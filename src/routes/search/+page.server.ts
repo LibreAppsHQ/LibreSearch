@@ -16,6 +16,9 @@ export const load = (async ({ fetch, url }) => {
 			query: '',
 			tab: 'web' as const,
 			freshness: undefined,
+			region: '',
+			safe: false,
+			page: 1,
 			error: '',
 			results: [],
 			newsResults: undefined,
@@ -36,6 +39,10 @@ export const load = (async ({ fetch, url }) => {
 
 	const query = normalizeSearchQuery(rawQuery);
 	const safe = url.searchParams.get('safe') === '1';
+	const region = url.searchParams.get('region') || '';
+	const rawPage = parseInt(url.searchParams.get('p') ?? '1', 10);
+	// Brave caps `offset` at 9, so page 10 is the highest reachable page.
+	const page = isNaN(rawPage) || rawPage < 1 ? 1 : Math.min(rawPage, 10);
 	const enableCache = url.searchParams.get('enablecache') === '1';
 	const rawTab = url.searchParams.get('t') ?? 'web';
 	const tab: SearchTab = VALID_TABS.has(rawTab as SearchTab) ? (rawTab as SearchTab) : 'web';
@@ -47,6 +54,9 @@ export const load = (async ({ fetch, url }) => {
 			query: '',
 			tab,
 			freshness,
+			region,
+			safe,
+			page,
 			error: '',
 			results: [],
 			newsResults: undefined,
@@ -62,6 +72,9 @@ export const load = (async ({ fetch, url }) => {
 			query: '',
 			tab,
 			freshness,
+			region,
+			safe,
+			page,
 			error: SEARCH_QUERY_ERROR,
 			results: [],
 			newsResults: undefined,
@@ -72,12 +85,13 @@ export const load = (async ({ fetch, url }) => {
 		};
 	}
 
-	const region = url.searchParams.get('region') || undefined;
 	const filterAds = url.searchParams.get('filterads') === '1';
 	const blockAds = url.searchParams.get('blockads') === '1';
 	const blockTrackers = url.searchParams.get('blocktrackers') === '1';
 
 	const apiParams = new URLSearchParams({ q: query, t: tab });
+	// Brave's `offset` is a page index (skips offset × count results), max 9.
+	if (page > 1) apiParams.set('offset', String(page - 1));
 	if (safe) apiParams.set('safe', '1');
 	if (freshness) apiParams.set('f', freshness);
 	if (region) apiParams.set('region', region);
@@ -145,6 +159,9 @@ export const load = (async ({ fetch, url }) => {
 			query: payload?.query?.trim() || query,
 			tab,
 			freshness,
+			region,
+			safe,
+			page,
 			error: payload?.error || '',
 			results: Array.isArray(payload?.results) ? payload.results : [],
 			newsResults: payload?.newsResults,
@@ -158,6 +175,9 @@ export const load = (async ({ fetch, url }) => {
 			query,
 			tab,
 			freshness,
+			region,
+			safe,
+			page,
 			error: 'Search backend unavailable.',
 			results: [],
 			newsResults: undefined,

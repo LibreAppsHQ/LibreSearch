@@ -1,7 +1,19 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python -c ' *)"
+      "Bash(python -c ' *)",
+      "Bash(timeout 120 npx svelte-check --threshold error)",
+      "Bash(sed -i '69,211d' src/routes/+layout.svelte)",
+      "Bash(sed -n '60,80p' src/routes/+layout.svelte)",
+      "Bash(timeout 150 npx svelte-check --threshold error)",
+      "Bash(perl -0pi -e 's{\\\\t</aside>\\\\n\\\\{/if\\\\}}{\\\\t</aside>\\\\n\\\\t</div>\\\\n\\\\{/if\\\\}}' src/lib/components/SiteMenu.svelte)",
+      "Bash(grep *)",
+      "Bash(perl -0pi -e 's{\\\\t\\\\t\\\\tfreshness,\\\\n}{\\\\t\\\\t\\\\tfreshness,\\\\n\\\\t\\\\t\\\\tregion,\\\\n\\\\t\\\\t\\\\tsafe,\\\\n}g' src/routes/search/+page.server.ts)",
+      "Bash(timeout 160 npx svelte-check --threshold error)",
+      "Bash(perl -0pi -e 's{\\\\t\\\\t\\\\tsafe,\\\\n}{\\\\t\\\\t\\\\tsafe,\\\\n\\\\t\\\\t\\\\tpage,\\\\n}g' src/routes/search/+page.server.ts)",
+      "Bash(perl -0pi -e 's{\\\\t\\\\t\\\\tsafe: false,\\\\n}{\\\\t\\\\t\\\\tsafe: false,\\\\n\\\\t\\\\t\\\\tpage: 1,\\\\n}g' src/routes/search/+page.server.ts)",
+      "Bash(pnpm exec *)",
+      "Bash(curl -s http://localhost:5173/src/routes/search/+page.svelte)"
     ]
   }
 }

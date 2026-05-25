@@ -13,7 +13,7 @@ export const themes = {
 	dark: {
 		name: 'Dark',
 		description: 'Low-light default with strong contrast.',
-		background: '#111111',
+		background: '#171b25',
 		panel: '#474747',
 		accent: '#8ab4f8',
 		text: '#fafafa'

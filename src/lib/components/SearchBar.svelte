@@ -12,7 +12,8 @@
 		action = '/search',
 		compact = false,
 		showButton = true,
-		safesearch = false
+		safesearch = false,
+		pill = false
 	} = $props<{
 		query?: string;
 		placeholder?: string;
@@ -20,6 +21,7 @@
 		compact?: boolean;
 		showButton?: boolean;
 		safesearch?: boolean;
+		pill?: boolean;
 	}>();
 
 	let formElement: HTMLFormElement | null = null;
@@ -31,6 +33,7 @@
 	let suggestionNonce = 0;
 
 	let autocompleteEnabled = $derived(getToggle($settingsStore, 'autocomplete'));
+	let showSuggestionIcons = $derived(getToggle($settingsStore, 'show-suggestion-icons', false));
 	let saveHistory = $derived(getToggle($settingsStore, 'save-history'));
 	let filterAds = $derived(getToggle($settingsStore, 'filter-ads'));
 	let blockAds = $derived(getToggle($settingsStore, 'block-ads'));
@@ -197,9 +200,11 @@
 	{/if}
 
 	<div
-		class={compact
-			? 'flex w-full items-center rounded-xl border border-[var(--app-border)] bg-[var(--app-panel)] px-4 py-1.5 transition focus-within:border-slate-500/60 focus-within:ring-2 focus-within:ring-slate-500/20'
-			: 'flex w-full items-center rounded-xl border border-[var(--app-border)] bg-[var(--app-panel)] px-5 py-2 transition focus-within:border-slate-500/60 focus-within:ring-2 focus-within:ring-slate-500/20'}
+		class={pill
+			? 'flex w-full items-center rounded-full border border-indigo-400/60 bg-transparent px-5 py-2.5 transition focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-400/20'
+			: compact
+				? 'flex w-full items-center rounded-xl border border-[var(--app-border)] bg-transparent px-4 py-1.5 transition focus-within:border-slate-500/60 focus-within:ring-2 focus-within:ring-slate-500/20'
+				: 'flex w-full items-center rounded-xl border border-[var(--app-border)] bg-transparent px-5 py-2 transition focus-within:border-slate-500/60 focus-within:ring-2 focus-within:ring-slate-500/20'}
 	>
 		<input
 			bind:value={query}
@@ -210,24 +215,47 @@
 			spellcheck="false"
 			enterkeyhint="search"
 			{placeholder}
-			class={compact
-				? 'min-w-0 flex-1 bg-transparent pr-2.5 text-base text-[var(--app-text)] placeholder:text-[var(--app-muted)] focus:outline-none sm:text-[17px]'
-				: 'min-w-0 flex-1 bg-transparent pr-3 text-lg text-[var(--app-text)] placeholder:text-[var(--app-muted)] focus:outline-none sm:text-xl'}
+			class={pill
+				? 'min-w-0 flex-1 bg-transparent pr-3 text-lg text-[var(--app-text)] placeholder:text-[var(--app-muted)] focus:outline-none'
+				: compact
+					? 'min-w-0 flex-1 bg-transparent pr-2.5 text-base text-[var(--app-text)] placeholder:text-[var(--app-muted)] focus:outline-none sm:text-[17px]'
+					: 'min-w-0 flex-1 bg-transparent pr-3 text-lg text-[var(--app-text)] placeholder:text-[var(--app-muted)] focus:outline-none sm:text-xl'}
 			onfocus={openDropdown}
 			oninput={(event) => fetchSuggestions((event.currentTarget as HTMLInputElement).value)}
 			onblur={() => setTimeout(closeDropdown, 150)}
 			onkeydown={handleKeydown}
 		/>
 
-		{#if showButton}
-			<button
-				type="submit"
-				aria-label="Search"
-				class="ml-2 inline-flex h-7 w-7 shrink-0 items-center justify-center text-[var(--app-muted)] transition hover:text-[var(--app-text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/40"
-			>
-				<i class="fa-solid fa-magnifying-glass text-[15px]"></i>
-			</button>
-		{/if}
+		<div class="ml-2 flex shrink-0 items-center gap-2">
+			{#if query}
+				<button
+					type="button"
+					aria-label="Clear search"
+					onclick={() => {
+						query = '';
+						suggestions = [];
+						document.querySelector<HTMLInputElement>('input[name="q"]')?.focus();
+					}}
+					class="inline-flex h-7 w-7 items-center justify-center text-[var(--app-muted)] transition hover:text-[var(--app-text)] focus-visible:outline-none"
+				>
+					<i class="fa-solid fa-xmark text-[15px]"></i>
+				</button>
+			{/if}
+
+			{#if query && showButton}
+				<span class="h-5 w-px bg-[var(--app-border)]"></span>
+			{/if}
+
+			{#if showButton}
+				<button
+					type="submit"
+					aria-label="Search"
+					class="inline-flex h-7 w-7 items-center justify-center text-[var(--app-accent)] transition hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/40"
+				>
+					<i class="fa-solid fa-magnifying-glass text-[15px]"></i>
+				</button>
+			{/if}
+		</div>
 	</div>
 
 	{#if isOpen && dropdownItems.length > 0}
@@ -251,11 +279,13 @@
 							}}
 							onmouseenter={() => (activeIndex = index)}
 						>
-							<i
-								class={item.type === 'history'
-									? 'fa-solid fa-clock-rotate-left shrink-0 text-xs text-[var(--app-muted)]'
-									: 'fa-solid fa-magnifying-glass shrink-0 text-xs text-[var(--app-muted)]'}
-							></i>
+							{#if showSuggestionIcons}
+								<i
+									class={item.type === 'history'
+										? 'fa-solid fa-clock-rotate-left shrink-0 text-xs text-[var(--app-muted)]'
+										: 'fa-solid fa-magnifying-glass shrink-0 text-xs text-[var(--app-muted)]'}
+								></i>
+							{/if}
 							<span
 								class={index === activeIndex
 									? 'truncate text-sm text-[var(--app-text)]'
@@ -294,3 +324,12 @@
 		</div>
 	{/if}
 </form>
+
+<style>
+	/* Hide the browser's native clear button on type="search" inputs */
+	input[type='search']::-webkit-search-cancel-button,
+	input[type='search']::-webkit-search-decoration {
+		-webkit-appearance: none;
+		appearance: none;
+	}
+</style>

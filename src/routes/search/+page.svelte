@@ -10,6 +10,7 @@
 	import VideoViewer from '$lib/components/VideoViewer.svelte';
 	import ImageGrid from '$lib/components/ImageGrid.svelte';
 	import CustomSelect from '$lib/components/CustomSelect.svelte';
+	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import { settingsStore, getToggle } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
 	import type { VideoResult } from '$lib/search';
@@ -20,7 +21,6 @@
 
 	let query = $state('');
 	let allResults = $state(data.results);
-	let loadingMore = $state(false);
 	let hasMore = $state(data.results.length >= 10);
 	let activeVideo = $state<VideoResult | null>(null);
 
@@ -28,6 +28,17 @@
 		query = data.query;
 		allResults = data.results;
 		hasMore = data.tab === 'web' && data.results.length >= 10;
+	});
+
+	const MAX_PAGE = 10; // Brave caps offset at 9 → page 10 is the last reachable page
+	let currentPage = $derived(data.page ?? 1);
+	let canGoNext = $derived(hasMore && currentPage < MAX_PAGE);
+	let pageNumbers = $derived.by(() => {
+		const start = Math.max(1, currentPage - 2);
+		const end = Math.min(MAX_PAGE, hasMore ? start + 4 : currentPage);
+		const pages: number[] = [];
+		for (let i = start; i <= end; i++) pages.push(i);
+		return pages;
 	});
 
 	let safesearch = $derived(getToggle($settingsStore, 'safe-search'));
@@ -39,11 +50,38 @@
 		py: 'Past year'
 	};
 
+	const regionOptions = [
+		{ label: 'All regions', value: '' },
+		{ label: 'United States', value: 'US' },
+		{ label: 'United Kingdom', value: 'GB' },
+		{ label: 'Canada', value: 'CA' },
+		{ label: 'Australia', value: 'AU' },
+		{ label: 'Germany', value: 'DE' },
+		{ label: 'France', value: 'FR' },
+		{ label: 'Japan', value: 'JP' },
+		{ label: 'India', value: 'IN' },
+		{ label: 'Brazil', value: 'BR' }
+	];
+
+	const timeOptions = [
+		{ label: 'Any time', value: '' },
+		{ label: 'Past day', value: 'pd' },
+		{ label: 'Past week', value: 'pw' },
+		{ label: 'Past month', value: 'pm' },
+		{ label: 'Past year', value: 'py' }
+	];
+
+	const safeOptions = [
+		{ label: 'Safe Search: On', value: '1' },
+		{ label: 'Safe Search: Off', value: '' }
+	];
+
 	function buildUrl(overrides: Record<string, string | undefined>): string {
 		const params = new URLSearchParams({ q: data.query });
 		if (data.tab !== 'web') params.set('t', data.tab);
 		if (data.freshness) params.set('f', data.freshness);
-		if (safesearch) params.set('safe', '1');
+		if (data.safe) params.set('safe', '1');
+		if (data.region) params.set('region', data.region);
 		for (const [k, v] of Object.entries(overrides)) {
 			if (v === undefined || v === '') params.delete(k);
 			else params.set(k, v);
@@ -63,37 +101,9 @@
 		if (data.query && getToggle($settingsStore, 'save-history')) historyStore.add(data.query);
 	});
 
-	async function loadMore() {
-		if (loadingMore || !hasMore) return;
-		loadingMore = true;
-		try {
-			const params = new URLSearchParams({ q: query, offset: String(allResults.length) });
-			if (safesearch) params.set('safe', '1');
-			if (data.freshness) params.set('f', data.freshness);
-			const res = await fetch(`/api/search?${params}`, {
-				cache: 'no-store',
-				credentials: 'omit',
-				headers: { accept: 'application/json' }
-			});
-			const payload = (await res.json().catch(() => null)) as {
-				results?: Array<{
-					title: string;
-					url: string;
-					snippet: string;
-					siteName?: string;
-					age?: string;
-					thumbnail?: string;
-					sitelinks?: Array<{ title: string; url: string }>;
-				}>;
-			} | null;
-			const newResults = Array.isArray(payload?.results) ? payload.results : [];
-			allResults = [...allResults, ...newResults];
-			hasMore = newResults.length >= 10;
-		} catch {
-			hasMore = false;
-		} finally {
-			loadingMore = false;
-		}
+	function goToPage(p: number) {
+		void goto(buildUrl({ p: p > 1 ? String(p) : undefined }));
+		if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 </script>
 
@@ -107,10 +117,10 @@
 	<header
 		class="sticky top-0 z-20 border-b border-[var(--app-border)] bg-[var(--app-background)]/95 backdrop-blur"
 	>
-		<div class="mx-auto w-full max-w-[1200px] pl-4 pr-14 sm:px-6">
+		<div class="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
 			<div class="flex items-center gap-3 py-3 sm:gap-5">
 				<a href="/" class="hidden shrink-0 text-lg font-semibold tracking-tight text-[var(--app-text)] sm:block">
-					ArcSearch
+					<img src="/logo1.png" alt="ArcSearch logo" class="h-10 w-25 rounded-full" />
 				</a>
 				<div class="max-w-2xl flex-1">
 					<SearchBar
@@ -122,36 +132,41 @@
 						{safesearch}
 					/>
 				</div>
+				<SiteMenu class="shrink-0" />
 			</div>
 
 			<!-- Tabs row -->
-			<div class="flex items-center justify-between">
-				<div class="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-					<SearchTabs current={data.tab} query={data.query} freshness={data.freshness} />
-				</div>
-
-				<!-- Time filter -->
-				{#if data.tab !== 'images'}
-					<div class="shrink-0 pr-1 pb-1">
-						<CustomSelect
-							value={data.freshness ?? ''}
-							options={[
-								{ label: 'Any time', value: '' },
-								{ label: 'Past day', value: 'pd' },
-								{ label: 'Past week', value: 'pw' },
-								{ label: 'Past month', value: 'pm' },
-								{ label: 'Past year', value: 'py' }
-							]}
-							onchange={(val) => void goto(buildUrl({ f: val || undefined }))}
-						/>
-					</div>
-				{/if}
+			<div class="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+				<SearchTabs current={data.tab} query={data.query} freshness={data.freshness} />
 			</div>
 		</div>
 	</header>
 
 	<!-- Body -->
-	<div class="mx-auto w-full max-w-[1200px] px-4 pt-6 pb-16 sm:px-6 sm:pr-6">
+	<div class="mx-auto w-full max-w-[1200px] px-4 pt-5 pb-16 sm:px-6 sm:pr-6">
+		<!-- Filters row -->
+		{#if data.query}
+			<div class="mb-5 flex flex-wrap items-center gap-3">
+				<CustomSelect
+					value={data.region ?? ''}
+					options={regionOptions}
+					onchange={(val) => void goto(buildUrl({ region: val || undefined }))}
+				/>
+				<CustomSelect
+					value={data.safe ? '1' : ''}
+					options={safeOptions}
+					onchange={(val) => void goto(buildUrl({ safe: val || undefined }))}
+				/>
+				{#if data.tab !== 'images'}
+					<CustomSelect
+						value={data.freshness ?? ''}
+						options={timeOptions}
+						onchange={(val) => void goto(buildUrl({ f: val || undefined }))}
+					/>
+				{/if}
+			</div>
+		{/if}
+
 		{#if data.error}
 			<p class="mb-6 max-w-2xl text-sm text-red-400">{data.error}</p>
 		{/if}
@@ -179,27 +194,56 @@
 		<!-- Two-column grid: left = results, right = infobox (web tab only) -->
 		<div class={data.infobox && data.tab === 'web' ? 'flex gap-8' : ''}>
 			<!-- Left / main column -->
-			<div class={data.infobox && data.tab === 'web' ? 'max-w-2xl min-w-0 flex-1' : 'max-w-2xl'}>
+			<div
+				class={data.infobox && data.tab === 'web'
+					? 'max-w-2xl min-w-0 flex-1'
+					: data.tab === 'images' || data.tab === 'videos'
+						? 'w-full'
+						: 'max-w-2xl'}
+			>
 				{#if data.tab === 'web'}
 					{#if allResults.length > 0}
+						<p class="mb-3 text-xs font-medium text-[var(--app-muted)]">Web results</p>
 						<ResultsList results={allResults} />
 
-						{#if hasMore}
-							<div class="mt-8 flex justify-center">
-								<button
-									type="button"
-									onclick={loadMore}
-									disabled={loadingMore}
-									class="inline-flex items-center gap-2 rounded-2xl border border-[var(--app-border)] bg-[var(--app-panel)] px-6 py-2.5 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)] disabled:opacity-50"
-								>
-									{#if loadingMore}
-										<i class="fa-solid fa-spinner animate-spin text-xs"></i>
-										Loading…
-									{:else}
-										More results
-									{/if}
-								</button>
-							</div>
+						{#if currentPage > 1 || hasMore}
+							<nav class="mt-10 flex items-center justify-center gap-2.5" aria-label="Pagination">
+								{#if currentPage > 1}
+									<button
+										type="button"
+										aria-label="Previous page"
+										onclick={() => goToPage(currentPage - 1)}
+										class="flex h-11 items-center justify-center rounded-full bg-[var(--app-surface)] px-5 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+									>
+										Prev
+									</button>
+								{/if}
+
+								{#each pageNumbers as p}
+									<button
+										type="button"
+										aria-label={`Page ${p}`}
+										aria-current={p === currentPage ? 'page' : undefined}
+										onclick={() => goToPage(p)}
+										class={p === currentPage
+											? 'flex h-11 w-11 items-center justify-center rounded-full bg-[var(--app-accent)] text-sm font-semibold text-[#111] transition'
+											: 'flex h-11 w-11 items-center justify-center rounded-full bg-[var(--app-surface)] text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]'}
+									>
+										{p}
+									</button>
+								{/each}
+
+								{#if canGoNext}
+									<button
+										type="button"
+										aria-label="Next page"
+										onclick={() => goToPage(currentPage + 1)}
+										class="flex h-11 items-center justify-center rounded-full bg-[var(--app-surface)] px-6 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+									>
+										Next
+									</button>
+								{/if}
+							</nav>
 						{/if}
 					{:else if data.query && !data.error}
 						<p class="text-sm text-[var(--app-muted)]">No results found.</p>
@@ -246,6 +290,111 @@
 		</div>
 	</div>
 </main>
+
+<footer class="border-t border-[var(--app-border)] bg-[var(--app-background)]">
+	<div class="mx-auto w-full max-w-[1100px] px-6 py-12">
+		<div class="flex flex-col gap-8 sm:flex-row sm:justify-between">
+			<!-- Brand -->
+			<div class="max-w-xs space-y-3">
+				<img src="/logo1.png" alt="ArcSearch logo" class="h-10 w-25 rounded-full" />
+				<p class="text-sm leading-6 text-[var(--app-muted)]">
+					A private search engine that puts you in control. No tracking, no profiles, no ads.
+				</p>
+			</div>
+
+			<!-- Links -->
+			<div class="flex gap-16">
+				<div class="space-y-3">
+					<p class="text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
+						Search
+					</p>
+					<ul class="space-y-2 text-sm">
+						<li>
+							<a href="/" class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+								>Home</a
+							>
+						</li>
+						<li>
+							<a
+								href="/search?q=news"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">News</a
+							>
+						</li>
+						<li>
+							<a
+								href="/search?q=videos&t=videos"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Videos</a
+							>
+						</li>
+						<li>
+							<a
+								href="/search?q=images&t=images"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Images</a
+							>
+						</li>
+					</ul>
+				</div>
+				<div class="space-y-3">
+					<p class="text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
+						Product
+					</p>
+					<ul class="space-y-2 text-sm">
+						<li>
+							<a
+								href="/about"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">About</a
+							>
+						</li>
+						<li>
+							<a
+								href="/settings"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Settings</a
+							>
+						</li>
+						<li>
+							<a
+								href="/settings#appearance"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Themes</a
+							>
+						</li>
+						<li>
+							<a
+								href="https://github.com/Arcbasehq/ArcSearch"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inline-flex items-center gap-1.5 text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+							>
+								<i class="fa-brands fa-github text-xs"></i>
+								GitHub
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="space-y-3">
+					<p class="text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
+						Company
+					</p>
+					<ul class="space-y-2 text-sm">
+						<li>
+							<a
+								href="https://arcbase.one"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+								target="_blank">Arcbase</a
+							>
+						</li>
+						<li>
+							<a
+								href="https://ai.arcbase.one"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+								target="_blank">OtterAI</a
+							>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
 
 {#if activeVideo}
 	<VideoViewer video={activeVideo} onclose={() => (activeVideo = null)} />

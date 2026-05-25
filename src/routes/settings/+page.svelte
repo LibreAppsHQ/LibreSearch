@@ -8,6 +8,7 @@
 	} from '$lib/stores/settings';
 	import { themeStore, themes, themeKeys } from '$lib/stores/theme';
 	import SearchBar from '$lib/components/SearchBar.svelte';
+	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import CustomSelect from '$lib/components/CustomSelect.svelte';
 	import { fly, fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
@@ -135,11 +136,11 @@
 <header
 	class="sticky top-0 z-20 border-b border-[var(--app-border)] bg-[var(--app-background)]/95 backdrop-blur"
 >
-	<div class="mx-auto w-full max-w-[1100px] pl-4 pr-14 sm:px-6">
+	<div class="mx-auto w-full max-w-[1100px] px-4 sm:px-6">
 		<div class="flex items-center gap-3 py-3 sm:gap-5">
-			<a href="/" class="hidden shrink-0 text-lg font-semibold tracking-tight text-[var(--app-text)] sm:block"
-				>ArcSearch</a
-			>
+			<a href="/" class="hidden shrink-0 sm:block">
+				<img src="/logo1.png" alt="ArcSearch logo" class="h-10 w-25 rounded-full" />
+			</a>
 			<div class="max-w-2xl flex-1">
 				<SearchBar
 					bind:query
@@ -150,6 +151,7 @@
 					{safesearch}
 				/>
 			</div>
+			<SiteMenu class="shrink-0" />
 		</div>
 	</div>
 </header>

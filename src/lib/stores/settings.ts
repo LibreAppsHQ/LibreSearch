@@ -98,6 +98,14 @@ const defaultSettings: Setting[] = [
 		checked: true
 	},
 	{
+		id: 'show-suggestion-icons',
+		name: 'Show suggestion icons',
+		description: 'Display the small clock and search icons in the autocomplete dropdown.',
+		category: 'appearance',
+		type: 'toggle',
+		checked: false
+	},
+	{
 		id: 'compact-results',
 		name: 'Compact results',
 		description: 'Use a denser layout with less spacing between cards.',

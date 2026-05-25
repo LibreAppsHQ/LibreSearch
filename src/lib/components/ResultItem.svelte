@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { formatDisplayUrl } from '$lib/search';
 	import { settingsStore, getToggle } from '$lib/stores/settings';
 
 	let {
@@ -32,6 +31,18 @@
 		}
 	});
 
+	let breadcrumb = $derived.by(() => {
+		try {
+			const u = new URL(result.url);
+			const segs = u.pathname.split('/').filter(Boolean).slice(0, 3);
+			return [`${u.protocol}//${u.host}`, ...segs].join(' › ');
+		} catch {
+			return result.url;
+		}
+	});
+
+	let siteLabel = $derived(result.siteName || domain.replace(/^www\./, ''));
+
 	let href = $derived.by(() => {
 		if (!stripTracking) return result.url;
 		try {
@@ -53,37 +64,38 @@
 			? 'block rounded-2xl px-3 py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--app-accent)]/50'
 			: 'block rounded-2xl px-3 py-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--app-accent)]/50'}
 	>
-		<div class={compact ? 'space-y-0.5' : 'space-y-1.5'}>
+		<div class={compact ? 'space-y-0.5' : 'space-y-1'}>
 			<!-- Site breadcrumb row -->
-			<div class="flex items-center gap-2">
+			<div class="flex items-center gap-2.5">
 				{#if showFavicons && domain}
-					<img
-						src={`https://icons.duckduckgo.com/ip3/${domain}.ico`}
-						alt=""
-						width="16"
-						height="16"
-						class="h-4 w-4 shrink-0 rounded-sm"
-						onerror={(e) => {
-							(e.currentTarget as HTMLImageElement).style.display = 'none';
-						}}
-					/>
+					<span
+						class="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[var(--app-border)] bg-[var(--app-surface)]"
+					>
+						<img
+							src={`https://icons.duckduckgo.com/ip3/${domain}.ico`}
+							alt=""
+							width="18"
+							height="18"
+							class="h-[18px] w-[18px]"
+							onerror={(e) => {
+								(e.currentTarget as HTMLImageElement).style.display = 'none';
+							}}
+						/>
+					</span>
 				{/if}
-				<div class="flex min-w-0 items-baseline gap-1 text-sm">
-					{#if result.siteName}
-						<span class="font-medium text-[var(--app-text)]">{result.siteName}</span>
-						<span class="text-[var(--app-muted)]">›</span>
-					{/if}
-					<span class="truncate text-xs text-[var(--app-muted)]">{formatDisplayUrl(result.url)}</span>
+				<div class="min-w-0 flex-1 leading-tight">
+					<div class="truncate text-sm font-medium text-[var(--app-text)]">{siteLabel}</div>
+					<div class="truncate text-xs text-[var(--app-muted)]">{breadcrumb}</div>
 				</div>
 				{#if showAge && result.age}
-					<span class="ml-auto shrink-0 text-xs text-[var(--app-muted)]">{result.age}</span>
+					<span class="shrink-0 text-xs text-[var(--app-muted)]">{result.age}</span>
 				{/if}
 			</div>
 
 			<!-- Title -->
 			<h2 class={compact
-				? 'text-sm font-medium leading-snug text-[var(--app-accent)] group-hover:underline'
-				: 'text-[17px] font-medium leading-snug text-[var(--app-accent)] group-hover:underline'}>
+				? 'pt-0.5 text-base font-normal leading-snug text-[var(--app-accent)] group-hover:underline'
+				: 'pt-1 text-xl font-normal leading-snug text-[var(--app-accent)] group-hover:underline'}>
 				{result.title}
 			</h2>
 

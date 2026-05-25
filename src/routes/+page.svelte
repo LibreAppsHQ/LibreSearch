@@ -1,22 +1,79 @@
 <script lang="ts">
 	import SearchBar from '$lib/components/SearchBar.svelte';
+	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import { settingsStore, getToggle } from '$lib/stores/settings';
-	import { reducedMotion } from '$lib/stores/motion';
-	import { fly, scale } from 'svelte/transition';
-	import { cubicOut } from 'svelte/easing';
 
 	let query = $state('');
 	let safesearch = $derived(getToggle($settingsStore, 'safe-search'));
-	let customizeOpen = $state(false);
 
-	const quickSettings = [
-		{ id: 'safe-search', label: 'Safe search' },
-		{ id: 'filter-ads', label: 'Filter ads' },
-		{ id: 'open-new-tab', label: 'Open in new tab' },
-		{ id: 'show-favicons', label: 'Show favicons' },
-		{ id: 'show-age', label: 'Show result date' },
-		{ id: 'compact-results', label: 'Compact results' }
-	];
+	let showDefaultModal = $state(false);
+
+	type BrowserKey = 'chrome' | 'edge' | 'firefox' | 'safari' | 'other';
+
+	function detectBrowser(): BrowserKey {
+		if (typeof navigator === 'undefined') return 'other';
+		const ua = navigator.userAgent;
+		if (/Edg\//.test(ua)) return 'edge';
+		if (/Firefox\//.test(ua)) return 'firefox';
+		if (/Chrome\//.test(ua) || /Chromium\//.test(ua)) return 'chrome';
+		if (/Safari\//.test(ua) && /Apple/.test(navigator.vendor)) return 'safari';
+		return 'other';
+	}
+
+	let origin = $state('https://search.arcbase.one');
+	let searchUrlTemplate = $derived(`${origin}/search?q=%s`);
+
+	let defaultSteps = $derived<Record<BrowserKey, { name: string; steps: string[] }>>({
+		chrome: {
+			name: 'Chrome',
+			steps: [
+				'Go to chrome://settings/searchEngines.',
+				'Next to “Site search”, click Add.',
+				`Name it “ArcSearch”, set a shortcut (e.g. arc), and set the URL to ${searchUrlTemplate}.`,
+				'Click the ⋮ next to the new entry and choose “Make default”.'
+			]
+		},
+		edge: {
+			name: 'Edge',
+			steps: [
+				'Go to edge://settings/searchEngines.',
+				'Next to “Manage search engines”, click Add.',
+				`Name it “ArcSearch”, set a shortcut (e.g. arc), and set the URL to ${searchUrlTemplate}.`,
+				'Click the ⋯ next to the new entry and choose “Make default”.'
+			]
+		},
+		firefox: {
+			name: 'Firefox',
+			steps: [
+				'Click the search bar, then the magnifying-glass/options icon.',
+				'Choose “Add ArcSearch” to install it as a search engine.',
+				'Open Settings → Search and pick ArcSearch as your Default Search Engine.'
+			]
+		},
+		safari: {
+			name: 'Safari',
+			steps: [
+				'Safari only allows a fixed list of default search engines, so it can’t be set as the system default.',
+				'Bookmark ArcSearch instead, or add it to your Favorites for one-tap access.'
+			]
+		},
+		other: {
+			name: 'your browser',
+			steps: [
+				'Open your browser’s search engine settings.',
+				'Look for “ArcSearch” among the discovered engines (most browsers add it after your first visit).',
+				`If it isn’t there, click Add and set the URL to ${searchUrlTemplate}, then select it.`
+			]
+		}
+	});
+
+	let browser = $state<BrowserKey>('other');
+
+	function openDefaultModal() {
+		browser = detectBrowser();
+		if (typeof window !== 'undefined') origin = window.location.origin;
+		showDefaultModal = true;
+	}
 </script>
 
 <svelte:head>
@@ -61,94 +118,129 @@
 	})}</script>`}
 </svelte:head>
 
-<main class="min-h-screen bg-[var(--app-background)] text-[var(--app-text)]">
-	<div class="mx-auto flex min-h-screen w-full max-w-3xl items-center px-6 py-12">
-		<div class="w-full space-y-8 text-center">
-			<div class="space-y-3">
-				<img
-					src="/logo.png"
-					alt="ArcSearch logo"
-					class="mx-auto h-24 w-24 rounded-full sm:h-32 sm:w-32 lg:h-37 lg:w-37"
-				/>
-				<a href="/about" class="inline-block">
-					<h1 class="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">ArcSearch</h1>
-				</a>
-			</div>
+<main class="relative flex min-h-screen flex-col bg-[var(--app-background)] text-[var(--app-text)]">
+	<SiteMenu class="absolute top-6 right-6 z-30" />
 
-			<div class="mx-auto w-full max-w-2xl pr-14 sm:pr-0">
+	<!-- Centered hero -->
+	<div class="relative flex min-h-screen flex-col items-center px-6 pt-[21vh]">
+		<div class="w-full max-w-xl text-center">
+			<a href="/about" class="inline-flex items-center gap-2.5">
+				<img src="/logo1.png" alt="ArcSearch logo" class="h-40 w-100 rounded-full" />
+			</a>
+			<p class="mt-3 text-base text-[var(--app-text)] sm:text-lg">
+				Find anything. Tracked by no one.
+			</p>
+
+			<div class="mt-6 w-full">
 				<SearchBar
 					bind:query
-					placeholder="Search the web privately..."
+					placeholder="Search privately"
 					showButton={true}
 					action="/search"
+					pill={true}
 					{safesearch}
 				/>
 			</div>
 		</div>
+
+		<!-- Scroll-down indicator -->
+		<a
+			href="#without-tracking"
+			aria-label="Scroll down"
+			class="absolute bottom-8 left-1/2 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border border-[var(--app-accent)] text-[var(--app-accent)] transition hover:bg-[var(--app-accent)]/10"
+		>
+			<i class="fas fa-chevron-down"></i>
+		</a>
 	</div>
+
+	<!-- Search, not surveillance -->
+	<section
+		id="without-tracking"
+		class="bg-gradient-to-b from-[#5b5bf0] to-[#6f6ff7] px-6 py-20 text-white sm:py-28"
+	>
+		<div
+			class="mx-auto flex max-w-6xl flex-col items-center gap-12 md:flex-row md:justify-between"
+		>
+			<div class="max-w-xl text-center md:text-left">
+				<h2 class="text-5xl leading-tight font-bold sm:text-6xl">
+					Search,<br />not surveillance.
+				</h2>
+				<p class="mt-6 text-lg text-white/85">
+					ArcSearch finds what you need without logging who you are.
+				</p>
+				<button
+					type="button"
+					onclick={openDefaultModal}
+					class="mt-8 inline-block rounded-md border border-white px-6 py-3 text-base font-medium text-white transition hover:bg-white hover:text-[#5b5bf0]"
+				>
+					Make it your default
+				</button>
+			</div>
+
+			<img
+				src="/icon2.svg"
+				alt="Browsing the web privately on a laptop"
+				class="w-full max-w-lg md:max-w-xl"
+			/>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class=" py-2.5 bg-[#0c0d0e]">
+		<nav class="flex items-center justify-center gap-18 text-sm text-white/90">
+			<a href="/privacy" class="transition hover:text-[var(--app-text)]">Privacy Policy</a>
+			<a href="/about" class="transition hover:text-[var(--app-text)]">About Us</a>
+			<a href="/settings" class="transition hover:text-[var(--app-text)]">Settings</a>
+		</nav>
+	</footer>
 </main>
 
-<!-- Customize button -->
-<div class="fixed right-6 bottom-6 z-50">
-	{#if customizeOpen}
-		<button
-			type="button"
-			class="fixed inset-0 z-40"
-			tabindex="-1"
-			aria-label="Close"
-			onclick={() => (customizeOpen = false)}
-		></button>
-
-		<div
-			class="absolute right-0 bottom-14 z-50 w-[min(16rem,calc(100vw-3rem))] overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[#1c1c1c] shadow-2xl shadow-black/50"
-			transition:fly={{ y: 8, duration: $reducedMotion ? 0 : 180, easing: cubicOut }}
-		>
-			<div class="border-b border-[var(--app-border)] px-4 py-3">
-				<p class="text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
-					Quick settings
-				</p>
-			</div>
-			<div class="divide-y divide-[var(--app-border)] px-1 py-1">
-				{#each quickSettings as s}
-					{@const checked = getToggle($settingsStore, s.id)}
-					<button
-						type="button"
-						onclick={() => settingsStore.toggle(s.id)}
-						class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition hover:bg-[var(--app-hover)]"
-					>
-						<span class={checked ? 'text-[var(--app-text)]' : 'text-[var(--app-muted)]'}
-							>{s.label}</span
-						>
-						<div
-							class={checked
-								? 'flex h-5 w-5 items-center justify-center rounded-full bg-[var(--app-accent)] text-[#111]'
-								: 'h-5 w-5 rounded-full border border-[var(--app-border)]'}
-						>
-							{#if checked}
-								<i class="fa-solid fa-check text-[9px]"></i>
-							{/if}
-						</div>
-					</button>
-				{/each}
-			</div>
-			<div class="border-t border-[var(--app-border)] px-4 py-3">
-				<a
-					href="/settings"
-					class="text-xs text-[var(--app-accent)] hover:underline"
-					onclick={() => (customizeOpen = false)}
-				>
-					All settings <i class="fa-solid fa-arrow-right"></i>
-				</a>
-			</div>
-		</div>
-	{/if}
-
-	<button
-		type="button"
-		onclick={() => (customizeOpen = !customizeOpen)}
-		class="flex items-center gap-2 rounded-full border border-[var(--app-border)] bg-[#1c1c1c] px-4 py-2.5 text-sm font-medium text-[var(--app-text)] shadow-lg shadow-black/30 transition hover:bg-[var(--app-hover)]"
+{#if showDefaultModal}
+	<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+		onclick={() => (showDefaultModal = false)}
 	>
-		<i class="fa-solid fa-sliders text-xs"></i>
-		Customize
-	</button>
-</div>
+		<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+		<div
+			class="w-full max-w-md rounded-xl bg-white p-6 text-[#0c0d0e] shadow-xl"
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="default-modal-title"
+			onclick={(e) => e.stopPropagation()}
+		>
+			<div class="flex items-start justify-between gap-4">
+				<h3 id="default-modal-title" class="text-xl font-bold">
+					Set ArcSearch as your default in {defaultSteps[browser].name}
+				</h3>
+				<button
+					type="button"
+					class="-mt-1 -mr-1 rounded p-1 text-2xl leading-none text-black/50 transition hover:text-black"
+					aria-label="Close"
+					onclick={() => (showDefaultModal = false)}
+				>
+					×
+				</button>
+			</div>
+
+			<ol class="mt-4 list-decimal space-y-3 pl-5 text-sm text-black/80">
+				{#each defaultSteps[browser].steps as step}
+					<li>{step}</li>
+				{/each}
+			</ol>
+
+			<p class="mt-4 text-xs text-black/50">
+				Browsers don’t allow a site to change your default search engine for you — it’s a
+				one-time setting you confirm yourself.
+			</p>
+
+			<button
+				type="button"
+				class="mt-6 w-full rounded-md bg-[#5b5bf0] px-4 py-2.5 font-medium text-white transition hover:bg-[#4a4ae0]"
+				onclick={() => (showDefaultModal = false)}
+			>
+				Got it
+			</button>
+		</div>
+	</div>
+{/if}
