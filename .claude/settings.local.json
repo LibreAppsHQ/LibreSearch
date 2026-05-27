@@ -14,7 +14,13 @@
       "Bash(perl -0pi -e 's{\\\\t\\\\t\\\\tsafe: false,\\\\n}{\\\\t\\\\t\\\\tsafe: false,\\\\n\\\\t\\\\t\\\\tpage: 1,\\\\n}g' src/routes/search/+page.server.ts)",
       "Bash(pnpm exec *)",
       "Bash(curl -s http://localhost:5173/src/routes/search/+page.svelte)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(cd *)",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\(JSON.stringify\\({...p.dependencies,...p.devDependencies},null,2\\)\\)\")",
+      "Bash(chmod +x test_site.py)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173/ --max-time 3)",
+      "Bash(python3 test_site.py)",
+      "Bash(curl -sI http://localhost:5173/)"
     ]
   }
 }

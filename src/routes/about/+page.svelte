@@ -1,6 +1,8 @@
 <script lang="ts">
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import Logo from '$lib/components/Logo.svelte';
+	import SiteFooter from '$lib/components/SiteFooter.svelte';
+	import AltchaBadge from '$lib/components/AltchaBadge.svelte';
 </script>
 
 <svelte:head>
@@ -196,122 +198,5 @@
 	</section>
 </main>
 
-<footer class="border-t border-[var(--app-border)] bg-[var(--app-background)]">
-	<div class="mx-auto w-full max-w-[1100px] px-6 py-12">
-		<div class="flex flex-col gap-8 sm:flex-row sm:justify-between">
-			<!-- Brand -->
-			<div class="max-w-xs space-y-3">
-				<p class="text-base font-bold tracking-tight text-[var(--app-text)]">Launchpad</p>
-				<p class="text-sm leading-6 text-[var(--app-muted)]">
-					A private search engine that puts you in control. No tracking, no profiles, no ads.
-				</p>
-			</div>
-
-			<!-- Links -->
-			<div class="flex gap-16">
-				<div class="space-y-3">
-					<p class="text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
-						Search
-					</p>
-					<ul class="space-y-2 text-sm">
-						<li>
-							<a href="/" class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
-								>Home</a
-							>
-						</li>
-						<li>
-							<a
-								href="/search?q=news"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">News</a
-							>
-						</li>
-						<li>
-							<a
-								href="/search?q=videos&t=videos"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Videos</a
-							>
-						</li>
-						<li>
-							<a
-								href="/search?q=images&t=images"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Images</a
-							>
-						</li>
-					</ul>
-				</div>
-				<div class="space-y-3">
-					<p class="text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
-						Product
-					</p>
-					<ul class="space-y-2 text-sm">
-						<li>
-							<a
-								href="/about"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">About</a
-							>
-						</li>
-						<li>
-							<a
-								href="/settings"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Settings</a
-							>
-						</li>
-						<li>
-							<a
-								href="/settings#appearance"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Themes</a
-							>
-						</li>
-						<li>
-							<a
-								href="https://github.com/Arcbasehq/Launchpad"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="inline-flex items-center gap-1.5 text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
-							>
-								<i class="fa-brands fa-github text-xs"></i>
-								GitHub
-							</a>
-						</li>
-					</ul>
-				</div>
-				<div class="space-y-3">
-					<p class="text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
-						Company
-					</p>
-					<ul class="space-y-2 text-sm">
-						<li>
-							<a
-								href="https://arcbase.one"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
-								target="_blank">Arcbase</a
-							>
-						</li>
-						<li>
-							<a
-								href="https://ai.arcbase.one"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
-								target="_blank">OtterAI</a
-							>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-
-		<div
-			class="mt-10 flex flex-col items-start justify-between gap-4 border-t border-[var(--app-border)] pt-8 sm:flex-row sm:items-center"
-		>
-			<div class="flex items-center gap-3">
-				<p class="text-xs text-[var(--app-muted)]">
-					© {new Date().getFullYear()} Launchpad. Built for privacy.
-				</p>
-				<span class="text-[var(--app-muted)]">·</span>
-				<span
-					class="rounded-full border border-[var(--app-border)] bg-[#171b25]/80 backdrop-blur-sm px-2 py-0.5 text-xs text-[var(--app-muted)]"
-					>v0.3.0</span
-				>
-			</div>
-		</div>
-	</div>
-</footer>
+<SiteFooter />
+<AltchaBadge />

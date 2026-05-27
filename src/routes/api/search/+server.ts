@@ -9,18 +9,15 @@ import {
 	type SearchTab
 } from '$lib/search';
 import { consumeRateLimit, searchBrave } from '$lib/server/search';
-
-function getClientKey(event: Parameters<RequestHandler>[0]): string {
-	return (
-		event.request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-		event.getClientAddress() ||
-		'unknown'
-	);
-}
+import { flagSuspicious, isVerified, getClientKey } from '$lib/server/security';
 
 export const GET: RequestHandler = async (event) => {
-	// Honeypot - silently drop requests where the bot-trap field is filled
+	const ip = getClientKey(event);
+
+	// Honeypot - silently drop requests where the bot-trap field is filled,
+	// and flag the client so it must solve a challenge to continue.
 	if (event.url.searchParams.get('website')) {
+		flagSuspicious(ip);
 		return json(
 			{ query: '', tab: 'web', results: [] },
 			{ headers: { 'Cache-Control': 'no-store' }, status: 200 }
@@ -36,19 +33,24 @@ export const GET: RequestHandler = async (event) => {
 		);
 	}
 
-	const rateLimit = consumeRateLimit(getClientKey(event));
-	if (!rateLimit.allowed) {
-		return json(
-			{ error: 'Too many searches. Please wait a moment.' },
-			{
-				headers: {
-					'Cache-Control': 'no-store',
-					'Retry-After': String(rateLimit.retryAfterSeconds),
-					'X-Robots-Tag': 'noindex, nofollow'
-				},
-				status: 429
-			}
-		);
+	// Verified humans bypass the rate limit; everyone else is throttled, and
+	// tripping the limit flags them for a challenge.
+	if (!isVerified(ip)) {
+		const rateLimit = consumeRateLimit(ip);
+		if (!rateLimit.allowed) {
+			flagSuspicious(ip);
+			return json(
+				{ error: 'Too many searches. Please wait a moment.' },
+				{
+					headers: {
+						'Cache-Control': 'no-store',
+						'Retry-After': String(rateLimit.retryAfterSeconds),
+						'X-Robots-Tag': 'noindex, nofollow'
+					},
+					status: 429
+				}
+			);
+		}
 	}
 
 	const safe = event.url.searchParams.get('safe') === '1';

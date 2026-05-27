@@ -2,18 +2,13 @@
 	import { onMount } from 'svelte';
 	import {
 		settingsStore,
-		getToggle,
 		type Setting,
 		type SettingCategory
 	} from '$lib/stores/settings';
 	import { themeStore, themes, themeKeys } from '$lib/stores/theme';
-	import SearchBar from '$lib/components/SearchBar.svelte';
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import CustomSelect from '$lib/components/CustomSelect.svelte';
-	import Logo from '$lib/components/Logo.svelte';
-
-	let query = $state('');
-	let safesearch = $derived(getToggle($settingsStore, 'safe-search'));
+	import SiteFooter from '$lib/components/SiteFooter.svelte';
 
 	type SettingGroup = { ids: string[] };
 
@@ -174,42 +169,38 @@
 	</button>
 {/snippet}
 
-<header
-	class="sticky top-0 z-30 border-b border-[var(--app-border)] bg-[var(--app-background)]/95 backdrop-blur"
->
-	<div class="mx-auto w-full max-w-[1100px] px-4 sm:px-6">
-		<div class="flex items-center gap-3 py-3 sm:gap-5">
-			<a href="/" class="hidden shrink-0 sm:block">
-				<Logo class="h-10 w-25 rounded-full" />
-			</a>
-			<div class="h-7.5 w-px bg-gray-700"></div>
-			<div class="max-w-2xl flex-1">
-				<SearchBar
-					bind:query
-					compact={true}
-					placeholder="Search the web..."
-					action="/search"
-					showButton={true}
-					{safesearch}
-				/>
+<header class="sticky top-0 z-30">
+	<!-- Black brand bar -->
+	<div class="bg-black">
+		<div class="mx-auto w-full max-w-[1100px] px-4 sm:px-6">
+			<div class="flex items-center gap-4 py-3">
+				<a href="/" class="shrink-0">
+					<img src="/2.svg" alt="Launchpad logo" class="h-10 w-25" />
+				</a>
+				<div class="h-7 w-px bg-white/25"></div>
+				<span class="text-lg font-medium text-white">Settings</span>
+				<SiteMenu class="ml-auto shrink-0 text-white!" />
 			</div>
-			<SiteMenu class="shrink-0" />
 		</div>
+	</div>
 
-		<!-- Underline tab bar (scroll anchors) -->
-		<nav class="-mb-px flex items-center gap-7 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-			{#each sections as section (section.id)}
-				<button
-					type="button"
-					onclick={() => scrollToSection(section.id)}
-					class={activeSection === section.id
-						? 'shrink-0 border-b-2 border-[var(--app-accent)] py-3 text-sm font-semibold text-[var(--app-text)]'
-						: 'shrink-0 border-b-2 border-transparent py-3 text-sm font-medium text-[var(--app-muted)] transition hover:text-[var(--app-text)]'}
-				>
-					{section.label}
-				</button>
-			{/each}
-		</nav>
+	<!-- Underline tab bar (scroll anchors) -->
+	<div class="border-b border-[var(--app-border)] bg-[var(--app-background)]/95 backdrop-blur">
+		<div class="mx-auto w-full max-w-[1100px] px-4 sm:px-6">
+			<nav class="-mb-px flex items-center gap-7 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+				{#each sections as section (section.id)}
+					<button
+						type="button"
+						onclick={() => scrollToSection(section.id)}
+						class={activeSection === section.id
+							? 'shrink-0 border-b-2 border-[var(--app-accent)] py-3 text-sm font-semibold text-[var(--app-text)]'
+							: 'shrink-0 border-b-2 border-transparent py-3 text-sm font-medium text-[var(--app-muted)] transition hover:text-[var(--app-text)]'}
+					>
+						{section.label}
+					</button>
+				{/each}
+			</nav>
+		</div>
 	</div>
 </header>
 
@@ -366,3 +357,5 @@
 		</div>
 	</div>
 </main>
+
+<SiteFooter />

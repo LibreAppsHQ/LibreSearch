@@ -15,6 +15,8 @@
 	import ImageGrid from '$lib/components/ImageGrid.svelte';
 	import CustomSelect from '$lib/components/CustomSelect.svelte';
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
+	import SiteFooter from '$lib/components/SiteFooter.svelte';
+	import AltchaChallenge from '$lib/components/AltchaChallenge.svelte';
 	import { settingsStore, getToggle } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
 	import type { VideoResult } from '$lib/search';
@@ -154,6 +156,11 @@
 	</header>
 
 	<!-- Body -->
+	{#if data.challengeRequired}
+		<div class="mx-auto w-full max-w-[1200px] px-4 pt-5 pb-16 sm:px-6">
+			<AltchaChallenge />
+		</div>
+	{:else}
 	<div class="mx-auto w-full max-w-[1200px] px-4 pt-5 pb-16 sm:px-6 sm:pr-6">
 		<!-- Filters row -->
 		{#if data.query}
@@ -308,112 +315,10 @@
 			{/if}
 		</div>
 	</div>
+	{/if}
 </main>
 
-<footer class="border-t border-[var(--app-border)] bg-[var(--app-background)]">
-	<div class="mx-auto w-full max-w-[1100px] px-6 py-12">
-		<div class="flex flex-col gap-8 sm:flex-row sm:justify-between">
-			<!-- Brand -->
-			<div class="max-w-xs space-y-3">
-				<Logo class="h-10 w-25 rounded-full" />
-				<p class="text-sm leading-6 text-[var(--app-muted)]">
-					A private search engine that puts you in control. No tracking, no profiles, no ads.
-				</p>
-			</div>
-
-			<!-- Links -->
-			<div class="flex gap-16">
-				<div class="space-y-3">
-					<p class="text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
-						Search
-					</p>
-					<ul class="space-y-2 text-sm">
-						<li>
-							<a href="/" class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
-								>Home</a
-							>
-						</li>
-						<li>
-							<a
-								href="/search?q=news"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">News</a
-							>
-						</li>
-						<li>
-							<a
-								href="/search?q=videos&t=videos"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Videos</a
-							>
-						</li>
-						<li>
-							<a
-								href="/search?q=images&t=images"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Images</a
-							>
-						</li>
-					</ul>
-				</div>
-				<div class="space-y-3">
-					<p class="text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
-						Product
-					</p>
-					<ul class="space-y-2 text-sm">
-						<li>
-							<a
-								href="/about"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">About</a
-							>
-						</li>
-						<li>
-							<a
-								href="/settings"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Settings</a
-							>
-						</li>
-						<li>
-							<a
-								href="/settings#appearance"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Themes</a
-							>
-						</li>
-						<li>
-							<a
-								href="https://github.com/Arcbasehq/Launchpad"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="inline-flex items-center gap-1.5 text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
-							>
-								<i class="fa-brands fa-github text-xs"></i>
-								GitHub
-							</a>
-						</li>
-					</ul>
-				</div>
-				<div class="space-y-3">
-					<p class="text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
-						Company
-					</p>
-					<ul class="space-y-2 text-sm">
-						<li>
-							<a
-								href="https://arcbase.one"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
-								target="_blank">Arcbase</a
-							>
-						</li>
-						<li>
-							<a
-								href="https://ai.arcbase.one"
-								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
-								target="_blank">OtterAI</a
-							>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-</footer>
+<SiteFooter />
 
 {#if activeVideo}
 	<VideoViewer video={activeVideo} onclose={() => (activeVideo = null)} />

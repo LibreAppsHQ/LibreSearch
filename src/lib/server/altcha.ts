@@ -1,0 +1,91 @@
+import crypto from 'node:crypto';
+import { env } from '$env/dynamic/private';
+
+// Self-hosted, privacy-friendly proof-of-work challenge (ALTCHA-compatible scheme).
+// No third-party service is contacted — challenges are signed with a server secret.
+
+const ALGORITHM = 'SHA-256';
+const DEFAULT_MAX_NUMBER = 50_000;
+const CHALLENGE_TTL_MS = 5 * 60_000;
+
+function getSecret(): string {
+	return env.ALTCHA_SECRET?.trim() || 'dev-insecure-altcha-secret-change-me';
+}
+
+function sha256Hex(input: string): string {
+	return crypto.createHash('sha256').update(input).digest('hex');
+}
+
+function hmacHex(input: string): string {
+	return crypto.createHmac('sha256', getSecret()).update(input).digest('hex');
+}
+
+function safeEqualHex(a: string, b: string): boolean {
+	if (a.length !== b.length) return false;
+	try {
+		return crypto.timingSafeEqual(Buffer.from(a, 'hex'), Buffer.from(b, 'hex'));
+	} catch {
+		return false;
+	}
+}
+
+export interface Challenge {
+	algorithm: string;
+	challenge: string;
+	salt: string;
+	signature: string;
+	maxnumber: number;
+}
+
+export function createChallenge(maxnumber = DEFAULT_MAX_NUMBER): Challenge {
+	const expires = Date.now() + CHALLENGE_TTL_MS;
+	// The expiry is embedded in the salt so it's covered by the signature.
+	const salt = `${crypto.randomBytes(12).toString('hex')}.${expires}`;
+	const secretNumber = crypto.randomInt(0, maxnumber + 1);
+	const challenge = sha256Hex(salt + secretNumber);
+	const signature = hmacHex(challenge);
+	return { algorithm: ALGORITHM, challenge, salt, signature, maxnumber };
+}
+
+// Prevent a solved challenge from being replayed.
+const usedSignatures = new Map<string, number>();
+function pruneUsed(now: number): void {
+	for (const [sig, expiresAt] of usedSignatures) {
+		if (expiresAt <= now) usedSignatures.delete(sig);
+	}
+}
+
+/** Verify a base64-encoded ALTCHA solution payload. */
+export function verifySolution(payloadB64: string): boolean {
+	try {
+		const decoded = JSON.parse(Buffer.from(payloadB64, 'base64').toString('utf-8')) as {
+			algorithm?: string;
+			challenge?: string;
+			number?: number;
+			salt?: string;
+			signature?: string;
+		};
+
+		if (!decoded.salt || !decoded.challenge || !decoded.signature) return false;
+		if (typeof decoded.number !== 'number' || !Number.isFinite(decoded.number)) return false;
+		if (decoded.algorithm && decoded.algorithm !== ALGORITHM) return false;
+
+		const expires = Number(decoded.salt.split('.')[1]);
+		const now = Date.now();
+		if (!Number.isFinite(expires) || now > expires) return false;
+
+		const challenge = sha256Hex(decoded.salt + decoded.number);
+		if (!safeEqualHex(challenge, decoded.challenge)) return false;
+
+		const signature = hmacHex(challenge);
+		if (!safeEqualHex(signature, decoded.signature)) return false;
+
+		pruneUsed(now);
+		if (usedSignatures.has(decoded.signature)) return false;
+		usedSignatures.set(decoded.signature, expires);
+
+		return true;
+	} catch {
+		return false;
+	}
+}

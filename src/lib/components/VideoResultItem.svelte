@@ -1,15 +1,13 @@
 <script lang="ts">
 	import type { VideoResult } from '$lib/search';
-	import { settingsStore } from '$lib/stores/settings';
+	import { settingsStore, getToggle } from '$lib/stores/settings';
 
 	let { result, onselect } = $props<{
 		result: VideoResult;
 		onselect?: (v: VideoResult) => void;
 	}>();
 
-	let openInNewTab = $derived(
-		$settingsStore.find((s) => s.id === 'open-new-tab')?.checked ?? true
-	);
+	let openInNewTab = $derived(getToggle($settingsStore, 'open-new-tab', true));
 </script>
 
 <article

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import Logo from '$lib/components/Logo.svelte';
+	import SiteFooter from '$lib/components/SiteFooter.svelte';
+	import AltchaBadge from '$lib/components/AltchaBadge.svelte';
 
 	const lastUpdated = 'May 2026';
 
@@ -202,19 +204,5 @@
 	</div>
 </main>
 
-<footer class="border-t border-[var(--app-border)] bg-[var(--app-background)]">
-	<div class="mx-auto w-full max-w-[1100px] px-6 py-10">
-		<div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
-			<p class="text-base font-bold tracking-tight text-[var(--app-text)]">Launchpad</p>
-			<nav class="flex items-center gap-8 text-sm font-medium text-[var(--app-muted)]">
-				<a href="/" class="transition hover:text-[var(--app-text)]">Home</a>
-				<a href="/about" class="transition hover:text-[var(--app-text)]">About</a>
-				<a href="/privacy" class="transition hover:text-[var(--app-text)]">Privacy</a>
-				<a href="/settings" class="transition hover:text-[var(--app-text)]">Settings</a>
-			</nav>
-			<p class="text-xs text-[var(--app-muted)]">
-				© {new Date().getFullYear()} Launchpad
-			</p>
-		</div>
-	</div>
-</footer>
+<SiteFooter />
+<AltchaBadge />

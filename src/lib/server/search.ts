@@ -266,6 +266,11 @@ function pruneRateLimitBuckets(now: number): void {
 	}
 }
 
+/** Reset a client's rate-limit bucket — used after they solve a challenge. */
+export function clearRateLimit(identifier: string): void {
+	rateLimitBuckets.delete(identifier);
+}
+
 export function consumeRateLimit(identifier: string): {
 	allowed: boolean;
 	retryAfterSeconds: number;

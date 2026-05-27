@@ -7,27 +7,36 @@ import {
 	type SearchTab
 } from '$lib/search';
 import { resolveBang } from '$lib/bangs';
+import { challengeRequired, flagSuspicious, getClientKey } from '$lib/server/security';
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ fetch, url }) => {
+export const load = (async (event) => {
+	const { fetch, url } = event;
+	const ip = getClientKey(event);
+
+	// Empty payload shape reused for blocked/challenge states.
+	const blocked = (challenge: boolean) => ({
+		query: '',
+		tab: 'web' as const,
+		freshness: undefined,
+		region: '',
+		safe: false,
+		page: 1,
+		count: 10,
+		error: '',
+		results: [],
+		newsResults: undefined,
+		videoResults: undefined,
+		imageResults: undefined,
+		infobox: undefined,
+		didYouMean: undefined,
+		challengeRequired: challenge
+	});
+
 	// Honeypot - bots fill this field, humans don't
 	if (url.searchParams.get('website')) {
-		return {
-			query: '',
-			tab: 'web' as const,
-			freshness: undefined,
-			region: '',
-			safe: false,
-			page: 1,
-			count: 10,
-			error: '',
-			results: [],
-			newsResults: undefined,
-			videoResults: undefined,
-			imageResults: undefined,
-			infobox: undefined,
-			didYouMean: undefined
-		};
+		flagSuspicious(ip);
+		return blocked(false);
 	}
 
 	const rawQuery = url.searchParams.get('q') ?? '';
@@ -60,6 +69,7 @@ export const load = (async ({ fetch, url }) => {
 			safe,
 			page,
 			count,
+			challengeRequired: false,
 			error: '',
 			results: [],
 			newsResults: undefined,
@@ -79,6 +89,7 @@ export const load = (async ({ fetch, url }) => {
 			safe,
 			page,
 			count,
+			challengeRequired: false,
 			error: SEARCH_QUERY_ERROR,
 			results: [],
 			newsResults: undefined,
@@ -87,6 +98,11 @@ export const load = (async ({ fetch, url }) => {
 			infobox: undefined,
 			didYouMean: undefined
 		};
+	}
+
+	// Adaptive ALTCHA gate: a flagged client must solve a challenge before searching.
+	if (challengeRequired(ip)) {
+		return { ...blocked(true), query };
 	}
 
 	const filterAds = url.searchParams.get('filterads') === '1';
@@ -107,6 +123,13 @@ export const load = (async ({ fetch, url }) => {
 
 	try {
 		const response = await fetch(`/api/search?${apiParams}`);
+
+		// Rate-limited → the client has been flagged; show a challenge instead of an error.
+		if (response.status === 429) {
+			flagSuspicious(ip);
+			return { ...blocked(true), query };
+		}
+
 		const payload = (await response.json().catch(() => null)) as {
 			error?: string;
 			query?: string;
@@ -168,6 +191,7 @@ export const load = (async ({ fetch, url }) => {
 			safe,
 			page,
 			count,
+			challengeRequired: false,
 			error: payload?.error || '',
 			results: Array.isArray(payload?.results) ? payload.results : [],
 			newsResults: payload?.newsResults,
@@ -185,6 +209,7 @@ export const load = (async ({ fetch, url }) => {
 			safe,
 			page,
 			count,
+			challengeRequired: false,
 			error: 'Search backend unavailable.',
 			results: [],
 			newsResults: undefined,

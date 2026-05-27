@@ -1,12 +1,10 @@
 <script lang="ts">
 	import type { NewsResult } from '$lib/search';
-	import { settingsStore } from '$lib/stores/settings';
+	import { settingsStore, getToggle } from '$lib/stores/settings';
 
 	let { result } = $props<{ result: NewsResult }>();
 
-	let openInNewTab = $derived(
-		$settingsStore.find((s) => s.id === 'open-new-tab')?.checked ?? true
-	);
+	let openInNewTab = $derived(getToggle($settingsStore, 'open-new-tab', true));
 </script>
 
 <article class="group rounded-2xl px-1 py-1 transition hover:bg-[var(--app-hover)]">
