@@ -45,7 +45,8 @@ function makeCacheKey(
 	country: string | undefined,
 	filterAds: boolean,
 	blockAds: boolean,
-	blockTrackers: boolean
+	blockTrackers: boolean,
+	count: number
 ): string {
 	return JSON.stringify({
 		query,
@@ -56,7 +57,8 @@ function makeCacheKey(
 		country: country ?? '',
 		filterAds,
 		blockAds,
-		blockTrackers
+		blockTrackers,
+		count
 	});
 }
 
@@ -338,11 +340,13 @@ function getBraveSearchUrl(
 	safesearch: 'strict' | 'moderate' | 'off',
 	offset: number,
 	freshness?: string,
-	country?: string
+	country?: string,
+	count = 10
 ): URL {
 	const searchUrl = new URL(BRAVE_ENDPOINTS[tab]);
 	searchUrl.searchParams.set('q', query);
-	searchUrl.searchParams.set('count', '10');
+	// Brave caps `count` at 20.
+	searchUrl.searchParams.set('count', String(Math.min(Math.max(count, 1), 20)));
 	if (tab !== 'images') searchUrl.searchParams.set('safesearch', safesearch);
 	if (tab === 'web') {
 		searchUrl.searchParams.set('search_lang', 'en');
@@ -370,9 +374,10 @@ async function fetchBraveSearch(
 	country?: string,
 	filterAds?: boolean,
 	blockAds?: boolean,
-	blockTrackers?: boolean
+	blockTrackers?: boolean,
+	count?: number
 ): Promise<SearchResponse> {
-	const searchUrl = getBraveSearchUrl(query, tab, safesearch, offset, freshness, country);
+	const searchUrl = getBraveSearchUrl(query, tab, safesearch, offset, freshness, country, count);
 	const apiKey = getBraveApiKey();
 	const controller = new AbortController();
 	const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
@@ -385,7 +390,7 @@ async function fetchBraveSearch(
 				accept: 'application/json',
 				'X-Subscription-Token': apiKey,
 				'user-agent':
-					'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 ArcSearch/1.0'
+					'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Launchpad/1.0'
 			},
 			signal: controller.signal
 		});
@@ -502,6 +507,7 @@ export async function searchBrave(
 		blockAds?: boolean;
 		blockTrackers?: boolean;
 		useCache?: boolean;
+		count?: number;
 	} = {},
 	fetchImpl: typeof fetch = fetch
 ): Promise<SearchResponse> {
@@ -512,11 +518,12 @@ export async function searchBrave(
 	const safesearch = options.safesearch ? 'strict' : 'moderate';
 	const offset = Math.max(0, options.offset ?? 0);
 	const { freshness, country, filterAds = false, blockAds = false, blockTrackers = false } = options;
+	const count = Math.min(Math.max(options.count ?? 10, 1), 20);
 
 	if (options.useCache) {
 		const key = makeCacheKey(
 			normalizedQuery, tab, safesearch, offset,
-			freshness, country, filterAds, blockAds, blockTrackers
+			freshness, country, filterAds, blockAds, blockTrackers, count
 		);
 		const now = Date.now();
 
@@ -531,7 +538,7 @@ export async function searchBrave(
 
 		const result = await fetchBraveSearch(
 			normalizedQuery, tab, safesearch, offset, freshness,
-			fetchImpl, country, filterAds, blockAds, blockTrackers
+			fetchImpl, country, filterAds, blockAds, blockTrackers, count
 		);
 		searchCache.set(key, { response: result, expiresAt: now + CACHE_TTL_MS });
 		return result;
@@ -539,6 +546,6 @@ export async function searchBrave(
 
 	return await fetchBraveSearch(
 		normalizedQuery, tab, safesearch, offset, freshness,
-		fetchImpl, country, filterAds, blockAds, blockTrackers
+		fetchImpl, country, filterAds, blockAds, blockTrackers, count
 	);
 }

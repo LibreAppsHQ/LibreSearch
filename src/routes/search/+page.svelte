@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { navigating } from '$app/state';
 	import SearchBar from '$lib/components/SearchBar.svelte';
+	import SearchSkeleton from '$lib/components/SearchSkeleton.svelte';
+	import NoResults from '$lib/components/NoResults.svelte';
+	import Logo from '$lib/components/Logo.svelte';
 	import ResultsList from '$lib/components/ResultsList.svelte';
 	import SearchTabs from '$lib/components/SearchTabs.svelte';
 	import Infobox from '$lib/components/Infobox.svelte';
@@ -21,13 +25,13 @@
 
 	let query = $state('');
 	let allResults = $state(data.results);
-	let hasMore = $state(data.results.length >= 10);
+	let hasMore = $state(data.results.length >= (data.count ?? 10));
 	let activeVideo = $state<VideoResult | null>(null);
 
 	$effect(() => {
 		query = data.query;
 		allResults = data.results;
-		hasMore = data.tab === 'web' && data.results.length >= 10;
+		hasMore = data.tab === 'web' && data.results.length >= (data.count ?? 10);
 	});
 
 	const MAX_PAGE = 10; // Brave caps offset at 9 → page 10 is the last reachable page
@@ -42,6 +46,13 @@
 	});
 
 	let safesearch = $derived(getToggle($settingsStore, 'safe-search'));
+
+	// Show skeletons while a search navigation is in flight so stale results
+	// aren't left frozen on screen during the server round-trip.
+	let loading = $derived(navigating.to?.url.pathname === '/search' && !!navigating.to?.url.searchParams.get('q'));
+	let loadingTab = $derived(
+		(navigating.to?.url.searchParams.get('t') as typeof data.tab) || 'web'
+	);
 
 	const freshnessLabels: Record<string, string> = {
 		pd: 'Past day',
@@ -108,7 +119,7 @@
 </script>
 
 <svelte:head>
-	<title>{query ? `${query} - ArcSearch` : 'ArcSearch'}</title>
+	<title>{query ? `${query} - Launchpad` : 'Launchpad'}</title>
 	<meta name="robots" content="noindex, noarchive, nofollow" />
 </svelte:head>
 
@@ -120,7 +131,7 @@
 		<div class="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
 			<div class="flex items-center gap-3 py-3 sm:gap-5">
 				<a href="/" class="hidden shrink-0 text-lg font-semibold tracking-tight text-[var(--app-text)] sm:block">
-					<img src="/logo1.png" alt="ArcSearch logo" class="h-10 w-25 rounded-full" />
+					<Logo class="h-10 w-25 rounded-full" />
 				</a>
 				<div class="max-w-2xl flex-1">
 					<SearchBar
@@ -192,18 +203,26 @@
 		{/if}
 
 		<!-- Two-column grid: left = results, right = infobox (web tab only) -->
-		<div class={data.infobox && data.tab === 'web' ? 'flex gap-8' : ''}>
+		<div class={data.infobox && data.tab === 'web' && !loading ? 'flex gap-8' : ''}>
 			<!-- Left / main column -->
 			<div
-				class={data.infobox && data.tab === 'web'
-					? 'max-w-2xl min-w-0 flex-1'
-					: data.tab === 'images' || data.tab === 'videos'
+				class={loading
+					? loadingTab === 'images' || loadingTab === 'videos'
 						? 'w-full'
-						: 'max-w-2xl'}
+						: 'max-w-2xl'
+					: data.infobox && data.tab === 'web'
+						? 'max-w-2xl min-w-0 flex-1'
+						: data.tab === 'images' || data.tab === 'videos'
+							? 'w-full'
+							: 'max-w-2xl'}
 			>
-				{#if data.tab === 'web'}
+				{#if loading}
+					<SearchSkeleton tab={loadingTab} />
+				{:else if data.tab === 'web'}
 					{#if allResults.length > 0}
-						<p class="mb-3 text-xs font-medium text-[var(--app-muted)]">Web results</p>
+						<p class="mb-3 text-xs font-medium text-[var(--app-muted)]">
+							Web results{currentPage > 1 ? ` · page ${currentPage}` : ''}
+						</p>
 						<ResultsList results={allResults} />
 
 						{#if currentPage > 1 || hasMore}
@@ -246,7 +265,7 @@
 							</nav>
 						{/if}
 					{:else if data.query && !data.error}
-						<p class="text-sm text-[var(--app-muted)]">No results found.</p>
+						<NoResults query={data.query} tab="web" />
 					{:else if !data.query}
 						<p class="text-sm text-[var(--app-muted)]">Search for something to begin.</p>
 					{/if}
@@ -258,7 +277,7 @@
 							{/each}
 						</ol>
 					{:else if data.query && !data.error}
-						<p class="text-sm text-[var(--app-muted)]">No news results found.</p>
+						<NoResults query={data.query} tab="news" />
 					{/if}
 				{:else if data.tab === 'videos'}
 					{#if data.videoResults && data.videoResults.length > 0}
@@ -268,19 +287,19 @@
 							{/each}
 						</div>
 					{:else if data.query && !data.error}
-						<p class="text-sm text-[var(--app-muted)]">No video results found.</p>
+						<NoResults query={data.query} tab="videos" />
 					{/if}
 				{:else if data.tab === 'images'}
 					{#if data.imageResults && data.imageResults.length > 0}
 						<ImageGrid images={data.imageResults} />
 					{:else if data.query && !data.error}
-						<p class="text-sm text-[var(--app-muted)]">No image results found.</p>
+						<NoResults query={data.query} tab="images" />
 					{/if}
 				{/if}
 			</div>
 
 			<!-- Right column: knowledge panel -->
-			{#if data.infobox && data.tab === 'web'}
+			{#if data.infobox && data.tab === 'web' && !loading}
 				<div class="hidden w-[380px] shrink-0 lg:block">
 					<div class="sticky top-[120px]">
 						<Infobox infobox={data.infobox} />
@@ -296,7 +315,7 @@
 		<div class="flex flex-col gap-8 sm:flex-row sm:justify-between">
 			<!-- Brand -->
 			<div class="max-w-xs space-y-3">
-				<img src="/logo1.png" alt="ArcSearch logo" class="h-10 w-25 rounded-full" />
+				<Logo class="h-10 w-25 rounded-full" />
 				<p class="text-sm leading-6 text-[var(--app-muted)]">
 					A private search engine that puts you in control. No tracking, no profiles, no ads.
 				</p>
@@ -359,7 +378,7 @@
 						</li>
 						<li>
 							<a
-								href="https://github.com/Arcbasehq/ArcSearch"
+								href="https://github.com/Arcbasehq/Launchpad"
 								target="_blank"
 								rel="noopener noreferrer"
 								class="inline-flex items-center gap-1.5 text-[var(--app-muted)] transition hover:text-[var(--app-text)]"

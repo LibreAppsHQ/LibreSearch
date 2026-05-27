@@ -63,9 +63,15 @@ function createThemeStore() {
 			themeKey === 'light' || themeKey === 'sand' ? '#5f5b55' : '#9ca3af'
 		);
 		const isLight = themeKey === 'light' || themeKey === 'sand';
+		root.style.setProperty('--app-secondary', isLight ? '#3f3b36' : '#d4d4d8');
 		root.style.setProperty('--app-border', isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.08)');
 		root.style.setProperty('--app-surface', isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.025)');
 		root.style.setProperty('--app-hover', isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)');
+		root.style.setProperty('--app-skeleton', isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)');
+		root.style.setProperty(
+			'--app-skeleton-shine',
+			isLight ? 'rgba(0,0,0,0.11)' : 'rgba(255,255,255,0.12)'
+		);
 		root.dataset.theme = themeKey;
 	}
 
@@ -75,7 +81,7 @@ function createThemeStore() {
 			if (initialized || typeof window === 'undefined') return;
 			initialized = true;
 
-			const stored = window.localStorage.getItem('arcsearch:theme');
+			const stored = window.localStorage.getItem('Launchpad:theme');
 			if (stored && stored in themes) {
 				const themeKey = stored as ThemeKey;
 				set(themeKey);
@@ -88,7 +94,7 @@ function createThemeStore() {
 			set(themeKey);
 			applyThemeStyles(themeKey);
 			if (typeof window !== 'undefined') {
-				window.localStorage.setItem('arcsearch:theme', themeKey);
+				window.localStorage.setItem('Launchpad:theme', themeKey);
 			}
 		}
 	};

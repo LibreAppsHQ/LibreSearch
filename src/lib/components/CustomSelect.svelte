@@ -15,8 +15,56 @@
 
 	let open = $state(false);
 	let buttonEl: HTMLButtonElement | null = null;
+	let menuRight = $state(0);
+	let menuTop = $state<number | null>(null);
+	let menuBottom = $state<number | null>(null);
+	let menuMaxHeight = $state(320);
 
-	let currentLabel = $derived(options.find((o) => o.value === value)?.label ?? options[0]?.label ?? '');
+	let currentLabel = $derived(
+		options.find((o: { label: string; value: string }) => o.value === value)?.label ??
+			options[0]?.label ??
+			''
+	);
+
+	// Render the dropdown on <body> so an ancestor's overflow-hidden can't clip it.
+	function portal(node: HTMLElement) {
+		document.body.appendChild(node);
+		return {
+			destroy() {
+				node.remove();
+			}
+		};
+	}
+
+	function position() {
+		if (!buttonEl) return;
+		const rect = buttonEl.getBoundingClientRect();
+		const gap = 6;
+		const margin = 12; // keep a little breathing room from the viewport edge
+		menuRight = window.innerWidth - rect.right;
+
+		const spaceBelow = window.innerHeight - rect.bottom - gap - margin;
+		const spaceAbove = rect.top - gap - margin;
+
+		// Estimate the menu's natural height (~36px per row + 8px padding).
+		const desired = options.length * 36 + 8;
+
+		// Open upward when there isn't room below but there is more room above.
+		if (desired > spaceBelow && spaceAbove > spaceBelow) {
+			menuTop = null;
+			menuBottom = window.innerHeight - rect.top + gap;
+			menuMaxHeight = Math.max(120, spaceAbove);
+		} else {
+			menuBottom = null;
+			menuTop = rect.bottom + gap;
+			menuMaxHeight = Math.max(120, spaceBelow);
+		}
+	}
+
+	function toggle() {
+		if (!open) position();
+		open = !open;
+	}
 
 	function select(val: string) {
 		value = val;
@@ -29,32 +77,39 @@
 	}
 </script>
 
-<svelte:window onkeydown={handleKeydown} />
+<svelte:window onkeydown={handleKeydown} onresize={() => (open = false)} onscroll={() => (open = false)} />
 
 <div class="relative">
 	<button
 		bind:this={buttonEl}
 		type="button"
-		onclick={() => (open = !open)}
+		onclick={toggle}
 		class="flex items-center gap-2 rounded-full border border-[var(--app-border)] bg-[var(--app-hover)] px-3.5 py-1.5 text-xs font-medium text-[var(--app-text)] transition hover:border-[var(--app-border)] hover:bg-[var(--app-hover)] focus:outline-none"
 	>
 		<span>{currentLabel}</span>
 		<i class="fa-solid fa-chevron-down text-[10px] text-[var(--app-muted)] transition-transform duration-150" class:rotate-180={open}></i>
 	</button>
+</div>
 
-	{#if open}
+{#if open}
+	<div use:portal>
 		<!-- Backdrop -->
 		<button
 			type="button"
-			class="fixed inset-0 z-30"
+			class="fixed inset-0 z-[60]"
 			aria-label="Close"
 			tabindex="-1"
 			onclick={() => (open = false)}
 		></button>
 
 		<!-- Dropdown -->
-		<div class="absolute right-0 z-40 mt-1.5 min-w-[10rem] overflow-hidden rounded-xl border border-[var(--app-border)] bg-[var(--app-panel)] py-1 shadow-2xl shadow-black/40"
-			transition:fly={{ y: -4, duration: $reducedMotion ? 0 : 140, easing: cubicOut }}>
+		<div
+			class="fixed z-[61] min-w-[10rem] overflow-y-auto overscroll-contain rounded-xl border border-[var(--app-border)] bg-[var(--app-panel)] py-1 shadow-2xl shadow-black/40"
+			style="{menuTop !== null ? `top:${menuTop}px;` : ''}{menuBottom !== null
+				? `bottom:${menuBottom}px;`
+				: ''} right:{menuRight}px; max-height:{menuMaxHeight}px;"
+			transition:fly={{ y: menuBottom !== null ? 4 : -4, duration: $reducedMotion ? 0 : 140, easing: cubicOut }}
+		>
 			{#each options as opt}
 				<button
 					type="button"
@@ -70,5 +125,5 @@
 				</button>
 			{/each}
 		</div>
-	{/if}
-</div>
+	</div>
+{/if}

@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 const MAX_HISTORY = 8;
-const STORAGE_KEY = 'arcsearch:history';
+const STORAGE_KEY = 'Launchpad:history';
 
 function createHistoryStore() {
 	const { subscribe, set, update } = writable<string[]>([]);

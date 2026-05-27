@@ -40,6 +40,7 @@
 	let blockTrackers = $derived(getToggle($settingsStore, 'block-trackers'));
 	let searchRegion = $derived(getSelect($settingsStore, 'search-region'));
 	let enableCache = $derived(getToggle($settingsStore, 'enable-cache', false));
+	let resultsPerPage = $derived(getSelect($settingsStore, 'results-per-page', '10'));
 
 	let history = $derived($historyStore);
 
@@ -64,6 +65,8 @@
 		}
 		return normalizedSuggestions.map((s) => ({ type: 'suggestion' as const, text: s }));
 	});
+
+	let hasHistory = $derived(dropdownItems.some((i) => i.type === 'history'));
 
 	$effect(() => {
 		if (dropdownItems.length === 0) {
@@ -198,6 +201,9 @@
 	{#if enableCache}
 		<input type="hidden" name="enablecache" value="1" />
 	{/if}
+	{#if resultsPerPage === '20'}
+		<input type="hidden" name="count" value="20" />
+	{/if}
 
 	<div
 		class={pill
@@ -261,14 +267,32 @@
 	{#if isOpen && dropdownItems.length > 0}
 		<div class="relative">
 			<div
-				class="absolute left-0 right-0 top-2 z-20 overflow-hidden rounded-xl border border-[var(--app-border)] bg-[var(--app-panel)] shadow-2xl shadow-black/30"
+				class="absolute left-0 right-0 top-2 z-20 overflow-hidden rounded-xl border border-[var(--app-border)] bg-[var(--app-panel)] py-1.5 shadow-2xl shadow-black/30"
 				transition:fly={{ y: -6, duration: $reducedMotion ? 0 : 160, easing: cubicOut }}
 			>
+				{#if hasHistory}
+					<div class="flex items-center justify-between px-4 pb-1.5 pt-1">
+						<span class="text-[11px] font-semibold uppercase tracking-wider text-[var(--app-muted)]">
+							Recent searches
+						</span>
+						<button
+							type="button"
+							class="text-[11px] font-medium text-[var(--app-muted)] transition hover:text-[var(--app-accent)]"
+							onmousedown={(event) => {
+								event.preventDefault();
+								historyStore.clear();
+							}}
+						>
+							Clear all
+						</button>
+					</div>
+				{/if}
+
 				{#each dropdownItems as item, index}
 					<div
 						class={index === activeIndex
-							? 'flex w-full items-center gap-3 bg-[var(--app-surface)] px-4 py-2.5'
-							: 'flex w-full items-center gap-3 px-4 py-2.5 hover:bg-[var(--app-hover)]'}
+							? 'group flex w-full items-center gap-3 bg-[var(--app-surface)] px-4 py-2.5'
+							: 'group flex w-full items-center gap-3 px-4 py-2.5 hover:bg-[var(--app-hover)]'}
 					>
 						<button
 							type="button"
@@ -279,10 +303,10 @@
 							}}
 							onmouseenter={() => (activeIndex = index)}
 						>
-							{#if showSuggestionIcons}
+							{#if item.type === 'history' || showSuggestionIcons}
 								<i
 									class={item.type === 'history'
-										? 'fa-solid fa-clock-rotate-left shrink-0 text-xs text-[var(--app-muted)]'
+										? 'fa-regular fa-clock shrink-0 text-xs text-[var(--app-muted)]'
 										: 'fa-solid fa-magnifying-glass shrink-0 text-xs text-[var(--app-muted)]'}
 								></i>
 							{/if}
@@ -296,8 +320,8 @@
 						{#if item.type === 'history'}
 							<button
 								type="button"
-								aria-label="Remove from history"
-								class="ml-auto shrink-0 text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+								aria-label="Remove “{item.text}” from history"
+								class="ml-auto inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[var(--app-muted)] opacity-0 transition hover:bg-[var(--app-hover)] hover:text-[var(--app-text)] focus-visible:opacity-100 group-hover:opacity-100"
 								onmousedown={(event) => removeHistory(item.text, event)}
 							>
 								<i class="fa-solid fa-xmark text-xs"></i>
@@ -305,21 +329,6 @@
 						{/if}
 					</div>
 				{/each}
-
-				{#if dropdownItems.some((i) => i.type === 'history')}
-					<div class="border-t border-[var(--app-border)] px-4 py-2">
-						<button
-							type="button"
-							class="text-xs text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
-							onmousedown={(event) => {
-								event.preventDefault();
-								historyStore.clear();
-							}}
-						>
-							Clear history
-						</button>
-					</div>
-				{/if}
 			</div>
 		</div>
 	{/if}

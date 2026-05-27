@@ -39,13 +39,14 @@
 </script>
 
 <svelte:head>
-	<meta name="description" content="Search the web privately with ArcSearch. No tracking, no profiles, no ads. Fast, clean results from an independent search index." />
-	<meta property="og:site_name" content="ArcSearch" />
+	<meta name="description" content="Search the web privately with Launchpad. No tracking, no profiles, no ads. Fast, clean results from an independent search index." />
+	<meta property="og:site_name" content="Launchpad" />
 	<meta property="og:type" content="website" />
 	<meta name="twitter:card" content="summary" />
-	<meta name="twitter:site" content="@arcsearch" />
-	<link rel="icon" href="/logo.png" />
-	<link rel="search" type="application/opensearchdescription+xml" title="ArcSearch" href="/opensearch.xml" />
+	<meta name="twitter:site" content="@Launchpad" />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<link rel="icon" type="image/png" href="/logo.png" />
+	<link rel="search" type="application/opensearchdescription+xml" title="Launchpad" href="/opensearch.xml" />
 </svelte:head>
 
 <svelte:window onkeydown={handleKeydown} />

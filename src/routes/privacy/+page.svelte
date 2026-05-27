@@ -1,5 +1,6 @@
 <script lang="ts">
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
+	import Logo from '$lib/components/Logo.svelte';
 
 	const lastUpdated = 'May 2026';
 
@@ -17,14 +18,14 @@
 </script>
 
 <svelte:head>
-	<title>Privacy Policy - ArcSearch</title>
+	<title>Privacy Policy - Launchpad</title>
 	<meta
 		name="description"
-		content="ArcSearch's privacy policy. We never log your searches, build profiles, or sell data. Read exactly what we do and don't collect."
+		content="Launchpad's privacy policy. We never log your searches, build profiles, or sell data. Read exactly what we do and don't collect."
 	/>
 	<link rel="canonical" href="https://search.arcbase.one/privacy" />
 
-	<meta property="og:title" content="Privacy Policy - ArcSearch" />
+	<meta property="og:title" content="Privacy Policy - Launchpad" />
 	<meta
 		property="og:description"
 		content="We never log your searches, build profiles, or sell data. Read exactly what we do and don't collect."
@@ -38,7 +39,7 @@
 	<div class="mx-auto w-full max-w-[1400px] px-6">
 		<div class="grid grid-cols-[1fr_auto_1fr] items-center py-5">
 			<a href="/" class="justify-self-start">
-				<img src="/logo1.png" alt="ArcSearch logo" class="h-10 w-25 rounded-full" />
+				<Logo class="h-10 w-25 rounded-full" />
 			</a>
 			<p class="justify-self-center text-2xl font-bold tracking-tight text-[var(--app-text)]">
 				Privacy Policy
@@ -58,7 +59,7 @@
 		</div>
 		<h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Privacy Policy</h1>
 		<p class="mx-auto mt-4 max-w-lg text-base leading-7 text-[var(--app-muted)]">
-			Privacy isn't a setting you turn on - it's how ArcSearch is built. Here's exactly what that
+			Privacy isn't a setting you turn on - it's how Launchpad is built. Here's exactly what that
 			means, in plain language.
 		</p>
 		<p class="mt-4 text-xs font-medium tracking-wide text-[var(--app-muted)] uppercase">
@@ -93,7 +94,7 @@
 			<section id="overview" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Overview</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					ArcSearch is a private search engine operated by Arcbase. We designed it so that the most
+					Launchpad is a private search engine operated by Arcbase. We designed it so that the most
 					private option is the default - and the only option. We do not run ads, we do not build
 					advertising profiles, and we do not sell data. This page explains the small amount of data
 					that is involved in running the service and the large amount we deliberately never touch.
@@ -122,7 +123,7 @@
 			<section id="what-we-dont" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">What we don't do</h2>
 				<p class="mb-4 text-sm leading-7 text-[var(--app-muted)]">
-					This is the part that matters most. ArcSearch never:
+					This is the part that matters most. Launchpad never:
 				</p>
 				<ul class="grid gap-3 sm:grid-cols-2">
 					{#each ['Logs your searches against your identity', 'Stores a search history on our servers', 'Builds an advertising or interest profile', 'Sells, rents, or shares your data', 'Uses tracking cookies or fingerprinting', 'Shows ads or sponsored results'] as item}
@@ -163,7 +164,7 @@
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					To return results we rely on an upstream search index, which receives your query through
 					our anonymizing proxy but not your identity. We do not embed third-party advertising,
-					analytics, or social tracking scripts on ArcSearch. We have no business model that depends
+					analytics, or social tracking scripts on Launchpad. We have no business model that depends
 					on sharing your data, so we don't.
 				</p>
 			</section>
@@ -183,14 +184,14 @@
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					If we update this policy, we'll revise the "last updated" date at the top of the page.
 					Material changes will be highlighted so you're never caught off guard. Continuing to use
-					ArcSearch after an update means you accept the revised policy.
+					Launchpad after an update means you accept the revised policy.
 				</p>
 			</section>
 
 			<section id="contact" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Contact</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					Questions about privacy at ArcSearch? Email us at
+					Questions about privacy at Launchpad? Email us at
 					<a href="mailto:privacy@arcbase.one" class="text-[var(--app-accent)] hover:underline"
 						>privacy@arcbase.one</a
 					>
@@ -204,7 +205,7 @@
 <footer class="border-t border-[var(--app-border)] bg-[var(--app-background)]">
 	<div class="mx-auto w-full max-w-[1100px] px-6 py-10">
 		<div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
-			<p class="text-base font-bold tracking-tight text-[var(--app-text)]">ArcSearch</p>
+			<p class="text-base font-bold tracking-tight text-[var(--app-text)]">Launchpad</p>
 			<nav class="flex items-center gap-8 text-sm font-medium text-[var(--app-muted)]">
 				<a href="/" class="transition hover:text-[var(--app-text)]">Home</a>
 				<a href="/about" class="transition hover:text-[var(--app-text)]">About</a>
@@ -212,7 +213,7 @@
 				<a href="/settings" class="transition hover:text-[var(--app-text)]">Settings</a>
 			</nav>
 			<p class="text-xs text-[var(--app-muted)]">
-				© {new Date().getFullYear()} ArcSearch
+				© {new Date().getFullYear()} Launchpad
 			</p>
 		</div>
 	</div>

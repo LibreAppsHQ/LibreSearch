@@ -63,11 +63,12 @@ export const GET: RequestHandler = async (event) => {
 	const blockAds = event.url.searchParams.get('blockads') === '1';
 	const blockTrackers = event.url.searchParams.get('blocktrackers') === '1';
 	const useCache = event.url.searchParams.get('enablecache') === '1';
+	const count = event.url.searchParams.get('count') === '20' ? 20 : 10;
 
 	try {
 		const payload = await searchBrave(
 			query,
-			{ safesearch: safe, offset, tab, freshness, country, filterAds, blockAds, blockTrackers, useCache },
+			{ safesearch: safe, offset, tab, freshness, country, filterAds, blockAds, blockTrackers, useCache, count },
 			event.fetch
 		);
 		return json(payload, {

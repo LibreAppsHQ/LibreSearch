@@ -1,36 +1,37 @@
 <script lang="ts">
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
+	import Logo from '$lib/components/Logo.svelte';
 </script>
 
 <svelte:head>
 	<title>About Us</title>
 	<meta
 		name="description"
-		content="ArcSearch is a private search engine that never logs your queries, builds profiles, or sells ads. Learn how it works and why privacy comes first."
+		content="Launchpad is a private search engine that never logs your queries, builds profiles, or sells ads. Learn how it works and why privacy comes first."
 	/>
 	<link rel="canonical" href="https://search.arcbase.one/about" />
 
 	<!-- Open Graph -->
-	<meta property="og:title" content="About - ArcSearch" />
+	<meta property="og:title" content="About - Launchpad" />
 	<meta
 		property="og:description"
-		content="ArcSearch is a private search engine that never logs your queries, builds profiles, or sells ads."
+		content="Launchpad is a private search engine that never logs your queries, builds profiles, or sells ads."
 	/>
 	<meta property="og:url" content="https://search.arcbase.one/about" />
 	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
 
 	<!-- Twitter -->
-	<meta name="twitter:title" content="About - ArcSearch" />
+	<meta name="twitter:title" content="About - Launchpad" />
 	<meta
 		name="twitter:description"
-		content="ArcSearch is a private search engine that never logs your queries, builds profiles, or sells ads."
+		content="Launchpad is a private search engine that never logs your queries, builds profiles, or sells ads."
 	/>
 
 	<!-- JSON-LD: Organization -->
 	{@html `<script type="application/ld+json">${JSON.stringify({
 		'@context': 'https://schema.org',
 		'@type': 'Organization',
-		name: 'ArcSearch',
+		name: 'Launchpad',
 		url: 'https://search.arcbase.one',
 		logo: 'https://search.arcbase.one/favicon.png',
 		description: 'A private search engine with no tracking, no profiles, and no ads.',
@@ -43,7 +44,7 @@
 	<div class="mx-auto w-full max-w-[1400px] px-6">
 		<div class="grid grid-cols-[1fr_auto_1fr] items-center py-5">
 			<a href="/" class="justify-self-start">
-				<img src="/logo1.png" alt="ArcSearch logo" class="h-10 w-25 rounded-full" />
+				<Logo class="h-10 w-25 rounded-full" />
 			</a>
 			<p class="justify-self-center text-2xl font-bold tracking-tight text-[var(--app-text)]">
 				About Us
@@ -64,7 +65,7 @@
 			<span class="text-[var(--app-accent)]">Leave no trace.</span>
 		</h1>
 		<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-white">
-			ArcSearch is a private search engine that gives you real results without logging your queries,
+			Launchpad is a private search engine that gives you real results without logging your queries,
 			building a profile on you, or selling your attention.
 		</p>
 		<div class="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -107,7 +108,7 @@
 					Real results without the surveillance.
 				</h2>
 				<p class="mb-4 text-sm leading-7 text-[var(--app-muted)]">
-					ArcSearch uses an independent search index that doesn't rely on Big Tech - so you get
+					Launchpad uses an independent search index that doesn't rely on Big Tech - so you get
 					genuine, unfiltered results instead of a curated feed designed to keep you clicking.
 				</p>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
@@ -117,7 +118,7 @@
 				</p>
 			</div>
 			<div class="space-y-3">
-				{#each [{ icon: 'fa-keyboard', label: 'You type a query', color: 'text-[var(--app-accent)]', bg: 'bg-[var(--app-accent)]/10' }, { icon: 'fa-server', label: 'ArcSearch proxies it anonymously', color: 'text-blue-400', bg: 'bg-blue-500/10' }, { icon: 'fa-globe', label: 'Real results come back to you', color: 'text-emerald-400', bg: 'bg-emerald-500/10' }, { icon: 'fa-display', label: 'You see results - nothing is stored', color: 'text-violet-400', bg: 'bg-violet-500/10' }] as step, i}
+				{#each [{ icon: 'fa-keyboard', label: 'You type a query', color: 'text-[var(--app-accent)]', bg: 'bg-[var(--app-accent)]/10' }, { icon: 'fa-server', label: 'Launchpad proxies it anonymously', color: 'text-blue-400', bg: 'bg-blue-500/10' }, { icon: 'fa-globe', label: 'Real results come back to you', color: 'text-emerald-400', bg: 'bg-emerald-500/10' }, { icon: 'fa-display', label: 'You see results - nothing is stored', color: 'text-violet-400', bg: 'bg-violet-500/10' }] as step, i}
 					<div
 						class="flex items-center gap-4 rounded-2xl border border-[var(--app-border)] bg-[#171b25]/80 backdrop-blur-sm px-5 py-4"
 					>
@@ -176,7 +177,7 @@
 			Frequently asked questions
 		</h2>
 		<div class="space-y-3">
-			{#each [{ q: 'Do you log my searches?', a: "No. We never store your queries, IP address, or tie any search to an identity. Each search is processed and then forgotten." }, { q: 'Do I need an account?', a: 'No sign-up is required. ArcSearch works the moment you load the page - there are no accounts to create.' }, { q: 'How does ArcSearch make money without ads?', a: "ArcSearch doesn't sell ads or profile data. The project runs independently and is funded by its operators, not your attention." }, { q: 'Where are my settings stored?', a: 'Your settings, history, and theme live entirely in your browser via local storage. Nothing is synced to our servers.' }, { q: 'Where do the results come from?', a: "We use an independent search index and proxy your query anonymously, so you get genuine results without Big Tech tracking you." }] as item}
+			{#each [{ q: 'Do you log my searches?', a: "No. We never store your queries, IP address, or tie any search to an identity. Each search is processed and then forgotten." }, { q: 'Do I need an account?', a: 'No sign-up is required. Launchpad works the moment you load the page - there are no accounts to create.' }, { q: 'How does Launchpad make money without ads?', a: "Launchpad doesn't sell ads or profile data. The project runs independently and is funded by its operators, not your attention." }, { q: 'Where are my settings stored?', a: 'Your settings, history, and theme live entirely in your browser via local storage. Nothing is synced to our servers.' }, { q: 'Where do the results come from?', a: "We use an independent search index and proxy your query anonymously, so you get genuine results without Big Tech tracking you." }] as item}
 				<details
 					class="group rounded-2xl border border-[var(--app-border)] bg-[#171b25]/80 px-6 py-5 backdrop-blur-sm"
 				>
@@ -200,7 +201,7 @@
 		<div class="flex flex-col gap-8 sm:flex-row sm:justify-between">
 			<!-- Brand -->
 			<div class="max-w-xs space-y-3">
-				<p class="text-base font-bold tracking-tight text-[var(--app-text)]">ArcSearch</p>
+				<p class="text-base font-bold tracking-tight text-[var(--app-text)]">Launchpad</p>
 				<p class="text-sm leading-6 text-[var(--app-muted)]">
 					A private search engine that puts you in control. No tracking, no profiles, no ads.
 				</p>
@@ -263,7 +264,7 @@
 						</li>
 						<li>
 							<a
-								href="https://github.com/Arcbasehq/ArcSearch"
+								href="https://github.com/Arcbasehq/Launchpad"
 								target="_blank"
 								rel="noopener noreferrer"
 								class="inline-flex items-center gap-1.5 text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
@@ -303,7 +304,7 @@
 		>
 			<div class="flex items-center gap-3">
 				<p class="text-xs text-[var(--app-muted)]">
-					© {new Date().getFullYear()} ArcSearch. Built for privacy.
+					© {new Date().getFullYear()} Launchpad. Built for privacy.
 				</p>
 				<span class="text-[var(--app-muted)]">·</span>
 				<span

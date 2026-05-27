@@ -1,6 +1,6 @@
-# ArcSearch
+# Launchpad
 
-ArcSearch is a private search engine that gives you real results without tracking who you are, building a profile on you, or selling your attention.
+Launchpad is a private search engine that gives you real results without tracking who you are, building a profile on you, or selling your attention.
 
 Every search starts fresh. No cookies. No logs. No surveillance.
 
@@ -24,7 +24,7 @@ Every search starts fresh. No cookies. No logs. No surveillance.
 
 ## Built for the open web
 
-ArcSearch uses an independent search index — not a feed curated by an ad platform. Your query is proxied anonymously so the index never sees who you are.
+Launchpad uses an independent search index — not a feed curated by an ad platform. Your query is proxied anonymously so the index never sees who you are.
 
 ## License
 

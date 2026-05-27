@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>{$page.status} — ArcSearch</title>
+	<title>{$page.status} — Launchpad</title>
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 

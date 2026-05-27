@@ -19,6 +19,7 @@ export const load = (async ({ fetch, url }) => {
 			region: '',
 			safe: false,
 			page: 1,
+			count: 10,
 			error: '',
 			results: [],
 			newsResults: undefined,
@@ -44,6 +45,7 @@ export const load = (async ({ fetch, url }) => {
 	// Brave caps `offset` at 9, so page 10 is the highest reachable page.
 	const page = isNaN(rawPage) || rawPage < 1 ? 1 : Math.min(rawPage, 10);
 	const enableCache = url.searchParams.get('enablecache') === '1';
+	const count = url.searchParams.get('count') === '20' ? 20 : 10;
 	const rawTab = url.searchParams.get('t') ?? 'web';
 	const tab: SearchTab = VALID_TABS.has(rawTab as SearchTab) ? (rawTab as SearchTab) : 'web';
 	const rawFreshness = url.searchParams.get('f') ?? '';
@@ -57,6 +59,7 @@ export const load = (async ({ fetch, url }) => {
 			region,
 			safe,
 			page,
+			count,
 			error: '',
 			results: [],
 			newsResults: undefined,
@@ -75,6 +78,7 @@ export const load = (async ({ fetch, url }) => {
 			region,
 			safe,
 			page,
+			count,
 			error: SEARCH_QUERY_ERROR,
 			results: [],
 			newsResults: undefined,
@@ -99,6 +103,7 @@ export const load = (async ({ fetch, url }) => {
 	if (blockAds) apiParams.set('blockads', '1');
 	if (blockTrackers) apiParams.set('blocktrackers', '1');
 	if (enableCache) apiParams.set('enablecache', '1');
+	if (count !== 10) apiParams.set('count', String(count));
 
 	try {
 		const response = await fetch(`/api/search?${apiParams}`);
@@ -162,6 +167,7 @@ export const load = (async ({ fetch, url }) => {
 			region,
 			safe,
 			page,
+			count,
 			error: payload?.error || '',
 			results: Array.isArray(payload?.results) ? payload.results : [],
 			newsResults: payload?.newsResults,
@@ -178,6 +184,7 @@ export const load = (async ({ fetch, url }) => {
 			region,
 			safe,
 			page,
+			count,
 			error: 'Search backend unavailable.',
 			results: [],
 			newsResults: undefined,

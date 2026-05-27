@@ -13,7 +13,8 @@
       "Bash(perl -0pi -e 's{\\\\t\\\\t\\\\tsafe,\\\\n}{\\\\t\\\\t\\\\tsafe,\\\\n\\\\t\\\\t\\\\tpage,\\\\n}g' src/routes/search/+page.server.ts)",
       "Bash(perl -0pi -e 's{\\\\t\\\\t\\\\tsafe: false,\\\\n}{\\\\t\\\\t\\\\tsafe: false,\\\\n\\\\t\\\\t\\\\tpage: 1,\\\\n}g' src/routes/search/+page.server.ts)",
       "Bash(pnpm exec *)",
-      "Bash(curl -s http://localhost:5173/src/routes/search/+page.svelte)"
+      "Bash(curl -s http://localhost:5173/src/routes/search/+page.svelte)",
+      "Bash(npm run *)"
     ]
   }
 }

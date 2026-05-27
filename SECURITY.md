@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Only the latest version of ArcSearch is actively supported with security fixes.
+Only the latest version of Launchpad is actively supported with security fixes.
 
 | Version | Supported |
 |---------|-----------|
@@ -43,4 +43,4 @@ Out of scope:
 
 ## Privacy
 
-ArcSearch does not log search queries, store IP addresses, or build user profiles. If you find a way that user data could be unintentionally exposed or retained, please report it as a security issue.
+Launchpad does not log search queries, store IP addresses, or build user profiles. If you find a way that user data could be unintentionally exposed or retained, please report it as a security issue.

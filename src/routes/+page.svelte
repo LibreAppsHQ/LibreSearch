@@ -1,6 +1,8 @@
 <script lang="ts">
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
+	import Logo from '$lib/components/Logo.svelte';
+	import Clock from '$lib/components/Clock.svelte';
 	import { settingsStore, getToggle } from '$lib/stores/settings';
 
 	let query = $state('');
@@ -29,7 +31,7 @@
 			steps: [
 				'Go to chrome://settings/searchEngines.',
 				'Next to “Site search”, click Add.',
-				`Name it “ArcSearch”, set a shortcut (e.g. arc), and set the URL to ${searchUrlTemplate}.`,
+				`Name it “Launchpad”, set a shortcut (e.g. arc), and set the URL to ${searchUrlTemplate}.`,
 				'Click the ⋮ next to the new entry and choose “Make default”.'
 			]
 		},
@@ -38,7 +40,7 @@
 			steps: [
 				'Go to edge://settings/searchEngines.',
 				'Next to “Manage search engines”, click Add.',
-				`Name it “ArcSearch”, set a shortcut (e.g. arc), and set the URL to ${searchUrlTemplate}.`,
+				`Name it “Launchpad”, set a shortcut (e.g. arc), and set the URL to ${searchUrlTemplate}.`,
 				'Click the ⋯ next to the new entry and choose “Make default”.'
 			]
 		},
@@ -46,22 +48,22 @@
 			name: 'Firefox',
 			steps: [
 				'Click the search bar, then the magnifying-glass/options icon.',
-				'Choose “Add ArcSearch” to install it as a search engine.',
-				'Open Settings → Search and pick ArcSearch as your Default Search Engine.'
+				'Choose “Add Launchpad” to install it as a search engine.',
+				'Open Settings → Search and pick Launchpad as your Default Search Engine.'
 			]
 		},
 		safari: {
 			name: 'Safari',
 			steps: [
 				'Safari only allows a fixed list of default search engines, so it can’t be set as the system default.',
-				'Bookmark ArcSearch instead, or add it to your Favorites for one-tap access.'
+				'Bookmark Launchpad instead, or add it to your Favorites for one-tap access.'
 			]
 		},
 		other: {
 			name: 'your browser',
 			steps: [
 				'Open your browser’s search engine settings.',
-				'Look for “ArcSearch” among the discovered engines (most browsers add it after your first visit).',
+				'Look for “Launchpad” among the discovered engines (most browsers add it after your first visit).',
 				`If it isn’t there, click Add and set the URL to ${searchUrlTemplate}, then select it.`
 			]
 		}
@@ -77,15 +79,15 @@
 </script>
 
 <svelte:head>
-	<title>ArcSearch - Private Search Engine</title>
+	<title>Launchpad - Private Search Engine</title>
 	<meta
 		name="description"
-		content="Search the web privately with ArcSearch. No tracking, no profiles, no ads. Fast, clean results from an independent search index."
+		content="Search the web privately with Launchpad. No tracking, no profiles, no ads. Fast, clean results from an independent search index."
 	/>
 	<link rel="canonical" href="https://search.arcbase.one" />
 
 	<!-- Open Graph -->
-	<meta property="og:title" content="ArcSearch - Private Search Engine" />
+	<meta property="og:title" content="Launchpad - Private Search Engine" />
 	<meta
 		property="og:description"
 		content="Search the web privately. No tracking, no profiles, no ads."
@@ -94,7 +96,7 @@
 	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
 
 	<!-- Twitter -->
-	<meta name="twitter:title" content="ArcSearch - Private Search Engine" />
+	<meta name="twitter:title" content="Launchpad - Private Search Engine" />
 	<meta
 		name="twitter:description"
 		content="Search the web privately. No tracking, no profiles, no ads."
@@ -104,7 +106,7 @@
 	{@html `<script type="application/ld+json">${JSON.stringify({
 		'@context': 'https://schema.org',
 		'@type': 'WebSite',
-		name: 'ArcSearch',
+		name: 'Launchpad',
 		url: 'https://search.arcbase.one',
 		description: 'A private search engine with no tracking, no profiles, and no ads.',
 		potentialAction: {
@@ -119,13 +121,16 @@
 </svelte:head>
 
 <main class="relative flex min-h-screen flex-col bg-[var(--app-background)] text-[var(--app-text)]">
+	<div class="absolute top-6 left-6 z-30">
+		<Clock />
+	</div>
 	<SiteMenu class="absolute top-6 right-6 z-30" />
 
 	<!-- Centered hero -->
 	<div class="relative flex min-h-screen flex-col items-center px-6 pt-[21vh]">
 		<div class="w-full max-w-xl text-center">
 			<a href="/about" class="inline-flex items-center gap-2.5">
-				<img src="/logo1.png" alt="ArcSearch logo" class="h-40 w-100 rounded-full" />
+				<Logo class="h-70 w-200 " />
 			</a>
 			<p class="mt-3 text-base text-[var(--app-text)] sm:text-lg">
 				Find anything. Tracked by no one.
@@ -166,7 +171,7 @@
 					Search,<br />not surveillance.
 				</h2>
 				<p class="mt-6 text-lg text-white/85">
-					ArcSearch finds what you need without logging who you are.
+					Launchpad finds what you need without logging who you are.
 				</p>
 				<button
 					type="button"
@@ -182,6 +187,38 @@
 				alt="Browsing the web privately on a laptop"
 				class="w-full max-w-lg md:max-w-xl"
 			/>
+		</div>
+	</section>
+
+	<!-- Mass surveillance -->
+	<section
+		id="mass-surveillance"
+		class="bg-gradient-to-b from-[#0f766e] to-[#0d9488] px-6 py-20 text-white sm:py-28"
+	>
+		<div
+			class="mx-auto flex max-w-6xl flex-col items-center gap-12 md:flex-row md:justify-between"
+		>
+			<img
+				src="/icon3.svg"
+				alt="Mass surveillance watching everyone online"
+				class="w-full max-w-lg md:order-1 md:max-w-xl"
+			/>
+
+			<div class="max-w-xl text-center md:order-2 md:text-left">
+				<h2 class="text-5xl leading-tight font-bold sm:text-6xl">
+					Stop mass<br />surveillance.
+				</h2>
+				<p class="mt-6 text-lg text-white/85">
+					Most search engines log every query and tie it to a profile that follows you across
+					the web. We don't. No logs, no profiles, no tracking — your searches stay yours.
+				</p>
+				<a
+					href="/privacy"
+					class="mt-8 inline-block rounded-md border border-white px-6 py-3 text-base font-medium text-white transition hover:bg-white hover:text-[#0d9488]"
+				>
+					How we protect you
+				</a>
+			</div>
 		</div>
 	</section>
 
@@ -211,7 +248,7 @@
 		>
 			<div class="flex items-start justify-between gap-4">
 				<h3 id="default-modal-title" class="text-xl font-bold">
-					Set ArcSearch as your default in {defaultSteps[browser].name}
+					Set Launchpad as your default in {defaultSteps[browser].name}
 				</h3>
 				<button
 					type="button"

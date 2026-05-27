@@ -1,6 +1,6 @@
 {
-  "name": "ArcSearch",
-  "short_name": "ArcSearch",
+  "name": "Launchpad",
+  "short_name": "Launchpad",
   "description": "Search the web privately. No tracking, no profiles, no ads.",
   "start_url": "/",
   "display": "standalone",

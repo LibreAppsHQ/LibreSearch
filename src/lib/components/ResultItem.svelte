@@ -101,7 +101,7 @@
 
 			<!-- Snippet — hidden in compact mode -->
 			{#if result.snippet && !compact}
-				<p class="text-sm leading-6 text-zinc-300">{result.snippet}</p>
+				<p class="text-sm leading-6 text-[var(--app-secondary)]">{result.snippet}</p>
 			{/if}
 		</div>
 	</a>

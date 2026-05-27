@@ -31,7 +31,8 @@
 			title: 'Resources',
 			links: [
 				{ label: 'About Us', href: '/about', icon: null },
-				{ label: 'Privacy Policy', href: '/privacy', icon: null }
+				{ label: 'Privacy Policy', href: '/privacy', icon: null },
+				{ label: 'Click me if interested in UI', href: '/design' }
 			]
 		}
 	];
