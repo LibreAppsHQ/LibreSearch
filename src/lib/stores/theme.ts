@@ -65,9 +65,15 @@ function createThemeStore() {
 		const isLight = themeKey === 'light' || themeKey === 'sand';
 		root.style.setProperty('--app-secondary', isLight ? '#3f3b36' : '#d4d4d8');
 		root.style.setProperty('--app-border', isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.08)');
-		root.style.setProperty('--app-surface', isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.025)');
+		root.style.setProperty(
+			'--app-surface',
+			isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.025)'
+		);
 		root.style.setProperty('--app-hover', isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)');
-		root.style.setProperty('--app-skeleton', isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)');
+		root.style.setProperty(
+			'--app-skeleton',
+			isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'
+		);
 		root.style.setProperty(
 			'--app-skeleton-shine',
 			isLight ? 'rgba(0,0,0,0.11)' : 'rgba(255,255,255,0.12)'

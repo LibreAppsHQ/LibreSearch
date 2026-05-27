@@ -8,10 +8,14 @@ import {
 } from '$lib/search';
 import { resolveBang } from '$lib/bangs';
 import { challengeRequired, flagSuspicious, getClientKey } from '$lib/server/security';
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad, RequestEvent } from './$types';
 
-export const load = (async (event) => {
-	const { fetch, url } = event;
+type ParamGetter = (key: string) => string | null;
+
+// Shared search resolver used by both the GET `load` (params from the URL) and
+// the POST form action (params from the request body, so the query stays out of
+// the URL when the user picks the POST request method in settings).
+async function runSearch(event: RequestEvent, get: ParamGetter) {
 	const ip = getClientKey(event);
 
 	// Empty payload shape reused for blocked/challenge states.
@@ -20,7 +24,7 @@ export const load = (async (event) => {
 		tab: 'web' as const,
 		freshness: undefined,
 		region: '',
-		safe: false,
+		safe: 'moderate' as const,
 		page: 1,
 		count: 10,
 		error: '',
@@ -28,18 +32,19 @@ export const load = (async (event) => {
 		newsResults: undefined,
 		videoResults: undefined,
 		imageResults: undefined,
+		placeResults: undefined,
 		infobox: undefined,
 		didYouMean: undefined,
 		challengeRequired: challenge
 	});
 
 	// Honeypot - bots fill this field, humans don't
-	if (url.searchParams.get('website')) {
+	if (get('website')) {
 		flagSuspicious(ip);
 		return blocked(false);
 	}
 
-	const rawQuery = url.searchParams.get('q') ?? '';
+	const rawQuery = get('q') ?? '';
 
 	// Bang redirect — must happen before normalisation so short/special queries work
 	if (rawQuery.trim()) {
@@ -48,16 +53,19 @@ export const load = (async (event) => {
 	}
 
 	const query = normalizeSearchQuery(rawQuery);
-	const safe = url.searchParams.get('safe') === '1';
-	const region = url.searchParams.get('region') || '';
-	const rawPage = parseInt(url.searchParams.get('p') ?? '1', 10);
+	const rawSafe = get('safe');
+	const safe: 'strict' | 'moderate' | 'low' =
+		rawSafe === 'strict' ? 'strict' : rawSafe === 'low' ? 'low' : 'moderate';
+	const region = get('region') || '';
+	const rawPage = parseInt(get('p') ?? '1', 10);
 	// Brave caps `offset` at 9, so page 10 is the highest reachable page.
 	const page = isNaN(rawPage) || rawPage < 1 ? 1 : Math.min(rawPage, 10);
-	const enableCache = url.searchParams.get('enablecache') === '1';
-	const count = url.searchParams.get('count') === '20' ? 20 : 10;
-	const rawTab = url.searchParams.get('t') ?? 'web';
+	const enableCache = get('enablecache') === '1';
+	const rawTab = get('t') ?? 'web';
 	const tab: SearchTab = VALID_TABS.has(rawTab as SearchTab) ? (rawTab as SearchTab) : 'web';
-	const rawFreshness = url.searchParams.get('f') ?? '';
+	// The images grid loads a full page of results; other tabs honor the setting.
+	const count = tab === 'images' ? 100 : get('count') === '20' ? 20 : 10;
+	const rawFreshness = get('f') ?? '';
 	const freshness = VALID_FRESHNESS.has(rawFreshness) ? rawFreshness : undefined;
 
 	if (!rawQuery) {
@@ -75,6 +83,7 @@ export const load = (async (event) => {
 			newsResults: undefined,
 			videoResults: undefined,
 			imageResults: undefined,
+			placeResults: undefined,
 			infobox: undefined,
 			didYouMean: undefined
 		};
@@ -95,6 +104,7 @@ export const load = (async (event) => {
 			newsResults: undefined,
 			videoResults: undefined,
 			imageResults: undefined,
+			placeResults: undefined,
 			infobox: undefined,
 			didYouMean: undefined
 		};
@@ -105,14 +115,14 @@ export const load = (async (event) => {
 		return { ...blocked(true), query };
 	}
 
-	const filterAds = url.searchParams.get('filterads') === '1';
-	const blockAds = url.searchParams.get('blockads') === '1';
-	const blockTrackers = url.searchParams.get('blocktrackers') === '1';
+	const filterAds = get('filterads') === '1';
+	const blockAds = get('blockads') === '1';
+	const blockTrackers = get('blocktrackers') === '1';
 
 	const apiParams = new URLSearchParams({ q: query, t: tab });
 	// Brave's `offset` is a page index (skips offset × count results), max 9.
 	if (page > 1) apiParams.set('offset', String(page - 1));
-	if (safe) apiParams.set('safe', '1');
+	if (safe !== 'moderate') apiParams.set('safe', safe);
 	if (freshness) apiParams.set('f', freshness);
 	if (region) apiParams.set('region', region);
 	if (filterAds) apiParams.set('filterads', '1');
@@ -122,7 +132,7 @@ export const load = (async (event) => {
 	if (count !== 10) apiParams.set('count', String(count));
 
 	try {
-		const response = await fetch(`/api/search?${apiParams}`);
+		const response = await event.fetch(`/api/search?${apiParams}`);
 
 		// Rate-limited → the client has been flagged; show a challenge instead of an error.
 		if (response.status === 429) {
@@ -170,8 +180,20 @@ export const load = (async (event) => {
 				width?: number;
 				height?: number;
 			}>;
+			placeResults?: Array<{
+				name: string;
+				displayName: string;
+				lat: number;
+				lon: number;
+				category?: string;
+				type?: string;
+				boundingBox?: [string, string, string, string];
+				osmType?: string;
+				osmId?: number;
+			}>;
 			infobox?: {
 				title: string;
+				subtitle?: string;
 				description?: string;
 				url?: string;
 				imageUrl?: string;
@@ -197,6 +219,7 @@ export const load = (async (event) => {
 			newsResults: payload?.newsResults,
 			videoResults: payload?.videoResults,
 			imageResults: payload?.imageResults,
+			placeResults: payload?.placeResults,
 			infobox: payload?.infobox,
 			didYouMean: payload?.didYouMean
 		};
@@ -215,8 +238,26 @@ export const load = (async (event) => {
 			newsResults: undefined,
 			videoResults: undefined,
 			imageResults: undefined,
+			placeResults: undefined,
 			infobox: undefined,
 			didYouMean: undefined
 		};
 	}
+}
+
+export const load = (async (event) => {
+	return runSearch(event, (key) => event.url.searchParams.get(key));
 }) satisfies PageServerLoad;
+
+export const actions = {
+	// POST search: the query travels in the request body, so it never appears in
+	// the URL or browser history. Returns the same shape `load` does; the page
+	// renders from the `form` prop in that case.
+	default: async (event) => {
+		const data = await event.request.formData();
+		return runSearch(event, (key) => {
+			const value = data.get(key);
+			return typeof value === 'string' ? value : null;
+		});
+	}
+} satisfies Actions;

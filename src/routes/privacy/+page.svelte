@@ -77,7 +77,9 @@
 		<!-- Sticky table of contents -->
 		<aside class="hidden lg:block">
 			<nav class="sticky top-28 space-y-1">
-				<p class="mb-3 px-3 text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
+				<p
+					class="mb-3 px-3 text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase"
+				>
 					On this page
 				</p>
 				{#each sections as s}
@@ -111,7 +113,9 @@
 				</p>
 				<ul class="space-y-3">
 					{#each [{ t: 'Transient request data', d: 'When you search, your query passes through our server so it can be forwarded anonymously. It is used only to return your results and is not written to a persistent search log tied to you.' }, { t: 'Abuse protection', d: 'We apply rate limiting to prevent automated abuse. This may briefly reference an IP address in memory, but it is not stored to build a history of your activity.' }, { t: 'Aggregate health metrics', d: 'We may count anonymous, aggregate totals (such as total requests per day) to keep the service healthy. These contain no queries and no identifiers.' }] as item}
-						<li class="flex gap-3 rounded-xl border border-[var(--app-border)] bg-[var(--app-surface)] p-4">
+						<li
+							class="flex gap-3 rounded-xl border border-[var(--app-border)] bg-[var(--app-surface)] p-4"
+						>
 							<i class="fa-solid fa-circle-info mt-1 shrink-0 text-sm text-[var(--app-accent)]"></i>
 							<div>
 								<p class="text-sm font-semibold text-[var(--app-text)]">{item.t}</p>
@@ -197,7 +201,8 @@
 					<a href="mailto:privacy@arcbase.one" class="text-[var(--app-accent)] hover:underline"
 						>privacy@arcbase.one</a
 					>
-					or learn more on the <a href="/about" class="text-[var(--app-accent)] hover:underline">About</a> page.
+					or learn more on the
+					<a href="/about" class="text-[var(--app-accent)] hover:underline">About</a> page.
 				</p>
 			</section>
 		</div>

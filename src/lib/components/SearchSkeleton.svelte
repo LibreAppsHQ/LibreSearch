@@ -29,6 +29,18 @@
 				</div>
 			{/each}
 		</div>
+	{:else if tab === 'maps'}
+		<div class="grid gap-6 lg:grid-cols-[minmax(0,360px)_1fr]">
+			<ol class="order-2 space-y-1.5 lg:order-1">
+				{#each rows as _}
+					<li class="space-y-2 rounded-xl bg-[var(--app-surface)] p-3.5">
+						<div class="skeleton h-4 w-2/3 rounded"></div>
+						<div class="skeleton h-3 w-full rounded"></div>
+					</li>
+				{/each}
+			</ol>
+			<div class="skeleton order-1 h-[320px] w-full rounded-2xl lg:order-2 lg:h-[560px]"></div>
+		</div>
 	{:else if tab === 'news'}
 		<ol class="space-y-4">
 			{#each rows as _}

@@ -7,8 +7,12 @@
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
-<main class="flex min-h-screen flex-col items-center justify-center bg-[var(--app-background)] px-6 text-center text-[var(--app-text)]">
-	<p class="mb-4 text-8xl font-bold tabular-nums text-[var(--app-accent)] opacity-40">{$page.status}</p>
+<main
+	class="flex min-h-screen flex-col items-center justify-center bg-[var(--app-background)] px-6 text-center text-[var(--app-text)]"
+>
+	<p class="mb-4 text-8xl font-bold text-[var(--app-accent)] tabular-nums opacity-40">
+		{$page.status}
+	</p>
 
 	<h1 class="mb-3 text-2xl font-bold tracking-tight">
 		{#if $page.status === 404}

@@ -20,7 +20,7 @@
 </script>
 
 {#if show}
-	<div class="select-none tabular-nums leading-none" aria-label="Current date and time">
+	<div class="leading-none tabular-nums select-none" aria-label="Current date and time">
 		<div class="text-5xl font-bold tracking-tight text-[var(--app-text)] sm:text-6xl">
 			{timeLabel}
 		</div>

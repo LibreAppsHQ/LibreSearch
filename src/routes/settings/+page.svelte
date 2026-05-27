@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import {
-		settingsStore,
-		type Setting,
-		type SettingCategory
-	} from '$lib/stores/settings';
+	import { settingsStore, type Setting, type SettingCategory } from '$lib/stores/settings';
 	import { themeStore, themes, themeKeys } from '$lib/stores/theme';
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import CustomSelect from '$lib/components/CustomSelect.svelte';
@@ -16,6 +12,7 @@
 		general: [
 			{ ids: ['open-new-tab', 'autocomplete', 'save-history'] },
 			{ ids: ['keyboard-shortcut', 'default-tab'] },
+			{ ids: ['instant-answers'] },
 			{ ids: ['enable-cache'] }
 		],
 		appearance: [
@@ -28,6 +25,7 @@
 			{ ids: ['block-ads', 'block-trackers'] },
 			{ ids: ['safe-search', 'filter-ads'] },
 			{ ids: ['strip-tracking', 'no-referrer'] },
+			{ ids: ['request-method'] },
 			{ ids: ['save-history', 'history-retention'] },
 			{ ids: ['search-region'] }
 		]
@@ -159,7 +157,7 @@
 		onclick={() => handleToggle(id)}
 		class={checked
 			? 'relative h-6 w-11 shrink-0 rounded-full bg-[#2dd4bf] transition-colors'
-			: 'relative h-6 w-11 shrink-0 rounded-full bg-[var(--app-hover)] ring-1 ring-inset ring-[var(--app-border)] transition-colors'}
+			: 'relative h-6 w-11 shrink-0 rounded-full bg-[var(--app-hover)] ring-1 ring-[var(--app-border)] transition-colors ring-inset'}
 	>
 		<span
 			class={checked
@@ -187,7 +185,9 @@
 	<!-- Underline tab bar (scroll anchors) -->
 	<div class="border-b border-[var(--app-border)] bg-[var(--app-background)]/95 backdrop-blur">
 		<div class="mx-auto w-full max-w-[1100px] px-4 sm:px-6">
-			<nav class="-mb-px flex items-center gap-7 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+			<nav
+				class="-mb-px flex [scrollbar-width:none] items-center gap-7 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+			>
 				{#each sections as section (section.id)}
 					<button
 						type="button"
@@ -229,10 +229,22 @@
 												? theme.accent
 												: 'rgba(255,255,255,0.12)'}"
 										>
-											<div class="mx-3 mt-3 h-1.5 rounded-full" style="background:{theme.accent}"></div>
-											<div class="mx-3 mt-2 h-1 rounded-full opacity-40" style="background:{theme.text}"></div>
-											<div class="mx-3 mt-1.5 h-1 w-3/4 rounded-full opacity-25" style="background:{theme.text}"></div>
-											<div class="mx-3 mt-1.5 h-1 w-1/2 rounded-full opacity-25" style="background:{theme.text}"></div>
+											<div
+												class="mx-3 mt-3 h-1.5 rounded-full"
+												style="background:{theme.accent}"
+											></div>
+											<div
+												class="mx-3 mt-2 h-1 rounded-full opacity-40"
+												style="background:{theme.text}"
+											></div>
+											<div
+												class="mx-3 mt-1.5 h-1 w-3/4 rounded-full opacity-25"
+												style="background:{theme.text}"
+											></div>
+											<div
+												class="mx-3 mt-1.5 h-1 w-1/2 rounded-full opacity-25"
+												style="background:{theme.text}"
+											></div>
 											{#if $themeStore === key}
 												<div
 													class="absolute bottom-2 left-1/2 flex h-5 w-5 -translate-x-1/2 items-center justify-center rounded-full bg-[#4a9eff]"
@@ -243,8 +255,9 @@
 										</div>
 										<span
 											class="text-xs font-medium transition"
-											style={$themeStore === key ? `color:${theme.accent}` : 'color:var(--app-muted)'}
-											>{theme.name}</span
+											style={$themeStore === key
+												? `color:${theme.accent}`
+												: 'color:var(--app-muted)'}>{theme.name}</span
 										>
 									</button>
 								{/each}
@@ -260,8 +273,12 @@
 									{#if setting}
 										<div class="flex items-center justify-between gap-8 px-5 py-4">
 											<div class="min-w-0 space-y-0.5">
-												<p class="text-[15px] font-semibold text-[var(--app-text)]">{setting.name}</p>
-												<p class="text-sm leading-5 text-[var(--app-muted)]">{setting.description}</p>
+												<p class="text-[15px] font-semibold text-[var(--app-text)]">
+													{setting.name}
+												</p>
+												<p class="text-sm leading-5 text-[var(--app-muted)]">
+													{setting.description}
+												</p>
 											</div>
 
 											{#if setting.type === 'toggle'}
@@ -300,8 +317,9 @@
 				</button>
 
 				<p class="mt-4 text-sm leading-6 text-[var(--app-muted)]">
-					This saves your settings <span class="font-semibold text-[var(--app-text)]">locally in your browser</span>.
-					Launchpad never stores them on a server, and nothing is tied to your identity.
+					This saves your settings <span class="font-semibold text-[var(--app-text)]"
+						>locally in your browser</span
+					>. Launchpad never stores them on a server, and nothing is tied to your identity.
 				</p>
 
 				{#if isDirty}

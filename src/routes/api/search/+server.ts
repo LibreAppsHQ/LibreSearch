@@ -53,7 +53,9 @@ export const GET: RequestHandler = async (event) => {
 		}
 	}
 
-	const safe = event.url.searchParams.get('safe') === '1';
+	const rawSafe = event.url.searchParams.get('safe');
+	const safe: 'strict' | 'moderate' | 'off' =
+		rawSafe === 'strict' ? 'strict' : rawSafe === 'low' ? 'off' : 'moderate';
 	const rawOffset = parseInt(event.url.searchParams.get('offset') ?? '0', 10);
 	const offset = isNaN(rawOffset) || rawOffset < 0 ? 0 : rawOffset;
 	const rawTab = event.url.searchParams.get('t') ?? 'web';
@@ -65,12 +67,26 @@ export const GET: RequestHandler = async (event) => {
 	const blockAds = event.url.searchParams.get('blockads') === '1';
 	const blockTrackers = event.url.searchParams.get('blocktrackers') === '1';
 	const useCache = event.url.searchParams.get('enablecache') === '1';
-	const count = event.url.searchParams.get('count') === '20' ? 20 : 10;
+	const rawCount = parseInt(event.url.searchParams.get('count') ?? '', 10);
+	// Images can return up to 100; other tabs are capped at 20 by Brave.
+	const maxCount = tab === 'images' ? 100 : 20;
+	const count = isNaN(rawCount) ? 10 : Math.min(Math.max(rawCount, 1), maxCount);
 
 	try {
 		const payload = await searchBrave(
 			query,
-			{ safesearch: safe, offset, tab, freshness, country, filterAds, blockAds, blockTrackers, useCache, count },
+			{
+				safesearch: safe,
+				offset,
+				tab,
+				freshness,
+				country,
+				filterAds,
+				blockAds,
+				blockTrackers,
+				useCache,
+				count
+			},
 			event.fetch
 		);
 		return json(payload, {

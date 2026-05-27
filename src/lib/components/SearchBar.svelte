@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { settingsStore, getToggle, getSelect } from '$lib/stores/settings';
@@ -12,7 +12,7 @@
 		action = '/search',
 		compact = false,
 		showButton = true,
-		safesearch = false,
+		safesearch = 'moderate',
 		pill = false
 	} = $props<{
 		query?: string;
@@ -20,11 +20,12 @@
 		action?: string;
 		compact?: boolean;
 		showButton?: boolean;
-		safesearch?: boolean;
+		safesearch?: 'strict' | 'moderate' | 'low';
 		pill?: boolean;
 	}>();
 
 	let formElement: HTMLFormElement | null = null;
+	let inputElement: HTMLInputElement | null = null;
 	let isOpen = $state(false);
 	let activeIndex = $state(-1);
 	let suggestions = $state<string[]>([]);
@@ -41,6 +42,9 @@
 	let searchRegion = $derived(getSelect($settingsStore, 'search-region'));
 	let enableCache = $derived(getToggle($settingsStore, 'enable-cache', false));
 	let resultsPerPage = $derived(getSelect($settingsStore, 'results-per-page', '10'));
+	let requestMethod = $derived<'get' | 'post'>(
+		getSelect($settingsStore, 'request-method', 'GET') === 'POST' ? 'post' : 'get'
+	);
 
 	let history = $derived($historyStore);
 
@@ -86,10 +90,30 @@
 		activeIndex = -1;
 	}
 
-	function submitQuery(value: string): void {
+	async function submitQuery(value: string): Promise<void> {
 		query = value;
 		closeDropdown();
+		// Wait for the binding to flush to the DOM input, otherwise the native form
+		// submit serializes the previously typed value instead of the chosen one.
+		await tick();
 		formElement?.requestSubmit();
+	}
+
+	// Put a suggestion in the box (without searching) so the user can keep typing.
+	function appendQuery(value: string): void {
+		query = value.endsWith(' ') ? value : `${value} `;
+		inputElement?.focus();
+		fetchSuggestions(query);
+	}
+
+	// Split a suggestion into the already-typed prefix and the completion, so the
+	// completion can be emphasised (Google-style).
+	function splitMatch(text: string): { typed: string; rest: string } {
+		const q = query.trim().toLowerCase();
+		if (q && text.toLowerCase().startsWith(q)) {
+			return { typed: text.slice(0, q.length), rest: text.slice(q.length) };
+		}
+		return { typed: '', rest: text };
 	}
 
 	function fetchSuggestions(value: string): void {
@@ -159,6 +183,10 @@
 		} else if (event.key === 'Escape') {
 			event.preventDefault();
 			closeDropdown();
+		} else if (event.key === 'Tab' && activeIndex >= 0 && dropdownItems[activeIndex].type === 'suggestion') {
+			// Tab completes the highlighted suggestion into the box without searching.
+			event.preventDefault();
+			appendQuery(dropdownItems[activeIndex].text);
 		} else if (event.key === 'Enter' && activeIndex >= 0) {
 			event.preventDefault();
 			submitQuery(dropdownItems[activeIndex].text);
@@ -180,11 +208,19 @@
 	});
 </script>
 
-<form bind:this={formElement} class="w-full" method="get" {action}>
+<form bind:this={formElement} class="w-full" method={requestMethod} {action}>
 	<!-- Honeypot: bots fill this, humans don't -->
-	<input type="text" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;" />
-	{#if safesearch}
-		<input type="hidden" name="safe" value="1" />
+	<input
+		type="text"
+		name="website"
+		value=""
+		tabindex="-1"
+		autocomplete="off"
+		aria-hidden="true"
+		style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;"
+	/>
+	{#if safesearch !== 'moderate'}
+		<input type="hidden" name="safe" value={safesearch} />
 	{/if}
 	{#if filterAds}
 		<input type="hidden" name="filterads" value="1" />
@@ -209,10 +245,11 @@
 		class={pill
 			? 'flex w-full items-center rounded-full border border-indigo-400/60 bg-transparent px-5 py-2.5 transition focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-400/20'
 			: compact
-				? 'flex w-full items-center rounded-xl border border-[var(--app-border)] bg-transparent px-4 py-1.5 transition focus-within:border-slate-500/60 focus-within:ring-2 focus-within:ring-slate-500/20'
+				? 'flex w-full items-center rounded-full border border-transparent bg-[#2e3443] px-5 py-3 transition focus-within:ring-2 focus-within:ring-slate-500/20'
 				: 'flex w-full items-center rounded-xl border border-[var(--app-border)] bg-transparent px-5 py-2 transition focus-within:border-slate-500/60 focus-within:ring-2 focus-within:ring-slate-500/20'}
 	>
 		<input
+			bind:this={inputElement}
 			bind:value={query}
 			name="q"
 			type="search"
@@ -256,7 +293,7 @@
 				<button
 					type="submit"
 					aria-label="Search"
-					class="inline-flex h-7 w-7 items-center justify-center text-[var(--app-accent)] transition hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/40"
+					class="inline-flex h-7 w-7 items-center justify-center text-[var(--app-accent)] transition hover:opacity-80 focus-visible:ring-2 focus-visible:ring-slate-400/40 focus-visible:outline-none"
 				>
 					<i class="fa-solid fa-magnifying-glass text-[15px]"></i>
 				</button>
@@ -267,12 +304,14 @@
 	{#if isOpen && dropdownItems.length > 0}
 		<div class="relative">
 			<div
-				class="absolute left-0 right-0 top-2 z-20 overflow-hidden rounded-xl border border-[var(--app-border)] bg-[var(--app-panel)] py-1.5 shadow-2xl shadow-black/30"
+				class="absolute top-2 right-0 left-0 z-20 overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[#2e3443] p-2 shadow-2xl shadow-black/40 ring-1 ring-black/5"
 				transition:fly={{ y: -6, duration: $reducedMotion ? 0 : 160, easing: cubicOut }}
 			>
 				{#if hasHistory}
-					<div class="flex items-center justify-between px-4 pb-1.5 pt-1">
-						<span class="text-[11px] font-semibold uppercase tracking-wider text-[var(--app-muted)]">
+					<div class="flex items-center justify-between px-3 pt-1 pb-2">
+						<span
+							class="text-[11px] font-semibold tracking-wider text-[var(--app-muted)] uppercase"
+						>
 							Recent searches
 						</span>
 						<button
@@ -289,42 +328,59 @@
 				{/if}
 
 				{#each dropdownItems as item, index}
+					{@const m = splitMatch(item.text)}
 					<div
 						class={index === activeIndex
-							? 'group flex w-full items-center gap-3 bg-[var(--app-surface)] px-4 py-2.5'
-							: 'group flex w-full items-center gap-3 px-4 py-2.5 hover:bg-[var(--app-hover)]'}
+							? 'group flex w-full items-center gap-3 rounded-xl bg-[var(--app-surface)] px-3 py-2.5'
+							: 'group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 transition hover:bg-[var(--app-hover)]'}
 					>
+						{#if item.type === 'history' || showSuggestionIcons}
+							<i
+								class={item.type === 'history'
+									? 'fa-regular fa-clock w-4 shrink-0 text-center text-xs text-[var(--app-muted)]'
+									: 'fa-solid fa-magnifying-glass w-4 shrink-0 text-center text-xs text-[var(--app-muted)]'}
+							></i>
+						{/if}
+
 						<button
 							type="button"
-							class="flex min-w-0 flex-1 items-center gap-3 text-left"
+							class="flex min-w-0 flex-1 items-center text-left"
 							onmousedown={(event) => {
 								event.preventDefault();
 								submitQuery(item.text);
 							}}
 							onmouseenter={() => (activeIndex = index)}
 						>
-							{#if item.type === 'history' || showSuggestionIcons}
-								<i
-									class={item.type === 'history'
-										? 'fa-regular fa-clock shrink-0 text-xs text-[var(--app-muted)]'
-										: 'fa-solid fa-magnifying-glass shrink-0 text-xs text-[var(--app-muted)]'}
-								></i>
-							{/if}
-							<span
-								class={index === activeIndex
-									? 'truncate text-sm text-[var(--app-text)]'
-									: 'truncate text-sm text-[var(--app-muted)]'}>{item.text}</span
-							>
+							<span class="truncate text-[15px]">
+								<span class="text-[var(--app-muted)]">{m.typed}</span><span
+									class={m.typed
+										? 'font-medium text-[var(--app-text)]'
+										: 'text-[var(--app-text)]'}>{m.rest}</span
+								>
+							</span>
 						</button>
 
 						{#if item.type === 'history'}
 							<button
 								type="button"
 								aria-label="Remove “{item.text}” from history"
-								class="ml-auto inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[var(--app-muted)] opacity-0 transition hover:bg-[var(--app-hover)] hover:text-[var(--app-text)] focus-visible:opacity-100 group-hover:opacity-100"
+								class="ml-auto inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[var(--app-muted)] opacity-0 transition group-hover:opacity-100 hover:bg-[var(--app-hover)] hover:text-[var(--app-text)] focus-visible:opacity-100"
 								onmousedown={(event) => removeHistory(item.text, event)}
 							>
 								<i class="fa-solid fa-xmark text-xs"></i>
+							</button>
+						{:else}
+							<button
+								type="button"
+								aria-label="Add “{item.text}” to the search box"
+								title="Append to search"
+								class="ml-auto inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[var(--app-muted)] opacity-0 transition group-hover:opacity-100 hover:bg-[var(--app-hover)] hover:text-[var(--app-text)] focus-visible:opacity-100"
+								onmousedown={(event) => {
+									event.preventDefault();
+									appendQuery(item.text);
+								}}
+							>
+								<i class="fa-solid fa-arrow-up text-xs -rotate-45"></i>
 							</button>
 						{/if}
 					</div>

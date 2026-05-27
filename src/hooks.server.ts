@@ -14,12 +14,12 @@ const SECURITY_HEADERS: Record<string, string> = {
 		"img-src 'self' https: data:",
 		"font-src 'self' data:",
 		"connect-src 'self'",
-		"frame-src https:",
+		'frame-src https:',
 		"worker-src 'self' blob:",
 		"object-src 'none'",
 		"base-uri 'self'",
 		"form-action 'self'",
-		"upgrade-insecure-requests"
+		'upgrade-insecure-requests'
 	].join('; ')
 };
 

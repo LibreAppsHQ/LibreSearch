@@ -4,10 +4,10 @@
 
 Only the latest version of Launchpad is actively supported with security fixes.
 
-| Version | Supported |
-|---------|-----------|
-| 0.0.x (latest) | Yes |
-| Older | No |
+| Version        | Supported |
+| -------------- | --------- |
+| 0.0.x (latest) | Yes       |
+| Older          | No        |
 
 ## Reporting a Vulnerability
 

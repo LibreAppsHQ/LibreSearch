@@ -8,10 +8,7 @@ export const POST: RequestHandler = async (event) => {
 	const payload = body?.payload;
 
 	if (!payload || typeof payload !== 'string' || !verifySolution(payload)) {
-		return json(
-			{ ok: false },
-			{ headers: { 'Cache-Control': 'no-store' }, status: 400 }
-		);
+		return json({ ok: false }, { headers: { 'Cache-Control': 'no-store' }, status: 400 });
 	}
 
 	const ip = getClientKey(event);

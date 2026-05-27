@@ -20,7 +20,19 @@
       "Bash(chmod +x test_site.py)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173/ --max-time 3)",
       "Bash(python3 test_site.py)",
-      "Bash(curl -sI http://localhost:5173/)"
+      "Bash(curl -sI http://localhost:5173/)",
+      "Bash(npx svelte-check *)",
+      "Bash(git stash *)",
+      "Bash(curl -s -X POST http://localhost:4319/search -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://localhost:4319' --data q=test+query -i)",
+      "Bash(curl -s -X POST http://localhost:4319/search -H \"Content-Type: application/x-www-form-urlencoded\" -H \"Origin: http://localhost:4319\" --data \"q=hello+world\")",
+      "Bash(curl -s -X POST http://localhost:4319/search -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html' -H 'Origin: http://localhost:4319' --data q=hello+world -i)",
+      "Bash(curl -s -X POST http://localhost:4319/search -H \"Content-Type: application/x-www-form-urlencoded\" -H \"Accept: text/html\" -H \"Origin: http://localhost:4319\" --data \"q=hello+world\" -o /tmp/post_resp.html)",
+      "Read(//tmp/**)",
+      "Bash(curl -s \"http://localhost:4319/search?q=hello+world\" -o /tmp/get_resp.html)",
+      "Bash(pkill -f \"vite preview\")",
+      "Bash(pkill -9 -f \"vite preview\")",
+      "Bash(pkill -9 -f \"vite-preview\")",
+      "Bash(npx playwright *)"
     ]
   }
 }

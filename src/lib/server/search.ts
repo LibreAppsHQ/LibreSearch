@@ -9,6 +9,7 @@ import {
 	type VideoResult,
 	type ImageResult,
 	type Infobox,
+	type PlaceResult,
 	type SearchTab
 } from '$lib/search';
 
@@ -18,12 +19,18 @@ const RATE_LIMIT_STATE_TTL_MS = 5 * 60_000;
 const REQUEST_TIMEOUT_MS = 8_000;
 const CACHE_TTL_MS = 5 * 60_000;
 
-const BRAVE_ENDPOINTS: Record<SearchTab, string> = {
+// Tabs backed directly by a Brave Search endpoint. `shopping` reuses the web
+// endpoint; `maps` is served by Nominatim instead (see geocodePlaces).
+type BraveEndpointTab = 'web' | 'news' | 'videos' | 'images';
+
+const BRAVE_ENDPOINTS: Record<BraveEndpointTab, string> = {
 	web: 'https://api.search.brave.com/res/v1/web/search',
 	news: 'https://api.search.brave.com/res/v1/news/search',
 	videos: 'https://api.search.brave.com/res/v1/videos/search',
 	images: 'https://api.search.brave.com/res/v1/images/search'
 };
+
+const NOMINATIM_ENDPOINT = 'https://nominatim.openstreetmap.org/search';
 
 type RateLimitState = {
 	tokens: number;
@@ -218,6 +225,28 @@ function normalizeImageResult(raw: unknown): ImageResult | null {
 	};
 }
 
+// Brave nests the infobox as `{ type: 'graph', results: [ {...} ] }`; pull the
+// first result out before normalizing.
+function unwrapInfobox(raw: unknown): unknown {
+	if (isRecord(raw) && Array.isArray(raw.results)) return raw.results[0];
+	return raw;
+}
+
+function getInfoboxImage(raw: Record<string, unknown>): string | undefined {
+	// `images` is the entity gallery; prefer Brave's proxied `src`, fall back to original.
+	if (Array.isArray(raw.images)) {
+		for (const img of raw.images) {
+			if (!isRecord(img)) continue;
+			const src = typeof img.src === 'string' ? img.src : undefined;
+			const original = typeof img.original === 'string' ? img.original : undefined;
+			if (src || original) return src ?? original;
+		}
+	}
+	// Older/other shapes expose a single thumbnail object.
+	if (isRecord(raw.img) && typeof raw.img.src === 'string') return raw.img.src;
+	return getThumbnail(raw);
+}
+
 function normalizeInfobox(raw: unknown): Infobox | null {
 	if (!isRecord(raw)) return null;
 	const title = readText(raw.title);
@@ -227,7 +256,7 @@ function normalizeInfobox(raw: unknown): Infobox | null {
 	if (Array.isArray(raw.attributes)) {
 		const parsed = (raw.attributes as unknown[])
 			.filter((a): a is unknown[] => Array.isArray(a) && a.length >= 2)
-			.map(([k, v]) => [readText(k), readText(v)] as [string, string])
+			.map(([k, v]) => [stripHtml(readText(k)), stripHtml(readText(v))] as [string, string])
 			.filter(([k, v]) => k && v);
 		if (parsed.length > 0) attributes = parsed;
 	}
@@ -239,23 +268,105 @@ function normalizeInfobox(raw: unknown): Infobox | null {
 			.map((p) => ({
 				network: readText(p.name ?? p.network ?? ''),
 				url: normalizeUrl(p.url) ?? '',
-				imageUrl: isRecord(p.img) && typeof p.img.src === 'string' ? p.img.src : undefined
+				// Brave gives the profile favicon as a plain string in `img`.
+				imageUrl:
+					typeof p.img === 'string'
+						? p.img
+						: isRecord(p.img) && typeof p.img.src === 'string'
+							? p.img.src
+							: undefined
 			}))
 			.filter((p) => p.network && p.url);
 		if (parsed.length > 0) profiles = parsed;
 	}
 
+	// `description` is a short subtitle; `long_desc` is the full overview paragraph.
+	const subtitle = typeof raw.description === 'string' ? stripHtml(readText(raw.description)) : '';
+	const longDesc = typeof raw.long_desc === 'string' ? stripHtml(readText(raw.long_desc)) : '';
+
 	return {
 		title: stripHtml(title),
-		description:
-			typeof raw.description === 'string'
-				? stripHtml(readText(raw.description)) || undefined
-				: undefined,
-		url: typeof raw.url === 'string' ? normalizeUrl(raw.url) ?? undefined : undefined,
-		imageUrl: isRecord(raw.img) && typeof raw.img.src === 'string' ? raw.img.src : undefined,
+		subtitle: subtitle || undefined,
+		description: longDesc || subtitle || undefined,
+		url: typeof raw.url === 'string' ? (normalizeUrl(raw.url) ?? undefined) : undefined,
+		imageUrl: getInfoboxImage(raw),
 		attributes,
 		profiles
 	};
+}
+
+function normalizePlaceResult(raw: unknown): PlaceResult | null {
+	if (!isRecord(raw)) return null;
+	const lat = Number(raw.lat);
+	const lon = Number(raw.lon);
+	if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+
+	const displayName = readText(raw.display_name);
+	if (!displayName) return null;
+
+	const boundingBox =
+		Array.isArray(raw.boundingbox) && raw.boundingbox.length === 4
+			? (raw.boundingbox.map((v) => readText(v)) as [string, string, string, string])
+			: undefined;
+
+	const osmId =
+		typeof raw.osm_id === 'number'
+			? raw.osm_id
+			: typeof raw.osm_id === 'string' && raw.osm_id
+				? Number(raw.osm_id)
+				: undefined;
+
+	return {
+		name: readText(raw.name) || displayName.split(',')[0].trim(),
+		displayName,
+		lat,
+		lon,
+		category: typeof raw.category === 'string' ? raw.category : undefined,
+		type: typeof raw.type === 'string' ? raw.type : undefined,
+		boundingBox,
+		osmType: typeof raw.osm_type === 'string' ? raw.osm_type : undefined,
+		osmId: Number.isFinite(osmId) ? osmId : undefined
+	};
+}
+
+/**
+ * Geocode a free-text query into places via OpenStreetMap's Nominatim service.
+ * Brave has no maps endpoint, so the Maps tab is served from here instead.
+ */
+async function geocodePlaces(query: string, fetchImpl: typeof fetch): Promise<SearchResponse> {
+	const url = new URL(NOMINATIM_ENDPOINT);
+	url.searchParams.set('q', query);
+	url.searchParams.set('format', 'jsonv2');
+	url.searchParams.set('limit', '10');
+	url.searchParams.set('addressdetails', '0');
+
+	const controller = new AbortController();
+	const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+	try {
+		const response = await fetchImpl(url, {
+			cache: 'no-store',
+			credentials: 'omit',
+			headers: {
+				accept: 'application/json',
+				// Nominatim's usage policy requires an identifying User-Agent.
+				'user-agent': 'Launchpad/1.0 (privacy-respecting metasearch)'
+			},
+			signal: controller.signal
+		});
+
+		if (!response.ok) throw new Error(`Nominatim responded with ${response.status}`);
+
+		const payload: unknown = await response.json();
+		const raw = Array.isArray(payload) ? payload : [];
+		const placeResults = raw
+			.map(normalizePlaceResult)
+			.filter((p): p is PlaceResult => p !== null);
+
+		return { query, tab: 'maps', results: [], placeResults };
+	} finally {
+		clearTimeout(timeout);
+	}
 }
 
 function pruneRateLimitBuckets(now: number): void {
@@ -309,21 +420,53 @@ export function consumeRateLimit(identifier: string): {
 }
 
 const AD_DOMAINS = new Set([
-	'doubleclick.net', 'googlesyndication.com', 'googleadservices.com',
-	'amazon-adsystem.com', 'advertising.com', 'adnxs.com', 'adsrvr.org',
-	'outbrain.com', 'taboola.com', 'revcontent.com', 'media.net',
-	'criteo.com', 'rubiconproject.com', 'pubmatic.com', 'openx.net',
-	'casalemedia.com', 'moatads.com', 'adroll.com', 'sharethrough.com',
-	'contextweb.com', 'lijit.com', 'yieldmo.com', 'triplelift.com'
+	'doubleclick.net',
+	'googlesyndication.com',
+	'googleadservices.com',
+	'amazon-adsystem.com',
+	'advertising.com',
+	'adnxs.com',
+	'adsrvr.org',
+	'outbrain.com',
+	'taboola.com',
+	'revcontent.com',
+	'media.net',
+	'criteo.com',
+	'rubiconproject.com',
+	'pubmatic.com',
+	'openx.net',
+	'casalemedia.com',
+	'moatads.com',
+	'adroll.com',
+	'sharethrough.com',
+	'contextweb.com',
+	'lijit.com',
+	'yieldmo.com',
+	'triplelift.com'
 ]);
 
 const TRACKER_DOMAINS = new Set([
-	'google-analytics.com', 'analytics.google.com', 'hotjar.com',
-	'mixpanel.com', 'segment.com', 'heap.io', 'fullstory.com',
-	'clarity.ms', 'scorecardresearch.com', 'quantserve.com',
-	'chartbeat.com', 'mouseflow.com', 'crazyegg.com', 'kissmetrics.com',
-	'optimizely.com', 'newrelic.com', 'datadog-browser-agent.com',
-	'marketo.com', 'pardot.com', 'hubspot.com', 'intercom.io'
+	'google-analytics.com',
+	'analytics.google.com',
+	'hotjar.com',
+	'mixpanel.com',
+	'segment.com',
+	'heap.io',
+	'fullstory.com',
+	'clarity.ms',
+	'scorecardresearch.com',
+	'quantserve.com',
+	'chartbeat.com',
+	'mouseflow.com',
+	'crazyegg.com',
+	'kissmetrics.com',
+	'optimizely.com',
+	'newrelic.com',
+	'datadog-browser-agent.com',
+	'marketo.com',
+	'pardot.com',
+	'hubspot.com',
+	'intercom.io'
 ]);
 
 function isBlockedDomain(url: string, blocklist: Set<string>): boolean {
@@ -335,9 +478,7 @@ function isBlockedDomain(url: string, blocklist: Set<string>): boolean {
 	}
 }
 
-const VALID_COUNTRIES = new Set([
-	'US','GB','CA','AU','DE','FR','JP','IN','BR'
-]);
+const VALID_COUNTRIES = new Set(['US', 'GB', 'CA', 'AU', 'DE', 'FR', 'JP', 'IN', 'BR']);
 
 function getBraveSearchUrl(
 	query: string,
@@ -348,14 +489,18 @@ function getBraveSearchUrl(
 	country?: string,
 	count = 10
 ): URL {
-	const searchUrl = new URL(BRAVE_ENDPOINTS[tab]);
+	// Shopping has no dedicated Brave endpoint — it runs against web search.
+	const endpointTab: BraveEndpointTab = tab === 'shopping' ? 'web' : (tab as BraveEndpointTab);
+	const searchUrl = new URL(BRAVE_ENDPOINTS[endpointTab]);
 	searchUrl.searchParams.set('q', query);
-	// Brave caps `count` at 20.
-	searchUrl.searchParams.set('count', String(Math.min(Math.max(count, 1), 20)));
-	if (tab !== 'images') searchUrl.searchParams.set('safesearch', safesearch);
-	if (tab === 'web') {
+	// Brave caps `count` at 20 for web/news/videos, but up to 100 for images.
+	const maxCount = endpointTab === 'images' ? 100 : 20;
+	searchUrl.searchParams.set('count', String(Math.min(Math.max(count, 1), maxCount)));
+	if (endpointTab !== 'images') searchUrl.searchParams.set('safesearch', safesearch);
+	if (endpointTab === 'web') {
 		searchUrl.searchParams.set('search_lang', 'en');
-		const resolvedCountry = country && VALID_COUNTRIES.has(country.toUpperCase()) ? country.toUpperCase() : 'us';
+		const resolvedCountry =
+			country && VALID_COUNTRIES.has(country.toUpperCase()) ? country.toUpperCase() : 'us';
 		searchUrl.searchParams.set('country', resolvedCountry);
 	}
 	if (offset > 0) searchUrl.searchParams.set('offset', String(offset));
@@ -382,6 +527,9 @@ async function fetchBraveSearch(
 	blockTrackers?: boolean,
 	count?: number
 ): Promise<SearchResponse> {
+	// Maps is served by Nominatim, not Brave.
+	if (tab === 'maps') return geocodePlaces(query, fetchImpl);
+
 	const searchUrl = getBraveSearchUrl(query, tab, safesearch, offset, freshness, country, count);
 	const apiKey = getBraveApiKey();
 	const controller = new AbortController();
@@ -408,6 +556,27 @@ async function fetchBraveSearch(
 				? readText(payload.query.original ?? payload.query.alt ?? payload.query.q)
 				: '';
 
+		if (tab === 'shopping') {
+			// Shopping reuses the web endpoint; surface its results under the shopping tab.
+			const rawWeb =
+				isRecord(payload) && isRecord(payload.web) && Array.isArray(payload.web.results)
+					? payload.web.results
+					: [];
+			const results = rawWeb
+				.filter((r) => !filterAds || !isRecord(r) || r['type'] !== 'ad')
+				.filter(
+					(r) => !blockAds || !isRecord(r) || !isBlockedDomain(String(r.url ?? ''), AD_DOMAINS)
+				)
+				.filter(
+					(r) =>
+						!blockTrackers || !isRecord(r) || !isBlockedDomain(String(r.url ?? ''), TRACKER_DOMAINS)
+				)
+				.map(normalizeWebResult)
+				.filter((r): r is SearchResult => r !== null);
+
+			return { query: queryValue || query, tab: 'shopping', results };
+		}
+
 		if (tab === 'web') {
 			const rawWeb =
 				isRecord(payload) && isRecord(payload.web) && Array.isArray(payload.web.results)
@@ -415,8 +584,13 @@ async function fetchBraveSearch(
 					: [];
 			const results = rawWeb
 				.filter((r) => !filterAds || !isRecord(r) || r['type'] !== 'ad')
-				.filter((r) => !blockAds || !isRecord(r) || !isBlockedDomain(String(r.url ?? ''), AD_DOMAINS))
-				.filter((r) => !blockTrackers || !isRecord(r) || !isBlockedDomain(String(r.url ?? ''), TRACKER_DOMAINS))
+				.filter(
+					(r) => !blockAds || !isRecord(r) || !isBlockedDomain(String(r.url ?? ''), AD_DOMAINS)
+				)
+				.filter(
+					(r) =>
+						!blockTrackers || !isRecord(r) || !isBlockedDomain(String(r.url ?? ''), TRACKER_DOMAINS)
+				)
 				.map(normalizeWebResult)
 				.filter((r): r is SearchResult => r !== null)
 				.slice(0, 10);
@@ -439,7 +613,9 @@ async function fetchBraveSearch(
 				.filter((r): r is VideoResult => r !== null)
 				.slice(0, 3);
 
-			const infobox = isRecord(payload) ? normalizeInfobox(payload.infobox) ?? undefined : undefined;
+			const infobox = isRecord(payload)
+				? (normalizeInfobox(unwrapInfobox(payload.infobox)) ?? undefined)
+				: undefined;
 
 			const resolvedQuery = queryValue || query;
 			const alteredQuery =
@@ -462,17 +638,14 @@ async function fetchBraveSearch(
 		}
 
 		// news / videos / images: top-level results array
-		const rawResults =
-			isRecord(payload) && Array.isArray(payload.results) ? payload.results : [];
+		const rawResults = isRecord(payload) && Array.isArray(payload.results) ? payload.results : [];
 
 		if (tab === 'news') {
 			return {
 				query: queryValue || query,
 				tab: 'news',
 				results: [],
-				newsResults: rawResults
-					.map(normalizeNewsResult)
-					.filter((r): r is NewsResult => r !== null)
+				newsResults: rawResults.map(normalizeNewsResult).filter((r): r is NewsResult => r !== null)
 			};
 		}
 
@@ -491,9 +664,7 @@ async function fetchBraveSearch(
 			query: queryValue || query,
 			tab: 'images',
 			results: [],
-			imageResults: rawResults
-				.map(normalizeImageResult)
-				.filter((r): r is ImageResult => r !== null)
+			imageResults: rawResults.map(normalizeImageResult).filter((r): r is ImageResult => r !== null)
 		};
 	} finally {
 		clearTimeout(timeout);
@@ -503,7 +674,7 @@ async function fetchBraveSearch(
 export async function searchBrave(
 	query: string,
 	options: {
-		safesearch?: boolean;
+		safesearch?: 'strict' | 'moderate' | 'off';
 		offset?: number;
 		tab?: SearchTab;
 		freshness?: string;
@@ -520,15 +691,29 @@ export async function searchBrave(
 	if (!normalizedQuery) throw new Error(SEARCH_QUERY_ERROR);
 
 	const tab = options.tab ?? 'web';
-	const safesearch = options.safesearch ? 'strict' : 'moderate';
+	const safesearch = options.safesearch ?? 'moderate';
 	const offset = Math.max(0, options.offset ?? 0);
-	const { freshness, country, filterAds = false, blockAds = false, blockTrackers = false } = options;
-	const count = Math.min(Math.max(options.count ?? 10, 1), 20);
+	const {
+		freshness,
+		country,
+		filterAds = false,
+		blockAds = false,
+		blockTrackers = false
+	} = options;
+	const count = Math.min(Math.max(options.count ?? 10, 1), tab === 'images' ? 100 : 20);
 
 	if (options.useCache) {
 		const key = makeCacheKey(
-			normalizedQuery, tab, safesearch, offset,
-			freshness, country, filterAds, blockAds, blockTrackers, count
+			normalizedQuery,
+			tab,
+			safesearch,
+			offset,
+			freshness,
+			country,
+			filterAds,
+			blockAds,
+			blockTrackers,
+			count
 		);
 		const now = Date.now();
 
@@ -542,15 +727,33 @@ export async function searchBrave(
 		}
 
 		const result = await fetchBraveSearch(
-			normalizedQuery, tab, safesearch, offset, freshness,
-			fetchImpl, country, filterAds, blockAds, blockTrackers, count
+			normalizedQuery,
+			tab,
+			safesearch,
+			offset,
+			freshness,
+			fetchImpl,
+			country,
+			filterAds,
+			blockAds,
+			blockTrackers,
+			count
 		);
 		searchCache.set(key, { response: result, expiresAt: now + CACHE_TTL_MS });
 		return result;
 	}
 
 	return await fetchBraveSearch(
-		normalizedQuery, tab, safesearch, offset, freshness,
-		fetchImpl, country, filterAds, blockAds, blockTrackers, count
+		normalizedQuery,
+		tab,
+		safesearch,
+		offset,
+		freshness,
+		fetchImpl,
+		country,
+		filterAds,
+		blockAds,
+		blockTrackers,
+		count
 	);
 }

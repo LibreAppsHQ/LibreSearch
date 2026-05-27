@@ -19,7 +19,12 @@
 		target={openInNewTab ? '_blank' : '_self'}
 		rel="noreferrer noopener"
 		class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--app-accent)]/50"
-		onclick={onselect ? (e) => { e.preventDefault(); onselect!(result); } : undefined}
+		onclick={onselect
+			? (e) => {
+					e.preventDefault();
+					onselect!(result);
+				}
+			: undefined}
 	>
 		<div class="relative aspect-video bg-black/30">
 			{#if result.thumbnail}
@@ -34,7 +39,7 @@
 			{/if}
 			{#if result.duration}
 				<span
-					class="absolute bottom-2 right-2 rounded bg-black/80 px-1.5 py-0.5 text-xs font-medium text-white"
+					class="absolute right-2 bottom-2 rounded bg-black/80 px-1.5 py-0.5 text-xs font-medium text-white"
 				>
 					{result.duration}
 				</span>
@@ -50,7 +55,9 @@
 			</div>
 		</div>
 		<div class="space-y-1 p-3">
-			<h2 class="text-sm font-medium leading-snug text-[var(--app-text)] line-clamp-2 group-hover:text-[var(--app-accent)]">
+			<h2
+				class="line-clamp-2 text-sm leading-snug font-medium text-[var(--app-text)] group-hover:text-[var(--app-accent)]"
+			>
 				{result.title}
 			</h2>
 			<div class="flex items-center gap-1.5 text-xs text-[var(--app-muted)]">

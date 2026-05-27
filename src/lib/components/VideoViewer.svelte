@@ -28,13 +28,16 @@
 					const params = new URLSearchParams({
 						autoplay: '1',
 						rel: '0',
-						enablejsapi: '0',      // disables JS API used for tracking
-						iv_load_policy: '3',   // no video annotations
-						modestbranding: '1',   // minimal YouTube branding
+						enablejsapi: '0', // disables JS API used for tracking
+						iv_load_policy: '3', // no video annotations
+						modestbranding: '1', // minimal YouTube branding
 						playsinline: '1',
 						origin: typeof window !== 'undefined' ? window.location.origin : ''
 					});
-					return { url: `https://www.youtube-nocookie.com/embed/${id}?${params}`, platform: 'YouTube' };
+					return {
+						url: `https://www.youtube-nocookie.com/embed/${id}?${params}`,
+						platform: 'YouTube'
+					};
 				}
 			}
 
@@ -59,7 +62,11 @@
 	}
 
 	function siteName(url: string): string {
-		try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return 'site'; }
+		try {
+			return new URL(url).hostname.replace(/^www\./, '');
+		} catch {
+			return 'site';
+		}
 	}
 
 	const embed = $derived(getEmbedInfo(video.url));
@@ -124,7 +131,8 @@
 						onclick={watchOnSite}
 						class="text-xs text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
 					>
-						Watch on {site} <i class="fa-solid fa-arrow-up-right-from-square ml-0.5 text-[10px]"></i>
+						Watch on {site}
+						<i class="fa-solid fa-arrow-up-right-from-square ml-0.5 text-[10px]"></i>
 					</button>
 				</div>
 			</div>
@@ -134,20 +142,30 @@
 				<!-- Thumbnail -->
 				<div class="aspect-video w-full bg-black">
 					{#if video.thumbnail}
-						<img src={video.thumbnail} alt={video.title} class="h-full w-full object-cover opacity-60" />
+						<img
+							src={video.thumbnail}
+							alt={video.title}
+							class="h-full w-full object-cover opacity-60"
+						/>
 					{/if}
-					<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+					<div
+						class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"
+					></div>
 
 					<!-- Play hint in centre -->
 					<div class="absolute inset-0 flex items-center justify-center">
-						<div class="flex h-16 w-16 items-center justify-center rounded-full bg-black/50 ring-2 ring-white/20 backdrop-blur-sm">
+						<div
+							class="flex h-16 w-16 items-center justify-center rounded-full bg-black/50 ring-2 ring-white/20 backdrop-blur-sm"
+						>
 							<i class="fa-solid fa-play ml-1 text-xl text-white"></i>
 						</div>
 					</div>
 
 					<!-- Title + meta overlaid at bottom -->
-					<div class="absolute bottom-0 left-0 right-0 p-5">
-						<h2 class="mb-1 text-base font-semibold leading-snug text-white line-clamp-2">{video.title}</h2>
+					<div class="absolute right-0 bottom-0 left-0 p-5">
+						<h2 class="mb-1 line-clamp-2 text-base leading-snug font-semibold text-white">
+							{video.title}
+						</h2>
 						<div class="flex items-center gap-2 text-xs text-white/60">
 							{#if video.publisher}<span>{video.publisher}</span>{/if}
 							{#if video.duration}<span>·</span><span>{video.duration}</span>{/if}
@@ -169,7 +187,9 @@
 						Watch here
 					</button>
 				{:else}
-					<div class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[var(--app-border)] px-5 py-3 text-sm text-[var(--app-muted)]">
+					<div
+						class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[var(--app-border)] px-5 py-3 text-sm text-[var(--app-muted)]"
+					>
 						<i class="fa-solid fa-circle-info text-xs"></i>
 						Can't embed this video
 					</div>

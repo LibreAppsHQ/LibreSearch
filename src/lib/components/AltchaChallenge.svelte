@@ -103,5 +103,7 @@
 		{/if}
 	</div>
 
-	<p class="mt-4 text-xs text-[var(--app-muted)]">Protected by ALTCHA · privacy-friendly, no CAPTCHA images</p>
+	<p class="mt-4 text-xs text-[var(--app-muted)]">
+		Protected by ALTCHA · privacy-friendly, no CAPTCHA images
+	</p>
 </div>

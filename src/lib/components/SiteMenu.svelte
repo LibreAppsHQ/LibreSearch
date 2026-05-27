@@ -32,7 +32,8 @@
 				{ label: 'Press', href: '/press', icon: null },
 				{ label: 'Privacy Policy', href: '/privacy', icon: null },
 				{ label: 'Terms of Service', href: '/terms', icon: null },
-				{ label: 'Click me if interested in UI', href: '/design' }
+				{ label: 'Click me if interested in UI', href: '/design' },
+				{ label: 'Donate', href: '/donate'}
 			]
 		}
 	];
@@ -76,7 +77,9 @@
 			<div class="mt-2 space-y-6">
 				{#each menuSections as section, i}
 					<div>
-						<p class="px-0.5 text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
+						<p
+							class="px-0.5 text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase"
+						>
 							{section.title}
 						</p>
 
@@ -97,7 +100,7 @@
 					</div>
 
 					{#if i < menuSections.length - 1}
-						<div class="border-t border-[#3a435b] " />
+						<div class="border-t border-[#3a435b]" />
 					{/if}
 				{/each}
 			</div>

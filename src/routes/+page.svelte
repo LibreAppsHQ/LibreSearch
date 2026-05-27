@@ -3,10 +3,12 @@
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import Clock from '$lib/components/Clock.svelte';
-	import { settingsStore, getToggle } from '$lib/stores/settings';
+	import { settingsStore, getToggle, getSelect } from '$lib/stores/settings';
 
 	let query = $state('');
-	let safesearch = $derived(getToggle($settingsStore, 'safe-search'));
+	let safesearch = $derived(
+		getSelect($settingsStore, 'safe-search', 'moderate') as 'strict' | 'moderate' | 'low'
+	);
 
 	let showDefaultModal = $state(false);
 
@@ -163,9 +165,7 @@
 		id="without-tracking"
 		class="bg-gradient-to-b from-[#5b5bf0] to-[#6f6ff7] px-6 py-20 text-white sm:py-28"
 	>
-		<div
-			class="mx-auto flex max-w-6xl flex-col items-center gap-12 md:flex-row md:justify-between"
-		>
+		<div class="mx-auto flex max-w-6xl flex-col items-center gap-12 md:flex-row md:justify-between">
 			<div class="max-w-xl text-center md:text-left">
 				<h2 class="text-5xl leading-tight font-bold sm:text-6xl">
 					Search,<br />not surveillance.
@@ -195,9 +195,7 @@
 		id="mass-surveillance"
 		class="bg-gradient-to-b from-[#0f766e] to-[#0d9488] px-6 py-20 text-white sm:py-28"
 	>
-		<div
-			class="mx-auto flex max-w-6xl flex-col items-center gap-12 md:flex-row md:justify-between"
-		>
+		<div class="mx-auto flex max-w-6xl flex-col items-center gap-12 md:flex-row md:justify-between">
 			<img
 				src="/icon3.svg"
 				alt="Mass surveillance watching everyone online"
@@ -209,8 +207,8 @@
 					Stop mass<br />surveillance.
 				</h2>
 				<p class="mt-6 text-lg text-white/85">
-					Most search engines log every query and tie it to a profile that follows you across
-					the web. We don't. No logs, no profiles, no tracking — your searches stay yours.
+					Most search engines log every query and tie it to a profile that follows you across the
+					web. We don't. No logs, no profiles, no tracking — your searches stay yours.
 				</p>
 				<a
 					href="/privacy"
@@ -223,7 +221,7 @@
 	</section>
 
 	<!-- Footer -->
-	<footer class=" py-2.5 bg-[#0c0d0e]">
+	<footer class=" bg-[#0c0d0e] py-2.5">
 		<nav class="flex items-center justify-center gap-18 text-sm text-white/90">
 			<a href="/privacy" class="transition hover:text-[var(--app-text)]">Privacy Policy</a>
 			<a href="/about" class="transition hover:text-[var(--app-text)]">About Us</a>
@@ -267,8 +265,8 @@
 			</ol>
 
 			<p class="mt-4 text-xs text-black/50">
-				Browsers don’t allow a site to change your default search engine for you — it’s a
-				one-time setting you confirm yourself.
+				Browsers don’t allow a site to change your default search engine for you — it’s a one-time
+				setting you confirm yourself.
 			</p>
 
 			<button

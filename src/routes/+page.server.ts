@@ -24,9 +24,11 @@ export const load = (async ({ fetch, url }) => {
 
 	try {
 		const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-		const payload = (await response.json().catch(() => null)) as
-			| { error?: string; query?: string; results?: Array<{ title: string; url: string; snippet: string }> }
-			| null;
+		const payload = (await response.json().catch(() => null)) as {
+			error?: string;
+			query?: string;
+			results?: Array<{ title: string; url: string; snippet: string }>;
+		} | null;
 
 		if (!response.ok) {
 			throw new Error(payload?.error ?? 'Search backend unavailable.');

@@ -77,7 +77,9 @@
 		<!-- Sticky table of contents -->
 		<aside class="hidden lg:block">
 			<nav class="sticky top-28 space-y-1">
-				<p class="mb-3 px-3 text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
+				<p
+					class="mb-3 px-3 text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase"
+				>
 					On this page
 				</p>
 				{#each sections as s}
@@ -98,17 +100,17 @@
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					Launchpad is a private search engine operated by Arcbase. By using it, you agree to these
 					terms. If you don't agree, please don't use the service. These terms work alongside our
-					<a href="/privacy" class="text-[var(--app-accent)] hover:underline">Privacy Policy</a>, which
-					explains how we handle data.
+					<a href="/privacy" class="text-[var(--app-accent)] hover:underline">Privacy Policy</a>,
+					which explains how we handle data.
 				</p>
 			</section>
 
 			<section id="the-service" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">The service</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					Launchpad lets you search the web privately. It is provided free of charge, and we may add,
-					change, or remove features at any time to keep it working and secure. We don't guarantee the
-					service will always be available or uninterrupted.
+					Launchpad lets you search the web privately. It is provided free of charge, and we may
+					add, change, or remove features at any time to keep it working and secure. We don't
+					guarantee the service will always be available or uninterrupted.
 				</p>
 			</section>
 
@@ -129,18 +131,22 @@
 				</ul>
 				<p class="mt-4 text-sm leading-7 text-[var(--app-muted)]">
 					We use measures such as rate limiting and a privacy-friendly
-					<a href="/design" class="text-[var(--app-accent)] hover:underline">proof-of-work challenge</a>
+					<a href="/design" class="text-[var(--app-accent)] hover:underline"
+						>proof-of-work challenge</a
+					>
 					to detect and slow down abuse. Automated traffic may be challenged or blocked.
 				</p>
 			</section>
 
 			<section id="search-results" class="scroll-mt-28">
-				<h2 class="mb-3 text-xl font-bold tracking-tight">Search results &amp; third-party content</h2>
+				<h2 class="mb-3 text-xl font-bold tracking-tight">
+					Search results &amp; third-party content
+				</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					Results are gathered from an independent upstream search index and the wider web. We don't
-					control, endorse, or guarantee the accuracy, legality, or safety of any third-party site you
-					reach through Launchpad. Following a link is at your own discretion, and those sites have
-					their own terms and privacy practices.
+					control, endorse, or guarantee the accuracy, legality, or safety of any third-party site
+					you reach through Launchpad. Following a link is at your own discretion, and those sites
+					have their own terms and privacy practices.
 				</p>
 			</section>
 
@@ -187,7 +193,8 @@
 					<a href="mailto:legal@arcbase.one" class="text-[var(--app-accent)] hover:underline"
 						>legal@arcbase.one</a
 					>
-					or learn more on the <a href="/about" class="text-[var(--app-accent)] hover:underline">About</a> page.
+					or learn more on the
+					<a href="/about" class="text-[var(--app-accent)] hover:underline">About</a> page.
 				</p>
 			</section>
 		</div>

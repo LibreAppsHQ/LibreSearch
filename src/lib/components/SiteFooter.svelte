@@ -8,7 +8,7 @@
 			<!-- Brand -->
 			<div class="max-w-xs space-y-3">
 				<a href="/" class="flex items-center gap-3">
-					<div class="w-35 h-28"><Logo class="w-40 h-45" /></div>
+					<div class="h-28 w-35"><Logo class="h-45 w-40" /></div>
 				</a>
 				<p class="text-sm leading-6 text-[var(--app-muted)]">
 					A private search engine that puts you in control. No tracking, no profiles, no ads.
@@ -60,6 +60,12 @@
 						</li>
 						<li>
 							<a
+								href="/donate"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Donate</a
+							>
+						</li>
+						<li>
+							<a
 								href="/settings"
 								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Settings</a
 							>
@@ -77,7 +83,7 @@
 								rel="noopener noreferrer"
 								class="inline-flex items-center gap-1.5 text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
 							>
-								<i class="fa-brands fa-github text-xs"></i>
+								<i class="fa-brands fa-github"></i>
 								GitHub
 							</a>
 						</li>
@@ -128,8 +134,8 @@
 				</p>
 				<span class="text-[var(--app-muted)]">·</span>
 				<span
-					class="rounded-full border border-[var(--app-border)] bg-[#171b25]/80 backdrop-blur-sm px-2 py-0.5 text-xs text-[var(--app-muted)]"
-					>v0.3.1</span
+					class="rounded-full border border-[var(--app-border)] bg-[#171b25]/80 px-2 py-0.5 text-xs text-[var(--app-muted)] backdrop-blur-sm"
+					>v0.4.0</span
 				>
 			</div>
 		</div>

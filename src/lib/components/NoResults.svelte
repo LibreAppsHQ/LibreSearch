@@ -11,12 +11,12 @@
 		web: { label: 'Web', icon: 'fa-magnifying-glass' },
 		news: { label: 'News', icon: 'fa-newspaper' },
 		videos: { label: 'Videos', icon: 'fa-play' },
-		images: { label: 'Images', icon: 'fa-image' }
+		images: { label: 'Images', icon: 'fa-image' },
+		shopping: { label: 'Shopping', icon: 'fa-bag-shopping' },
+		maps: { label: 'Maps', icon: 'fa-location-dot' }
 	};
 
-	let others = $derived(
-		(Object.keys(tabMeta) as SearchTab[]).filter((t) => t !== tab)
-	);
+	let others = $derived((Object.keys(tabMeta) as SearchTab[]).filter((t) => t !== tab));
 
 	function urlFor(t: SearchTab): string {
 		const params = new URLSearchParams({ q: query });

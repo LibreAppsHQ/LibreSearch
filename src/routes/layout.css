@@ -10,11 +10,11 @@
 	--app-text: #fafafa;
 	--app-muted: #9ca3af;
 	--app-secondary: #d4d4d8;
-	--app-border: rgba(255,255,255,0.08);
-	--app-surface: rgba(255,255,255,0.025);
-	--app-hover: rgba(255,255,255,0.06);
-	--app-skeleton: rgba(255,255,255,0.06);
-	--app-skeleton-shine: rgba(255,255,255,0.12);
+	--app-border: rgba(255, 255, 255, 0.08);
+	--app-surface: rgba(255, 255, 255, 0.025);
+	--app-hover: rgba(255, 255, 255, 0.06);
+	--app-skeleton: rgba(255, 255, 255, 0.06);
+	--app-skeleton-shine: rgba(255, 255, 255, 0.12);
 	background: var(--app-background);
 	color: var(--app-text);
 	font-family:
@@ -62,18 +62,34 @@ select {
 }
 
 @keyframes fade-in {
-	from { opacity: 0; }
-	to { opacity: 1; }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 @keyframes slide-up {
-	from { opacity: 0; transform: translateY(10px); }
-	to { opacity: 1; transform: translateY(0); }
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 @keyframes scale-in {
-	from { opacity: 0; transform: scale(0.96); }
-	to { opacity: 1; transform: scale(1); }
+	from {
+		opacity: 0;
+		transform: scale(0.96);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 
 .animate-fade-in {
@@ -89,7 +105,9 @@ select {
 }
 
 @keyframes skeleton-shimmer {
-	100% { transform: translateX(100%); }
+	100% {
+		transform: translateX(100%);
+	}
 }
 
 .skeleton {
@@ -104,12 +122,7 @@ select {
 	position: absolute;
 	inset: 0;
 	transform: translateX(-100%);
-	background: linear-gradient(
-		90deg,
-		transparent,
-		var(--app-skeleton-shine),
-		transparent
-	);
+	background: linear-gradient(90deg, transparent, var(--app-skeleton-shine), transparent);
 	animation: skeleton-shimmer 1.4s ease-in-out infinite;
 }
 

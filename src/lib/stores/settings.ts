@@ -50,6 +50,14 @@ const defaultSettings: Setting[] = [
 		checked: true
 	},
 	{
+		id: 'instant-answers',
+		name: 'Instant answers',
+		description: 'Show built-in tools like the calculator, unit converter, and password generator.',
+		category: 'general',
+		type: 'toggle',
+		checked: true
+	},
+	{
 		id: 'enable-cache',
 		name: 'Cache search results',
 		description: 'Speed up repeated searches by reusing results for up to 5 minutes.',
@@ -207,8 +215,13 @@ const defaultSettings: Setting[] = [
 		name: 'Safe search',
 		description: 'Filter explicit content from search results.',
 		category: 'privacy',
-		type: 'toggle',
-		checked: true
+		type: 'select',
+		value: 'moderate',
+		options: [
+			{ label: 'Strict', value: 'strict' },
+			{ label: 'Moderate', value: 'moderate' },
+			{ label: 'Low', value: 'low' }
+		]
 	},
 	{
 		id: 'filter-ads',
@@ -233,6 +246,18 @@ const defaultSettings: Setting[] = [
 		category: 'privacy',
 		type: 'toggle',
 		checked: false
+	},
+	{
+		id: 'request-method',
+		name: 'HTTP request method',
+		description: 'POST hides your query from the URL and browser tab. GET includes them.',
+		category: 'privacy',
+		type: 'select',
+		value: 'GET',
+		options: [
+			{ label: 'GET', value: 'GET' },
+			{ label: 'POST', value: 'POST' }
+		]
 	},
 	{
 		id: 'save-history',

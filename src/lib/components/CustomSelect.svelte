@@ -77,17 +77,24 @@
 	}
 </script>
 
-<svelte:window onkeydown={handleKeydown} onresize={() => (open = false)} onscroll={() => (open = false)} />
+<svelte:window
+	onkeydown={handleKeydown}
+	onresize={() => (open = false)}
+	onscroll={() => (open = false)}
+/>
 
 <div class="relative">
 	<button
 		bind:this={buttonEl}
 		type="button"
 		onclick={toggle}
-		class="flex items-center gap-2 rounded-full border border-[var(--app-border)] bg-[var(--app-hover)] px-3.5 py-1.5 text-xs font-medium text-[var(--app-text)] transition hover:border-[var(--app-border)] hover:bg-[var(--app-hover)] focus:outline-none"
+		class="flex items-center gap-1.5 px-2 py-1 text-xs font-medium text-[var(--app-text)] hover:text-[var(--app-accent)] transition  focus:outline-none"
 	>
 		<span>{currentLabel}</span>
-		<i class="fa-solid fa-chevron-down text-[10px] text-[var(--app-muted)] transition-transform duration-150" class:rotate-180={open}></i>
+		<i
+			class="fa-solid fa-chevron-down text-[10px] text-[var(--app-muted)] transition-transform duration-150"
+			class:rotate-180={open}
+		></i>
 	</button>
 </div>
 
@@ -104,18 +111,22 @@
 
 		<!-- Dropdown -->
 		<div
-			class="fixed z-[61] min-w-[10rem] overflow-y-auto overscroll-contain rounded-xl border border-[var(--app-border)] bg-[var(--app-panel)] py-1 shadow-2xl shadow-black/40"
+			class="fixed z-[61] min-w-[10rem] overflow-y-auto overscroll-contain rounded-sm border border-[var(--app-border)] bg-[#272c39] py-1 shadow-2xl shadow-black/40"
 			style="{menuTop !== null ? `top:${menuTop}px;` : ''}{menuBottom !== null
 				? `bottom:${menuBottom}px;`
 				: ''} right:{menuRight}px; max-height:{menuMaxHeight}px;"
-			transition:fly={{ y: menuBottom !== null ? 4 : -4, duration: $reducedMotion ? 0 : 140, easing: cubicOut }}
+			transition:fly={{
+				y: menuBottom !== null ? 4 : -4,
+				duration: $reducedMotion ? 0 : 140,
+				easing: cubicOut
+			}}
 		>
 			{#each options as opt}
 				<button
 					type="button"
 					onclick={() => select(opt.value)}
 					class={opt.value === value
-						? 'flex w-full items-center justify-between gap-6 px-4 py-2 text-left text-sm font-medium text-[var(--app-text)] bg-[var(--app-hover)]'
+						? 'flex w-full items-center justify-between gap-6 bg-[var(--app-hover)] px-4 py-2 text-left text-sm font-medium text-[var(--app-text)]'
 						: 'flex w-full items-center px-4 py-2 text-left text-sm text-[var(--app-muted)] transition hover:bg-[var(--app-hover)] hover:text-[var(--app-text)]'}
 				>
 					{opt.label}

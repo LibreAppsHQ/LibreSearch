@@ -20,32 +20,35 @@
 </script>
 
 <aside class="overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[#171b25]">
-	<!-- Header: title + subtitle on the left, poster on the right -->
-	<div class="flex items-start justify-between gap-4 p-5">
-		<div class="min-w-0 flex-1">
-			<h2 class="text-2xl font-semibold leading-tight text-[var(--app-text)]">{infobox.title}</h2>
-			{#if attrs.length > 0}
-				<p class="mt-2 text-sm leading-6 text-[var(--app-muted)]">
-					{attrs[0][1]}
-				</p>
-			{/if}
-		</div>
+	<!-- Hero image -->
+	{#if infobox.imageUrl}
+		<img
+			src={infobox.imageUrl}
+			alt={infobox.title}
+			class="h-56 w-full object-cover"
+			onerror={(e) => {
+				(e.currentTarget as HTMLImageElement).style.display = 'none';
+			}}
+		/>
+	{/if}
 
-		{#if infobox.imageUrl}
-			<img
-				src={infobox.imageUrl}
-				alt={infobox.title}
-				class="h-28 w-24 shrink-0 rounded-lg object-cover"
-				onerror={(e) => {
-					(e.currentTarget as HTMLImageElement).style.display = 'none';
-				}}
-			/>
+	<!-- Title + subtitle -->
+	<div class="p-5">
+		<h2 class="text-2xl leading-tight font-semibold text-[var(--app-text)]">{infobox.title}</h2>
+		{#if infobox.subtitle}
+			<p class="mt-2 text-sm leading-6 text-[var(--app-muted)]">
+				{infobox.subtitle}
+			</p>
 		{/if}
 	</div>
 
 	{#if infobox.description}
 		<div class="border-t border-[var(--app-border)] p-5">
-			<p class={expanded ? 'text-sm leading-6 text-[var(--app-text)]' : 'line-clamp-3 text-sm leading-6 text-[var(--app-text)]'}>
+			<p
+				class={expanded
+					? 'text-sm leading-6 text-[var(--app-text)]'
+					: 'line-clamp-3 text-sm leading-6 text-[var(--app-text)]'}
+			>
 				{infobox.description}
 			</p>
 
@@ -75,11 +78,11 @@
 		</div>
 	{/if}
 
-	{#if expanded && (attrs.length > 1 || (infobox.profiles && infobox.profiles.length > 0))}
+	{#if expanded && (attrs.length > 0 || (infobox.profiles && infobox.profiles.length > 0))}
 		<div class="space-y-4 border-t border-[var(--app-border)] p-5">
-			{#if attrs.length > 1}
+			{#if attrs.length > 0}
 				<dl class="space-y-2">
-					{#each attrs.slice(1) as [key, value]}
+					{#each attrs as [key, value]}
 						<div class="grid grid-cols-[auto_1fr] gap-x-4 text-sm">
 							<dt class="shrink-0 text-[var(--app-muted)]">{key}</dt>
 							<dd class="text-[var(--app-text)]">{value}</dd>
@@ -89,7 +92,7 @@
 			{/if}
 
 			{#if infobox.profiles && infobox.profiles.length > 0}
-				<div class={attrs.length > 1 ? 'border-t border-[var(--app-border)] pt-4' : ''}>
+				<div class={attrs.length > 0 ? 'border-t border-[var(--app-border)] pt-4' : ''}>
 					<p class="mb-2 text-xs font-medium tracking-wider text-[var(--app-muted)] uppercase">
 						Quick links
 					</p>

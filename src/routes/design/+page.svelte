@@ -45,8 +45,8 @@
 				target="_blank"
 				rel="noopener noreferrer"
 				class="text-[var(--app-accent)] hover:underline">Startpage</a
-			>, the resemblance is hard to miss. That's not an accident, and we'd rather be upfront about it
-			than pretend otherwise.
+			>, the resemblance is hard to miss. That's not an accident, and we'd rather be upfront about
+			it than pretend otherwise.
 		</p>
 
 		<div class="mt-10 space-y-8 text-[15px] leading-7 text-[var(--app-muted)]">
@@ -55,9 +55,9 @@
 				<p>
 					Startpage has spent years refining what a calm, privacy-first search interface should feel
 					like: generous spacing, an honest settings page, a results layout that gets out of your
-					way. When we set out to build Launchpad, we studied interfaces we admired — and theirs kept
-					coming out on top. So our layout, our settings structure, and our tone borrow heavily from
-					what they got right.
+					way. When we set out to build Launchpad, we studied interfaces we admired — and theirs
+					kept coming out on top. So our layout, our settings structure, and our tone borrow heavily
+					from what they got right.
 				</p>
 			</section>
 
@@ -68,8 +68,9 @@
 				<p>
 					Familiar patterns lower the bar for people switching away from surveillance-heavy search
 					engines. If the toggles, tabs, and result cards feel like something you already know how
-					to use, that's a feature — not a coincidence. We'd rather you spend zero seconds relearning
-					an interface and all your attention on the fact that nobody is logging your searches.
+					to use, that's a feature — not a coincidence. We'd rather you spend zero seconds
+					relearning an interface and all your attention on the fact that nobody is logging your
+					searches.
 				</p>
 			</section>
 

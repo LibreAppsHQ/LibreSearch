@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { settingsStore, getToggle } from '$lib/stores/settings';
 
-	let {
-		result
-	} = $props<{
+	let { result } = $props<{
 		result: {
 			title: string;
 			url: string;
@@ -47,7 +45,17 @@
 		if (!stripTracking) return result.url;
 		try {
 			const u = new URL(result.url);
-			['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', 'ref', 'source'].forEach((p) => u.searchParams.delete(p));
+			[
+				'utm_source',
+				'utm_medium',
+				'utm_campaign',
+				'utm_term',
+				'utm_content',
+				'fbclid',
+				'gclid',
+				'ref',
+				'source'
+			].forEach((p) => u.searchParams.delete(p));
 			return u.toString();
 		} catch {
 			return result.url;
@@ -93,9 +101,11 @@
 			</div>
 
 			<!-- Title -->
-			<h2 class={compact
-				? 'pt-0.5 text-base font-normal leading-snug text-[var(--app-accent)] group-hover:underline'
-				: 'pt-1 text-xl font-normal leading-snug text-[var(--app-accent)] group-hover:underline'}>
+			<h2
+				class={compact
+					? 'pt-0.5 text-base leading-snug font-normal text-[var(--app-accent)] group-hover:underline'
+					: 'pt-1 text-xl leading-snug font-normal text-[var(--app-accent)] group-hover:underline'}
+			>
 				{result.title}
 			</h2>
 
