@@ -88,7 +88,7 @@
 		bind:this={buttonEl}
 		type="button"
 		onclick={toggle}
-		class="flex items-center gap-1.5 px-2 py-1 text-xs font-medium text-[var(--app-text)] hover:text-[var(--app-accent)] transition  focus:outline-none"
+		class="flex items-center gap-1.5 px-2 py-1 text-xs font-medium text-[var(--app-text)] transition hover:text-[var(--app-accent)] focus:outline-none"
 	>
 		<span>{currentLabel}</span>
 		<i

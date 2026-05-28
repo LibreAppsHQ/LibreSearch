@@ -141,46 +141,149 @@
 		time: { ms: 0.001, s: 1, min: 60, h: 3600, day: 86400, week: 604800, year: 31557600 }
 	};
 	const UNIT_ALIASES: Record<string, string> = {
-		millimeter: 'mm', millimeters: 'mm', millimetre: 'mm', mm: 'mm',
-		centimeter: 'cm', centimeters: 'cm', cm: 'cm',
-		meter: 'm', meters: 'm', metre: 'm', metres: 'm', m: 'm',
-		kilometer: 'km', kilometers: 'km', kilometre: 'km', km: 'km',
-		inch: 'in', inches: 'in', in: 'in',
-		foot: 'ft', feet: 'ft', ft: 'ft',
-		yard: 'yd', yards: 'yd', yd: 'yd',
-		mile: 'mi', miles: 'mi', mi: 'mi',
-		nmi: 'nmi', nauticalmile: 'nmi',
-		milligram: 'mg', milligrams: 'mg', mg: 'mg',
-		gram: 'g', grams: 'g', g: 'g',
-		kilogram: 'kg', kilograms: 'kg', kilo: 'kg', kilos: 'kg', kg: 'kg',
-		tonne: 't', tonnes: 't', ton: 't', tons: 't', t: 't',
-		ounce: 'oz', ounces: 'oz', oz: 'oz',
-		pound: 'lb', pounds: 'lb', lb: 'lb', lbs: 'lb',
-		stone: 'st', st: 'st',
-		milliliter: 'ml', milliliters: 'ml', millilitre: 'ml', ml: 'ml',
-		liter: 'l', liters: 'l', litre: 'l', litres: 'l', l: 'l',
-		gallon: 'gal', gallons: 'gal', gal: 'gal',
-		quart: 'qt', quarts: 'qt', qt: 'qt',
-		pint: 'pt', pints: 'pt', pt: 'pt',
-		cup: 'cup', cups: 'cup',
-		floz: 'floz', fluidounce: 'floz',
-		byte: 'b', bytes: 'b', b: 'b',
-		kilobyte: 'kb', kilobytes: 'kb', kb: 'kb',
-		megabyte: 'mb', megabytes: 'mb', mb: 'mb',
-		gigabyte: 'gb', gigabytes: 'gb', gb: 'gb',
-		terabyte: 'tb', terabytes: 'tb', tb: 'tb',
-		kibibyte: 'kib', kib: 'kib', mebibyte: 'mib', mib: 'mib',
-		gibibyte: 'gib', gib: 'gib', tebibyte: 'tib', tib: 'tib',
-		millisecond: 'ms', milliseconds: 'ms', ms: 'ms',
-		second: 's', seconds: 's', sec: 's', secs: 's', s: 's',
-		minute: 'min', minutes: 'min', min: 'min', mins: 'min',
-		hour: 'h', hours: 'h', hr: 'h', hrs: 'h', h: 'h',
-		day: 'day', days: 'day',
-		week: 'week', weeks: 'week',
-		year: 'year', years: 'year', yr: 'year', yrs: 'year',
-		mph: 'mph', kmh: 'km/h', kph: 'km/h', 'km/h': 'km/h', mps: 'm/s', 'm/s': 'm/s',
-		knot: 'knot', knots: 'knot', fps: 'ft/s', 'ft/s': 'ft/s',
-		celsius: 'c', c: 'c', '°c': 'c', fahrenheit: 'f', f: 'f', '°f': 'f', kelvin: 'k', k: 'k'
+		millimeter: 'mm',
+		millimeters: 'mm',
+		millimetre: 'mm',
+		mm: 'mm',
+		centimeter: 'cm',
+		centimeters: 'cm',
+		cm: 'cm',
+		meter: 'm',
+		meters: 'm',
+		metre: 'm',
+		metres: 'm',
+		m: 'm',
+		kilometer: 'km',
+		kilometers: 'km',
+		kilometre: 'km',
+		km: 'km',
+		inch: 'in',
+		inches: 'in',
+		in: 'in',
+		foot: 'ft',
+		feet: 'ft',
+		ft: 'ft',
+		yard: 'yd',
+		yards: 'yd',
+		yd: 'yd',
+		mile: 'mi',
+		miles: 'mi',
+		mi: 'mi',
+		nmi: 'nmi',
+		nauticalmile: 'nmi',
+		milligram: 'mg',
+		milligrams: 'mg',
+		mg: 'mg',
+		gram: 'g',
+		grams: 'g',
+		g: 'g',
+		kilogram: 'kg',
+		kilograms: 'kg',
+		kilo: 'kg',
+		kilos: 'kg',
+		kg: 'kg',
+		tonne: 't',
+		tonnes: 't',
+		ton: 't',
+		tons: 't',
+		t: 't',
+		ounce: 'oz',
+		ounces: 'oz',
+		oz: 'oz',
+		pound: 'lb',
+		pounds: 'lb',
+		lb: 'lb',
+		lbs: 'lb',
+		stone: 'st',
+		st: 'st',
+		milliliter: 'ml',
+		milliliters: 'ml',
+		millilitre: 'ml',
+		ml: 'ml',
+		liter: 'l',
+		liters: 'l',
+		litre: 'l',
+		litres: 'l',
+		l: 'l',
+		gallon: 'gal',
+		gallons: 'gal',
+		gal: 'gal',
+		quart: 'qt',
+		quarts: 'qt',
+		qt: 'qt',
+		pint: 'pt',
+		pints: 'pt',
+		pt: 'pt',
+		cup: 'cup',
+		cups: 'cup',
+		floz: 'floz',
+		fluidounce: 'floz',
+		byte: 'b',
+		bytes: 'b',
+		b: 'b',
+		kilobyte: 'kb',
+		kilobytes: 'kb',
+		kb: 'kb',
+		megabyte: 'mb',
+		megabytes: 'mb',
+		mb: 'mb',
+		gigabyte: 'gb',
+		gigabytes: 'gb',
+		gb: 'gb',
+		terabyte: 'tb',
+		terabytes: 'tb',
+		tb: 'tb',
+		kibibyte: 'kib',
+		kib: 'kib',
+		mebibyte: 'mib',
+		mib: 'mib',
+		gibibyte: 'gib',
+		gib: 'gib',
+		tebibyte: 'tib',
+		tib: 'tib',
+		millisecond: 'ms',
+		milliseconds: 'ms',
+		ms: 'ms',
+		second: 's',
+		seconds: 's',
+		sec: 's',
+		secs: 's',
+		s: 's',
+		minute: 'min',
+		minutes: 'min',
+		min: 'min',
+		mins: 'min',
+		hour: 'h',
+		hours: 'h',
+		hr: 'h',
+		hrs: 'h',
+		h: 'h',
+		day: 'day',
+		days: 'day',
+		week: 'week',
+		weeks: 'week',
+		year: 'year',
+		years: 'year',
+		yr: 'year',
+		yrs: 'year',
+		mph: 'mph',
+		kmh: 'km/h',
+		kph: 'km/h',
+		'km/h': 'km/h',
+		mps: 'm/s',
+		'm/s': 'm/s',
+		knot: 'knot',
+		knots: 'knot',
+		fps: 'ft/s',
+		'ft/s': 'ft/s',
+		celsius: 'c',
+		c: 'c',
+		'°c': 'c',
+		fahrenheit: 'f',
+		f: 'f',
+		'°f': 'f',
+		kelvin: 'k',
+		k: 'k'
 	};
 	const TEMP = new Set(['c', 'f', 'k']);
 
@@ -227,20 +330,30 @@
 		const q = query.trim().toLowerCase();
 		if (!q) return null;
 
-		if (/password|passwd|passphrase/.test(q) && /generat|random|strong|secure|create|maker|\bgen\b/.test(q))
+		if (
+			/password|passwd|passphrase/.test(q) &&
+			/generat|random|strong|secure|create|maker|\bgen\b/.test(q)
+		)
 			return 'password';
 		if (q === 'password generator' || q === 'password gen') return 'password';
 
 		if (/\bmy ip\b|ip address|what'?s? my ip|whats my ip/.test(q) || q === 'ip') return 'ip';
 
-		if (q === 'color picker' || q === 'colour picker' || q === 'color' || q === 'colour' || HEX_RE.test(q))
+		if (
+			q === 'color picker' ||
+			q === 'colour picker' ||
+			q === 'color' ||
+			q === 'colour' ||
+			HEX_RE.test(q)
+		)
 			return 'color';
 
 		if (q === 'unit converter' || q === 'unit conversion' || q === 'converter') return 'unit';
 		if (parseUnit(query)) return 'unit';
 
 		if (/flip a coin|coin flip|flip coin|heads or tails/.test(q)) return 'coin';
-		if (/roll(ing)?\s+(a\s+)?(dice|die|d\d+)|dice roll|roll dice|\bd6\b|\bd20\b/.test(q)) return 'dice';
+		if (/roll(ing)?\s+(a\s+)?(dice|die|d\d+)|dice roll|roll dice|\bd6\b|\bd20\b/.test(q))
+			return 'dice';
 		if (/random number|number generator|\brng\b|random number generator/.test(q)) return 'rng';
 
 		if (q === 'calculator' || q === 'calc') return 'calculator';
@@ -350,7 +463,8 @@
 		const bits = pool ? length * Math.log2(pool) : 0;
 		if (bits < 50) return { label: 'Weak', cls: 'text-red-400', bar: 'w-1/4 bg-red-400' };
 		if (bits < 80) return { label: 'Fair', cls: 'text-amber-400', bar: 'w-2/4 bg-amber-400' };
-		if (bits < 120) return { label: 'Strong', cls: 'text-emerald-400', bar: 'w-3/4 bg-emerald-400' };
+		if (bits < 120)
+			return { label: 'Strong', cls: 'text-emerald-400', bar: 'w-3/4 bg-emerald-400' };
 		return { label: 'Very strong', cls: 'text-emerald-400', bar: 'w-full bg-emerald-400' };
 	});
 	$effect(() => {
@@ -369,7 +483,11 @@
 	$effect(() => {
 		if (kind === 'color' && HEX_RE.test(query.trim())) {
 			let h = query.trim().replace('#', '');
-			if (h.length === 3) h = h.split('').map((c) => c + c).join('');
+			if (h.length === 3)
+				h = h
+					.split('')
+					.map((c) => c + c)
+					.join('');
 			color = '#' + h.toLowerCase();
 		}
 	});
@@ -519,7 +637,9 @@
 				</div>
 				<div class="mt-3 flex items-center gap-3">
 					<div class="h-1.5 flex-1 overflow-hidden rounded-full bg-[var(--app-hover)]">
-						<div class="h-full rounded-full transition-[width,background-color] {strength.bar}"></div>
+						<div
+							class="h-full rounded-full transition-[width,background-color] {strength.bar}"
+						></div>
 					</div>
 					<span class="text-xs font-medium {strength.cls}">{strength.label}</span>
 				</div>
@@ -598,7 +718,9 @@
 							onclick={() => copyText(row.value, (v) => (colorCopied = v))}
 							class="flex w-full items-center gap-3 rounded-lg px-2 py-1.5 text-left transition hover:bg-[var(--app-hover)]"
 						>
-							<span class="w-9 shrink-0 text-xs font-semibold text-[var(--app-muted)]">{row.label}</span>
+							<span class="w-9 shrink-0 text-xs font-semibold text-[var(--app-muted)]"
+								>{row.label}</span
+							>
 							<code class="flex-1 truncate font-mono text-[var(--app-text)]">{row.value}</code>
 							<i class="fa-solid fa-copy text-xs text-[var(--app-muted)]"></i>
 						</button>

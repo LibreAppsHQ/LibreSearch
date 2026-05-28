@@ -34,7 +34,7 @@
 				{ label: 'Privacy Policy', href: '/privacy', icon: null },
 				{ label: 'Terms of Service', href: '/terms', icon: null },
 				{ label: 'Click me if interested in UI', href: '/design' },
-				{ label: 'Donate', href: '/donate'}
+				{ label: 'Donate', href: '/donate' }
 			]
 		}
 	];

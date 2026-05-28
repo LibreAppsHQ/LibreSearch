@@ -67,8 +67,8 @@
 			<span class="text-[var(--app-accent)]">Leave no trace.</span>
 		</h1>
 		<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-white">
-			LibreSearch is a private search engine that gives you real results without logging your queries,
-			building a profile on you, or selling your attention.
+			LibreSearch is a private search engine that gives you real results without logging your
+			queries, building a profile on you, or selling your attention.
 		</p>
 		<div class="mt-10 flex flex-wrap items-center justify-center gap-4">
 			<img src="/icon.svg" alt="No Trace Icon" class="h-48 w-48 sm:h-64 sm:w-64" />

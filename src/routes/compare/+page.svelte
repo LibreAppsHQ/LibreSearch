@@ -156,7 +156,9 @@
 			<table class="w-full min-w-[820px] border-collapse text-sm">
 				<thead>
 					<tr class="border-b border-[var(--app-border)]">
-						<th class="sticky left-0 z-10 bg-[#171b25] px-5 py-4 text-left font-semibold">Feature</th>
+						<th class="sticky left-0 z-10 bg-[#171b25] px-5 py-4 text-left font-semibold"
+							>Feature</th
+						>
 						{#each engines as engine (engine.name)}
 							<th class="px-3 py-5 text-center">
 								<img
@@ -195,8 +197,7 @@
 								{#each row.values as value, i (engines[i].name)}
 									{@const m = markStyles[value]}
 									<td class="px-3 py-4 text-center align-middle">
-										<i class={`fa-solid ${m.icon} ${m.color} text-base`} aria-label={m.label}
-										></i>
+										<i class={`fa-solid ${m.icon} ${m.color} text-base`} aria-label={m.label}></i>
 									</td>
 								{/each}
 							</tr>
@@ -207,7 +208,9 @@
 		</div>
 
 		<!-- Legend -->
-		<div class="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-[var(--app-muted)]">
+		<div
+			class="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-[var(--app-muted)]"
+		>
 			<span class="inline-flex items-center gap-2">
 				<i class="fa-solid fa-check text-emerald-400"></i> Yes
 			</span>
@@ -230,22 +233,22 @@
 			<ul class="space-y-3 text-sm leading-7 text-[var(--app-muted)]">
 				<li>
 					<span class="text-[var(--app-text)]">Sources.</span> Each engine's public privacy policy
-					and product documentation as of the latest review. Where a vendor's claims and
-					independent reporting disagree, we mark the row <em>Partial</em>.
+					and product documentation as of the latest review. Where a vendor's claims and independent
+					reporting disagree, we mark the row <em>Partial</em>.
 				</li>
 				<li>
-					<span class="text-[var(--app-text)]">"No filter bubble."</span> Means results are not
-					tailored to a user profile built from prior searches. It does not mean results are
-					identical across regions or languages.
+					<span class="text-[var(--app-text)]">"No filter bubble."</span> Means results are not tailored
+					to a user profile built from prior searches. It does not mean results are identical across regions
+					or languages.
 				</li>
 				<li>
 					<span class="text-[var(--app-text)]">"Independent index."</span> A <em>Not applicable</em>
-					here isn't a downside — meta-search engines like LibreSearch, DuckDuckGo, and Startpage
-					rely on partner indices on purpose, and we're upfront about ours.
+					here isn't a downside — meta-search engines like LibreSearch, DuckDuckGo, and Startpage rely
+					on partner indices on purpose, and we're upfront about ours.
 				</li>
 				<li>
-					<span class="text-[var(--app-text)]">Spotted something off?</span> Open an issue or
-					email us and we'll fix the row — accuracy matters more here than marketing.
+					<span class="text-[var(--app-text)]">Spotted something off?</span> Open an issue or email us
+					and we'll fix the row — accuracy matters more here than marketing.
 				</li>
 			</ul>
 		</div>

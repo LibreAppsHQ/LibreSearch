@@ -98,10 +98,11 @@
 			<section id="overview" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Overview</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					LibreSearch is a private search engine operated by Arcbase. We designed it so that the most
-					private option is the default - and the only option. We do not run ads, we do not build
-					advertising profiles, and we do not sell data. This page explains the small amount of data
-					that is involved in running the service and the large amount we deliberately never touch.
+					LibreSearch is a private search engine operated by Arcbase. We designed it so that the
+					most private option is the default - and the only option. We do not run ads, we do not
+					build advertising profiles, and we do not sell data. This page explains the small amount
+					of data that is involved in running the service and the large amount we deliberately never
+					touch.
 				</p>
 			</section>
 
@@ -170,8 +171,8 @@
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					To return results we rely on an upstream search index, which receives your query through
 					our anonymizing proxy but not your identity. We do not embed third-party advertising,
-					analytics, or social tracking scripts on LibreSearch. We have no business model that depends
-					on sharing your data, so we don't.
+					analytics, or social tracking scripts on LibreSearch. We have no business model that
+					depends on sharing your data, so we don't.
 				</p>
 			</section>
 

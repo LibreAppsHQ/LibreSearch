@@ -122,8 +122,8 @@
 			<span class="text-[var(--app-accent)]">Just your support.</span>
 		</h1>
 		<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-white">
-			LibreSearch refuses to sell ads or profile your searches, which means the only thing keeping the
-			servers on is people like you. Every contribution goes straight to infrastructure.
+			LibreSearch refuses to sell ads or profile your searches, which means the only thing keeping
+			the servers on is people like you. Every contribution goes straight to infrastructure.
 		</p>
 		<div class="mt-10 flex flex-wrap items-center justify-center gap-4">
 			<a
@@ -180,7 +180,9 @@
 		>
 			Choose a method
 		</p>
-		<h2 class="mb-12 text-center text-2xl font-bold tracking-tight">Every dollar keeps us online.</h2>
+		<h2 class="mb-12 text-center text-2xl font-bold tracking-tight">
+			Every dollar keeps us online.
+		</h2>
 
 		<div class="mx-auto max-w-[640px]">
 			<!-- Crypto -->
@@ -195,7 +197,9 @@
 				</div>
 				<div class="space-y-3">
 					{#each wallets as wallet}
-						<div class="rounded-xl border border-[var(--app-border)] bg-[var(--app-background)]/40 p-4">
+						<div
+							class="rounded-xl border border-[var(--app-border)] bg-[var(--app-background)]/40 p-4"
+						>
 							<div class="mb-2 flex items-center gap-2">
 								<span
 									class="flex h-7 w-7 items-center justify-center rounded-lg {wallet.bg} {wallet.color}"

@@ -361,9 +361,7 @@ async function geocodePlaces(query: string, fetchImpl: typeof fetch): Promise<Se
 
 		const payload: unknown = await response.json();
 		const raw = Array.isArray(payload) ? payload : [];
-		const placeResults = raw
-			.map(normalizePlaceResult)
-			.filter((p): p is PlaceResult => p !== null);
+		const placeResults = raw.map(normalizePlaceResult).filter((p): p is PlaceResult => p !== null);
 
 		return { query, tab: 'maps', results: [], placeResults };
 	} finally {
