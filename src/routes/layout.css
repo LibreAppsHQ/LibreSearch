@@ -1,6 +1,17 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
-@import '@fortawesome/fontawesome-free/css/all.css';
+
+/* FontAwesome is loaded asynchronously in +layout.svelte to avoid
+   blocking the first paint. These @font-face overrides make sure the
+   text using FA icons swaps in instead of blocking. */
+@font-face {
+	font-family: 'Font Awesome 6 Free';
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Font Awesome 6 Brands';
+	font-display: swap;
+}
 
 :root {
 	color-scheme: light dark;
@@ -94,14 +105,17 @@ select {
 
 .animate-fade-in {
 	animation: fade-in 0.2s ease both;
+	will-change: opacity;
 }
 
 .animate-slide-up {
 	animation: slide-up 0.22s ease both;
+	will-change: opacity, transform;
 }
 
 .animate-scale-in {
 	animation: scale-in 0.15s ease both;
+	will-change: opacity, transform;
 }
 
 @keyframes skeleton-shimmer {

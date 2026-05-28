@@ -87,6 +87,7 @@
 		content="Search the web privately with LibreSearch. No tracking, no profiles, no ads. Fast, clean results from an independent search index."
 	/>
 	<link rel="canonical" href="https://libresearch.ca" />
+	<link rel="preload" as="image" href="/2.svg" fetchpriority="high" />
 
 	<!-- Open Graph -->
 	<meta property="og:title" content="LibreSearch - Private Search Engine" />

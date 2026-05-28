@@ -29,7 +29,8 @@
       "Read(//tmp/**)",
       "Bash(curl -sSI --max-time 15 \"https://libresearch.ca/sitemap.xml\")",
       "Bash(curl -sSI --max-time 15 \"https://libresearch.ca/robots.txt\")",
-      "Bash(curl -sS --max-time 15 \"https://libresearch.ca/sitemap.xml\")"
+      "Bash(curl -sS --max-time 15 \"https://libresearch.ca/sitemap.xml\")",
+      "Bash(npx svelte-kit *)"
     ]
   }
 }

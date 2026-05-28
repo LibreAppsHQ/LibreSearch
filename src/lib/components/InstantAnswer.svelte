@@ -519,7 +519,7 @@
 				</div>
 				<div class="mt-3 flex items-center gap-3">
 					<div class="h-1.5 flex-1 overflow-hidden rounded-full bg-[var(--app-hover)]">
-						<div class="h-full rounded-full transition-all {strength.bar}"></div>
+						<div class="h-full rounded-full transition-[width,background-color] {strength.bar}"></div>
 					</div>
 					<span class="text-xs font-medium {strength.cls}">{strength.label}</span>
 				</div>

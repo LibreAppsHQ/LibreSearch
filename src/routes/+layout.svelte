@@ -35,6 +35,8 @@
 		themeStore.load();
 		settingsStore.load();
 		historyStore.load();
+		// Load FontAwesome after first paint so it doesn't block FCP/LCP.
+		import('@fortawesome/fontawesome-free/css/all.css');
 	});
 </script>
 
