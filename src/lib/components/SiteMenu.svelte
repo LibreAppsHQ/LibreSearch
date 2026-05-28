@@ -92,7 +92,11 @@
 									class="flex items-center gap-2 rounded-lg px-2 py-2 text-sm text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
 								>
 									{#if link.icon}
-										<i class="fa-solid {link.icon} w-5 text-center text-[var(--app-muted)]"></i>
+										{#if link.icon.startsWith('/')}
+											<img src={link.icon} alt="" class="h-5 w-5 rounded-[4px]" />
+										{:else}
+											<i class="fa-solid {link.icon} w-5 text-center text-[var(--app-muted)]"></i>
+										{/if}
 									{/if}
 									{link.label}
 								</a>

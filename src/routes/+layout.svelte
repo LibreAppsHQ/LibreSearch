@@ -1,9 +1,15 @@
 <script lang="ts">
 	import './layout.css';
+	import { browser } from '$app/environment';
 	import { themeStore } from '$lib/stores/theme';
 	import { settingsStore, getToggle } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
 	import { onMount } from 'svelte';
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+
+	if (browser) {
+		injectSpeedInsights();
+	}
 
 	let { children } = $props();
 
@@ -39,6 +45,7 @@
 		import('@fortawesome/fontawesome-free/css/all.css');
 	});
 </script>
+
 
 <svelte:head>
 	<!-- Per-page `<meta name="description">` lives in each route, not here, so
