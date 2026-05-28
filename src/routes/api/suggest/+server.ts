@@ -25,7 +25,7 @@ export const GET: RequestHandler = async ({ url, fetch, request, getClientAddres
 		const response = await fetch(
 			`https://duckduckgo.com/ac/?q=${encodeURIComponent(q)}&type=list`,
 			{
-				headers: { 'User-Agent': 'Launchpad/1.0' },
+				headers: { 'User-Agent': 'LibreSearch/1.0' },
 				signal: AbortSignal.timeout(3000)
 			}
 		);

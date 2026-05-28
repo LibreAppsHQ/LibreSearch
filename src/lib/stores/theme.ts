@@ -87,7 +87,7 @@ function createThemeStore() {
 			if (initialized || typeof window === 'undefined') return;
 			initialized = true;
 
-			const stored = window.localStorage.getItem('Launchpad:theme');
+			const stored = window.localStorage.getItem('LibreSearch:theme');
 			if (stored && stored in themes) {
 				const themeKey = stored as ThemeKey;
 				set(themeKey);
@@ -100,7 +100,7 @@ function createThemeStore() {
 			set(themeKey);
 			applyThemeStyles(themeKey);
 			if (typeof window !== 'undefined') {
-				window.localStorage.setItem('Launchpad:theme', themeKey);
+				window.localStorage.setItem('LibreSearch:theme', themeKey);
 			}
 		}
 	};

@@ -9,31 +9,31 @@
 	<title>About Us</title>
 	<meta
 		name="description"
-		content="Launchpad is a private search engine that never logs your queries, builds profiles, or sells ads. Learn how it works and why privacy comes first."
+		content="LibreSearch is a private search engine that never logs your queries, builds profiles, or sells ads. Learn how it works and why privacy comes first."
 	/>
 	<link rel="canonical" href="https://search.arcbase.one/about" />
 
 	<!-- Open Graph -->
-	<meta property="og:title" content="About - Launchpad" />
+	<meta property="og:title" content="About - LibreSearch" />
 	<meta
 		property="og:description"
-		content="Launchpad is a private search engine that never logs your queries, builds profiles, or sells ads."
+		content="LibreSearch is a private search engine that never logs your queries, builds profiles, or sells ads."
 	/>
 	<meta property="og:url" content="https://search.arcbase.one/about" />
 	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
 
 	<!-- Twitter -->
-	<meta name="twitter:title" content="About - Launchpad" />
+	<meta name="twitter:title" content="About - LibreSearch" />
 	<meta
 		name="twitter:description"
-		content="Launchpad is a private search engine that never logs your queries, builds profiles, or sells ads."
+		content="LibreSearch is a private search engine that never logs your queries, builds profiles, or sells ads."
 	/>
 
 	<!-- JSON-LD: Organization -->
 	{@html `<script type="application/ld+json">${JSON.stringify({
 		'@context': 'https://schema.org',
 		'@type': 'Organization',
-		name: 'Launchpad',
+		name: 'LibreSearch',
 		url: 'https://search.arcbase.one',
 		logo: 'https://search.arcbase.one/favicon.png',
 		description: 'A private search engine with no tracking, no profiles, and no ads.',
@@ -67,7 +67,7 @@
 			<span class="text-[var(--app-accent)]">Leave no trace.</span>
 		</h1>
 		<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-white">
-			Launchpad is a private search engine that gives you real results without logging your queries,
+			LibreSearch is a private search engine that gives you real results without logging your queries,
 			building a profile on you, or selling your attention.
 		</p>
 		<div class="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -112,7 +112,7 @@
 					Real results without the surveillance.
 				</h2>
 				<p class="mb-4 text-sm leading-7 text-[var(--app-muted)]">
-					Launchpad uses an independent search index that doesn't rely on Big Tech - so you get
+					LibreSearch uses an independent search index that doesn't rely on Big Tech - so you get
 					genuine, unfiltered results instead of a curated feed designed to keep you clicking.
 				</p>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
@@ -122,7 +122,7 @@
 				</p>
 			</div>
 			<div class="space-y-3">
-				{#each [{ icon: 'fa-keyboard', label: 'You type a query', color: 'text-[var(--app-accent)]', bg: 'bg-[var(--app-accent)]/10' }, { icon: 'fa-server', label: 'Launchpad proxies it anonymously', color: 'text-blue-400', bg: 'bg-blue-500/10' }, { icon: 'fa-globe', label: 'Real results come back to you', color: 'text-emerald-400', bg: 'bg-emerald-500/10' }, { icon: 'fa-display', label: 'You see results - nothing is stored', color: 'text-violet-400', bg: 'bg-violet-500/10' }] as step, i}
+				{#each [{ icon: 'fa-keyboard', label: 'You type a query', color: 'text-[var(--app-accent)]', bg: 'bg-[var(--app-accent)]/10' }, { icon: 'fa-server', label: 'LibreSearch proxies it anonymously', color: 'text-blue-400', bg: 'bg-blue-500/10' }, { icon: 'fa-globe', label: 'Real results come back to you', color: 'text-emerald-400', bg: 'bg-emerald-500/10' }, { icon: 'fa-display', label: 'You see results - nothing is stored', color: 'text-violet-400', bg: 'bg-violet-500/10' }] as step, i}
 					<div
 						class="flex items-center gap-4 rounded-2xl border border-[var(--app-border)] bg-[#171b25]/80 px-5 py-4 backdrop-blur-sm"
 					>
@@ -185,7 +185,7 @@
 			Frequently asked questions
 		</h2>
 		<div class="space-y-3">
-			{#each [{ q: 'Do you log my searches?', a: 'No. We never store your queries, IP address, or tie any search to an identity. Each search is processed and then forgotten.' }, { q: 'Do I need an account?', a: 'No sign-up is required. Launchpad works the moment you load the page - there are no accounts to create.' }, { q: 'How does Launchpad make money without ads?', a: "Launchpad doesn't sell ads or profile data. The project runs independently and is funded by its operators, not your attention." }, { q: 'Where are my settings stored?', a: 'Your settings, history, and theme live entirely in your browser via local storage. Nothing is synced to our servers.' }, { q: 'Where do the results come from?', a: 'We use an independent search index and proxy your query anonymously, so you get genuine results without Big Tech tracking you.' }] as item}
+			{#each [{ q: 'Do you log my searches?', a: 'No. We never store your queries, IP address, or tie any search to an identity. Each search is processed and then forgotten.' }, { q: 'Do I need an account?', a: 'No sign-up is required. LibreSearch works the moment you load the page - there are no accounts to create.' }, { q: 'How does LibreSearch make money without ads?', a: "LibreSearch doesn't sell ads or profile data. The project runs independently and is funded by its operators, not your attention." }, { q: 'Where are my settings stored?', a: 'Your settings, history, and theme live entirely in your browser via local storage. Nothing is synced to our servers.' }, { q: 'Where do the results come from?', a: 'We use an independent search index and proxy your query anonymously, so you get genuine results without Big Tech tracking you.' }] as item}
 				<details
 					class="group rounded-2xl border border-[var(--app-border)] bg-[#171b25]/80 px-6 py-5 backdrop-blur-sm"
 				>

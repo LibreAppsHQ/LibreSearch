@@ -11,4 +11,4 @@
 	let src = $derived(lightThemes.includes($themeStore) ? '/logo_dark.svg' : '/2.svg');
 </script>
 
-<img {src} alt="Launchpad logo" class={className} />
+<img {src} alt="LibreSearch logo" class={className} />

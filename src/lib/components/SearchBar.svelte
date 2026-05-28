@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { settingsStore, getToggle, getSelect } from '$lib/stores/settings';
@@ -90,12 +90,13 @@
 		activeIndex = -1;
 	}
 
-	async function submitQuery(value: string): Promise<void> {
+	function submitQuery(value: string): void {
 		query = value;
+		// Reflect the choice in the DOM input immediately so the form serializes the
+		// selected text (not what was typed) — a reactive flush would land too late.
+		// Done synchronously so the submit stays within the original click gesture.
+		if (inputElement) inputElement.value = value;
 		closeDropdown();
-		// Wait for the binding to flush to the DOM input, otherwise the native form
-		// submit serializes the previously typed value instead of the chosen one.
-		await tick();
 		formElement?.requestSubmit();
 	}
 

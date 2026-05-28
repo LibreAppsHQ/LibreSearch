@@ -184,7 +184,7 @@
 </script>
 
 <svelte:head>
-	<title>{query ? `${query} - Launchpad` : 'Launchpad'}</title>
+	<title>{data.query ? `${data.query} - LibreSearch` : 'LibreSearch'}</title>
 	<meta name="robots" content="noindex, noarchive, nofollow" />
 </svelte:head>
 

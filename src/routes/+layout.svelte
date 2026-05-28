@@ -41,18 +41,18 @@
 <svelte:head>
 	<meta
 		name="description"
-		content="Search the web privately with Launchpad. No tracking, no profiles, no ads. Fast, clean results from an independent search index."
+		content="Search the web privately with LibreSearch. No tracking, no profiles, no ads. Fast, clean results from an independent search index."
 	/>
-	<meta property="og:site_name" content="Launchpad" />
+	<meta property="og:site_name" content="LibreSearch" />
 	<meta property="og:type" content="website" />
 	<meta name="twitter:card" content="summary" />
-	<meta name="twitter:site" content="@Launchpad" />
+	<meta name="twitter:site" content="@LibreSearch" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 	<link rel="icon" type="image/png" href="/logo.png" />
 	<link
 		rel="search"
 		type="application/opensearchdescription+xml"
-		title="Launchpad"
+		title="LibreSearch"
 		href="/opensearch.xml"
 	/>
 </svelte:head>

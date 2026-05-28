@@ -111,7 +111,7 @@
 		const blobUrl = URL.createObjectURL(blob);
 		const anchor = document.createElement('a');
 		anchor.href = blobUrl;
-		anchor.download = 'Launchpad-settings.json';
+		anchor.download = 'LibreSearch-settings.json';
 		anchor.click();
 		URL.revokeObjectURL(blobUrl);
 	}
@@ -144,7 +144,7 @@
 </script>
 
 <svelte:head>
-	<title>Settings - Launchpad</title>
+	<title>Settings - LibreSearch</title>
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
@@ -173,7 +173,7 @@
 		<div class="mx-auto w-full max-w-[1100px] px-4 sm:px-6">
 			<div class="flex items-center gap-4 py-3">
 				<a href="/" class="shrink-0">
-					<img src="/2.svg" alt="Launchpad logo" class="h-10 w-25" />
+					<img src="/2.svg" alt="LibreSearch logo" class="h-10 w-25" />
 				</a>
 				<div class="h-7 w-px bg-white/25"></div>
 				<span class="text-lg font-medium text-white">Settings</span>
@@ -319,7 +319,7 @@
 				<p class="mt-4 text-sm leading-6 text-[var(--app-muted)]">
 					This saves your settings <span class="font-semibold text-[var(--app-text)]"
 						>locally in your browser</span
-					>. Launchpad never stores them on a server, and nothing is tied to your identity.
+					>. LibreSearch never stores them on a server, and nothing is tied to your identity.
 				</p>
 
 				{#if isDirty}

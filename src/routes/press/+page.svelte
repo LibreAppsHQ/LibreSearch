@@ -20,7 +20,7 @@
 	];
 
 	const boilerplate =
-		'Launchpad is an independent, privacy-first search engine built by Arcbase. It delivers real web results without logging your queries, building a profile on you, or selling your attention. There are no ads and no trackers, and your settings live entirely in your own browser — never on a server.';
+		'LibreSearch is an independent, privacy-first search engine built by Arcbase. It delivers real web results without logging your queries, building a profile on you, or selling your attention. There are no ads and no trackers, and your settings live entirely in your own browser — never on a server.';
 
 	let copied = $state(false);
 
@@ -36,18 +36,18 @@
 </script>
 
 <svelte:head>
-	<title>Press &amp; Media - Launchpad</title>
+	<title>Press &amp; Media - LibreSearch</title>
 	<meta
 		name="description"
-		content="Press resources for Launchpad — the private search engine with no tracking, no profiles, and no ads. Company facts, brand assets, boilerplate, and media contact."
+		content="Press resources for LibreSearch — the private search engine with no tracking, no profiles, and no ads. Company facts, brand assets, boilerplate, and media contact."
 	/>
 	<link rel="canonical" href="https://search.arcbase.one/press" />
 
 	<!-- Open Graph -->
-	<meta property="og:title" content="Press & Media - Launchpad" />
+	<meta property="og:title" content="Press & Media - LibreSearch" />
 	<meta
 		property="og:description"
-		content="Company facts, brand assets, boilerplate, and media contact for Launchpad."
+		content="Company facts, brand assets, boilerplate, and media contact for LibreSearch."
 	/>
 	<meta property="og:url" content="https://search.arcbase.one/press" />
 	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
@@ -78,7 +78,7 @@
 			Tell the story of search without surveillance.
 		</h1>
 		<p class="mt-6 max-w-2xl text-lg leading-8 text-[var(--app-secondary)]">
-			Everything you need to write about Launchpad — the facts, the brand assets, an approved
+			Everything you need to write about LibreSearch — the facts, the brand assets, an approved
 			boilerplate, and a direct line to our team. Working on a deadline? Email us and we'll move
 			fast.
 		</p>
@@ -104,7 +104,7 @@
 
 	<!-- At a glance -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 py-12 sm:py-20">
-		<h2 class="mb-10 text-2xl font-bold tracking-tight">Launchpad at a glance</h2>
+		<h2 class="mb-10 text-2xl font-bold tracking-tight">LibreSearch at a glance</h2>
 		<dl class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 			{#each facts as fact}
 				<div class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6">
@@ -125,7 +125,7 @@
 			<div>
 				<h2 class="text-2xl font-bold tracking-tight">Boilerplate</h2>
 				<p class="mt-3 text-sm leading-7 text-[var(--app-muted)]">
-					A short, approved description of Launchpad you can drop straight into an article.
+					A short, approved description of LibreSearch you can drop straight into an article.
 				</p>
 			</div>
 			<div class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6">

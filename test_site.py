@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Launchpad site smoke test.
+LibreSearch site smoke test.
 
 Hits a running instance and checks pages, static assets, the search/suggest
 APIs, the ALTCHA proof-of-work challenge round-trip, rate limiting, the
@@ -398,14 +398,14 @@ def test_broken_links(r: Runner):
 
 # ── main ───────────────────────────────────────────────────────────────────────
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Launchpad site smoke test")
+    ap = argparse.ArgumentParser(description="LibreSearch site smoke test")
     ap.add_argument("--base-url", default="http://localhost:5173", help="base URL of the running app")
     ap.add_argument("--skip-ratelimit", action="store_true", help="skip the rate-limit/recovery test")
     ap.add_argument("--quiet", action="store_true", help="only show failures and the summary")
     args = ap.parse_args()
 
     base = args.base_url.rstrip("/")
-    print(BOLD(f"Launchpad smoke test → {base}"))
+    print(BOLD(f"LibreSearch smoke test → {base}"))
 
     # reachability
     try:

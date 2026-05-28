@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>{$page.status} — Launchpad</title>
+	<title>{$page.status} — LibreSearch</title>
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 

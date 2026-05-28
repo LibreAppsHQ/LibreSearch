@@ -20,17 +20,17 @@
 </script>
 
 <svelte:head>
-	<title>Terms of Service - Launchpad</title>
+	<title>Terms of Service - LibreSearch</title>
 	<meta
 		name="description"
-		content="The terms of service for Launchpad, the private search engine. Plain-language rules for using the service."
+		content="The terms of service for LibreSearch, the private search engine. Plain-language rules for using the service."
 	/>
 	<link rel="canonical" href="https://search.arcbase.one/terms" />
 
-	<meta property="og:title" content="Terms of Service - Launchpad" />
+	<meta property="og:title" content="Terms of Service - LibreSearch" />
 	<meta
 		property="og:description"
-		content="Plain-language rules for using Launchpad, the private search engine."
+		content="Plain-language rules for using LibreSearch, the private search engine."
 	/>
 	<meta property="og:url" content="https://search.arcbase.one/terms" />
 	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
@@ -61,7 +61,7 @@
 		</div>
 		<h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Terms of Service</h1>
 		<p class="mx-auto mt-4 max-w-lg text-base leading-7 text-[var(--app-muted)]">
-			The short, plain-language agreement for using Launchpad. No dense legalese - just what you can
+			The short, plain-language agreement for using LibreSearch. No dense legalese - just what you can
 			expect from us, and what we ask of you.
 		</p>
 		<p class="mt-4 text-xs font-medium tracking-wide text-[var(--app-muted)] uppercase">
@@ -98,7 +98,7 @@
 			<section id="acceptance" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Acceptance of these terms</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					Launchpad is a private search engine operated by Arcbase. By using it, you agree to these
+					LibreSearch is a private search engine operated by Arcbase. By using it, you agree to these
 					terms. If you don't agree, please don't use the service. These terms work alongside our
 					<a href="/privacy" class="text-[var(--app-accent)] hover:underline">Privacy Policy</a>,
 					which explains how we handle data.
@@ -108,7 +108,7 @@
 			<section id="the-service" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">The service</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					Launchpad lets you search the web privately. It is provided free of charge, and we may
+					LibreSearch lets you search the web privately. It is provided free of charge, and we may
 					add, change, or remove features at any time to keep it working and secure. We don't
 					guarantee the service will always be available or uninterrupted.
 				</p>
@@ -117,10 +117,10 @@
 			<section id="acceptable-use" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Acceptable use</h2>
 				<p class="mb-4 text-sm leading-7 text-[var(--app-muted)]">
-					To keep Launchpad fast and available for everyone, please don't:
+					To keep LibreSearch fast and available for everyone, please don't:
 				</p>
 				<ul class="grid gap-3 sm:grid-cols-2">
-					{#each ['Send automated, scripted, or bulk queries', 'Scrape, harvest, or resell our results', 'Attempt to bypass rate limits or security checks', 'Probe, scan, or disrupt the service or its infrastructure', 'Use the service to break the law or infringe others', 'Misrepresent or impersonate Launchpad or Arcbase'] as item}
+					{#each ['Send automated, scripted, or bulk queries', 'Scrape, harvest, or resell our results', 'Attempt to bypass rate limits or security checks', 'Probe, scan, or disrupt the service or its infrastructure', 'Use the service to break the law or infringe others', 'Misrepresent or impersonate LibreSearch or Arcbase'] as item}
 						<li
 							class="flex items-center gap-3 rounded-xl border border-[var(--app-border)] bg-[var(--app-surface)] px-4 py-3"
 						>
@@ -145,7 +145,7 @@
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					Results are gathered from an independent upstream search index and the wider web. We don't
 					control, endorse, or guarantee the accuracy, legality, or safety of any third-party site
-					you reach through Launchpad. Following a link is at your own discretion, and those sites
+					you reach through LibreSearch. Following a link is at your own discretion, and those sites
 					have their own terms and privacy practices.
 				</p>
 			</section>
@@ -153,7 +153,7 @@
 			<section id="intellectual-property" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Intellectual property</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					The Launchpad name, logo, and interface are the property of Arcbase. Please don't copy,
+					The LibreSearch name, logo, and interface are the property of Arcbase. Please don't copy,
 					stretch, recolor, or otherwise misuse our brand assets - see the
 					<a href="/press" class="text-[var(--app-accent)] hover:underline">press page</a> for approved
 					usage. Content surfaced in results remains the property of its respective owners.
@@ -163,7 +163,7 @@
 			<section id="no-warranty" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">No warranty</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					Launchpad is provided "as is" and "as available", without warranties of any kind, whether
+					LibreSearch is provided "as is" and "as available", without warranties of any kind, whether
 					express or implied. We don't promise the service will be error-free, secure, or fit for a
 					particular purpose, to the fullest extent permitted by law.
 				</p>
@@ -174,7 +174,7 @@
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					To the maximum extent permitted by law, Arcbase will not be liable for any indirect,
 					incidental, or consequential damages arising from your use of - or inability to use -
-					Launchpad, including reliance on any search result or linked content.
+					LibreSearch, including reliance on any search result or linked content.
 				</p>
 			</section>
 
@@ -182,7 +182,7 @@
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Changes to these terms</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					We may update these terms from time to time. When we do, we'll revise the "last updated"
-					date above. Continuing to use Launchpad after a change means you accept the updated terms.
+					date above. Continuing to use LibreSearch after a change means you accept the updated terms.
 				</p>
 			</section>
 

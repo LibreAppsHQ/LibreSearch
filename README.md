@@ -1,6 +1,6 @@
-# Launchpad
+# LibreSearch
 
-Launchpad is a private search engine that gives you real results without tracking who you are, building a profile on you, or selling your attention.
+LibreSearch is a private search engine that gives you real results without tracking who you are, building a profile on you, or selling your attention.
 
 Every search starts fresh. No cookies. No logs. No surveillance.
 
@@ -24,7 +24,7 @@ Every search starts fresh. No cookies. No logs. No surveillance.
 
 ## Built for the open web
 
-Launchpad uses an independent search index — not a feed curated by an ad platform. Your query is proxied anonymously so the index never sees who you are.
+LibreSearch uses an independent search index — not a feed curated by an ad platform. Your query is proxied anonymously so the index never sees who you are.
 
 ## License
 

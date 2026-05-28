@@ -28,7 +28,7 @@ const defaultSettings: Setting[] = [
 	{
 		id: 'open-new-tab',
 		name: 'Open results in new tab',
-		description: 'Keep Launchpad open while you browse a result.',
+		description: 'Keep LibreSearch open while you browse a result.',
 		category: 'general',
 		type: 'toggle',
 		checked: false
@@ -242,7 +242,7 @@ const defaultSettings: Setting[] = [
 	{
 		id: 'no-referrer',
 		name: 'Hide referrer on clicks',
-		description: "Don't tell sites you came from Launchpad when you open a result.",
+		description: "Don't tell sites you came from LibreSearch when you open a result.",
 		category: 'privacy',
 		type: 'toggle',
 		checked: false
@@ -337,7 +337,7 @@ function createSettingsStore() {
 		load: () => {
 			if (typeof window === 'undefined') return;
 			try {
-				const raw = window.localStorage.getItem('Launchpad:settings');
+				const raw = window.localStorage.getItem('LibreSearch:settings');
 				if (raw) {
 					const parsed = JSON.parse(raw) as unknown[];
 					set(mergeWithDefaults(parsed));
@@ -352,7 +352,7 @@ function createSettingsStore() {
 					s.id === id && s.type === 'toggle' ? { ...s, checked: !s.checked } : s
 				);
 				if (typeof window !== 'undefined') {
-					window.localStorage.setItem('Launchpad:settings', JSON.stringify(updated));
+					window.localStorage.setItem('LibreSearch:settings', JSON.stringify(updated));
 				}
 				return updated;
 			});
@@ -363,7 +363,7 @@ function createSettingsStore() {
 					s.id === id && s.type === 'select' ? { ...s, value } : s
 				);
 				if (typeof window !== 'undefined') {
-					window.localStorage.setItem('Launchpad:settings', JSON.stringify(updated));
+					window.localStorage.setItem('LibreSearch:settings', JSON.stringify(updated));
 				}
 				return updated;
 			});
@@ -371,13 +371,13 @@ function createSettingsStore() {
 		save: (updatedSettings: Setting[]) => {
 			set(updatedSettings);
 			if (typeof window !== 'undefined') {
-				window.localStorage.setItem('Launchpad:settings', JSON.stringify(updatedSettings));
+				window.localStorage.setItem('LibreSearch:settings', JSON.stringify(updatedSettings));
 			}
 		},
 		reset: () => {
 			set(defaultSettings);
 			if (typeof window !== 'undefined') {
-				window.localStorage.removeItem('Launchpad:settings');
+				window.localStorage.removeItem('LibreSearch:settings');
 			}
 		},
 		import: (raw: unknown): boolean => {
@@ -386,7 +386,7 @@ function createSettingsStore() {
 				const merged = mergeWithDefaults(raw as unknown[]);
 				set(merged);
 				if (typeof window !== 'undefined') {
-					window.localStorage.setItem('Launchpad:settings', JSON.stringify(merged));
+					window.localStorage.setItem('LibreSearch:settings', JSON.stringify(merged));
 				}
 				return true;
 			} catch {

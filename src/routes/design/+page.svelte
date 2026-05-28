@@ -5,11 +5,11 @@
 </script>
 
 <svelte:head>
-	<title>About the design - Launchpad</title>
+	<title>About the design - LibreSearch</title>
 	<meta name="robots" content="noindex, nofollow" />
 	<meta
 		name="description"
-		content="Why Launchpad's interface looks a lot like Startpage's — an honest note on design inspiration."
+		content="Why LibreSearch's interface looks a lot like Startpage's — an honest note on design inspiration."
 	/>
 </svelte:head>
 
@@ -55,7 +55,7 @@
 				<p>
 					Startpage has spent years refining what a calm, privacy-first search interface should feel
 					like: generous spacing, an honest settings page, a results layout that gets out of your
-					way. When we set out to build Launchpad, we studied interfaces we admired — and theirs
+					way. When we set out to build LibreSearch, we studied interfaces we admired — and theirs
 					kept coming out on top. So our layout, our settings structure, and our tone borrow heavily
 					from what they got right.
 				</p>
@@ -77,7 +77,7 @@
 			<section>
 				<h2 class="mb-2 text-lg font-semibold text-[var(--app-text)]">What's actually ours</h2>
 				<p>
-					The look is inspired by Startpage; the engine underneath is our own. Launchpad is an
+					The look is inspired by Startpage; the engine underneath is our own. LibreSearch is an
 					independent project with its own search backend, its own privacy model, and its own code.
 					We're not affiliated with Startpage, and nothing here is copied from their codebase — only
 					the design sensibility.

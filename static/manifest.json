@@ -1,6 +1,6 @@
 {
-  "name": "Launchpad",
-  "short_name": "Launchpad",
+  "name": "LibreSearch",
+  "short_name": "LibreSearch",
   "description": "Search the web privately. No tracking, no profiles, no ads.",
   "start_url": "/",
   "display": "standalone",

@@ -350,7 +350,7 @@ async function geocodePlaces(query: string, fetchImpl: typeof fetch): Promise<Se
 			headers: {
 				accept: 'application/json',
 				// Nominatim's usage policy requires an identifying User-Agent.
-				'user-agent': 'Launchpad/1.0 (privacy-respecting metasearch)'
+				'user-agent': 'LibreSearch/1.0 (privacy-respecting metasearch)'
 			},
 			signal: controller.signal
 		});
@@ -543,7 +543,7 @@ async function fetchBraveSearch(
 				accept: 'application/json',
 				'X-Subscription-Token': apiKey,
 				'user-agent':
-					'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Launchpad/1.0'
+					'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 LibreSearch/1.0'
 			},
 			signal: controller.signal
 		});

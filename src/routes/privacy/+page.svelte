@@ -20,14 +20,14 @@
 </script>
 
 <svelte:head>
-	<title>Privacy Policy - Launchpad</title>
+	<title>Privacy Policy - LibreSearch</title>
 	<meta
 		name="description"
-		content="Launchpad's privacy policy. We never log your searches, build profiles, or sell data. Read exactly what we do and don't collect."
+		content="LibreSearch's privacy policy. We never log your searches, build profiles, or sell data. Read exactly what we do and don't collect."
 	/>
 	<link rel="canonical" href="https://search.arcbase.one/privacy" />
 
-	<meta property="og:title" content="Privacy Policy - Launchpad" />
+	<meta property="og:title" content="Privacy Policy - LibreSearch" />
 	<meta
 		property="og:description"
 		content="We never log your searches, build profiles, or sell data. Read exactly what we do and don't collect."
@@ -61,7 +61,7 @@
 		</div>
 		<h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Privacy Policy</h1>
 		<p class="mx-auto mt-4 max-w-lg text-base leading-7 text-[var(--app-muted)]">
-			Privacy isn't a setting you turn on - it's how Launchpad is built. Here's exactly what that
+			Privacy isn't a setting you turn on - it's how LibreSearch is built. Here's exactly what that
 			means, in plain language.
 		</p>
 		<p class="mt-4 text-xs font-medium tracking-wide text-[var(--app-muted)] uppercase">
@@ -98,7 +98,7 @@
 			<section id="overview" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Overview</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					Launchpad is a private search engine operated by Arcbase. We designed it so that the most
+					LibreSearch is a private search engine operated by Arcbase. We designed it so that the most
 					private option is the default - and the only option. We do not run ads, we do not build
 					advertising profiles, and we do not sell data. This page explains the small amount of data
 					that is involved in running the service and the large amount we deliberately never touch.
@@ -129,7 +129,7 @@
 			<section id="what-we-dont" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">What we don't do</h2>
 				<p class="mb-4 text-sm leading-7 text-[var(--app-muted)]">
-					This is the part that matters most. Launchpad never:
+					This is the part that matters most. LibreSearch never:
 				</p>
 				<ul class="grid gap-3 sm:grid-cols-2">
 					{#each ['Logs your searches against your identity', 'Stores a search history on our servers', 'Builds an advertising or interest profile', 'Sells, rents, or shares your data', 'Uses tracking cookies or fingerprinting', 'Shows ads or sponsored results'] as item}
@@ -170,7 +170,7 @@
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					To return results we rely on an upstream search index, which receives your query through
 					our anonymizing proxy but not your identity. We do not embed third-party advertising,
-					analytics, or social tracking scripts on Launchpad. We have no business model that depends
+					analytics, or social tracking scripts on LibreSearch. We have no business model that depends
 					on sharing your data, so we don't.
 				</p>
 			</section>
@@ -190,14 +190,14 @@
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					If we update this policy, we'll revise the "last updated" date at the top of the page.
 					Material changes will be highlighted so you're never caught off guard. Continuing to use
-					Launchpad after an update means you accept the revised policy.
+					LibreSearch after an update means you accept the revised policy.
 				</p>
 			</section>
 
 			<section id="contact" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Contact</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					Questions about privacy at Launchpad? Email us at
+					Questions about privacy at LibreSearch? Email us at
 					<a href="mailto:privacy@arcbase.one" class="text-[var(--app-accent)] hover:underline"
 						>privacy@arcbase.one</a
 					>

@@ -7,7 +7,7 @@ export const GET: RequestHandler = ({ url }) => {
 <OpenSearchDescription
   xmlns="http://a9.com/-/spec/opensearch/1.1/"
   xmlns:moz="http://www.mozilla.org/2006/browser/search/">
-  <ShortName>Launchpad</ShortName>
+  <ShortName>LibreSearch</ShortName>
   <Description>Search the web privately. No tracking, no ads.</Description>
   <InputEncoding>UTF-8</InputEncoding>
   <Image width="16" height="16" type="image/png">${origin}/logo.png</Image>

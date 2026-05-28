@@ -78,7 +78,7 @@
 						</li>
 						<li>
 							<a
-								href="https://github.com/Arcbasehq/Launchpad"
+								href="https://github.com/Arcbasehq/LibreSearch"
 								target="_blank"
 								rel="noopener noreferrer"
 								class="inline-flex items-center gap-1.5 text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
@@ -130,7 +130,7 @@
 		>
 			<div class="flex items-center gap-3">
 				<p class="text-xs text-[var(--app-muted)]">
-					&copy; {new Date().getFullYear()} Launchpad. Built for privacy.
+					&copy; {new Date().getFullYear()} LibreSearch. Built for privacy.
 				</p>
 				<span class="text-[var(--app-muted)]">·</span>
 				<span

@@ -33,7 +33,7 @@
 			steps: [
 				'Go to chrome://settings/searchEngines.',
 				'Next to “Site search”, click Add.',
-				`Name it “Launchpad”, set a shortcut (e.g. arc), and set the URL to ${searchUrlTemplate}.`,
+				`Name it “LibreSearch”, set a shortcut (e.g. arc), and set the URL to ${searchUrlTemplate}.`,
 				'Click the ⋮ next to the new entry and choose “Make default”.'
 			]
 		},
@@ -42,7 +42,7 @@
 			steps: [
 				'Go to edge://settings/searchEngines.',
 				'Next to “Manage search engines”, click Add.',
-				`Name it “Launchpad”, set a shortcut (e.g. arc), and set the URL to ${searchUrlTemplate}.`,
+				`Name it “LibreSearch”, set a shortcut (e.g. arc), and set the URL to ${searchUrlTemplate}.`,
 				'Click the ⋯ next to the new entry and choose “Make default”.'
 			]
 		},
@@ -50,22 +50,22 @@
 			name: 'Firefox',
 			steps: [
 				'Click the search bar, then the magnifying-glass/options icon.',
-				'Choose “Add Launchpad” to install it as a search engine.',
-				'Open Settings → Search and pick Launchpad as your Default Search Engine.'
+				'Choose “Add LibreSearch” to install it as a search engine.',
+				'Open Settings → Search and pick LibreSearch as your Default Search Engine.'
 			]
 		},
 		safari: {
 			name: 'Safari',
 			steps: [
 				'Safari only allows a fixed list of default search engines, so it can’t be set as the system default.',
-				'Bookmark Launchpad instead, or add it to your Favorites for one-tap access.'
+				'Bookmark LibreSearch instead, or add it to your Favorites for one-tap access.'
 			]
 		},
 		other: {
 			name: 'your browser',
 			steps: [
 				'Open your browser’s search engine settings.',
-				'Look for “Launchpad” among the discovered engines (most browsers add it after your first visit).',
+				'Look for “LibreSearch” among the discovered engines (most browsers add it after your first visit).',
 				`If it isn’t there, click Add and set the URL to ${searchUrlTemplate}, then select it.`
 			]
 		}
@@ -81,15 +81,15 @@
 </script>
 
 <svelte:head>
-	<title>Launchpad - Private Search Engine</title>
+	<title>LibreSearch - Private Search Engine</title>
 	<meta
 		name="description"
-		content="Search the web privately with Launchpad. No tracking, no profiles, no ads. Fast, clean results from an independent search index."
+		content="Search the web privately with LibreSearch. No tracking, no profiles, no ads. Fast, clean results from an independent search index."
 	/>
 	<link rel="canonical" href="https://search.arcbase.one" />
 
 	<!-- Open Graph -->
-	<meta property="og:title" content="Launchpad - Private Search Engine" />
+	<meta property="og:title" content="LibreSearch - Private Search Engine" />
 	<meta
 		property="og:description"
 		content="Search the web privately. No tracking, no profiles, no ads."
@@ -98,7 +98,7 @@
 	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
 
 	<!-- Twitter -->
-	<meta name="twitter:title" content="Launchpad - Private Search Engine" />
+	<meta name="twitter:title" content="LibreSearch - Private Search Engine" />
 	<meta
 		name="twitter:description"
 		content="Search the web privately. No tracking, no profiles, no ads."
@@ -108,7 +108,7 @@
 	{@html `<script type="application/ld+json">${JSON.stringify({
 		'@context': 'https://schema.org',
 		'@type': 'WebSite',
-		name: 'Launchpad',
+		name: 'LibreSearch',
 		url: 'https://search.arcbase.one',
 		description: 'A private search engine with no tracking, no profiles, and no ads.',
 		potentialAction: {
@@ -171,7 +171,7 @@
 					Search,<br />not surveillance.
 				</h2>
 				<p class="mt-6 text-lg text-white/85">
-					Launchpad finds what you need without logging who you are.
+					LibreSearch finds what you need without logging who you are.
 				</p>
 				<button
 					type="button"
@@ -246,7 +246,7 @@
 		>
 			<div class="flex items-start justify-between gap-4">
 				<h3 id="default-modal-title" class="text-xl font-bold">
-					Set Launchpad as your default in {defaultSteps[browser].name}
+					Set LibreSearch as your default in {defaultSteps[browser].name}
 				</h3>
 				<button
 					type="button"

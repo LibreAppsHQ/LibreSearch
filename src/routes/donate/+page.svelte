@@ -75,24 +75,24 @@
 	<title>Donate</title>
 	<meta
 		name="description"
-		content="Launchpad runs on donations, not ads. Support a private search engine that never logs your queries or sells your data."
+		content="LibreSearch runs on donations, not ads. Support a private search engine that never logs your queries or sells your data."
 	/>
 	<link rel="canonical" href="https://search.arcbase.one/donate" />
 
 	<!-- Open Graph -->
-	<meta property="og:title" content="Donate - Launchpad" />
+	<meta property="og:title" content="Donate - LibreSearch" />
 	<meta
 		property="og:description"
-		content="Launchpad runs on donations, not ads. Support a private search engine that never logs your queries or sells your data."
+		content="LibreSearch runs on donations, not ads. Support a private search engine that never logs your queries or sells your data."
 	/>
 	<meta property="og:url" content="https://search.arcbase.one/donate" />
 	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
 
 	<!-- Twitter -->
-	<meta name="twitter:title" content="Donate - Launchpad" />
+	<meta name="twitter:title" content="Donate - LibreSearch" />
 	<meta
 		name="twitter:description"
-		content="Launchpad runs on donations, not ads. Support a private search engine that never logs your queries or sells your data."
+		content="LibreSearch runs on donations, not ads. Support a private search engine that never logs your queries or sells your data."
 	/>
 </svelte:head>
 
@@ -122,7 +122,7 @@
 			<span class="text-[var(--app-accent)]">Just your support.</span>
 		</h1>
 		<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-white">
-			Launchpad refuses to sell ads or profile your searches, which means the only thing keeping the
+			LibreSearch refuses to sell ads or profile your searches, which means the only thing keeping the
 			servers on is people like you. Every contribution goes straight to infrastructure.
 		</p>
 		<div class="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -240,11 +240,11 @@
 				</p>
 				<h2 class="mb-6 text-3xl font-bold tracking-tight">100% to keeping search free.</h2>
 				<p class="mb-4 text-sm leading-7 text-[var(--app-muted)]">
-					Launchpad has no investors and no advertising revenue. Donations cover the real costs of
+					LibreSearch has no investors and no advertising revenue. Donations cover the real costs of
 					running a private search engine - nothing more.
 				</p>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					Can't donate? Sharing Launchpad, reporting bugs, or contributing on GitHub helps just as
+					Can't donate? Sharing LibreSearch, reporting bugs, or contributing on GitHub helps just as
 					much.
 				</p>
 			</div>
