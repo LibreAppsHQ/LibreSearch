@@ -76,17 +76,6 @@
 								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Themes</a
 							>
 						</li>
-						<li>
-							<a
-								href="https://github.com/Arcbasehq/LibreSearch"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="inline-flex items-center gap-1.5 text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
-							>
-								<i class="fa-brands fa-github"></i>
-								GitHub
-							</a>
-						</li>
 					</ul>
 				</div>
 				<div class="space-y-3">
@@ -137,6 +126,26 @@
 					class="rounded-full border border-[var(--app-border)] bg-[#171b25]/80 px-2 py-0.5 text-xs text-[var(--app-muted)] backdrop-blur-sm"
 					>v0.4.1</span
 				>
+			</div>
+			<div class="flex items-center gap-4">
+				<a
+					href="https://github.com/Arcbasehq/LibreSearch"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="GitHub"
+					class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+				>
+					<i class="fa-brands fa-github text-base"></i>
+				</a>
+				<a
+					href="https://mastodon.social/@libresearch"
+					target="_blank"
+					rel="me noopener noreferrer"
+					aria-label="Mastodon"
+					class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+				>
+					<i class="fa-brands fa-mastodon text-base"></i>
+				</a>
 			</div>
 		</div>
 	</div>

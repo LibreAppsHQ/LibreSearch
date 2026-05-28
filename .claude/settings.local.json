@@ -27,9 +27,9 @@
       "Bash(curl -s -X POST http://localhost:4319/search -H \"Content-Type: application/x-www-form-urlencoded\" -H \"Origin: http://localhost:4319\" --data \"q=hello+world\")",
       "Bash(curl -sS --max-time 20 https://www.gnu.org/licenses/agpl-3.0.txt -o /tmp/agpl-3.0.txt)",
       "Read(//tmp/**)",
-      "WebSearch",
-      "WebFetch(domain:www.startpage.com)",
-      "WebFetch(domain:search.brave.com)"
+      "Bash(curl -sSI --max-time 15 \"https://libresearch.ca/sitemap.xml\")",
+      "Bash(curl -sSI --max-time 15 \"https://libresearch.ca/robots.txt\")",
+      "Bash(curl -sS --max-time 15 \"https://libresearch.ca/sitemap.xml\")"
     ]
   }
 }
