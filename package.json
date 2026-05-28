@@ -1,7 +1,7 @@
 {
 	"name": "LibreSearch",
 	"private": true,
-	"version": "0.4.3",
+	"version": "0.4.4",
 	"type": "module",
 	"license": "AGPL-3.0-only",
 	"author": "arcbaseproject",
@@ -41,6 +41,7 @@
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-free": "^7.2.0",
+		"@vercel/analytics": "^2.0.1",
 		"@vercel/speed-insights": "^2.0.0"
 	}
 }

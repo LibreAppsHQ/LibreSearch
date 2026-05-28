@@ -1,20 +1,28 @@
 <script lang="ts">
 	import './layout.css';
-	import { browser } from '$app/environment';
+	import { browser, dev } from '$app/environment';
 	import { themeStore } from '$lib/stores/theme';
 	import { settingsStore, getToggle } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
 	import { onMount } from 'svelte';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
-
-	if (browser) {
-		injectSpeedInsights();
-	}
+	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 
 	let { children } = $props();
 
 	let keyboardShortcut = $derived(getToggle($settingsStore, 'keyboard-shortcut'));
 	let reduceMotion = $derived(getToggle($settingsStore, 'reduce-motion', false));
+
+	// Vercel SDKs must run client-side inside lifecycle
+	onMount(() => {
+		if (!browser) return;
+
+		injectSpeedInsights();
+
+		if (!dev) {
+			injectAnalytics();
+		}
+	});
 
 	$effect(() => {
 		if (reduceMotion) {
@@ -41,11 +49,11 @@
 		themeStore.load();
 		settingsStore.load();
 		historyStore.load();
+
 		// Load FontAwesome after first paint so it doesn't block FCP/LCP.
 		import('@fortawesome/fontawesome-free/css/all.css');
 	});
 </script>
-
 
 <svelte:head>
 	<!-- Per-page `<meta name="description">` lives in each route, not here, so
