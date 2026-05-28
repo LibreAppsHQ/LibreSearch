@@ -25,15 +25,15 @@
 		name="description"
 		content="LibreSearch's privacy policy. We never log your searches, build profiles, or sell data. Read exactly what we do and don't collect."
 	/>
-	<link rel="canonical" href="https://search.arcbase.one/privacy" />
+	<link rel="canonical" href="https://libresearch.ca/privacy" />
 
 	<meta property="og:title" content="Privacy Policy - LibreSearch" />
 	<meta
 		property="og:description"
 		content="We never log your searches, build profiles, or sell data. Read exactly what we do and don't collect."
 	/>
-	<meta property="og:url" content="https://search.arcbase.one/privacy" />
-	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
+	<meta property="og:url" content="https://libresearch.ca/privacy" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 </svelte:head>
 
 <!-- Sticky header -->
@@ -198,8 +198,8 @@
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Contact</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					Questions about privacy at LibreSearch? Email us at
-					<a href="mailto:privacy@arcbase.one" class="text-[var(--app-accent)] hover:underline"
-						>privacy@arcbase.one</a
+					<a href="mailto:info@libresearch.ca" class="text-[var(--app-accent)] hover:underline"
+						>info@libresearch.ca</a
 					>
 					or learn more on the
 					<a href="/about" class="text-[var(--app-accent)] hover:underline">About</a> page.

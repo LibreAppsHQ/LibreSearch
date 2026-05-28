@@ -29,6 +29,7 @@
 			title: 'Resources',
 			links: [
 				{ label: 'About Us', href: '/about', icon: null },
+				{ label: 'Compare', href: '/compare', icon: null },
 				{ label: 'Press', href: '/press', icon: null },
 				{ label: 'Privacy Policy', href: '/privacy', icon: null },
 				{ label: 'Terms of Service', href: '/terms', icon: null },

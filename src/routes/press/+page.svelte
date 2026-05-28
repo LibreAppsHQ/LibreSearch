@@ -41,7 +41,7 @@
 		name="description"
 		content="Press resources for LibreSearch — the private search engine with no tracking, no profiles, and no ads. Company facts, brand assets, boilerplate, and media contact."
 	/>
-	<link rel="canonical" href="https://search.arcbase.one/press" />
+	<link rel="canonical" href="https://libresearch.ca/press" />
 
 	<!-- Open Graph -->
 	<meta property="og:title" content="Press & Media - LibreSearch" />
@@ -49,8 +49,8 @@
 		property="og:description"
 		content="Company facts, brand assets, boilerplate, and media contact for LibreSearch."
 	/>
-	<meta property="og:url" content="https://search.arcbase.one/press" />
-	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
+	<meta property="og:url" content="https://libresearch.ca/press" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 </svelte:head>
 
 <!-- Sticky header -->
@@ -84,7 +84,7 @@
 		</p>
 		<div class="mt-8 flex flex-wrap gap-3">
 			<a
-				href="mailto:press@arcbase.one"
+				href="mailto:info@libresearch.ca"
 				class="inline-flex items-center gap-2 rounded-xl bg-[var(--app-accent)] px-5 py-2.5 text-sm font-semibold text-[#111111] transition hover:opacity-90"
 			>
 				<i class="fa-solid fa-envelope text-xs"></i>
@@ -191,11 +191,11 @@
 				</p>
 			</div>
 			<a
-				href="mailto:press@arcbase.one"
+				href="mailto:info@libresearch.ca"
 				class="inline-flex shrink-0 items-center gap-2 rounded-xl bg-[var(--app-accent)] px-6 py-3 text-sm font-semibold text-[#111111] transition hover:opacity-90"
 			>
 				<i class="fa-solid fa-envelope text-xs"></i>
-				press@arcbase.one
+				info@libresearch.ca
 			</a>
 		</div>
 	</section>

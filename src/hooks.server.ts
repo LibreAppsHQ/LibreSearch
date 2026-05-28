@@ -30,5 +30,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 		response.headers.set(header, value);
 	}
 
+	// Some SEO crawlers flag HTML responses whose `Content-Type` lacks an
+	// explicit charset, even when a `<meta charset>` is present. Make sure
+	// every HTML response declares utf-8 at the HTTP-header level too.
+	const contentType = response.headers.get('content-type');
+	if (contentType?.startsWith('text/html') && !/charset=/i.test(contentType)) {
+		response.headers.set('content-type', `${contentType}; charset=utf-8`);
+	}
+
 	return response;
 };

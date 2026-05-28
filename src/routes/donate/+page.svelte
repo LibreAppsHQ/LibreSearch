@@ -77,7 +77,7 @@
 		name="description"
 		content="LibreSearch runs on donations, not ads. Support a private search engine that never logs your queries or sells your data."
 	/>
-	<link rel="canonical" href="https://search.arcbase.one/donate" />
+	<link rel="canonical" href="https://libresearch.ca/donate" />
 
 	<!-- Open Graph -->
 	<meta property="og:title" content="Donate - LibreSearch" />
@@ -85,8 +85,8 @@
 		property="og:description"
 		content="LibreSearch runs on donations, not ads. Support a private search engine that never logs your queries or sells your data."
 	/>
-	<meta property="og:url" content="https://search.arcbase.one/donate" />
-	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
+	<meta property="og:url" content="https://libresearch.ca/donate" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 
 	<!-- Twitter -->
 	<meta name="twitter:title" content="Donate - LibreSearch" />

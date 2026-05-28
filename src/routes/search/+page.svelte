@@ -46,7 +46,10 @@
 	let activeVideo = $state<VideoResult | null>(null);
 
 	$effect(() => {
-		query = data.query;
+		// Don't clobber what the user is actively typing in the search box.
+		const input = typeof document !== 'undefined' ? document.activeElement : null;
+		const typing = input instanceof HTMLInputElement && input.name === 'q';
+		if (!typing) query = data.query;
 		allResults = data.results;
 		hasMore = data.tab === 'web' && data.results.length >= (data.count ?? 10);
 	});
@@ -115,7 +118,7 @@
 	const safeOptions = [
 		{ label: 'Safe Search: Strict', value: 'strict' },
 		{ label: 'Safe Search: Moderate', value: 'moderate' },
-		{ label: 'Safe Search: Low', value: 'low' }
+		{ label: 'Safe Search: Off', value: 'low' }
 	];
 
 	function buildUrl(overrides: Record<string, string | undefined>): string {

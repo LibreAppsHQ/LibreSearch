@@ -24,7 +24,7 @@
 		return 'other';
 	}
 
-	let origin = $state('https://search.arcbase.one');
+	let origin = $state('https://libresearch.ca');
 	let searchUrlTemplate = $derived(`${origin}/search?q=%s`);
 
 	let defaultSteps = $derived<Record<BrowserKey, { name: string; steps: string[] }>>({
@@ -33,7 +33,7 @@
 			steps: [
 				'Go to chrome://settings/searchEngines.',
 				'Next to “Site search”, click Add.',
-				`Name it “LibreSearch”, set a shortcut (e.g. arc), and set the URL to ${searchUrlTemplate}.`,
+				`Name it “LibreSearch”, set a shortcut (e.g. libre), and set the URL to ${searchUrlTemplate}.`,
 				'Click the ⋮ next to the new entry and choose “Make default”.'
 			]
 		},
@@ -42,7 +42,7 @@
 			steps: [
 				'Go to edge://settings/searchEngines.',
 				'Next to “Manage search engines”, click Add.',
-				`Name it “LibreSearch”, set a shortcut (e.g. arc), and set the URL to ${searchUrlTemplate}.`,
+				`Name it “LibreSearch”, set a shortcut (e.g. libre), and set the URL to ${searchUrlTemplate}.`,
 				'Click the ⋯ next to the new entry and choose “Make default”.'
 			]
 		},
@@ -86,7 +86,7 @@
 		name="description"
 		content="Search the web privately with LibreSearch. No tracking, no profiles, no ads. Fast, clean results from an independent search index."
 	/>
-	<link rel="canonical" href="https://search.arcbase.one" />
+	<link rel="canonical" href="https://libresearch.ca" />
 
 	<!-- Open Graph -->
 	<meta property="og:title" content="LibreSearch - Private Search Engine" />
@@ -94,8 +94,8 @@
 		property="og:description"
 		content="Search the web privately. No tracking, no profiles, no ads."
 	/>
-	<meta property="og:url" content="https://search.arcbase.one" />
-	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
+	<meta property="og:url" content="https://libresearch.ca" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 
 	<!-- Twitter -->
 	<meta name="twitter:title" content="LibreSearch - Private Search Engine" />
@@ -109,13 +109,13 @@
 		'@context': 'https://schema.org',
 		'@type': 'WebSite',
 		name: 'LibreSearch',
-		url: 'https://search.arcbase.one',
+		url: 'https://libresearch.ca',
 		description: 'A private search engine with no tracking, no profiles, and no ads.',
 		potentialAction: {
 			'@type': 'SearchAction',
 			target: {
 				'@type': 'EntryPoint',
-				urlTemplate: 'https://search.arcbase.one/search?q={search_term_string}'
+				urlTemplate: 'https://libresearch.ca/search?q={search_term_string}'
 			},
 			'query-input': 'required name=search_term_string'
 		}
@@ -131,12 +131,12 @@
 	<!-- Centered hero -->
 	<div class="relative flex min-h-screen flex-col items-center px-6 pt-[21vh]">
 		<div class="w-full max-w-xl text-center">
-			<a href="/about" class="inline-flex items-center gap-2.5">
+			<a href="/about" class="inline-flex items-center gap-2.5" aria-label="LibreSearch home">
 				<Logo class="h-70 w-200 " />
 			</a>
-			<p class="mt-3 text-base text-[var(--app-text)] sm:text-lg">
+			<h1 class="mt-3 text-base text-[var(--app-text)] sm:text-lg">
 				Find anything. Tracked by no one.
-			</p>
+			</h1>
 
 			<div class="mt-6 w-full">
 				<SearchBar
@@ -171,7 +171,8 @@
 					Search,<br />not surveillance.
 				</h2>
 				<p class="mt-6 text-lg text-white/85">
-					LibreSearch finds what you need without logging who you are.
+					LibreSearch is a private search engine that finds what you need without logging who you
+					are.
 				</p>
 				<button
 					type="button"

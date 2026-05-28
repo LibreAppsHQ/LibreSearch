@@ -11,7 +11,7 @@
 		name="description"
 		content="LibreSearch is a private search engine that never logs your queries, builds profiles, or sells ads. Learn how it works and why privacy comes first."
 	/>
-	<link rel="canonical" href="https://search.arcbase.one/about" />
+	<link rel="canonical" href="https://libresearch.ca/about" />
 
 	<!-- Open Graph -->
 	<meta property="og:title" content="About - LibreSearch" />
@@ -19,8 +19,8 @@
 		property="og:description"
 		content="LibreSearch is a private search engine that never logs your queries, builds profiles, or sells ads."
 	/>
-	<meta property="og:url" content="https://search.arcbase.one/about" />
-	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
+	<meta property="og:url" content="https://libresearch.ca/about" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 
 	<!-- Twitter -->
 	<meta name="twitter:title" content="About - LibreSearch" />
@@ -34,8 +34,8 @@
 		'@context': 'https://schema.org',
 		'@type': 'Organization',
 		name: 'LibreSearch',
-		url: 'https://search.arcbase.one',
-		logo: 'https://search.arcbase.one/favicon.png',
+		url: 'https://libresearch.ca',
+		logo: 'https://libresearch.ca/favicon.png',
 		description: 'A private search engine with no tracking, no profiles, and no ads.',
 		sameAs: []
 	})}</script>`}

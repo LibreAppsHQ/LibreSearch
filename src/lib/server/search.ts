@@ -18,6 +18,7 @@ const RATE_LIMIT_REFILL_INTERVAL_MS = 5_000;
 const RATE_LIMIT_STATE_TTL_MS = 5 * 60_000;
 const REQUEST_TIMEOUT_MS = 8_000;
 const CACHE_TTL_MS = 5 * 60_000;
+const CACHE_MAX_ENTRIES = 500;
 
 // Tabs backed directly by a Brave Search endpoint. `shopping` reuses the web
 // endpoint; `maps` is served by Nominatim instead (see geocodePlaces).
@@ -234,9 +235,10 @@ function unwrapInfobox(raw: unknown): unknown {
 
 function getInfoboxImage(raw: Record<string, unknown>): string | undefined {
 	// `images` is the entity gallery; prefer Brave's proxied `src`, fall back to original.
+	// Skip entries Brave marks as logos — they're tiny favicons, not the hero photo.
 	if (Array.isArray(raw.images)) {
 		for (const img of raw.images) {
-			if (!isRecord(img)) continue;
+			if (!isRecord(img) || img.logo === true) continue;
 			const src = typeof img.src === 'string' ? img.src : undefined;
 			const original = typeof img.original === 'string' ? img.original : undefined;
 			if (src || original) return src ?? original;
@@ -496,7 +498,13 @@ function getBraveSearchUrl(
 	// Brave caps `count` at 20 for web/news/videos, but up to 100 for images.
 	const maxCount = endpointTab === 'images' ? 100 : 20;
 	searchUrl.searchParams.set('count', String(Math.min(Math.max(count, 1), maxCount)));
-	if (endpointTab !== 'images') searchUrl.searchParams.set('safesearch', safesearch);
+	if (endpointTab === 'images') {
+		// Brave's image endpoint only supports `off` / `strict`; map moderate → strict
+		// so picking Moderate in the UI still gives some filtering on images.
+		searchUrl.searchParams.set('safesearch', safesearch === 'off' ? 'off' : 'strict');
+	} else {
+		searchUrl.searchParams.set('safesearch', safesearch);
+	}
 	if (endpointTab === 'web') {
 		searchUrl.searchParams.set('search_lang', 'en');
 		const resolvedCountry =
@@ -593,7 +601,7 @@ async function fetchBraveSearch(
 				)
 				.map(normalizeWebResult)
 				.filter((r): r is SearchResult => r !== null)
-				.slice(0, 10);
+				.slice(0, count ?? 10);
 
 			const rawNews =
 				isRecord(payload) && isRecord(payload.news) && Array.isArray(payload.news.results)
@@ -739,6 +747,13 @@ export async function searchBrave(
 			blockTrackers,
 			count
 		);
+		// Hard size cap: evict the oldest entries first if we're full. Map iteration
+		// preserves insertion order, so the first key is the oldest.
+		while (searchCache.size >= CACHE_MAX_ENTRIES) {
+			const oldestKey = searchCache.keys().next().value;
+			if (oldestKey === undefined) break;
+			searchCache.delete(oldestKey);
+		}
 		searchCache.set(key, { response: result, expiresAt: now + CACHE_TTL_MS });
 		return result;
 	}

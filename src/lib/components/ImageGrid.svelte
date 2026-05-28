@@ -99,6 +99,15 @@
 		window.addEventListener('resize', onResize);
 		return () => window.removeEventListener('resize', onResize);
 	});
+
+	// Close the preview and drop stale element refs whenever the result set
+	// changes — otherwise `selected` would silently point at a different image.
+	$effect(() => {
+		void images;
+		selected = null;
+		copied = false;
+		els = [];
+	});
 </script>
 
 <svelte:window onkeydown={onKeydown} />

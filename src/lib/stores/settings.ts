@@ -220,7 +220,7 @@ const defaultSettings: Setting[] = [
 		options: [
 			{ label: 'Strict', value: 'strict' },
 			{ label: 'Moderate', value: 'moderate' },
-			{ label: 'Low', value: 'low' }
+			{ label: 'Off', value: 'low' }
 		]
 	},
 	{

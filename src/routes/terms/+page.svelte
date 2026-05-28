@@ -25,15 +25,15 @@
 		name="description"
 		content="The terms of service for LibreSearch, the private search engine. Plain-language rules for using the service."
 	/>
-	<link rel="canonical" href="https://search.arcbase.one/terms" />
+	<link rel="canonical" href="https://libresearch.ca/terms" />
 
 	<meta property="og:title" content="Terms of Service - LibreSearch" />
 	<meta
 		property="og:description"
 		content="Plain-language rules for using LibreSearch, the private search engine."
 	/>
-	<meta property="og:url" content="https://search.arcbase.one/terms" />
-	<meta property="og:image" content="https://search.arcbase.one/og-image.png" />
+	<meta property="og:url" content="https://libresearch.ca/terms" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 </svelte:head>
 
 <!-- Sticky header -->
@@ -190,8 +190,8 @@
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Contact</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					Questions about these terms? Email us at
-					<a href="mailto:legal@arcbase.one" class="text-[var(--app-accent)] hover:underline"
-						>legal@arcbase.one</a
+					<a href="mailto:info@libresearch.ca" class="text-[var(--app-accent)] hover:underline"
+						>info@libresearch.ca</a
 					>
 					or learn more on the
 					<a href="/about" class="text-[var(--app-accent)] hover:underline">About</a> page.
