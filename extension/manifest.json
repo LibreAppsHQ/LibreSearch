@@ -5,9 +5,7 @@
   "version": "0.1.0",
   "description": "Private search without tracking, profiles, or ads. Toolbar popup, address-bar shortcut, and right-click search for LibreSearch.",
   "homepage_url": "https://libresearch.ca",
-  "author": {
-    "email": "grady.korchinski@gmail.com"
-  },
+  "author": "LibreSearch",
 
   "icons": {
     "16": "logo-16.png",
@@ -26,7 +24,8 @@
   },
 
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
   },
 
   "options_ui": {
@@ -47,7 +46,7 @@
       "name": "LibreSearch",
       "keyword": "libresearch",
       "search_url": "https://libresearch.ca/search?q={searchTerms}",
-      "favicon_url": "https://libresearch.ca/favicon.svg",
+      "favicon_url": "logo-16.png",
       "encoding": "UTF-8",
       "is_default": false
     }
@@ -56,7 +55,10 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "libresearch@arcbase.one",
-      "strict_min_version": "115.0"
+      "strict_min_version": "115.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
     }
   }
 }

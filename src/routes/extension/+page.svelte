@@ -32,7 +32,7 @@
 		{
 			name: 'Mozilla Firefox',
 			icon: 'fa-firefox-browser',
-			status: 'planned',
+			status: 'pending',
 			url: null,
 			note: 'Coming after Edge approval, via Mozilla Add-ons.'
 		}

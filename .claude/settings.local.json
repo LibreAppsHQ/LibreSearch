@@ -63,7 +63,16 @@
       "Bash(./node_modules/.bin/vite build *)",
       "Bash(pnpm config *)",
       "Read(//root/**)",
-      "Bash(find / -maxdepth 6 -name \"rc.yaml\")"
+      "Bash(find / -maxdepth 6 -name \"rc.yaml\")",
+      "Bash(python3 -m json.tool manifest.json)",
+      "Bash(python3 -m json.tool extension/manifest.json)",
+      "Bash(zip -r -X ../libresearch-extension.zip manifest.json background.js settings.js theme.js theme-init.js theme.js themes.css logo-16.png logo-48.png logo-128.png popup options -x '*.DS_Store')",
+      "Bash(unzip -l libresearch-extension.zip)",
+      "Bash(zip -r -X -q ../libresearch-extension.zip manifest.json background.js settings.js theme.js theme-init.js themes.css logo-16.png logo-48.png logo-128.png popup options -x '*.DS_Store')",
+      "Bash(unzip -p libresearch-extension.zip manifest.json)",
+      "Bash(python3 -m json.tool)",
+      "Bash(zip -r -X -q ../libresearch-extension-source.zip manifest.json background.js settings.js theme.js theme-init.js themes.css logo-16.png logo-48.png logo-128.png logo.png popup/index.html popup/popup.js popup/popup.src.css popup/popup.css options/index.html options/options.js options/options.src.css options/options.css BUILD.md README.md LICENSE -x *.DS_Store)",
+      "Bash(unzip -l ../libresearch-extension-source.zip)"
     ]
   }
 }
