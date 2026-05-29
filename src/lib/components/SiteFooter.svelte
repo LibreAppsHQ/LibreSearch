@@ -91,6 +91,12 @@
 						</li>
 						<li>
 							<a
+								href="/blog"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Blog</a
+							>
+						</li>
+						<li>
+							<a
 								href="/changelog"
 								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
 								>Changelog</a
@@ -197,7 +203,7 @@
 				<span class="text-[var(--app-muted)]">·</span>
 				<span
 					class="rounded-full border border-[var(--app-border)] bg-[#171b25]/80 px-2 py-0.5 text-xs text-[var(--app-muted)] backdrop-blur-sm"
-					>v0.4.5</span
+					>v0.5.0</span
 				>
 			</div>
 			<div class="flex items-center gap-4">

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
+	import BurnButton from '$lib/components/BurnButton.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import Clock from '$lib/components/Clock.svelte';
 	import { settingsStore, getToggle, getSelect } from '$lib/stores/settings';
@@ -127,7 +128,10 @@
 	<div class="absolute top-6 left-6 z-30">
 		<Clock />
 	</div>
-	<SiteMenu class="absolute top-6 right-6 z-30" />
+	<div class="absolute top-6 right-6 z-30 flex items-center gap-1">
+		<BurnButton />
+		<SiteMenu />
+	</div>
 
 	<!-- Centered hero -->
 	<div class="relative flex min-h-screen flex-col items-center px-6 pt-[21vh]">

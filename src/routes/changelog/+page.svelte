@@ -17,7 +17,16 @@
 
 	const releases: Release[] = [
 		{
-			version: '0.4.5',
+			version: '0.6.0',
+			date: '2026-05-29',
+			title: 'One-tap wipe',
+			entries: [
+				{ tag: 'feature', text: 'Wipe button clears all on-device history, settings, and data in one tap, then returns home' },
+				{ tag: 'feature', text: 'Full-screen whirlpool animation plays while your data drains away (respects reduced-motion)' }
+			]
+		},
+		{
+			version: '0.5.0',
 			date: '2026-05-28',
 			title: 'Enterprise, contact, and content surfaces',
 			entries: [
@@ -28,7 +37,7 @@
 			]
 		},
 		{
-			version: '0.4.5',
+			version: '0.5.0',
 			date: '2026-05-27',
 			title: 'Analytics and speed insights',
 			entries: [

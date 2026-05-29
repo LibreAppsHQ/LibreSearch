@@ -21,14 +21,20 @@
 			title: 'Search',
 			links: [{ label: 'Settings', href: '/settings', icon: 'fa-gear' }]
 		},
+
 		{
 			title: 'Personalize',
 			links: [{ label: 'Themes', href: '/themes', icon: 'fa-palette' }]
 		},
 		{
+			title: 'Products',
+			links: [{ label: 'LibreSearch Extension', href: '/extension', icon: '/ex-icon.png' }]
+		},
+		{
 			title: 'Resources',
 			links: [
 				{ label: 'About Us', href: '/about', icon: null },
+				{ label: 'Blog', href: '/blog', icon: null },
 				{ label: 'Compare', href: '/compare', icon: null },
 				{ label: 'Press', href: '/press', icon: null },
 				{ label: 'Contact', href: '/contact', icon: null },

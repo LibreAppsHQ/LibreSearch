@@ -18,6 +18,7 @@
 	import MapView from '$lib/components/MapView.svelte';
 	import CustomSelect from '$lib/components/CustomSelect.svelte';
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
+	import BurnButton from '$lib/components/BurnButton.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 	import AltchaChallenge from '$lib/components/AltchaChallenge.svelte';
 	import { settingsStore, getToggle, getSelect } from '$lib/stores/settings';
@@ -220,6 +221,7 @@
 					<i class="fa-solid fa-shield-halved text-emerald-400"></i>
 					Private Search
 				</a>
+				<BurnButton class="shrink-0" />
 				<SiteMenu class="shrink-0" />
 			</div>
 

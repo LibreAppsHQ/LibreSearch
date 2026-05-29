@@ -56,17 +56,56 @@
 	</div>
 </header>
 
-<main
-	class="bg-[var(--app-background)] bg-cover bg-fixed bg-center bg-no-repeat text-[var(--app-text)]"
-	style="background-image: url('/background.jpg');"
->
+<main class="relative overflow-hidden bg-[var(--app-background)] text-[var(--app-text)]">
+	<!-- Curving wave backdrop (Startpage-style) in LibreSearch's own palette -->
+	<div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+		<!-- Top accent band that curves down into the page -->
+		<svg
+			class="absolute top-0 left-0 h-[65vh] w-full"
+			viewBox="0 0 1440 600"
+			preserveAspectRatio="none"
+		>
+			<path
+				d="M0,0 L1440,0 L1440,360 C1140,500 980,300 720,360 C460,420 280,520 0,420 Z"
+				fill="var(--app-accent)"
+				fill-opacity="0.85"
+			/>
+		</svg>
+
+		<!-- Middle accent band that sweeps across the centre of the page -->
+		<svg
+			class="absolute top-1/2 left-0 h-[55vh] w-full -translate-y-1/2"
+			viewBox="0 0 1440 600"
+			preserveAspectRatio="none"
+		>
+			<path
+				d="M0,300 C320,180 540,420 760,360 C1010,290 1230,440 1440,320 L1440,420 C1230,540 1010,390 760,460 C540,520 320,280 0,400 Z"
+				fill="var(--app-accent)"
+				fill-opacity="0.5"
+			/>
+		</svg>
+
+		<!-- Bottom dark band that curves up, deepening toward black -->
+		<svg
+			class="absolute bottom-0 left-0 h-[95vh] w-full"
+			viewBox="0 0 1440 600"
+			preserveAspectRatio="none"
+		>
+			<path
+				d="M0,200 C300,80 520,150 760,210 C1020,275 1220,140 1440,250 L1440,600 L0,600 Z"
+				fill="#05060a"
+			/>
+		</svg>
+
+	</div>
+
 	<!-- Hero -->
-	<section class="mx-auto w-full max-w-[1100px] px-6 py-16 text-center sm:py-24">
-		<h1 class="mx-auto max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-7xl">
+	<section class="relative mx-auto w-full max-w-[1100px] px-6 py-16 text-center sm:py-24">
+		<h1 class="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-white drop-shadow-sm sm:text-5xl lg:text-7xl">
 			Search the web.<br />
-			<span class="text-[var(--app-accent)]">Leave no trace.</span>
+			<span class="text-white/80">Leave no trace.</span>
 		</h1>
-		<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-white">
+		<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-white/90">
 			LibreSearch is a private search engine that gives you real results without logging your queries,
 			building a profile on you, or selling your attention.
 		</p>

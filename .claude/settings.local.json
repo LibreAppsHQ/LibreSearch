@@ -84,7 +84,12 @@
       "Bash(rm -f /tmp/crxbuild/ext.zip)",
       "Bash(openssl genrsa *)",
       "Bash(openssl rsa *)",
-      "Bash(unzip -t inner.zip)"
+      "Bash(unzip -t inner.zip)",
+      "Bash(npx playwright *)",
+      "Bash(pkill -f \"vite.*5179\")",
+      "Bash(xargs -r kill)",
+      "Bash(pkill -f vite)",
+      "Bash(awk '{print $2}')"
     ]
   }
 }
