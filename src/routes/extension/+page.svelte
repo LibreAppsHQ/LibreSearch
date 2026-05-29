@@ -25,9 +25,9 @@
 		{
 			name: 'Google Chrome',
 			icon: 'fa-chrome',
-			status: 'planned',
-			url: null,
-			note: 'Coming after Edge approval. Works in Brave, Vivaldi, and Opera too.'
+			status: 'available',
+			url: '/libresearch-extension.crx',
+			note: 'Web Store won\'t accept my payment. Only .crx available. Works in Brave, Vivaldi, and Opera too.'
 		},
 		{
 			name: 'Mozilla Firefox',

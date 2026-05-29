@@ -72,7 +72,19 @@
       "Bash(unzip -p libresearch-extension.zip manifest.json)",
       "Bash(python3 -m json.tool)",
       "Bash(zip -r -X -q ../libresearch-extension-source.zip manifest.json background.js settings.js theme.js theme-init.js themes.css logo-16.png logo-48.png logo-128.png logo.png popup/index.html popup/popup.js popup/popup.src.css popup/popup.css options/index.html options/options.js options/options.src.css options/options.css BUILD.md README.md LICENSE -x *.DS_Store)",
-      "Bash(unzip -l ../libresearch-extension-source.zip)"
+      "Bash(unzip -l ../libresearch-extension-source.zip)",
+      "Bash(zip -r -X -q ../libresearch-extension.xpi manifest.json background.js settings.js theme.js theme-init.js themes.css logo-16.png logo-48.png logo-128.png popup/index.html popup/popup.js popup/popup.css options/index.html options/options.js options/options.css -x *.DS_Store)",
+      "Bash(unzip -l ../libresearch-extension.xpi)",
+      "Bash(unzip -Z1 libresearch-extension.xpi)",
+      "Bash(python3 *)",
+      "Bash(command -v openssl)",
+      "Bash(openssl version *)",
+      "Bash(rm -rf /tmp/crxbuild)",
+      "Bash(mkdir -p /tmp/crxbuild)",
+      "Bash(rm -f /tmp/crxbuild/ext.zip)",
+      "Bash(openssl genrsa *)",
+      "Bash(openssl rsa *)",
+      "Bash(unzip -t inner.zip)"
     ]
   }
 }
