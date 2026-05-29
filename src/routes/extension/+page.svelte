@@ -18,9 +18,9 @@
 		{
 			name: 'Microsoft Edge',
 			icon: 'fa-edge',
-			status: 'pending',
-			url: null,
-			note: 'Submitted to the Edge Add-ons store. Awaiting review.'
+			status: 'available',
+			url: 'https://microsoftedge.microsoft.com/addons/detail/libresearch/ddcbildoepaboaieaplgnnhmmccpihoh',
+			note: 'Submitted to the Edge Add-ons store. Published.'
 		},
 		{
 			name: 'Google Chrome',
