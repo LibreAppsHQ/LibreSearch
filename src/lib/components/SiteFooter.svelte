@@ -45,6 +45,12 @@
 								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Images</a
 							>
 						</li>
+						<li>
+							<a
+								href="/syntax"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Syntax</a
+							>
+						</li>
 					</ul>
 				</div>
 				<div class="space-y-3">
@@ -76,6 +82,20 @@
 								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Themes</a
 							>
 						</li>
+						<li>
+							<a
+								href="/extension"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+								>Extension</a
+							>
+						</li>
+						<li>
+							<a
+								href="/changelog"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+								>Changelog</a
+							>
+						</li>
 					</ul>
 				</div>
 				<div class="space-y-3">
@@ -105,8 +125,61 @@
 						</li>
 						<li>
 							<a
+								href="/enterprise"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+								>Enterprise</a
+							>
+						</li>
+						<li>
+							<a
+								href="/contact"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+								>Contact</a
+							>
+						</li>
+						<li>
+							<a
 								href="/terms"
 								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Terms</a
+							>
+						</li>
+					</ul>
+				</div>
+				<div class="space-y-3">
+					<p class="text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
+						Trust
+					</p>
+					<ul class="space-y-2 text-sm">
+						<li>
+							<a
+								href="/privacy"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Privacy</a
+							>
+						</li>
+						<li>
+							<a
+								href="/trust"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+								>Trust Center</a
+							>
+						</li>
+						<li>
+							<a
+								href="/transparency"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+								>Transparency</a
+							>
+						</li>
+						<li>
+							<a
+								href="/security"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Security</a
+							>
+						</li>
+						<li>
+							<a
+								href="/status"
+								class="text-[var(--app-muted)] transition hover:text-[var(--app-text)]">Status</a
 							>
 						</li>
 					</ul>
@@ -124,7 +197,7 @@
 				<span class="text-[var(--app-muted)]">·</span>
 				<span
 					class="rounded-full border border-[var(--app-border)] bg-[#171b25]/80 px-2 py-0.5 text-xs text-[var(--app-muted)] backdrop-blur-sm"
-					>v0.4.4</span
+					>v0.4.5</span
 				>
 			</div>
 			<div class="flex items-center gap-4">

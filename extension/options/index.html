@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>LibreSearch Settings</title>
+		<link rel="stylesheet" href="options.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+		/>
+		<script src="../theme-init.js"></script>
+	</head>
+	<body class="min-h-screen bg-bg text-text">
+		<main class="mx-auto w-full max-w-2xl px-6 py-12">
+			<header class="mb-10 flex items-center gap-4">
+				<img src="../logo-128.png" alt="" width="44" height="44" class="rounded-lg" />
+				<div>
+					<h1 class="text-xl font-semibold tracking-tight">LibreSearch Extension Settings</h1>
+				</div>
+			</header>
+
+			<form id="settings-form" class="space-y-8">
+				<!-- Theme -->
+				<fieldset>
+					<legend class="mb-2 text-sm font-semibold text-text">Theme</legend>
+					<p class="mb-3 text-xs text-muted">Appearance of the popup and this page.</p>
+					<div class="grid grid-cols-2 gap-2 sm:grid-cols-5">
+						<label class="radio-tile">
+							<input type="radio" name="theme" value="auto" />
+							<span><i class="fa-solid fa-circle-half-stroke"></i> Auto</span>
+						</label>
+						<label class="radio-tile">
+							<input type="radio" name="theme" value="dark" />
+							<span><i class="fa-solid fa-moon"></i> Dark</span>
+						</label>
+						<label class="radio-tile">
+							<input type="radio" name="theme" value="light" />
+							<span><i class="fa-solid fa-sun"></i> Light</span>
+						</label>
+						<label class="radio-tile">
+							<input type="radio" name="theme" value="slate" />
+							<span><i class="fa-solid fa-cloud"></i> Slate</span>
+						</label>
+						<label class="radio-tile">
+							<input type="radio" name="theme" value="sand" />
+							<span><i class="fa-solid fa-mug-hot"></i> Sand</span>
+						</label>
+					</div>
+				</fieldset>
+
+				<!-- Default tab -->
+				<fieldset>
+					<legend class="mb-2 text-sm font-semibold text-text">Default search category</legend>
+					<p class="mb-3 text-xs text-muted">
+						Which tab is selected when you open the popup.
+					</p>
+					<div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+						<label class="radio-tile">
+							<input type="radio" name="defaultTab" value="" />
+							<span><i class="fa-solid fa-globe"></i> Web</span>
+						</label>
+						<label class="radio-tile">
+							<input type="radio" name="defaultTab" value="images" />
+							<span><i class="fa-solid fa-image"></i> Images</span>
+						</label>
+						<label class="radio-tile">
+							<input type="radio" name="defaultTab" value="videos" />
+							<span><i class="fa-solid fa-play"></i> Videos</span>
+						</label>
+						<label class="radio-tile">
+							<input type="radio" name="defaultTab" value="news" />
+							<span><i class="fa-solid fa-newspaper"></i> News</span>
+						</label>
+					</div>
+				</fieldset>
+
+				<!-- Safe search -->
+				<fieldset>
+					<legend class="mb-2 text-sm font-semibold text-text">Safe search</legend>
+					<p class="mb-3 text-xs text-muted">Filter explicit content from results.</p>
+					<div class="grid grid-cols-3 gap-2">
+						<label class="radio-tile">
+							<input type="radio" name="safeSearch" value="strict" />
+							<span>Strict</span>
+						</label>
+						<label class="radio-tile">
+							<input type="radio" name="safeSearch" value="moderate" />
+							<span>Moderate</span>
+						</label>
+						<label class="radio-tile">
+							<input type="radio" name="safeSearch" value="low" />
+							<span>Off</span>
+						</label>
+					</div>
+				</fieldset>
+
+				<!-- Region -->
+				<fieldset>
+					<legend class="mb-2 text-sm font-semibold text-text">Region</legend>
+					<p class="mb-3 text-xs text-muted">Bias results to a specific country.</p>
+					<select id="region" name="region" class="select">
+						<option value="">Any (default)</option>
+						<option value="us">United States</option>
+						<option value="ca">Canada</option>
+						<option value="gb">United Kingdom</option>
+						<option value="au">Australia</option>
+						<option value="de">Germany</option>
+						<option value="fr">France</option>
+						<option value="es">Spain</option>
+						<option value="it">Italy</option>
+						<option value="nl">Netherlands</option>
+						<option value="jp">Japan</option>
+						<option value="in">India</option>
+						<option value="br">Brazil</option>
+						<option value="mx">Mexico</option>
+					</select>
+				</fieldset>
+
+				<!-- Open in -->
+				<fieldset>
+					<legend class="mb-2 text-sm font-semibold text-text">Open results in</legend>
+					<p class="mb-3 text-xs text-muted">Where popup searches go.</p>
+					<div class="grid grid-cols-2 gap-2">
+						<label class="radio-tile">
+							<input type="radio" name="openIn" value="newTab" />
+							<span><i class="fa-solid fa-plus"></i> New tab</span>
+						</label>
+						<label class="radio-tile">
+							<input type="radio" name="openIn" value="currentTab" />
+							<span><i class="fa-solid fa-rotate"></i> Current tab</span>
+						</label>
+					</div>
+				</fieldset>
+
+				<!-- Actions -->
+				<div class="flex items-center justify-between border-t border-border pt-6">
+					<button
+						type="button"
+						id="reset"
+						class="text-xs text-muted transition-colors hover:text-text"
+					>
+						Reset to defaults
+					</button>
+					<div class="flex items-center gap-3">
+						<span id="status" class="text-xs text-ok opacity-0 transition-opacity">
+							<i class="fa-solid fa-check"></i> Saved
+						</span>
+						<button
+							type="submit"
+							class="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-bg transition-opacity hover:opacity-90"
+						>
+							Save settings
+						</button>
+					</div>
+				</div>
+			</form>
+
+			<footer class="mt-12 border-t border-border pt-6 text-center text-xs text-muted">
+				LibreSearch extension · v0.1.0 ·
+				<a
+					href="https://libresearch.ca/privacy"
+					target="_blank"
+					class="text-accent hover:underline"
+					>Privacy policy</a
+				>
+			</footer>
+		</main>
+
+		<script type="module" src="options.js"></script>
+	</body>
+</html>

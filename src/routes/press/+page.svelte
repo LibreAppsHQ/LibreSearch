@@ -79,12 +79,12 @@
 		</h1>
 		<p class="mt-6 max-w-2xl text-lg leading-8 text-[var(--app-secondary)]">
 			Everything you need to write about LibreSearch — the facts, the brand assets, an approved
-			boilerplate, and a direct line to our team. Working on a deadline? Email us and we'll move
+			boilerplate, and a direct line to our team. Working on a deadline? Message us and we'll move
 			fast.
 		</p>
 		<div class="mt-8 flex flex-wrap gap-3">
 			<a
-				href="mailto:info@libresearch.ca"
+				href="/contact"
 				class="inline-flex items-center gap-2 rounded-xl bg-[var(--app-accent)] px-5 py-2.5 text-sm font-semibold text-[#111111] transition hover:opacity-90"
 			>
 				<i class="fa-solid fa-envelope text-xs"></i>
@@ -191,11 +191,11 @@
 				</p>
 			</div>
 			<a
-				href="mailto:info@libresearch.ca"
+				href="/contact"
 				class="inline-flex shrink-0 items-center gap-2 rounded-xl bg-[var(--app-accent)] px-6 py-3 text-sm font-semibold text-[#111111] transition hover:opacity-90"
 			>
 				<i class="fa-solid fa-envelope text-xs"></i>
-				info@libresearch.ca
+				Message the team
 			</a>
 		</div>
 	</section>

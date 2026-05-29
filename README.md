@@ -33,7 +33,7 @@ Every search starts fresh. No cookies. No logs. No surveillance.
 
 ## Built for the open web
 
-LibreSearch uses an independent search index — not a feed curated by an ad platform. Your query is proxied anonymously so the index never sees who you are.
+LibreSearch is a private meta-search frontend. Your query is proxied through our server to an independent upstream index, anonymously — the index never sees your IP, cookies, or browser fingerprint.
 
 ## Bot protection without surveillance
 

@@ -30,7 +30,27 @@
       "Bash(curl -sSI --max-time 15 \"https://libresearch.ca/sitemap.xml\")",
       "Bash(curl -sSI --max-time 15 \"https://libresearch.ca/robots.txt\")",
       "Bash(curl -sS --max-time 15 \"https://libresearch.ca/sitemap.xml\")",
-      "Bash(npx svelte-kit *)"
+      "Bash(npx svelte-kit *)",
+      "Bash(git *)",
+      "Bash(command -v magick convert rsvg-convert ffmpeg)",
+      "Bash(identify /home/stormz/Desktop/LibreSearch/extension/logo.png)",
+      "Bash(ffmpeg -y -loglevel error -i logo.png -vf \"crop=1024:1024:0:256,scale=16:16:flags=lanczos\" logo-16.png)",
+      "Bash(ffmpeg -y -loglevel error -i logo.png -vf \"crop=1024:1024:0:256,scale=48:48:flags=lanczos\" logo-48.png)",
+      "Bash(ffmpeg -y -loglevel error -i logo.png -vf \"crop=1024:1024:0:256,scale=128:128:flags=lanczos\" logo-128.png)",
+      "Bash(ffprobe -v error -select_streams v:0 -show_entries stream=width,height /home/stormz/Desktop/LibreSearch/extension/logo.png)",
+      "Bash(ffmpeg -y -loglevel error -i logo.png -vf \"crop=474:474:0:27,scale=16:16:flags=lanczos\" logo-16.png)",
+      "Bash(ffmpeg -y -loglevel error -i logo.png -vf \"crop=474:474:0:27,scale=48:48:flags=lanczos\" logo-48.png)",
+      "Bash(ffmpeg -y -loglevel error -i logo.png -vf \"crop=474:474:0:27,scale=128:128:flags=lanczos\" logo-128.png)",
+      "Bash(ffmpeg -y -loglevel error -i logo.png -vf \"crop=460:460:7:22,scale=16:16:flags=lanczos\" logo-16.png)",
+      "Bash(ffmpeg -y -loglevel error -i logo.png -vf \"crop=460:460:7:22,scale=48:48:flags=lanczos\" logo-48.png)",
+      "Bash(ffmpeg -y -loglevel error -i logo.png -vf \"crop=460:460:7:22,scale=128:128:flags=lanczos\" logo-128.png)",
+      "Bash(npx @tailwindcss/cli --help)",
+      "Bash(npx @tailwindcss/cli -i extension/popup/popup.src.css -o extension/popup/popup.css --minify)",
+      "Bash(npm install *)",
+      "Bash(rm -f ../libresearch-extension.zip)",
+      "Bash(zip -r ../libresearch-extension.zip . -x .gitignore -x STORE_LISTING.md -x README.md -x popup/popup.src.css -x options/options.src.css -x *.zip)",
+      "Bash(unzip -l ../libresearch-extension.zip)",
+      "Bash(node *)"
     ]
   }
 }

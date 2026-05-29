@@ -38,7 +38,7 @@
 		if (!accessKey) {
 			result = {
 				type: 'error',
-				msg: 'Contact form isn’t configured yet. Email info@libresearch.ca directly.'
+				msg: 'Contact form isn’t configured yet. Please try again later.'
 			};
 			return;
 		}
@@ -73,13 +73,13 @@
 			} else {
 				result = {
 					type: 'error',
-					msg: data?.message ?? 'Couldn’t send. Try again, or email info@libresearch.ca.'
+					msg: data?.message ?? 'Couldn’t send. Please try again in a moment.'
 				};
 			}
 		} catch {
 			result = {
 				type: 'error',
-				msg: 'Network error. Please try again or email info@libresearch.ca.'
+				msg: 'Network error. Please try again in a moment.'
 			};
 		} finally {
 			submitting = false;
@@ -225,7 +225,7 @@
 				</button>
 			</form>
 			{:else}
-				<!-- Form disabled: backend not configured. Point users at email. -->
+				<!-- Form disabled: backend not configured. -->
 				<div
 					class="rounded-2xl border border-[var(--app-border)] bg-[#171b25]/80 p-7 backdrop-blur-sm"
 				>
@@ -235,43 +235,23 @@
 						<i class="fa-solid fa-envelope-open-text text-xl"></i>
 					</div>
 					<h2 class="text-xl font-semibold text-[var(--app-text)]">
-						Contact form isn't configured yet
+						Contact form is temporarily unavailable
 					</h2>
 					<p class="mt-3 text-sm leading-7 text-[var(--app-muted)]">
-						We haven't wired up the web form on this site yet. In the meantime, please email us
-						directly — we read every message and reply within a couple of business days.
+						We're getting it back online. In the meantime, you can file non-sensitive issues and
+						feature requests on our
+						<a
+							href="https://github.com/Arcbasehq/LibreSearch/issues"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-[var(--app-accent)] hover:underline">GitHub repo</a
+						>.
 					</p>
-					<a
-						href="mailto:info@libresearch.ca"
-						class="mt-5 inline-flex items-center gap-2 rounded-full bg-[var(--app-accent)] px-6 py-2.5 text-sm font-semibold text-[#111] transition hover:opacity-90"
-					>
-						<i class="fa-solid fa-paper-plane text-xs"></i>
-						info@libresearch.ca
-					</a>
 				</div>
 			{/if}
 
-			<!-- Sidebar: direct email + notes -->
+			<!-- Sidebar: notes -->
 			<aside class="space-y-6">
-				<div class="rounded-2xl border border-[var(--app-border)] bg-[#171b25]/80 p-6 backdrop-blur-sm">
-					<div
-						class="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500/15 text-sky-400"
-					>
-						<i class="fa-solid fa-envelope text-xl"></i>
-					</div>
-					<h2 class="text-lg font-semibold text-[var(--app-text)]">Or email us directly</h2>
-					<p class="mt-2 text-sm leading-7 text-[var(--app-muted)]">
-						Prefer your own mail client? Reach us straight at:
-					</p>
-					<a
-						href="mailto:info@libresearch.ca"
-						class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-[var(--app-accent)] hover:underline"
-					>
-						info@libresearch.ca
-						<i class="fa-solid fa-arrow-right text-xs"></i>
-					</a>
-				</div>
-
 				<div class="rounded-2xl border border-[var(--app-border)] bg-[#171b25]/60 p-6">
 					<h2 class="mb-3 text-sm font-semibold tracking-wider text-[var(--app-muted)] uppercase">
 						A few notes
@@ -282,8 +262,8 @@
 							business days. Security reports get triaged within 72 hours.
 						</li>
 						<li>
-							<span class="text-[var(--app-text)]">PGP.</span> Ask in your first message and
-							we'll send a key for encrypted follow-ups.
+							<span class="text-[var(--app-text)]">Privacy.</span> We don't log message
+							metadata beyond what's needed to read and respond.
 						</li>
 						<li>
 							<span class="text-[var(--app-text)]">Bugs.</span> Non-sensitive bugs and feature

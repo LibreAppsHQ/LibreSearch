@@ -256,6 +256,7 @@
 			type="search"
 			autocomplete="off"
 			autocapitalize="off"
+			autocorrect="off"
 			spellcheck="false"
 			enterkeyhint="search"
 			{placeholder}

@@ -9,11 +9,14 @@ const SECURITY_HEADERS: Record<string, string> = {
 	'X-DNS-Prefetch-Control': 'off',
 	'Content-Security-Policy': [
 		"default-src 'self'",
-		"script-src 'self' 'unsafe-inline'",
+		// va.vercel-scripts.com hosts the Speed Insights + Analytics scripts.
+		"script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
 		"style-src 'self' 'unsafe-inline'",
 		"img-src 'self' https: data:",
 		"font-src 'self' data:",
-		"connect-src 'self'",
+		// Web3Forms is the contact-form backend; vitals.vercel-insights.com is
+		// the Speed Insights beacon endpoint.
+		"connect-src 'self' https://api.web3forms.com https://vitals.vercel-insights.com",
 		'frame-src https:',
 		"worker-src 'self' blob:",
 		"object-src 'none'",
@@ -24,6 +27,16 @@ const SECURITY_HEADERS: Record<string, string> = {
 };
 
 export const handle: Handle = async ({ event, resolve }) => {
+	// Browsers and crawlers still probe /favicon.ico even when the page declares
+	// an SVG icon. We don't ship a .ico, so without this we'd 500/404 on every
+	// such probe. Redirect to the SVG we do have.
+	if (event.url.pathname === '/favicon.ico') {
+		return new Response(null, {
+			status: 301,
+			headers: { location: '/favicon.svg', 'cache-control': 'public, max-age=86400' }
+		});
+	}
+
 	const response = await resolve(event);
 
 	for (const [header, value] of Object.entries(SECURITY_HEADERS)) {

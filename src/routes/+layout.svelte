@@ -5,6 +5,7 @@
 	import { settingsStore, getToggle } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
 	import { onMount } from 'svelte';
+	import InstallPrompt from '$lib/components/InstallPrompt.svelte';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 
@@ -76,3 +77,5 @@
 <svelte:window onkeydown={handleKeydown} />
 
 {@render children()}
+
+<InstallPrompt />

@@ -197,10 +197,8 @@
 			<section id="contact" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Contact</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					Questions about privacy at LibreSearch? Email us at
-					<a href="mailto:info@libresearch.ca" class="text-[var(--app-accent)] hover:underline"
-						>info@libresearch.ca</a
-					>
+					Questions about privacy at LibreSearch? Reach us via
+					<a href="/contact" class="text-[var(--app-accent)] hover:underline">/contact</a>
 					or learn more on the
 					<a href="/about" class="text-[var(--app-accent)] hover:underline">About</a> page.
 				</p>

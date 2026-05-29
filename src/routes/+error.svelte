@@ -1,5 +1,48 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import SiteFooter from '$lib/components/SiteFooter.svelte';
+	import Logo from '$lib/components/Logo.svelte';
+
+	let query = $state('');
+
+	function copy(status: number): { title: string; body: string } {
+		switch (status) {
+			case 404:
+				return {
+					title: 'Page not found',
+					body: "The page you're looking for doesn't exist, has been renamed, or never existed in the first place. Try searching for what you were after."
+				};
+			case 403:
+				return {
+					title: 'Forbidden',
+					body: "You don't have permission to view this. If you believe this is a mistake, get in touch."
+				};
+			case 429:
+				return {
+					title: 'Too many requests',
+					body: "You've been rate-limited to keep the service fast for everyone. Take a breath and try again in a minute."
+				};
+			case 500:
+				return {
+					title: 'Something went wrong',
+					body: "Our server hit an unexpected error. We're notified automatically and we'll look at it."
+				};
+			case 502:
+			case 503:
+			case 504:
+				return {
+					title: 'The search index is unreachable',
+					body: 'Our upstream search provider may be having a moment. Try again shortly.'
+				};
+			default:
+				return {
+					title: 'Unexpected error',
+					body: 'An unexpected error occurred. Try again, or head back home.'
+				};
+		}
+	}
+
+	let { title, body } = $derived(copy($page.status));
 </script>
 
 <svelte:head>
@@ -8,44 +51,68 @@
 </svelte:head>
 
 <main
-	class="flex min-h-screen flex-col items-center justify-center bg-[var(--app-background)] px-6 text-center text-[var(--app-text)]"
+	class="flex min-h-screen flex-col items-center justify-center bg-[var(--app-background)] px-6 py-16 text-center text-[var(--app-text)]"
 >
-	<p class="mb-4 text-8xl font-bold text-[var(--app-accent)] tabular-nums opacity-40">
+	<a href="/" class="mb-10 inline-flex" aria-label="LibreSearch home">
+		<Logo class="h-12 w-30" />
+	</a>
+
+	<p class="mb-4 text-8xl font-bold tabular-nums text-[var(--app-accent)] opacity-40">
 		{$page.status}
 	</p>
 
-	<h1 class="mb-3 text-2xl font-bold tracking-tight">
-		{#if $page.status === 404}
-			Page not found
-		{:else if $page.status === 500}
-			Something went wrong
-		{:else}
-			Unexpected error
-		{/if}
-	</h1>
+	<h1 class="mb-3 text-2xl font-bold tracking-tight">{title}</h1>
 
-	<p class="mb-10 max-w-sm text-sm leading-6 text-[var(--app-muted)]">
-		{#if $page.status === 404}
-			The page you're looking for doesn't exist or has been moved.
-		{:else}
-			An unexpected error occurred. Please try again.
-		{/if}
-	</p>
+	<p class="mb-10 max-w-md text-sm leading-6 text-[var(--app-muted)]">{body}</p>
+
+	<form
+		action="/search"
+		method="get"
+		class="mb-8 flex w-full max-w-md items-center gap-2 rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] px-4 py-2.5 focus-within:border-[var(--app-accent)]"
+	>
+		<i class="fa-solid fa-magnifying-glass text-sm text-[var(--app-muted)]"></i>
+		<input
+			type="search"
+			name="q"
+			autocomplete="off"
+			autocapitalize="off"
+			autocorrect="off"
+			spellcheck="false"
+			placeholder="Try a search instead"
+			bind:value={query}
+			class="min-w-0 flex-1 bg-transparent text-sm text-[var(--app-text)] placeholder:text-[var(--app-muted)] focus:outline-none"
+		/>
+		<button
+			type="submit"
+			class="rounded-xl bg-[var(--app-accent)] px-3 py-1.5 text-xs font-semibold text-[#0d1019] transition hover:opacity-90"
+		>
+			Search
+		</button>
+	</form>
 
 	<div class="flex flex-wrap items-center justify-center gap-3">
 		<a
 			href="/"
-			class="inline-flex items-center gap-2 rounded-2xl bg-[var(--app-accent)] px-5 py-2.5 text-sm font-semibold text-[#111111] transition hover:opacity-90"
+			class="inline-flex items-center gap-2 rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] px-5 py-2.5 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
 		>
 			<i class="fa-solid fa-house text-xs"></i>
-			Go home
+			Home
 		</a>
 		<a
-			href="/search?q="
-			class="inline-flex items-center gap-2 rounded-2xl border border-[var(--app-border)] px-5 py-2.5 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+			href="/about"
+			class="inline-flex items-center gap-2 rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] px-5 py-2.5 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
 		>
-			<i class="fa-solid fa-magnifying-glass text-xs"></i>
-			Search
+			<i class="fa-solid fa-circle-info text-xs"></i>
+			About
+		</a>
+		<a
+			href="/contact"
+			class="inline-flex items-center gap-2 rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] px-5 py-2.5 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+		>
+			<i class="fa-solid fa-envelope text-xs"></i>
+			Contact
 		</a>
 	</div>
 </main>
+
+<SiteFooter />

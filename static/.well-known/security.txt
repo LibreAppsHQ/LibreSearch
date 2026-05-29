@@ -1,0 +1,6 @@
+Contact: https://libresearch.ca/contact
+Expires: 2027-01-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://libresearch.ca/.well-known/security.txt
+Policy: https://libresearch.ca/security
+Acknowledgments: https://libresearch.ca/security#hall-of-fame
