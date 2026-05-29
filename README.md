@@ -45,8 +45,11 @@ LibreSearch is free and ad-free. If you'd like to keep it that way, you can supp
 
 ## Stay in touch
 
-- GitHub: [Arcbasehq/LibreSearch](https://github.com/Arcbasehq/LibreSearch)
-- Mastodon: linked from the site footer
+- ![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)
+  [Arcbasehq/LibreSearch](https://github.com/Arcbasehq/LibreSearch)
+
+- ![Mastodon](https://img.shields.io/badge/Mastodon-6364FF?logo=mastodon&logoColor=white)
+  [Mastodon](https://mastodon.social/@libresearch)
 
 ## License
 
