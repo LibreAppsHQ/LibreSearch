@@ -50,7 +50,20 @@
       "Bash(rm -f ../libresearch-extension.zip)",
       "Bash(zip -r ../libresearch-extension.zip . -x .gitignore -x STORE_LISTING.md -x README.md -x popup/popup.src.css -x options/options.src.css -x *.zip)",
       "Bash(unzip -l ../libresearch-extension.zip)",
-      "Bash(node *)"
+      "Bash(node *)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm run *)",
+      "Bash(./node_modules/.bin/tailwindcss -i extension/popup/popup.src.css -o extension/popup/popup.css --minify)",
+      "Bash(pnpm --version)",
+      "Bash(echo \"exit code: $?\")",
+      "Bash(pnpm rebuild *)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(pnpm store *)",
+      "Bash(pnpm why *)",
+      "Bash(./node_modules/.bin/vite build *)",
+      "Bash(pnpm config *)",
+      "Read(//root/**)",
+      "Bash(find / -maxdepth 6 -name \"rc.yaml\")"
     ]
   }
 }
