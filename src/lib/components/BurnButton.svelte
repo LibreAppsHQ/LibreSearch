@@ -5,6 +5,18 @@
 
 	let swirling = $state(false);
 
+	// Move the overlay to <body> so a `backdrop-filter` ancestor (e.g. the
+	// sticky, blurred search-results header) can't trap our position:fixed
+	// element inside its stacking context. Same trick SiteMenu uses.
+	function portal(node: HTMLElement) {
+		document.body.appendChild(node);
+		return {
+			destroy() {
+				node.remove();
+			}
+		};
+	}
+
 	// Wipe every LibreSearch-owned key out of local storage: search history,
 	// settings, theme — everything that lives on the device.
 	function clearEverything() {
@@ -57,7 +69,7 @@
 </button>
 
 {#if swirling}
-	<div class="swirl-overlay" role="presentation" aria-hidden="true">
+	<div use:portal class="swirl-overlay" role="presentation" aria-hidden="true">
 		<img class="swirl-gif" src="/animation2.gif" alt="" />
 	</div>
 {/if}
