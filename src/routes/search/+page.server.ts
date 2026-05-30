@@ -34,7 +34,6 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 		imageResults: undefined,
 		placeResults: undefined,
 		infobox: undefined,
-		didYouMean: undefined,
 		challengeRequired: challenge
 	});
 
@@ -84,8 +83,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 			videoResults: undefined,
 			imageResults: undefined,
 			placeResults: undefined,
-			infobox: undefined,
-			didYouMean: undefined
+			infobox: undefined
 		};
 	}
 
@@ -105,8 +103,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 			videoResults: undefined,
 			imageResults: undefined,
 			placeResults: undefined,
-			infobox: undefined,
-			didYouMean: undefined
+			infobox: undefined
 		};
 	}
 
@@ -200,7 +197,6 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 				attributes?: Array<[string, string]>;
 				profiles?: Array<{ network: string; url: string; imageUrl?: string }>;
 			};
-			didYouMean?: string;
 		} | null;
 
 		if (!response.ok) throw new Error(payload?.error ?? 'Search backend unavailable.');
@@ -220,8 +216,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 			videoResults: payload?.videoResults,
 			imageResults: payload?.imageResults,
 			placeResults: payload?.placeResults,
-			infobox: payload?.infobox,
-			didYouMean: payload?.didYouMean
+			infobox: payload?.infobox
 		};
 	} catch {
 		return {
@@ -239,8 +234,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 			videoResults: undefined,
 			imageResults: undefined,
 			placeResults: undefined,
-			infobox: undefined,
-			didYouMean: undefined
+			infobox: undefined
 		};
 	}
 }

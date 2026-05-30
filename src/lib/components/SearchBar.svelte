@@ -28,6 +28,10 @@
 	let inputElement: HTMLInputElement | null = null;
 	let isOpen = $state(false);
 	let activeIndex = $state(-1);
+	// True only when the highlighted item was reached via arrow keys. Enter submits
+	// a suggestion only in that case — never a mouse-hover or auto-preselected one —
+	// so typing "ca" + Enter searches "ca", not the highlighted "canva".
+	let keyboardSelected = $state(false);
 	let suggestions = $state<string[]>([]);
 	let suggestionController: AbortController | null = null;
 	let suggestionTimer: ReturnType<typeof setTimeout> | null = null;
@@ -76,18 +80,21 @@
 		if (dropdownItems.length === 0) {
 			isOpen = false;
 			activeIndex = -1;
+			keyboardSelected = false;
 		}
 	});
 
 	function openDropdown(): void {
 		if (!autocompleteEnabled) return;
 		isOpen = dropdownItems.length > 0;
-		activeIndex = dropdownItems.length > 0 ? 0 : -1;
+		activeIndex = -1;
+		keyboardSelected = false;
 	}
 
 	function closeDropdown(): void {
 		isOpen = false;
 		activeIndex = -1;
+		keyboardSelected = false;
 	}
 
 	function submitQuery(value: string): void {
@@ -125,9 +132,10 @@
 		if (!next) {
 			suggestionController?.abort();
 			suggestions = [];
+			keyboardSelected = false;
 			if (autocompleteEnabled && saveHistory && history.length > 0) {
 				isOpen = true;
-				activeIndex = 0;
+				activeIndex = -1;
 			}
 			return;
 		}
@@ -157,7 +165,10 @@
 
 				suggestions = Array.isArray(payload) ? payload : [];
 				isOpen = suggestions.length > 0;
-				activeIndex = suggestions.length > 0 ? 0 : -1;
+				// Don't preselect a suggestion: Enter should search exactly what the
+				// user typed. A suggestion is only submitted if they arrow down to it.
+				activeIndex = -1;
+				keyboardSelected = false;
 			} catch {
 				if (currentNonce !== suggestionNonce || controller.signal.aborted) return;
 				suggestions = [];
@@ -178,9 +189,11 @@
 		if (event.key === 'ArrowDown') {
 			event.preventDefault();
 			activeIndex = (activeIndex + 1) % dropdownItems.length;
+			keyboardSelected = true;
 		} else if (event.key === 'ArrowUp') {
 			event.preventDefault();
 			activeIndex = activeIndex <= 0 ? dropdownItems.length - 1 : activeIndex - 1;
+			keyboardSelected = true;
 		} else if (event.key === 'Escape') {
 			event.preventDefault();
 			closeDropdown();
@@ -188,7 +201,9 @@
 			// Tab completes the highlighted suggestion into the box without searching.
 			event.preventDefault();
 			appendQuery(dropdownItems[activeIndex].text);
-		} else if (event.key === 'Enter' && activeIndex >= 0) {
+		} else if (event.key === 'Enter' && activeIndex >= 0 && keyboardSelected) {
+			// Only a keyboard-navigated highlight wins on Enter; a hover-highlighted
+			// item is ignored so Enter submits exactly what was typed.
 			event.preventDefault();
 			submitQuery(dropdownItems[activeIndex].text);
 		}
@@ -351,7 +366,10 @@
 								event.preventDefault();
 								submitQuery(item.text);
 							}}
-							onmouseenter={() => (activeIndex = index)}
+							onmouseenter={() => {
+								activeIndex = index;
+								keyboardSelected = false;
+							}}
 						>
 							<span class="truncate text-[15px]">
 								<span class="text-[var(--app-muted)]">{m.typed}</span><span

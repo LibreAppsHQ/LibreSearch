@@ -90,7 +90,13 @@
       "Bash(xargs -r kill)",
       "Bash(pkill -f vite)",
       "Bash(awk '{print $2}')",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:5183/search?q=test\")"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:5183/search?q=test\")",
+      "Bash(awk 'NR>=122 && NR<=145' /home/stormz/Desktop/LibreSearch/src/routes/search/+page.svelte)",
+      "Bash(awk NR>=272 && NR<=292 *)",
+      "Bash(curl -s \"http://localhost:5173/api/suggest?q=ca\")",
+      "Bash(curl -s \"http://localhost:5173/src/lib/components/SearchBar.svelte\")",
+      "Bash(pkill -f \"vite dev\")",
+      "Bash(kill 9203 18939 9740)"
     ]
   }
 }

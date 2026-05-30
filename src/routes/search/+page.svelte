@@ -283,18 +283,6 @@
 				</p>
 			{/if}
 
-			{#if data.didYouMean}
-				<p class="mb-4 max-w-2xl text-sm text-[var(--app-muted)]">
-					Did you mean:
-					<button
-						type="button"
-						onclick={() => navigate({ q: data.didYouMean })}
-						class="font-medium text-[var(--app-accent)] italic hover:underline"
-						>{data.didYouMean}</button
-					>?
-				</p>
-			{/if}
-
 			<!-- Two-column grid: left = results, right = infobox (web tab only) -->
 			<div class={data.infobox && data.tab === 'web' && !loading ? 'flex gap-8' : ''}>
 				<!-- Left / main column -->

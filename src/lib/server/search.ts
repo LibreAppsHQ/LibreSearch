@@ -626,13 +626,6 @@ async function fetchBraveSearch(
 				: undefined;
 
 			const resolvedQuery = queryValue || query;
-			const alteredQuery =
-				isRecord(payload) &&
-				isRecord(payload.query) &&
-				typeof payload.query.altered === 'string' &&
-				payload.query.altered.trim().toLowerCase() !== resolvedQuery.toLowerCase()
-					? payload.query.altered.trim()
-					: undefined;
 
 			return {
 				query: resolvedQuery,
@@ -640,8 +633,7 @@ async function fetchBraveSearch(
 				results,
 				newsResults: newsResults.length > 0 ? newsResults : undefined,
 				videoResults: videoResults.length > 0 ? videoResults : undefined,
-				infobox,
-				didYouMean: alteredQuery
+				infobox
 			};
 		}
 
