@@ -63,6 +63,12 @@ function createThemeStore() {
 			themeKey === 'light' || themeKey === 'sand' ? '#5f5b55' : '#9ca3af'
 		);
 		const isLight = themeKey === 'light' || themeKey === 'sand';
+		// Elevated surfaces (inputs, dropdowns, pills). Must track the theme so
+		// near-black text stays readable on light themes instead of dark-on-dark.
+		root.style.setProperty(
+			'--app-elevated',
+			isLight ? palette.panel : themeKey === 'slate' ? '#272c39' : '#2e3443'
+		);
 		root.style.setProperty('--app-secondary', isLight ? '#3f3b36' : '#d4d4d8');
 		root.style.setProperty('--app-border', isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.08)');
 		root.style.setProperty(

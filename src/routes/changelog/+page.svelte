@@ -17,6 +17,17 @@
 
 	const releases: Release[] = [
 		{
+			version: '0.6.1',
+			date: '2026-05-30',
+			title: 'Theme and accessibility fixes',
+			entries: [
+				{ tag: 'fix', text: 'Light and Sand themes: the search box, suggestions, and filter menus rendered dark-on-dark and were unreadable — surfaces are now theme-aware' },
+				{ tag: 'fix', text: 'Home and search-page logos no longer stretch out of proportion or overflow on small screens' },
+				{ tag: 'fix', text: 'Wipe button now also clears the install-prompt dismissal' },
+				{ tag: 'fix', text: '“Make it your default” dialog closes on Escape and moves focus into itself for keyboard users' }
+			]
+		},
+		{
 			version: '0.6.0',
 			date: '2026-05-29',
 			title: 'One-tap wipe',

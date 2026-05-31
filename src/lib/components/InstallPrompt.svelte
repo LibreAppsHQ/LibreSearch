@@ -7,7 +7,8 @@
 		userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 	}
 
-	const DISMISS_KEY = 'libresearch-install-dismissed';
+	// Prefixed so the Wipe button (which clears every `LibreSearch:` key) removes it too.
+	const DISMISS_KEY = 'LibreSearch:install-dismissed';
 	// Don't pester someone who dismissed for ~30 days.
 	const DISMISS_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
 

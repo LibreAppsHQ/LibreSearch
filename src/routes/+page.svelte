@@ -73,12 +73,25 @@
 	});
 
 	let browser = $state<BrowserKey>('other');
+	let dialogEl = $state<HTMLDivElement | null>(null);
 
 	function openDefaultModal() {
 		browser = detectBrowser();
 		if (typeof window !== 'undefined') origin = window.location.origin;
 		showDefaultModal = true;
 	}
+
+	// Close on Escape and pull focus into the dialog when it opens, so keyboard
+	// users aren't left tabbing through the page behind the modal.
+	$effect(() => {
+		if (!showDefaultModal) return;
+		function onKey(event: KeyboardEvent) {
+			if (event.key === 'Escape') showDefaultModal = false;
+		}
+		window.addEventListener('keydown', onKey);
+		dialogEl?.focus();
+		return () => window.removeEventListener('keydown', onKey);
+	});
 </script>
 
 <svelte:head>
@@ -136,8 +149,8 @@
 	<!-- Centered hero -->
 	<div class="relative flex min-h-screen flex-col items-center px-6 pt-[21vh]">
 		<div class="w-full max-w-xl text-center">
-			<a href="/about" class="inline-flex items-center gap-2.5" aria-label="LibreSearch home">
-				<Logo class="h-70 w-200 " />
+			<a href="/" class="inline-flex items-center gap-2.5" aria-label="LibreSearch home">
+				<Logo class="h-24 w-auto max-w-full sm:h-28" />
 			</a>
 			<h1 class="mt-3 text-base text-[var(--app-text)] sm:text-lg">
 				Find anything. Tracked by no one.
@@ -229,9 +242,9 @@
 	<!-- Footer -->
 	<footer class=" bg-[#0c0d0e] py-2.5">
 		<nav class="flex items-center justify-center gap-18 text-sm text-white/90">
-			<a href="/privacy" class="transition hover:text-[var(--app-text)]">Privacy Policy</a>
-			<a href="/about" class="transition hover:text-[var(--app-text)]">About Us</a>
-			<a href="/settings" class="transition hover:text-[var(--app-text)]">Settings</a>
+			<a href="/privacy" class="transition hover:text-[var(--app-accent)]">Privacy Policy</a>
+			<a href="/about" class="transition hover:text-[var(--app-accent)]">About Us</a>
+			<a href="/settings" class="transition hover:text-[var(--app-accent)]">Settings</a>
 		</nav>
 	</footer>
 </main>
@@ -244,7 +257,9 @@
 	>
 		<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 		<div
-			class="w-full max-w-md rounded-xl bg-white p-6 text-[#0c0d0e] shadow-xl"
+			bind:this={dialogEl}
+			tabindex="-1"
+			class="w-full max-w-md rounded-xl bg-white p-6 text-[#0c0d0e] shadow-xl focus:outline-none"
 			role="dialog"
 			aria-modal="true"
 			aria-labelledby="default-modal-title"

@@ -13,6 +13,7 @@
 
 	const subjectOptions = [
 		{ value: 'General', label: 'General inquiry' },
+		{ value: 'Bug', label: 'Report a bug' },
 		{ value: 'Privacy', label: 'Privacy / data request' },
 		{ value: 'Security', label: 'Security disclosure' },
 		{ value: 'Press', label: 'Press / media' }
@@ -60,9 +61,10 @@
 					botcheck
 				})
 			});
-			const data = (await response.json().catch(() => null)) as
-				| { success?: boolean; message?: string }
-				| null;
+			const data = (await response.json().catch(() => null)) as {
+				success?: boolean;
+				message?: string;
+			} | null;
 
 			if (response.ok && data?.success) {
 				result = { type: 'success', msg: 'Thanks — your message is on its way. We’ll reply soon.' };
@@ -136,94 +138,94 @@
 					class="rounded-2xl border border-[var(--app-border)] bg-[#171b25]/80 p-7 backdrop-blur-sm"
 					novalidate
 				>
-				<!-- Honeypot: real users never see/fill this; bots autofill it. -->
-				<input
-					type="text"
-					name="botcheck"
-					bind:value={botcheck}
-					tabindex="-1"
-					autocomplete="off"
-					aria-hidden="true"
-					style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;"
-				/>
+					<!-- Honeypot: real users never see/fill this; bots autofill it. -->
+					<input
+						type="text"
+						name="botcheck"
+						bind:value={botcheck}
+						tabindex="-1"
+						autocomplete="off"
+						aria-hidden="true"
+						style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;"
+					/>
 
-				<div class="grid gap-5 sm:grid-cols-2">
-					<label class="block">
-						<span class="mb-2 block text-sm font-medium text-[var(--app-text)]">Name</span>
-						<input
-							type="text"
-							bind:value={name}
-							required
-							autocomplete="name"
-							maxlength="100"
-							class="w-full rounded-xl border border-[var(--app-border)] bg-transparent px-4 py-2.5 text-[var(--app-text)] placeholder:text-[var(--app-muted)] focus:border-[var(--app-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)]/30"
-							placeholder="Your name"
-						/>
-					</label>
-					<label class="block">
-						<span class="mb-2 block text-sm font-medium text-[var(--app-text)]">Email</span>
-						<input
-							type="email"
-							bind:value={email}
-							required
-							autocomplete="email"
-							maxlength="200"
-							class="w-full rounded-xl border border-[var(--app-border)] bg-transparent px-4 py-2.5 text-[var(--app-text)] placeholder:text-[var(--app-muted)] focus:border-[var(--app-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)]/30"
-							placeholder="you@example.com"
-						/>
-					</label>
-				</div>
-
-				<label class="mt-5 block">
-					<span class="mb-2 block text-sm font-medium text-[var(--app-text)]">Topic</span>
-					<select
-						bind:value={subject}
-						class="w-full rounded-xl border border-[var(--app-border)] bg-[#171b25] px-4 py-2.5 text-[var(--app-text)] focus:border-[var(--app-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)]/30"
-					>
-						{#each subjectOptions as opt (opt.value)}
-							<option value={opt.value}>{opt.label}</option>
-						{/each}
-					</select>
-				</label>
-
-				<label class="mt-5 block">
-					<span class="mb-2 block text-sm font-medium text-[var(--app-text)]">Message</span>
-					<textarea
-						bind:value={message}
-						required
-						rows="6"
-						maxlength="5000"
-						class="w-full resize-y rounded-xl border border-[var(--app-border)] bg-transparent px-4 py-3 text-[var(--app-text)] placeholder:text-[var(--app-muted)] focus:border-[var(--app-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)]/30"
-						placeholder="What's on your mind?"
-					></textarea>
-					<span class="mt-1 block text-xs text-[var(--app-muted)]">{message.length} / 5000</span>
-				</label>
-
-				{#if result}
-					<div
-						class={result.type === 'success'
-							? 'mt-5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-300'
-							: 'mt-5 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300'}
-						role={result.type === 'success' ? 'status' : 'alert'}
-					>
-						{result.msg}
+					<div class="grid gap-5 sm:grid-cols-2">
+						<label class="block">
+							<span class="mb-2 block text-sm font-medium text-[var(--app-text)]">Name</span>
+							<input
+								type="text"
+								bind:value={name}
+								required
+								autocomplete="name"
+								maxlength="100"
+								class="w-full rounded-xl border border-[var(--app-border)] bg-transparent px-4 py-2.5 text-[var(--app-text)] placeholder:text-[var(--app-muted)] focus:border-[var(--app-accent)] focus:ring-2 focus:ring-[var(--app-accent)]/30 focus:outline-none"
+								placeholder="Your name"
+							/>
+						</label>
+						<label class="block">
+							<span class="mb-2 block text-sm font-medium text-[var(--app-text)]">Email</span>
+							<input
+								type="email"
+								bind:value={email}
+								required
+								autocomplete="email"
+								maxlength="200"
+								class="w-full rounded-xl border border-[var(--app-border)] bg-transparent px-4 py-2.5 text-[var(--app-text)] placeholder:text-[var(--app-muted)] focus:border-[var(--app-accent)] focus:ring-2 focus:ring-[var(--app-accent)]/30 focus:outline-none"
+								placeholder="you@example.com"
+							/>
+						</label>
 					</div>
-				{/if}
 
-				<button
-					type="submit"
-					disabled={submitting}
-					class="mt-6 inline-flex items-center gap-2 rounded-full bg-[var(--app-accent)] px-6 py-2.5 text-sm font-semibold text-[#111] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-				>
-					{#if submitting}
-						<i class="fa-solid fa-circle-notch fa-spin text-xs"></i>
-						Sending…
-					{:else}
-						<i class="fa-solid fa-paper-plane text-xs"></i>
-						Send message
+					<label class="mt-5 block">
+						<span class="mb-2 block text-sm font-medium text-[var(--app-text)]">Topic</span>
+						<select
+							bind:value={subject}
+							class="w-full rounded-xl border border-[var(--app-border)] bg-[#171b25] px-4 py-2.5 text-[var(--app-text)] focus:border-[var(--app-accent)] focus:ring-2 focus:ring-[var(--app-accent)]/30 focus:outline-none"
+						>
+							{#each subjectOptions as opt (opt.value)}
+								<option value={opt.value}>{opt.label}</option>
+							{/each}
+						</select>
+					</label>
+
+					<label class="mt-5 block">
+						<span class="mb-2 block text-sm font-medium text-[var(--app-text)]">Message</span>
+						<textarea
+							bind:value={message}
+							required
+							rows="6"
+							maxlength="5000"
+							class="w-full resize-y rounded-xl border border-[var(--app-border)] bg-transparent px-4 py-3 text-[var(--app-text)] placeholder:text-[var(--app-muted)] focus:border-[var(--app-accent)] focus:ring-2 focus:ring-[var(--app-accent)]/30 focus:outline-none"
+							placeholder="What's on your mind?"
+						></textarea>
+						<span class="mt-1 block text-xs text-[var(--app-muted)]">{message.length} / 5000</span>
+					</label>
+
+					{#if result}
+						<div
+							class={result.type === 'success'
+								? 'mt-5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-300'
+								: 'mt-5 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300'}
+							role={result.type === 'success' ? 'status' : 'alert'}
+						>
+							{result.msg}
+						</div>
 					{/if}
-				</button>
-			</form>
+
+					<button
+						type="submit"
+						disabled={submitting}
+						class="mt-6 inline-flex items-center gap-2 rounded-full bg-[var(--app-accent)] px-6 py-2.5 text-sm font-semibold text-[#111] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+					>
+						{#if submitting}
+							<i class="fa-solid fa-circle-notch fa-spin text-xs"></i>
+							Sending…
+						{:else}
+							<i class="fa-solid fa-paper-plane text-xs"></i>
+							Send message
+						{/if}
+					</button>
+				</form>
 			{:else}
 				<!-- Form disabled: backend not configured. -->
 				<div
@@ -258,16 +260,16 @@
 					</h2>
 					<ul class="space-y-3 text-sm leading-6 text-[var(--app-muted)]">
 						<li>
-							<span class="text-[var(--app-text)]">Response time.</span> Usually within two
-							business days. Security reports get triaged within 72 hours.
+							<span class="text-[var(--app-text)]">Response time.</span> Usually within two business days.
+							Security reports get triaged within 72 hours.
 						</li>
 						<li>
-							<span class="text-[var(--app-text)]">Privacy.</span> We don't log message
-							metadata beyond what's needed to read and respond.
+							<span class="text-[var(--app-text)]">Privacy.</span> We don't log message metadata beyond
+							what's needed to read and respond.
 						</li>
 						<li>
-							<span class="text-[var(--app-text)]">Bugs.</span> Non-sensitive bugs and feature
-							requests are best filed on our repo.
+							<span class="text-[var(--app-text)]">Bugs.</span> Non-sensitive bugs and feature requests
+							are best filed on our repo.
 						</li>
 					</ul>
 				</div>

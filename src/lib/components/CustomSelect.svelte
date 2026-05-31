@@ -111,7 +111,7 @@
 
 		<!-- Dropdown -->
 		<div
-			class="fixed z-[61] min-w-[10rem] overflow-y-auto overscroll-contain rounded-sm border border-[var(--app-border)] bg-[#272c39] shadow-2xl shadow-black/40"
+			class="fixed z-[61] min-w-[10rem] overflow-y-auto overscroll-contain rounded-sm border border-[var(--app-border)] bg-[var(--app-elevated)] shadow-2xl shadow-black/40"
 			style="{menuTop !== null ? `top:${menuTop}px;` : ''}{menuBottom !== null
 				? `bottom:${menuBottom}px;`
 				: ''} right:{menuRight}px; max-height:{menuMaxHeight}px;"

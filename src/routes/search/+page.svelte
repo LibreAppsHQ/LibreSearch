@@ -200,7 +200,7 @@
 		<div class="mx-auto w-full max-w-[1400px] px-4 sm:px-6">
 			<div class="flex items-center gap-4 py-3 sm:gap-6">
 				<a href="/" class="hidden shrink-0 sm:block">
-					<Logo class="h-10 w-25 rounded-full" />
+					<Logo class="h-10 w-auto" />
 				</a>
 				<div class="min-w-0 flex-1">
 					<div class="max-w-3xl">
@@ -216,7 +216,7 @@
 				</div>
 				<a
 					href="/privacy"
-					class="hidden shrink-0 items-center gap-2 rounded-full bg-[#2e3443] px-4 py-2.5 text-sm font-medium text-[var(--app-secondary)] transition hover:opacity-90 md:inline-flex"
+					class="hidden shrink-0 items-center gap-2 rounded-full bg-[var(--app-elevated)] px-4 py-2.5 text-sm font-medium text-[var(--app-secondary)] transition hover:opacity-90 md:inline-flex"
 				>
 					<i class="fa-solid fa-shield-halved text-emerald-400"></i>
 					Private Search

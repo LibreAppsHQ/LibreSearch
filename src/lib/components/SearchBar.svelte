@@ -261,7 +261,7 @@
 		class={pill
 			? 'flex w-full items-center rounded-full border border-indigo-400/60 bg-transparent px-5 py-2.5 transition focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-400/20'
 			: compact
-				? 'flex w-full items-center rounded-full border border-transparent bg-[#2e3443] px-5 py-3 transition focus-within:ring-2 focus-within:ring-slate-500/20'
+				? 'flex w-full items-center rounded-full border border-transparent bg-[var(--app-elevated)] px-5 py-3 transition focus-within:ring-2 focus-within:ring-slate-500/20'
 				: 'flex w-full items-center rounded-xl border border-[var(--app-border)] bg-transparent px-5 py-2 transition focus-within:border-slate-500/60 focus-within:ring-2 focus-within:ring-slate-500/20'}
 	>
 		<input
@@ -321,7 +321,7 @@
 	{#if isOpen && dropdownItems.length > 0}
 		<div class="relative">
 			<div
-				class="absolute top-2 right-0 left-0 z-20 overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[#2e3443] p-2 shadow-2xl shadow-black/40 ring-1 ring-black/5"
+				class="absolute top-2 right-0 left-0 z-20 overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-elevated)] p-2 shadow-2xl shadow-black/40 ring-1 ring-black/5"
 				transition:fly={{ y: -6, duration: $reducedMotion ? 0 : 160, easing: cubicOut }}
 			>
 				{#if hasHistory}
