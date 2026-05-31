@@ -253,13 +253,9 @@
 		<nav
 			class="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-white/90"
 		>
-			<a href="/about" class="transition hover:text-[var(--app-accent)]">About Us</a>
 			<a href="/privacy" class="transition hover:text-[var(--app-accent)]">Privacy Policy</a>
-			<a href="/extension" class="transition hover:text-[var(--app-accent)]">Browser Extension</a>
-			<a href="/compare" class="transition hover:text-[var(--app-accent)]">Compare</a>
-			<a href="/transparency" class="transition hover:text-[var(--app-accent)]">Transparency</a>
-			<a href="/themes" class="transition hover:text-[var(--app-accent)]">Themes</a>
-			<a href="/settings" class="transition hover:text-[var(--app-accent)]">Settings</a>
+			<a href="/about" class="transition hover:text-[var(--app-accent)]">About Us</a>
+			<a href="/press" class="transition hover:text-[var(--app-accent)]">Press</a>
 		</nav>
 	</footer>
 </main>
