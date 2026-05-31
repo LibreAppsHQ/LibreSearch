@@ -120,7 +120,7 @@
 		<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-[var(--app-muted)]">
 			The LibreSearch browser extension puts a private search bar in your toolbar, a quick search in
 			your address bar, and a "Search LibreSearch" option in your right-click menu. No tracking, no
-			profiles, no ads - and no permissions to read your pages.
+			profiles, no ads — and no permissions to read your pages.
 		</p>
 	</section>
 
@@ -230,7 +230,7 @@
 		</h2>
 		<p class="mx-auto mb-12 max-w-2xl text-center text-sm leading-6 text-[var(--app-muted)]">
 			Most extensions request "read and change all your data on the websites you visit." This one
-			doesn't. There are no host permissions - it can't see, read, or modify any page you load.
+			doesn't. There are no host permissions — it can't see, read, or modify any page you load.
 		</p>
 
 		<div

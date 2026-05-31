@@ -37,7 +37,7 @@
 				{
 					label: 'Accounts affected',
 					value: 0,
-					desc: 'We do not maintain user accounts - there is nothing tied to an identity to disclose.'
+					desc: 'We do not maintain user accounts — there is nothing tied to an identity to disclose.'
 				}
 			]
 		}

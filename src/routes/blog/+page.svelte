@@ -20,7 +20,7 @@
 	<title>Blog - LibreSearch</title>
 	<meta
 		name="description"
-		content="Writing on privacy, security, and how LibreSearch is built - from what search engines know about you to why we use proof-of-work instead of CAPTCHAs."
+		content="Writing on privacy, security, and how LibreSearch is built — from what search engines know about you to why we use proof-of-work instead of CAPTCHAs."
 	/>
 	<link rel="canonical" href="https://libresearch.ca/blog" />
 	<meta property="og:title" content="Blog - LibreSearch" />

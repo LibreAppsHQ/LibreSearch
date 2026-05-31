@@ -144,7 +144,7 @@
 		</h1>
 		<p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[var(--app-muted)]">
 			LibreSearch can be rolled out as the default search engine in Chrome, Edge, and Firefox using
-			the same Group Policy / MDM tools you already use. No telemetry, no query logging - defensible
+			the same Group Policy / MDM tools you already use. No telemetry, no query logging — defensible
 			under GDPR, HIPAA, and FERPA.
 		</p>
 	</section>

@@ -9,7 +9,7 @@
 	<meta name="robots" content="noindex, nofollow" />
 	<meta
 		name="description"
-		content="Why LibreSearch's interface looks a lot like Startpage's - an honest note on design inspiration."
+		content="Why LibreSearch's interface looks a lot like Startpage's — an honest note on design inspiration."
 	/>
 </svelte:head>
 
@@ -55,7 +55,7 @@
 				<p>
 					Startpage has spent years refining what a calm, privacy-first search interface should feel
 					like: generous spacing, an honest settings page, a results layout that gets out of your
-					way. When we set out to build LibreSearch, we studied interfaces we admired - and theirs
+					way. When we set out to build LibreSearch, we studied interfaces we admired — and theirs
 					kept coming out on top. So our layout, our settings structure, and our tone borrow heavily
 					from what they got right.
 				</p>
@@ -68,7 +68,7 @@
 				<p>
 					Familiar patterns lower the bar for people switching away from surveillance-heavy search
 					engines. If the toggles, tabs, and result cards feel like something you already know how
-					to use, that's a feature - not a coincidence. We'd rather you spend zero seconds
+					to use, that's a feature — not a coincidence. We'd rather you spend zero seconds
 					relearning an interface and all your attention on the fact that nobody is logging your
 					searches.
 				</p>
@@ -79,7 +79,7 @@
 				<p>
 					The look is inspired by Startpage; the engine underneath is our own. LibreSearch is an
 					independent project with its own search backend, its own privacy model, and its own code.
-					We're not affiliated with Startpage, and nothing here is copied from their codebase - only
+					We're not affiliated with Startpage, and nothing here is copied from their codebase — only
 					the design sensibility.
 				</p>
 			</section>
@@ -88,7 +88,7 @@
 				<h2 class="mb-2 text-lg font-semibold text-[var(--app-text)]">Credit where it's due</h2>
 				<p>
 					So: thank you, Startpage, for setting a high bar for what private search can look like. If
-					you like this interface, you'll probably like theirs too - go check them out.
+					you like this interface, you'll probably like theirs too — go check them out.
 				</p>
 			</section>
 		</div>

@@ -14,7 +14,7 @@ import { flagSuspicious, isVerified, getClientKey } from '$lib/server/security';
 export const GET: RequestHandler = async (event) => {
 	const ip = getClientKey(event);
 
-	// Honeypot - silently drop requests where the bot-trap field is filled,
+	// Honeypot — silently drop requests where the bot-trap field is filled,
 	// and flag the client so it must solve a challenge to continue.
 	if (event.url.searchParams.get('website')) {
 		flagSuspicious(ip);

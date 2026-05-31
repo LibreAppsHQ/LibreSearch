@@ -123,7 +123,7 @@
 			Type a bang (e.g. <code
 				class="rounded bg-[var(--app-hover)] px-1.5 py-0.5 font-mono text-[var(--app-accent)]"
 				>!w turing machine</code
-			>) anywhere in your query to redirect the search to another site. Order doesn't matter - both
+			>) anywhere in your query to redirect the search to another site. Order doesn't matter — both
 			<code class="font-mono">!w turing</code> and <code class="font-mono">turing !w</code> work.
 		</p>
 		<div

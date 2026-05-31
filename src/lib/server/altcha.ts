@@ -2,7 +2,7 @@ import crypto from 'node:crypto';
 import { env } from '$env/dynamic/private';
 
 // Self-hosted, privacy-friendly proof-of-work challenge (ALTCHA-compatible scheme).
-// No third-party service is contacted - challenges are signed with a server secret.
+// No third-party service is contacted — challenges are signed with a server secret.
 
 const ALGORITHM = 'SHA-256';
 const DEFAULT_MAX_NUMBER = 50_000;

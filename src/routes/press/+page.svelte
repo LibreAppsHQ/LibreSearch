@@ -7,7 +7,7 @@
 		{ label: 'What it is', value: 'An independent, privacy-first search engine.' },
 		{ label: 'Maker', value: 'Built by Arcbase.' },
 		{ label: 'Business model', value: 'No ads, no profiles, no selling of data.' },
-		{ label: 'Data stored', value: 'None - searches are never logged or tied to you.' },
+		{ label: 'Data stored', value: 'None — searches are never logged or tied to you.' },
 		{ label: 'Where settings live', value: 'Locally in your browser, never on a server.' },
 		{ label: 'Availability', value: 'Free to use on the web, worldwide.' }
 	];
@@ -20,7 +20,7 @@
 	];
 
 	const boilerplate =
-		'LibreSearch is an independent, privacy-first search engine built by Arcbase. It delivers real web results without logging your queries, building a profile on you, or selling your attention. There are no ads and no trackers, and your settings live entirely in your own browser - never on a server.';
+		'LibreSearch is an independent, privacy-first search engine built by Arcbase. It delivers real web results without logging your queries, building a profile on you, or selling your attention. There are no ads and no trackers, and your settings live entirely in your own browser — never on a server.';
 
 	let copied = $state(false);
 
@@ -30,7 +30,7 @@
 			copied = true;
 			setTimeout(() => (copied = false), 2000);
 		} catch {
-			// Clipboard unavailable - ignore
+			// Clipboard unavailable — ignore
 		}
 	}
 </script>
@@ -39,7 +39,7 @@
 	<title>Press &amp; Media - LibreSearch</title>
 	<meta
 		name="description"
-		content="Press resources for LibreSearch - the private search engine with no tracking, no profiles, and no ads. Company facts, brand assets, boilerplate, and media contact."
+		content="Press resources for LibreSearch — the private search engine with no tracking, no profiles, and no ads. Company facts, brand assets, boilerplate, and media contact."
 	/>
 	<link rel="canonical" href="https://libresearch.ca/press" />
 
@@ -78,7 +78,7 @@
 			Tell the story of search without surveillance.
 		</h1>
 		<p class="mt-6 max-w-2xl text-lg leading-8 text-[var(--app-secondary)]">
-			Everything you need to write about LibreSearch - the facts, the brand assets, an approved
+			Everything you need to write about LibreSearch — the facts, the brand assets, an approved
 			boilerplate, and a direct line to our team. Working on a deadline? Message us and we'll move
 			fast.
 		</p>
@@ -148,7 +148,7 @@
 	<section id="assets" class="mx-auto w-full max-w-[1100px] scroll-mt-24 px-6 py-12 sm:py-20">
 		<h2 class="mb-3 text-2xl font-bold tracking-tight">Brand assets</h2>
 		<p class="mb-10 max-w-2xl text-sm leading-7 text-[var(--app-muted)]">
-			Please use these marks as-is - don't stretch, recolor, or add effects. The wordmark and icon
+			Please use these marks as-is — don't stretch, recolor, or add effects. The wordmark and icon
 			should always sit on a clear background.
 		</p>
 		<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -186,7 +186,7 @@
 			<div>
 				<h2 class="text-2xl font-bold tracking-tight">Media inquiries</h2>
 				<p class="mt-2 max-w-xl text-sm leading-7 text-[var(--app-muted)]">
-					Interviews, fact-checks, or anything else - reach the team directly. We aim to reply
+					Interviews, fact-checks, or anything else — reach the team directly. We aim to reply
 					within one business day.
 				</p>
 			</div>

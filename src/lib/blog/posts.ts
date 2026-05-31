@@ -2,7 +2,7 @@
 // individual post pages (/blog/[slug]) read from a single source of truth.
 //
 // `body` is trusted, hand-authored HTML rendered with {@html}. Keep it to plain
-// semantic tags (h2/h3, p, ul/ol/li, a, strong, em, blockquote, code) - the
+// semantic tags (h2/h3, p, ul/ol/li, a, strong, em, blockquote, code) — the
 // prose styles in the post page only target those. Never interpolate untrusted
 // input here.
 
@@ -36,7 +36,7 @@ export const posts: Post[] = [
 		category: 'privacy',
 		author: 'LibreSearch Team',
 		body: `
-<p>Search is the most intimate thing you do online. You ask a search box things you would never say out loud - about your health, your money, your relationships, your fears. Over a year, your search history is a more honest diary than anything you would ever write down.</p>
+<p>Search is the most intimate thing you do online. You ask a search box things you would never say out loud — about your health, your money, your relationships, your fears. Over a year, your search history is a more honest diary than anything you would ever write down.</p>
 
 <p>So it is worth asking, plainly: what does a typical search engine actually keep?</p>
 
@@ -46,13 +46,13 @@ export const posts: Post[] = [
 <li><strong>The query itself</strong>, with a precise timestamp.</li>
 <li><strong>Your IP address</strong>, which maps to a rough location and, often, a single household or device.</li>
 <li><strong>A cookie or account ID</strong> that links this search to every other search you have ever made.</li>
-<li><strong>Your user agent</strong> - browser, version, operating system, language, screen size - which together form a surprisingly unique fingerprint.</li>
+<li><strong>Your user agent</strong> — browser, version, operating system, language, screen size — which together form a surprisingly unique fingerprint.</li>
 <li><strong>Which results you clicked</strong>, and how long before you came back.</li>
 </ul>
 <p>Individually these feel harmless. Joined together, keyed to one identity, they become a behavioral profile that updates in real time.</p>
 
 <h2>"Anonymized" is doing a lot of work</h2>
-<p>Companies love the word <em>anonymized</em>. In practice it often means "we removed your name and kept everything else." But research has shown again and again that a handful of data points - a ZIP code, a birth date, a few distinctive queries - are enough to re-identify a specific person out of millions.</p>
+<p>Companies love the word <em>anonymized</em>. In practice it often means "we removed your name and kept everything else." But research has shown again and again that a handful of data points — a ZIP code, a birth date, a few distinctive queries — are enough to re-identify a specific person out of millions.</p>
 <blockquote>The famous lesson from the 2006 AOL search-log release: queries alone, with no names attached, were enough for journalists to knock on a real person's door.</blockquote>
 <p>The only search data that cannot leak is the search data that was never stored.</p>
 
@@ -94,7 +94,7 @@ export const posts: Post[] = [
 <p>Instead we use <strong>Altcha</strong>, a proof-of-work challenge. The idea is simple:</p>
 <ol>
 <li>Our server hands your browser a small math puzzle.</li>
-<li>Your browser spends a tiny amount of CPU time solving it - typically imperceptible to you.</li>
+<li>Your browser spends a tiny amount of CPU time solving it — typically imperceptible to you.</li>
 <li>It returns the answer, which our server can verify instantly.</li>
 </ol>
 <p>For one human doing one search, the cost is a few milliseconds you will never notice. For a bot trying to do this millions of times per hour, that cost stacks up into a real, economic wall. The asymmetry does the defending.</p>
@@ -160,13 +160,13 @@ export const posts: Post[] = [
 
 <h2>How LibreSearch handles them</h2>
 <p>When you click a result, we strip known tracking parameters from the outbound link before you go. You still land on the page you wanted; the page just learns less about how you got there.</p>
-<p>This happens quietly and by default. There is nothing to enable, and it does not change the destination - only the metadata riding along with you.</p>
+<p>This happens quietly and by default. There is nothing to enable, and it does not change the destination — only the metadata riding along with you.</p>
 
 <h2>Doing it yourself</h2>
 <p>Even away from LibreSearch, two habits help:</p>
 <ol>
 <li>When sharing a link, delete everything from the <code>?</code> onward if the page still loads without it. It usually does.</li>
-<li>Be suspicious of long, messy URLs in emails and ads - the mess is often the tracking.</li>
+<li>Be suspicious of long, messy URLs in emails and ads — the mess is often the tracking.</li>
 </ol>
 <p>Small thing, repeated millions of times a day. Cleaning it up is exactly the kind of quiet default a privacy-first product should own so you do not have to think about it.</p>
 `

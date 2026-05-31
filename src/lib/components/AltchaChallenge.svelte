@@ -55,7 +55,7 @@
 			if (!res.ok) throw new Error('Verification failed');
 
 			state = 'done';
-			// Re-run the page load - the server now sees us as verified.
+			// Re-run the page load — the server now sees us as verified.
 			await invalidateAll();
 		} catch {
 			state = 'error';
@@ -75,7 +75,7 @@
 	<h1 class="text-xl font-semibold text-[var(--app-text)]">Quick security check</h1>
 	<p class="mt-2 text-sm leading-6 text-[var(--app-muted)]">
 		We noticed unusual activity from your connection. Your browser is solving a quick puzzle to
-		confirm you're human - no clicks, no tracking, and nothing leaves your device.
+		confirm you're human — no clicks, no tracking, and nothing leaves your device.
 	</p>
 
 	<div
@@ -89,7 +89,7 @@
 			<span class="text-sm text-[var(--app-text)]">Confirming…</span>
 		{:else if state === 'done'}
 			<i class="fa-solid fa-circle-check text-emerald-400"></i>
-			<span class="text-sm text-[var(--app-text)]">Verified - loading your results…</span>
+			<span class="text-sm text-[var(--app-text)]">Verified — loading your results…</span>
 		{:else}
 			<i class="fa-solid fa-triangle-exclamation text-rose-400"></i>
 			<span class="text-sm text-[var(--app-text)]">Verification failed.</span>

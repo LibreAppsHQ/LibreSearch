@@ -61,7 +61,7 @@
 		</div>
 		<h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Terms of Service</h1>
 		<p class="mx-auto mt-4 max-w-lg text-base leading-7 text-[var(--app-muted)]">
-			The short, plain-language agreement for using LibreSearch. No dense legalese - just what you can
+			The short, plain-language agreement for using LibreSearch. No dense legalese — just what you can
 			expect from us, and what we ask of you.
 		</p>
 		<p class="mt-4 text-xs font-medium tracking-wide text-[var(--app-muted)] uppercase">
@@ -154,7 +154,7 @@
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Intellectual property</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					The LibreSearch name, logo, and interface are the property of Arcbase. Please don't copy,
-					stretch, recolor, or otherwise misuse our brand assets - see the
+					stretch, recolor, or otherwise misuse our brand assets — see the
 					<a href="/press" class="text-[var(--app-accent)] hover:underline">press page</a> for approved
 					usage. Content surfaced in results remains the property of its respective owners.
 				</p>
@@ -173,7 +173,7 @@
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Limitation of liability</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					To the maximum extent permitted by law, Arcbase will not be liable for any indirect,
-					incidental, or consequential damages arising from your use of - or inability to use -
+					incidental, or consequential damages arising from your use of — or inability to use -
 					LibreSearch, including reliance on any search result or linked content.
 				</p>
 			</section>

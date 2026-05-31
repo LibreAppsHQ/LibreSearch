@@ -3,7 +3,7 @@
 
 	let { places } = $props<{ places: PlaceResult[] }>();
 
-	// The currently focused place - drives the embedded map.
+	// The currently focused place — drives the embedded map.
 	let selected = $state<PlaceResult>(places[0]);
 
 	// Reset focus to the top hit whenever a new search comes in.

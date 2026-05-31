@@ -190,7 +190,7 @@
 				<div>
 					<p class="mb-1 text-lg font-semibold">Crypto</p>
 					<p class="text-sm leading-6 text-[var(--app-muted)]">
-						Send any amount directly - no platform fees, no account. Tap an address to copy it.
+						Send any amount directly — no platform fees, no account. Tap an address to copy it.
 					</p>
 				</div>
 				<div class="space-y-3">
@@ -241,7 +241,7 @@
 				<h2 class="mb-6 text-3xl font-bold tracking-tight">100% to keeping search free.</h2>
 				<p class="mb-4 text-sm leading-7 text-[var(--app-muted)]">
 					LibreSearch has no investors and no advertising revenue. Donations cover the real costs of
-					running a private search engine - nothing more.
+					running a private search engine — nothing more.
 				</p>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					Can't donate? Sharing LibreSearch, reporting bugs, or contributing on GitHub helps just as

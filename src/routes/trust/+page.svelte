@@ -22,7 +22,7 @@
 		{
 			icon: 'fa-shield-halved',
 			title: 'Bot protection without surveillance',
-			desc: 'We use Altcha - a proof-of-work challenge your browser solves locally. No CAPTCHAs, no behavioural tracking, no third-party cookies.'
+			desc: 'We use Altcha — a proof-of-work challenge your browser solves locally. No CAPTCHAs, no behavioural tracking, no third-party cookies.'
 		}
 	];
 
@@ -54,7 +54,7 @@
 		{ label: 'Operating entity', value: 'Arcbase HQ' },
 		{ label: 'Primary jurisdiction', value: 'Canada' },
 		{ label: 'License', value: 'AGPL-3.0 (source: github.com/Arcbasehq/LibreSearch)' },
-		{ label: 'Funding model', value: 'Donations - no ads, no data sales' },
+		{ label: 'Funding model', value: 'Donations — no ads, no data sales' },
 		{ label: 'Security contact', value: '/contact (subject: Security disclosure)' },
 		{ label: 'Security disclosure', value: '/.well-known/security.txt (RFC 9116)' }
 	];
@@ -70,7 +70,7 @@
 	<meta property="og:title" content="Trust Center - LibreSearch" />
 	<meta
 		property="og:description"
-		content="The full story on how we handle your data - sub-processors, retention, jurisdiction."
+		content="The full story on how we handle your data — sub-processors, retention, jurisdiction."
 	/>
 	<meta property="og:url" content="https://libresearch.ca/trust" />
 </svelte:head>

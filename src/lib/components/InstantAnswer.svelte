@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	// ── Safe math evaluator (no eval/Function - the site CSP forbids them) ──
+	// ── Safe math evaluator (no eval/Function — the site CSP forbids them) ──
 	const FUNCS: Record<string, (n: number) => number> = {
 		sqrt: Math.sqrt,
 		cbrt: Math.cbrt,

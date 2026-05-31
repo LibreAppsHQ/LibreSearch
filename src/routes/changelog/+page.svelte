@@ -23,7 +23,7 @@
 			entries: [
 				{
 					tag: 'fix',
-					text: 'Light and Sand themes: the search box, suggestions, and filter menus rendered dark-on-dark and were unreadable - surfaces are now theme-aware'
+					text: 'Light and Sand themes: the search box, suggestions, and filter menus rendered dark-on-dark and were unreadable — surfaces are now theme-aware'
 				},
 				{
 					tag: 'fix',
@@ -87,7 +87,7 @@
 			entries: [
 				{
 					tag: 'perf',
-					text: 'FontAwesome CSS deferred until after first paint - ~890ms FCP/LCP improvement on mobile'
+					text: 'FontAwesome CSS deferred until after first paint — ~890ms FCP/LCP improvement on mobile'
 				},
 				{ tag: 'perf', text: 'font-display: swap added so icon text never blocks rendering' },
 				{ tag: 'perf', text: 'Home-page logo preloaded for instant LCP discovery' },
@@ -123,7 +123,7 @@
 			entries: [
 				{
 					tag: 'security',
-					text: 'Altcha proof-of-work bot protection - no CAPTCHAs, no behavioral tracking'
+					text: 'Altcha proof-of-work bot protection — no CAPTCHAs, no behavioral tracking'
 				},
 				{ tag: 'security', text: 'Rate limiting per IP for the search API' },
 				{ tag: 'feature', text: 'Built-in video viewer for video search results' }

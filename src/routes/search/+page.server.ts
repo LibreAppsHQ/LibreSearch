@@ -37,7 +37,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 		challengeRequired: challenge
 	});
 
-	// Honeypot - bots fill this field, humans don't
+	// Honeypot — bots fill this field, humans don't
 	if (get('website')) {
 		flagSuspicious(ip);
 		return blocked(false);
@@ -45,7 +45,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 
 	const rawQuery = get('q') ?? '';
 
-	// Bang redirect - must happen before normalisation so short/special queries work
+	// Bang redirect — must happen before normalisation so short/special queries work
 	if (rawQuery.trim()) {
 		const bang = resolveBang(rawQuery.trim());
 		if (bang) redirect(302, bang.redirectUrl);

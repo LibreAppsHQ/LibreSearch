@@ -91,7 +91,7 @@
 			<div>
 				<p class="font-semibold">Search without the surveillance.</p>
 				<p class="mt-1 text-sm text-[var(--app-muted)]">
-					No logging, no profiles, no ads - just results.
+					No logging, no profiles, no ads — just results.
 				</p>
 			</div>
 			<a

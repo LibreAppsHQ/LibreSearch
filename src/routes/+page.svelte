@@ -194,7 +194,7 @@
 					results from our own independent index.
 				</p>
 				<p class="mt-4 text-lg text-white/85">
-					No query logs, no personal profiles, and no ad-tech trailing you from page to page - your
+					No query logs, no personal profiles, and no ad-tech trailing you from page to page — your
 					searches start and end with you.
 				</p>
 				<button
@@ -232,10 +232,10 @@
 				</h2>
 				<p class="mt-6 text-lg text-white/85">
 					Most search engines log every query and tie it to a profile that follows you across the
-					web. We don't. No logs, no profiles, no tracking - your searches stay yours.
+					web. We don't. No logs, no profiles, no tracking — your searches stay yours.
 				</p>
 				<p class="mt-4 text-lg text-white/85">
-					Make LibreSearch your default and reclaim your privacy in seconds - no account, no
+					Make LibreSearch your default and reclaim your privacy in seconds — no account, no
 					extension required, and nothing about your searches ever leaves your control.
 				</p>
 				<a
@@ -301,7 +301,7 @@
 			</ol>
 
 			<p class="mt-4 text-xs text-black/50">
-				Browsers don’t allow a site to change your default search engine for you - it’s a one-time
+				Browsers don’t allow a site to change your default search engine for you — it’s a one-time
 				setting you confirm yourself.
 			</p>
 

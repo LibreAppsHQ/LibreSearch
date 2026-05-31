@@ -29,7 +29,7 @@
 	let isOpen = $state(false);
 	let activeIndex = $state(-1);
 	// True only when the highlighted item was reached via arrow keys. Enter submits
-	// a suggestion only in that case - never a mouse-hover or auto-preselected one -
+	// a suggestion only in that case — never a mouse-hover or auto-preselected one -
 	// so typing "ca" + Enter searches "ca", not the highlighted "canva".
 	let keyboardSelected = $state(false);
 	let suggestions = $state<string[]>([]);
@@ -100,7 +100,7 @@
 	function submitQuery(value: string): void {
 		query = value;
 		// Reflect the choice in the DOM input immediately so the form serializes the
-		// selected text (not what was typed) - a reactive flush would land too late.
+		// selected text (not what was typed) — a reactive flush would land too late.
 		// Done synchronously so the submit stays within the original click gesture.
 		if (inputElement) inputElement.value = value;
 		closeDropdown();

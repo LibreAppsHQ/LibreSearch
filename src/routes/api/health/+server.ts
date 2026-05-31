@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-// Lightweight liveness probe - the /status page pings this without burning
+// Lightweight liveness probe — the /status page pings this without burning
 // upstream API quota. Returns a small JSON payload that includes server-side
 // timestamp so the client can measure round-trip latency itself.
 

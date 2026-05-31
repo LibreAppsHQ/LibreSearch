@@ -27,7 +27,7 @@
 					.filter((t) => t && t.toLowerCase() !== lower)
 					.slice(0, 14);
 			} catch {
-				/* ignore - strip just stays empty */
+				/* ignore — strip just stays empty */
 			}
 		})();
 

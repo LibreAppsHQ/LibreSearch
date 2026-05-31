@@ -3,7 +3,7 @@
 	import Logo from '$lib/components/Logo.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 
-	// Engines we compare against. Order matters - LibreSearch sits first so it
+	// Engines we compare against. Order matters — LibreSearch sits first so it
 	// reads as "us vs the rest" left-to-right.
 	// `size` overrides the default 64×64 logo box. Wide wordmarks (Bing) get a
 	// wider, shorter box; square marks that are visually denser (Brave) get bumped.
@@ -118,7 +118,7 @@
 	<meta name="robots" content="index, follow" />
 </svelte:head>
 
-<!-- Sticky header - matches /about layout -->
+<!-- Sticky header — matches /about layout -->
 <header class="sticky top-0 z-20 bg-[var(--app-background)]">
 	<div class="mx-auto w-full max-w-[1400px] px-6">
 		<div class="grid grid-cols-[1fr_auto_1fr] items-center py-5">
@@ -243,12 +243,12 @@
 				</li>
 				<li>
 					<span class="text-[var(--app-text)]">"Independent index."</span> A <em>Not applicable</em>
-					here isn't a downside - meta-search engines like LibreSearch, DuckDuckGo, and Startpage rely
+					here isn't a downside — meta-search engines like LibreSearch, DuckDuckGo, and Startpage rely
 					on partner indices on purpose, and we're upfront about ours.
 				</li>
 				<li>
 					<span class="text-[var(--app-text)]">Spotted something off?</span> Open an issue or email us
-					and we'll fix the row - accuracy matters more here than marketing.
+					and we'll fix the row — accuracy matters more here than marketing.
 				</li>
 			</ul>
 		</div>

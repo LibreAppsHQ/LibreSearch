@@ -61,7 +61,7 @@
 		</div>
 		<h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Privacy Policy</h1>
 		<p class="mx-auto mt-4 max-w-lg text-base leading-7 text-[var(--app-muted)]">
-			Privacy isn't a setting you turn on - it's how LibreSearch is built. Here's exactly what that
+			Privacy isn't a setting you turn on — it's how LibreSearch is built. Here's exactly what that
 			means, in plain language.
 		</p>
 		<p class="mt-4 text-xs font-medium tracking-wide text-[var(--app-muted)] uppercase">
@@ -99,7 +99,7 @@
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Overview</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					LibreSearch is a private search engine operated by Arcbase. We designed it so that the most
-					private option is the default - and the only option. We do not run ads, we do not build
+					private option is the default — and the only option. We do not run ads, we do not build
 					advertising profiles, and we do not sell data. This page explains the small amount of data
 					that is involved in running the service and the large amount we deliberately never touch.
 				</p>
@@ -157,7 +157,7 @@
 			<section id="local-storage" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Local storage on your device</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
-					Your preferences - settings, theme, and optional search history for autocomplete - are
+					Your preferences — settings, theme, and optional search history for autocomplete — are
 					stored entirely in your own browser using local storage. They never leave your device and
 					are never synced to our servers. You can wipe all of it at any time by clearing your
 					browser data or using the controls in
@@ -179,7 +179,7 @@
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Your rights</h2>
 				<p class="text-sm leading-7 text-[var(--app-muted)]">
 					Because we don't build a profile or store searches against your identity, there is no
-					personal dossier for us to hand over, correct, or delete - there simply isn't one. Any
+					personal dossier for us to hand over, correct, or delete — there simply isn't one. Any
 					preferences we do hold live on your device and are fully under your control. If you have a
 					specific request or question about your data, reach out and we'll help.
 				</p>
