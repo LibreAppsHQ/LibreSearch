@@ -27,7 +27,7 @@
 					.filter((t) => t && t.toLowerCase() !== lower)
 					.slice(0, 14);
 			} catch {
-				/* ignore — strip just stays empty */
+				/* ignore - strip just stays empty */
 			}
 		})();
 
@@ -47,7 +47,7 @@
 	<div class="relative mb-5">
 		<div
 			bind:this={strip}
-			class="flex gap-2.5 overflow-x-auto pr-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+			class="flex [scrollbar-width:none] gap-2.5 overflow-x-auto pr-10 [&::-webkit-scrollbar]:hidden"
 		>
 			{#each terms as term (term)}
 				<a

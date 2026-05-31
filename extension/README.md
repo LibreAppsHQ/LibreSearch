@@ -6,19 +6,19 @@ Edge, Brave, Vivaldi, Opera, and Firefox.
 
 ## What it does
 
-- **Quick-search popup** — click the toolbar icon for a Startpage-style
+- **Quick-search popup** - click the toolbar icon for a Startpage-style
   search bar with Web / News / Images / Videos tabs. Hit enter, results open
   in a new tab, popup closes.
-- **Right-click → Search LibreSearch for "X"** — select any text on any
+- **Right-click → Search LibreSearch for "X"** - select any text on any
   page, right-click, search privately. Opens results in a new tab next to
   the current one.
-- **Address-bar keyword** — type `libre <query>` in the URL bar to search
+- **Address-bar keyword** - type `libre <query>` in the URL bar to search
   LibreSearch directly without first navigating to the site.
-- **Search engine registration** — installing the extension adds LibreSearch
+- **Search engine registration** - installing the extension adds LibreSearch
   to the browser's search-engine picker (Settings → Search Engine on
   Chromium-based browsers, Search Bar on Firefox). The popup includes a
   browser-specific guide for promoting it to default.
-- **Welcome page on first install** — opens libresearch.ca once so the user
+- **Welcome page on first install** - opens libresearch.ca once so the user
   knows the extension was installed and where to go.
 
 ## What it does NOT do
@@ -30,9 +30,9 @@ Edge, Brave, Vivaldi, Opera, and Firefox.
 
 ## Permissions explained
 
-| Permission | Why |
-|---|---|
-| `contextMenus` | Adds the right-click "Search LibreSearch for X" entry. Does not grant any access to page content — only the text the user selects and chooses to send. |
+| Permission     | Why                                                                                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `contextMenus` | Adds the right-click "Search LibreSearch for X" entry. Does not grant any access to page content - only the text the user selects and chooses to send. |
 
 ## Local development
 
@@ -50,7 +50,7 @@ npm run watch:extension        # rebuild on save
    - Open `chrome://extensions` (or `edge://extensions`).
    - Enable **Developer mode**.
    - Click **Load unpacked** and pick this `extension/` folder.
-3. **Firefox:**
+2. **Firefox:**
    - Open `about:debugging#/runtime/this-firefox`.
    - Click **Load Temporary Add-on** and pick `manifest.json`.
 

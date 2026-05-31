@@ -21,10 +21,19 @@
 			date: '2026-05-30',
 			title: 'Theme and accessibility fixes',
 			entries: [
-				{ tag: 'fix', text: 'Light and Sand themes: the search box, suggestions, and filter menus rendered dark-on-dark and were unreadable — surfaces are now theme-aware' },
-				{ tag: 'fix', text: 'Home and search-page logos no longer stretch out of proportion or overflow on small screens' },
+				{
+					tag: 'fix',
+					text: 'Light and Sand themes: the search box, suggestions, and filter menus rendered dark-on-dark and were unreadable - surfaces are now theme-aware'
+				},
+				{
+					tag: 'fix',
+					text: 'Home and search-page logos no longer stretch out of proportion or overflow on small screens'
+				},
 				{ tag: 'fix', text: 'Wipe button now also clears the install-prompt dismissal' },
-				{ tag: 'fix', text: '“Make it your default” dialog closes on Escape and moves focus into itself for keyboard users' }
+				{
+					tag: 'fix',
+					text: '“Make it your default” dialog closes on Escape and moves focus into itself for keyboard users'
+				}
 			]
 		},
 		{
@@ -32,8 +41,14 @@
 			date: '2026-05-29',
 			title: 'One-tap wipe',
 			entries: [
-				{ tag: 'feature', text: 'Wipe button clears all on-device history, settings, and data in one tap, then returns home' },
-				{ tag: 'feature', text: 'Full-screen whirlpool animation plays while your data drains away (respects reduced-motion)' }
+				{
+					tag: 'feature',
+					text: 'Wipe button clears all on-device history, settings, and data in one tap, then returns home'
+				},
+				{
+					tag: 'feature',
+					text: 'Full-screen whirlpool animation plays while your data drains away (respects reduced-motion)'
+				}
 			]
 		},
 		{
@@ -41,10 +56,16 @@
 			date: '2026-05-28',
 			title: 'Enterprise, contact, and content surfaces',
 			entries: [
-				{ tag: 'feature', text: 'New /enterprise page with copy-pasteable Chrome, Edge, and Firefox deployment policies' },
+				{
+					tag: 'feature',
+					text: 'New /enterprise page with copy-pasteable Chrome, Edge, and Firefox deployment policies'
+				},
 				{ tag: 'feature', text: 'Contact form (/contact) wired up via Web3Forms' },
 				{ tag: 'fix', text: '/favicon.ico now redirects to favicon.svg instead of returning 500' },
-				{ tag: 'security', text: 'CSP tightened: explicit allow-list for Vercel and Web3Forms only' }
+				{
+					tag: 'security',
+					text: 'CSP tightened: explicit allow-list for Vercel and Web3Forms only'
+				}
 			]
 		},
 		{
@@ -52,7 +73,10 @@
 			date: '2026-05-27',
 			title: 'Analytics and speed insights',
 			entries: [
-				{ tag: 'feature', text: 'Vercel Analytics integrated for aggregate, privacy-respecting usage signals' },
+				{
+					tag: 'feature',
+					text: 'Vercel Analytics integrated for aggregate, privacy-respecting usage signals'
+				},
 				{ tag: 'feature', text: 'Vercel Speed Insights for Core Web Vitals monitoring' }
 			]
 		},
@@ -61,10 +85,16 @@
 			date: '2026-05-28',
 			title: 'Mobile performance pass',
 			entries: [
-				{ tag: 'perf', text: 'FontAwesome CSS deferred until after first paint — ~890ms FCP/LCP improvement on mobile' },
+				{
+					tag: 'perf',
+					text: 'FontAwesome CSS deferred until after first paint - ~890ms FCP/LCP improvement on mobile'
+				},
 				{ tag: 'perf', text: 'font-display: swap added so icon text never blocks rendering' },
 				{ tag: 'perf', text: 'Home-page logo preloaded for instant LCP discovery' },
-				{ tag: 'perf', text: 'Composite-friendly will-change hints on fade/slide/scale animations' },
+				{
+					tag: 'perf',
+					text: 'Composite-friendly will-change hints on fade/slide/scale animations'
+				},
 				{ tag: 'feature', text: 'Mastodon link added to footer alongside GitHub' }
 			]
 		},
@@ -73,11 +103,17 @@
 			date: '2026-05-26',
 			title: 'Instant answers, donations, and search UX',
 			entries: [
-				{ tag: 'feature', text: 'Instant answers for calculations, conversions, definitions, IP lookup, and quick facts' },
+				{
+					tag: 'feature',
+					text: 'Instant answers for calculations, conversions, definitions, IP lookup, and quick facts'
+				},
 				{ tag: 'feature', text: 'Donation page with Bitcoin and Ethereum addresses' },
 				{ tag: 'feature', text: 'Did-you-mean spelling suggestion above results' },
 				{ tag: 'feature', text: 'Bang shortcuts (!w, !gh, !yt, and hundreds more)' },
-				{ tag: 'feature', text: 'OpenSearch endpoint so browsers can register LibreSearch as default' }
+				{
+					tag: 'feature',
+					text: 'OpenSearch endpoint so browsers can register LibreSearch as default'
+				}
 			]
 		},
 		{
@@ -85,7 +121,10 @@
 			date: '2026-05-20',
 			title: 'Security and abuse protection',
 			entries: [
-				{ tag: 'security', text: 'Altcha proof-of-work bot protection — no CAPTCHAs, no behavioral tracking' },
+				{
+					tag: 'security',
+					text: 'Altcha proof-of-work bot protection - no CAPTCHAs, no behavioral tracking'
+				},
 				{ tag: 'security', text: 'Rate limiting per IP for the search API' },
 				{ tag: 'feature', text: 'Built-in video viewer for video search results' }
 			]
@@ -112,10 +151,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/changelog" />
 	<meta property="og:title" content="Changelog - LibreSearch" />
-	<meta
-		property="og:description"
-		content="Everything that's shipped in LibreSearch, by release."
-	/>
+	<meta property="og:description" content="Everything that's shipped in LibreSearch, by release." />
 	<meta property="og:url" content="https://libresearch.ca/changelog" />
 </svelte:head>
 

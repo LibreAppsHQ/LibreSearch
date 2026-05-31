@@ -6,7 +6,7 @@
 
 	// Web3Forms posts the form to a public endpoint, then forwards the message
 	// to whatever inbox is tied to the access key. The key is intentionally
-	// browser-visible — Web3Forms expects this. When unset, the form is hidden
+	// browser-visible - Web3Forms expects this. When unset, the form is hidden
 	// and users are pointed at the direct email address instead.
 	const accessKey = env.PUBLIC_WEB3FORMS_KEY ?? '';
 	const formEnabled = accessKey.length > 0;
@@ -23,7 +23,7 @@
 	let email = $state('');
 	let subject = $state('General');
 	let message = $state('');
-	// Honeypot — real users leave this empty; spam bots fill every field.
+	// Honeypot - real users leave this empty; spam bots fill every field.
 	let botcheck = $state('');
 	let submitting = $state(false);
 	let result = $state<{ type: 'success' | 'error'; msg: string } | null>(null);
@@ -67,7 +67,7 @@
 			} | null;
 
 			if (response.ok && data?.success) {
-				result = { type: 'success', msg: 'Thanks — your message is on its way. We’ll reply soon.' };
+				result = { type: 'success', msg: 'Thanks - your message is on its way. We’ll reply soon.' };
 				name = '';
 				email = '';
 				subject = 'General';
@@ -93,7 +93,7 @@
 	<title>Contact - LibreSearch</title>
 	<meta
 		name="description"
-		content="Get in touch with the LibreSearch team — feedback, privacy questions, security disclosures, or press inquiries."
+		content="Get in touch with the LibreSearch team - feedback, privacy questions, security disclosures, or press inquiries."
 	/>
 	<link rel="canonical" href="https://libresearch.ca/contact" />
 	<meta property="og:title" content="Contact - LibreSearch" />
@@ -104,7 +104,7 @@
 	<meta property="og:url" content="https://libresearch.ca/contact" />
 </svelte:head>
 
-<!-- Sticky header — matches /about and /compare -->
+<!-- Sticky header - matches /about and /compare -->
 <header class="sticky top-0 z-20 bg-[var(--app-background)]">
 	<div class="mx-auto w-full max-w-[1400px] px-6">
 		<div class="grid grid-cols-[1fr_auto_1fr] items-center py-5">
@@ -124,7 +124,7 @@
 	<section class="mx-auto w-full max-w-[1100px] px-6 pt-12 pb-10 text-center sm:pt-20">
 		<h1 class="mx-auto max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">Get in touch</h1>
 		<p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-[var(--app-muted)] sm:text-lg">
-			Privacy questions, security reports, press, or general feedback — drop us a line and we'll
+			Privacy questions, security reports, press, or general feedback - drop us a line and we'll
 			reply soon.
 		</p>
 	</section>

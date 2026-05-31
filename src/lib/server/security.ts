@@ -1,7 +1,7 @@
 import type { RequestEvent } from '@sveltejs/kit';
 
 // Tracks which clients have tripped abuse signals (rate limit / honeypot) and
-// must solve an ALTCHA challenge before searching again — and who has recently
+// must solve an ALTCHA challenge before searching again - and who has recently
 // passed one. In-memory, keyed by client IP, mirroring the rate limiter.
 
 const FLAG_WINDOW_MS = 5 * 60_000; // how long a flagged client must verify for
@@ -31,7 +31,7 @@ export function getClientKey(event: RequestEvent): string {
 	);
 }
 
-/** Mark a client as suspicious — future searches require a solved challenge. */
+/** Mark a client as suspicious - future searches require a solved challenge. */
 export function flagSuspicious(ip: string): void {
 	const now = Date.now();
 	prune(now);
@@ -55,7 +55,7 @@ export function isVerified(ip: string): boolean {
 	return Date.now() < get(ip).verifiedUntil;
 }
 
-/** True when the client is flagged and hasn't verified — show the challenge. */
+/** True when the client is flagged and hasn't verified - show the challenge. */
 export function challengeRequired(ip: string): boolean {
 	const now = Date.now();
 	const entry = get(ip);

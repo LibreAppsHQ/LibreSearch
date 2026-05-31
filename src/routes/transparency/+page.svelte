@@ -12,8 +12,7 @@
 	const reports: Report[] = [
 		{
 			period: 'As of May 28, 2026',
-			summary:
-				'No government requests, no court orders, no takedown notices received to date.',
+			summary: 'No government requests, no court orders, no takedown notices received to date.',
 			stats: [
 				{
 					label: 'Government data requests',
@@ -38,7 +37,7 @@
 				{
 					label: 'Accounts affected',
 					value: 0,
-					desc: 'We do not maintain user accounts — there is nothing tied to an identity to disclose.'
+					desc: 'We do not maintain user accounts - there is nothing tied to an identity to disclose.'
 				}
 			]
 		}
@@ -94,7 +93,9 @@
 				<h2 class="text-xl font-semibold tracking-tight">{r.period}</h2>
 				<p class="mt-2 text-sm leading-6 text-[var(--app-text)]">{r.summary}</p>
 
-				<div class="mt-6 grid gap-px overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-border)] sm:grid-cols-2">
+				<div
+					class="mt-6 grid gap-px overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-border)] sm:grid-cols-2"
+				>
 					{#each r.stats as s}
 						<div class="bg-[var(--app-surface)] p-5">
 							<div class="flex items-baseline gap-3">

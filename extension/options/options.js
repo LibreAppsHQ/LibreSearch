@@ -62,7 +62,7 @@ resetBtn.addEventListener('click', async () => {
 	flashSaved();
 });
 
-// Auto-save when a radio tile changes — saving feels more responsive than
+// Auto-save when a radio tile changes - saving feels more responsive than
 // a click-then-save dance.
 form.addEventListener('change', async (event) => {
 	const isRadio = event.target instanceof HTMLInputElement && event.target.type === 'radio';

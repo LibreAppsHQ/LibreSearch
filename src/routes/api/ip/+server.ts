@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 // Returns the caller's IP for the "what's my IP" instant answer. Nothing is
-// logged or stored — it's read from the request and handed straight back.
+// logged or stored - it's read from the request and handed straight back.
 //
 // On Vercel / behind a proxy, `getClientAddress()` may return the loopback
 // address (`::1` or `127.0.0.1`) because the upstream socket is the proxy.
@@ -27,7 +27,7 @@ function pickClientIp(event: Parameters<RequestHandler>[0]): string {
 
 	if (candidates.length > 0) return candidates[0];
 
-	// No forwarded headers — fall back to the socket address. This may be a
+	// No forwarded headers - fall back to the socket address. This may be a
 	// loopback (`::1` / `127.0.0.1`) in local dev, which is the right answer:
 	// the visitor really is on this machine.
 	try {

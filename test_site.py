@@ -366,7 +366,7 @@ def test_ratelimit_and_recovery(r: Runner):
     # (server load returns challengeRequired → the page renders the ALTCHA card)
     r.check("search page stays 200 while flagged", page.status == 200, f"got {page.status}")
 
-    # Recover by solving a challenge — proves a solved PoW clears the flag.
+    # Recover by solving a challenge - proves a solved PoW clears the flag.
     ch = request(r.base, "/api/altcha/challenge", client_ip=probe_ip).json()
     payload = solve_altcha(ch)
     verify = request(

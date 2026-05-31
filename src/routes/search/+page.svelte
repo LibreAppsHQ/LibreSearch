@@ -61,7 +61,7 @@
 		try {
 			sessionStorage.setItem(SEARCH_CACHE_KEY, JSON.stringify(data));
 		} catch {
-			// sessionStorage may be unavailable (private mode / quota) — ignore.
+			// sessionStorage may be unavailable (private mode / quota) - ignore.
 		}
 	});
 

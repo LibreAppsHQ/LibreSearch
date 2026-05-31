@@ -1,9 +1,9 @@
 // Background service worker.
 //
 // Handles three integration points:
-//   1. Omnibox keyword `libre <query>` — search from the address bar.
-//   2. Context menu — right-click any selected text → search LibreSearch.
-//   3. First-install action — open the welcome page once.
+//   1. Omnibox keyword `libre <query>` - search from the address bar.
+//   2. Context menu - right-click any selected text → search LibreSearch.
+//   3. First-install action - open the welcome page once.
 
 const SEARCH_URL = 'https://libresearch.ca/search?q=';
 const CONTEXT_MENU_ID = 'libresearch-search-selection';
@@ -14,7 +14,7 @@ function searchUrlFor(text) {
 
 // ── Omnibox ───────────────────────────────────────────────
 chrome.omnibox.setDefaultSuggestion({
-	description: 'Search LibreSearch for "%s" — private, no tracking'
+	description: 'Search LibreSearch for "%s" - private, no tracking'
 });
 
 chrome.omnibox.onInputEntered.addListener((text, disposition) => {
@@ -55,4 +55,3 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 	const url = searchUrlFor(selection);
 	chrome.tabs.create({ url, active: true, index: tab ? tab.index + 1 : undefined });
 });
-

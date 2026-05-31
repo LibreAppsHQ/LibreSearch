@@ -100,7 +100,7 @@
 		name="description"
 		content="Search the web privately with LibreSearch. No tracking, no profiles, no ads. Fast, clean results from an independent search index."
 	/>
-	<link rel="canonical" href="https://libresearch.ca" />
+	<link rel="canonical" href="https://libresearch.ca/" />
 	<link rel="preload" as="image" href="/2.svg" fetchpriority="high" />
 
 	<!-- Open Graph -->
@@ -189,8 +189,13 @@
 					Search,<br />not surveillance.
 				</h2>
 				<p class="mt-6 text-lg text-white/85">
-					LibreSearch is a private search engine that finds what you need without logging who you
-					are.
+					LibreSearch is a private search engine built on one idea: you should be able to find
+					anything on the web while being tracked by no one. Every search returns fast, relevant
+					results from our own independent index.
+				</p>
+				<p class="mt-4 text-lg text-white/85">
+					No query logs, no personal profiles, and no ad-tech trailing you from page to page - your
+					searches start and end with you.
 				</p>
 				<button
 					type="button"
@@ -227,7 +232,11 @@
 				</h2>
 				<p class="mt-6 text-lg text-white/85">
 					Most search engines log every query and tie it to a profile that follows you across the
-					web. We don't. No logs, no profiles, no tracking — your searches stay yours.
+					web. We don't. No logs, no profiles, no tracking - your searches stay yours.
+				</p>
+				<p class="mt-4 text-lg text-white/85">
+					Make LibreSearch your default and reclaim your privacy in seconds - no account, no
+					extension required, and nothing about your searches ever leaves your control.
 				</p>
 				<a
 					href="/privacy"
@@ -240,10 +249,16 @@
 	</section>
 
 	<!-- Footer -->
-	<footer class=" bg-[#0c0d0e] py-2.5">
-		<nav class="flex items-center justify-center gap-18 text-sm text-white/90">
-			<a href="/privacy" class="transition hover:text-[var(--app-accent)]">Privacy Policy</a>
+	<footer class="bg-[#0c0d0e] px-6 py-3">
+		<nav
+			class="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-white/90"
+		>
 			<a href="/about" class="transition hover:text-[var(--app-accent)]">About Us</a>
+			<a href="/privacy" class="transition hover:text-[var(--app-accent)]">Privacy Policy</a>
+			<a href="/extension" class="transition hover:text-[var(--app-accent)]">Browser Extension</a>
+			<a href="/compare" class="transition hover:text-[var(--app-accent)]">Compare</a>
+			<a href="/transparency" class="transition hover:text-[var(--app-accent)]">Transparency</a>
+			<a href="/themes" class="transition hover:text-[var(--app-accent)]">Themes</a>
 			<a href="/settings" class="transition hover:text-[var(--app-accent)]">Settings</a>
 		</nav>
 	</footer>
@@ -286,7 +301,7 @@
 			</ol>
 
 			<p class="mt-4 text-xs text-black/50">
-				Browsers don’t allow a site to change your default search engine for you — it’s a one-time
+				Browsers don’t allow a site to change your default search engine for you - it’s a one-time
 				setting you confirm yourself.
 			</p>
 

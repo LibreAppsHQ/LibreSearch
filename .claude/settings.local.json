@@ -96,7 +96,8 @@
       "Bash(curl -s \"http://localhost:5173/api/suggest?q=ca\")",
       "Bash(curl -s \"http://localhost:5173/src/lib/components/SearchBar.svelte\")",
       "Bash(pkill -f \"vite dev\")",
-      "Bash(kill 9203 18939 9740)"
+      "Bash(kill 9203 18939 9740)",
+      "Bash([ -f \"src/routes/$r/+page.svelte\" ])"
     ]
   }
 }

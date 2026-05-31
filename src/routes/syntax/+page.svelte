@@ -63,10 +63,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/syntax" />
 	<meta property="og:title" content="Search syntax - LibreSearch" />
-	<meta
-		property="og:description"
-		content="The full operator and bang reference for LibreSearch."
-	/>
+	<meta property="og:description" content="The full operator and bang reference for LibreSearch." />
 	<meta property="og:url" content="https://libresearch.ca/syntax" />
 </svelte:head>
 
@@ -99,7 +96,9 @@
 			class="mt-6 overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)]"
 		>
 			<table class="w-full text-sm">
-				<thead class="bg-[var(--app-hover)] text-left text-xs tracking-widest text-[var(--app-muted)] uppercase">
+				<thead
+					class="bg-[var(--app-hover)] text-left text-xs tracking-widest text-[var(--app-muted)] uppercase"
+				>
 					<tr>
 						<th class="px-5 py-3 font-semibold">Operator</th>
 						<th class="px-5 py-3 font-semibold">Example</th>
@@ -121,9 +120,10 @@
 		<!-- Bangs -->
 		<h2 id="bangs" class="mt-14 text-xl font-semibold tracking-tight">Bang shortcuts</h2>
 		<p class="mt-3 text-sm leading-6 text-[var(--app-muted)]">
-			Type a bang (e.g. <code class="rounded bg-[var(--app-hover)] px-1.5 py-0.5 font-mono text-[var(--app-accent)]"
+			Type a bang (e.g. <code
+				class="rounded bg-[var(--app-hover)] px-1.5 py-0.5 font-mono text-[var(--app-accent)]"
 				>!w turing machine</code
-			>) anywhere in your query to redirect the search to another site. Order doesn't matter — both
+			>) anywhere in your query to redirect the search to another site. Order doesn't matter - both
 			<code class="font-mono">!w turing</code> and <code class="font-mono">turing !w</code> work.
 		</p>
 		<div

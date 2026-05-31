@@ -1,4 +1,4 @@
-// Theme module — applies one of the LibreSearch themes by setting
+// Theme module - applies one of the LibreSearch themes by setting
 // data-theme on <html>. Cached in localStorage so the popup can apply it
 // synchronously on open (no flash), then reconciled with chrome.storage.
 
@@ -36,7 +36,7 @@ export function cacheTheme(name) {
 	}
 }
 
-// Re-evaluate when the system preference changes — only relevant in 'auto'.
+// Re-evaluate when the system preference changes - only relevant in 'auto'.
 export function watchSystemPreference(getCurrentName) {
 	const mq = window.matchMedia('(prefers-color-scheme: dark)');
 	const listener = () => {

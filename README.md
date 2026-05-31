@@ -10,10 +10,10 @@ Every search starts fresh. No cookies. No logs. No surveillance.
 
 ## Privacy by design
 
-- **No query logging** — searches are never stored on any server
-- **No profiling** — your searches are never tied to an identity or sold to advertisers
-- **No third-party trackers** — built-in tracker and ad blocking at the network level
-- **Local-first settings** — your preferences, history, and theme live entirely in your browser
+- **No query logging** - searches are never stored on any server
+- **No profiling** - your searches are never tied to an identity or sold to advertisers
+- **No third-party trackers** - built-in tracker and ad blocking at the network level
+- **Local-first settings** - your preferences, history, and theme live entirely in your browser
 
 ## What you get
 
@@ -29,15 +29,15 @@ Every search starts fresh. No cookies. No logs. No surveillance.
 - Four themes: dark, light, slate, and sand
 - Compact results mode for faster scanning
 - Full keyboard navigation
-- OpenSearch support — set LibreSearch as your browser's default search engine
+- OpenSearch support - set LibreSearch as your browser's default search engine
 
 ## Built for the open web
 
-LibreSearch is a private meta-search frontend. Your query is proxied through our server to an independent upstream index, anonymously — the index never sees your IP, cookies, or browser fingerprint.
+LibreSearch is a private meta-search frontend. Your query is proxied through our server to an independent upstream index, anonymously - the index never sees your IP, cookies, or browser fingerprint.
 
 ## Bot protection without surveillance
 
-LibreSearch uses [Altcha](https://altcha.org), a privacy-preserving proof-of-work challenge, to keep automated scrapers out. There are no CAPTCHAs, no behavioral tracking, and no third-party cookies — just a tiny computation your browser solves locally.
+LibreSearch uses [Altcha](https://altcha.org), a privacy-preserving proof-of-work challenge, to keep automated scrapers out. There are no CAPTCHAs, no behavioral tracking, and no third-party cookies - just a tiny computation your browser solves locally.
 
 ## Support the project
 
@@ -51,4 +51,4 @@ LibreSearch is free and ad-free. If you'd like to keep it that way, you can supp
 
 ## License
 
-AGPL — see [LICENSE](LICENSE).
+AGPL - see [LICENSE](LICENSE).

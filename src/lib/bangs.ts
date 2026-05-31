@@ -1,9 +1,9 @@
-// Bang redirects — type !bang before or after your query to search a specific site.
+// Bang redirects - type !bang before or after your query to search a specific site.
 // Only common, widely-used bangs are included.
 
 export type BangEntry = { name: string; url: string };
 
-/** URL template — %s is replaced with the URI-encoded search term. */
+/** URL template - %s is replaced with the URI-encoded search term. */
 export const BANGS: Record<string, BangEntry> = {
 	// ── General search ────────────────────────────────────────────────
 	g: { name: 'Google', url: 'https://www.google.com/search?q=%s' },

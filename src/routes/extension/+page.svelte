@@ -27,7 +27,7 @@
 			icon: 'fa-chrome',
 			status: 'available',
 			url: '/libresearch-extension.crx',
-			note: 'Web Store won\'t accept my payment. Only .crx available. Works in Brave, Vivaldi, and Opera too.'
+			note: "Web Store won't accept my payment. Only .crx available. Works in Brave, Vivaldi, and Opera too."
 		},
 		{
 			name: 'Mozilla Firefox',
@@ -120,7 +120,7 @@
 		<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-[var(--app-muted)]">
 			The LibreSearch browser extension puts a private search bar in your toolbar, a quick search in
 			your address bar, and a "Search LibreSearch" option in your right-click menu. No tracking, no
-			profiles, no ads — and no permissions to read your pages.
+			profiles, no ads - and no permissions to read your pages.
 		</p>
 	</section>
 
@@ -230,16 +230,14 @@
 		</h2>
 		<p class="mx-auto mb-12 max-w-2xl text-center text-sm leading-6 text-[var(--app-muted)]">
 			Most extensions request "read and change all your data on the websites you visit." This one
-			doesn't. There are no host permissions — it can't see, read, or modify any page you load.
+			doesn't. There are no host permissions - it can't see, read, or modify any page you load.
 		</p>
 
 		<div
 			class="mx-auto max-w-2xl overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)]"
 		>
 			{#each permissions as p, i}
-				<div
-					class="p-6 {i > 0 ? 'border-t border-[var(--app-border)]' : ''}"
-				>
+				<div class="p-6 {i > 0 ? 'border-t border-[var(--app-border)]' : ''}">
 					<p class="font-mono text-sm text-[var(--app-accent)]">{p.name}</p>
 					<p class="mt-2 text-sm leading-6 text-[var(--app-text)]">{p.why}</p>
 				</div>

@@ -46,7 +46,7 @@
 </script>
 
 <svelte:head>
-	<title>{$page.status} — LibreSearch</title>
+	<title>{$page.status} - LibreSearch</title>
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
@@ -57,7 +57,7 @@
 		<Logo class="h-12 w-30" />
 	</a>
 
-	<p class="mb-4 text-8xl font-bold tabular-nums text-[var(--app-accent)] opacity-40">
+	<p class="mb-4 text-8xl font-bold text-[var(--app-accent)] tabular-nums opacity-40">
 		{$page.status}
 	</p>
 

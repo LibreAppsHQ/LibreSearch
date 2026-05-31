@@ -101,7 +101,7 @@
 	});
 
 	// Close the preview and drop stale element refs whenever the result set
-	// changes — otherwise `selected` would silently point at a different image.
+	// changes - otherwise `selected` would silently point at a different image.
 	$effect(() => {
 		void images;
 		selected = null;
@@ -153,7 +153,9 @@
 					style={`left:${caretLeft}px;transform:translateX(-50%);`}
 				></i>
 
-				<div class="relative rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-5">
+				<div
+					class="relative rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-5"
+				>
 					<button
 						type="button"
 						onclick={close}

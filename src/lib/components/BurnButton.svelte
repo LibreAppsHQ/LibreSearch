@@ -18,7 +18,7 @@
 	}
 
 	// Wipe every LibreSearch-owned key out of local storage: search history,
-	// settings, theme — everything that lives on the device.
+	// settings, theme - everything that lives on the device.
 	function clearEverything() {
 		if (typeof window === 'undefined') return;
 		try {
@@ -30,7 +30,7 @@
 			keys.forEach((k) => window.localStorage.removeItem(k));
 			window.sessionStorage.clear();
 		} catch {
-			// Storage unavailable — nothing to clear.
+			// Storage unavailable - nothing to clear.
 		}
 	}
 
@@ -56,7 +56,7 @@
 
 <button
 	type="button"
-	aria-label="Wipe — delete all history, settings, and data"
+	aria-label="Wipe - delete all history, settings, and data"
 	title="Delete everything"
 	onclick={swirl}
 	class="group inline-flex h-10 w-10 items-center justify-center rounded-lg text-[var(--app-text)] transition hover:bg-[var(--app-hover)] {triggerClass}"

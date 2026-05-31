@@ -29,7 +29,7 @@
 	let isOpen = $state(false);
 	let activeIndex = $state(-1);
 	// True only when the highlighted item was reached via arrow keys. Enter submits
-	// a suggestion only in that case — never a mouse-hover or auto-preselected one —
+	// a suggestion only in that case - never a mouse-hover or auto-preselected one -
 	// so typing "ca" + Enter searches "ca", not the highlighted "canva".
 	let keyboardSelected = $state(false);
 	let suggestions = $state<string[]>([]);
@@ -100,7 +100,7 @@
 	function submitQuery(value: string): void {
 		query = value;
 		// Reflect the choice in the DOM input immediately so the form serializes the
-		// selected text (not what was typed) — a reactive flush would land too late.
+		// selected text (not what was typed) - a reactive flush would land too late.
 		// Done synchronously so the submit stays within the original click gesture.
 		if (inputElement) inputElement.value = value;
 		closeDropdown();
@@ -197,7 +197,11 @@
 		} else if (event.key === 'Escape') {
 			event.preventDefault();
 			closeDropdown();
-		} else if (event.key === 'Tab' && activeIndex >= 0 && dropdownItems[activeIndex].type === 'suggestion') {
+		} else if (
+			event.key === 'Tab' &&
+			activeIndex >= 0 &&
+			dropdownItems[activeIndex].type === 'suggestion'
+		) {
 			// Tab completes the highlighted suggestion into the box without searching.
 			event.preventDefault();
 			appendQuery(dropdownItems[activeIndex].text);
@@ -321,7 +325,7 @@
 	{#if isOpen && dropdownItems.length > 0}
 		<div class="relative">
 			<div
-				class="absolute top-2 right-0 left-0 z-20 overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-elevated)] p-2 shadow-2xl shadow-black/40 ring-1 ring-black/5"
+				class="absolute top-2 right-0 left-0 z-20 overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-elevated)] p-2 shadow-2xl ring-1 shadow-black/40 ring-black/5"
 				transition:fly={{ y: -6, duration: $reducedMotion ? 0 : 160, easing: cubicOut }}
 			>
 				{#if hasHistory}
@@ -373,9 +377,8 @@
 						>
 							<span class="truncate text-[15px]">
 								<span class="text-[var(--app-muted)]">{m.typed}</span><span
-									class={m.typed
-										? 'font-medium text-[var(--app-text)]'
-										: 'text-[var(--app-text)]'}>{m.rest}</span
+									class={m.typed ? 'font-medium text-[var(--app-text)]' : 'text-[var(--app-text)]'}
+									>{m.rest}</span
 								>
 							</span>
 						</button>
@@ -400,7 +403,7 @@
 									appendQuery(item.text);
 								}}
 							>
-								<i class="fa-solid fa-arrow-up text-xs -rotate-45"></i>
+								<i class="fa-solid fa-arrow-up -rotate-45 text-xs"></i>
 							</button>
 						{/if}
 					</div>

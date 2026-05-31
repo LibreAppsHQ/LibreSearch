@@ -34,7 +34,7 @@
 			title: 'Microsoft Edge',
 			icon: 'fa-brands fa-edge',
 			platform: 'Windows · macOS · Linux',
-			path: 'Same key names as Chrome. Use Group Policy (ADMX) on Windows, or drop the JSON in Edge\'s managed-policies directory.',
+			path: "Same key names as Chrome. Use Group Policy (ADMX) on Windows, or drop the JSON in Edge's managed-policies directory.",
 			lang: 'json',
 			code: `{
   "DefaultSearchProviderEnabled": true,
@@ -144,7 +144,7 @@
 		</h1>
 		<p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[var(--app-muted)]">
 			LibreSearch can be rolled out as the default search engine in Chrome, Edge, and Firefox using
-			the same Group Policy / MDM tools you already use. No telemetry, no query logging — defensible
+			the same Group Policy / MDM tools you already use. No telemetry, no query logging - defensible
 			under GDPR, HIPAA, and FERPA.
 		</p>
 	</section>
@@ -153,9 +153,7 @@
 	<section class="mx-auto w-full max-w-[1100px] px-6 pb-12">
 		<div class="grid gap-6 sm:grid-cols-3">
 			{#each [{ icon: 'fa-eye-slash', title: 'No query logging', desc: 'Searches are never written to a persistent log tied to any user or IP.' }, { icon: 'fa-server', title: 'No third-party telemetry', desc: 'No Google Analytics, no Bing, no ad-tech embedded in the search frontend.' }, { icon: 'fa-file-contract', title: 'Compliance-friendly', desc: 'AGPL-licensed, auditable source, ready for review by your security team.' }] as item}
-				<div
-					class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6"
-				>
+				<div class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6">
 					<div
 						class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--app-accent)]/15 text-[var(--app-accent)]"
 					>
@@ -186,7 +184,9 @@
 				<article
 					class="overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)]"
 				>
-					<header class="flex items-start justify-between gap-4 border-b border-[var(--app-border)] p-6">
+					<header
+						class="flex items-start justify-between gap-4 border-b border-[var(--app-border)] p-6"
+					>
 						<div>
 							<div class="flex items-center gap-3">
 								<i class="{s.icon} text-2xl text-[var(--app-accent)]"></i>

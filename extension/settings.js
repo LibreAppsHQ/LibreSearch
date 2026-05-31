@@ -1,14 +1,8 @@
-// Shared settings module — used by both the popup and the options page.
+// Shared settings module - used by both the popup and the options page.
 // Backed by chrome.storage.sync so user prefs follow them across devices
 // (with a graceful fallback to .local if sync is unavailable).
 
-export const SETTINGS_KEYS = [
-	'defaultTab',
-	'safeSearch',
-	'region',
-	'openIn',
-	'theme'
-];
+export const SETTINGS_KEYS = ['defaultTab', 'safeSearch', 'region', 'openIn', 'theme'];
 
 export const DEFAULTS = {
 	defaultTab: '', // '' = web, 'images', 'videos', 'news'

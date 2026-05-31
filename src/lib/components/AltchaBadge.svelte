@@ -1,7 +1,7 @@
 <script lang="ts">
 	// reCAPTCHA-style badge: collapsed to the logo tile on the right edge,
 	// slides out on hover/focus to reveal the protection notice.
-	// NOTE: the logo is a placeholder image for now — swap `placeholderLogo`.
+	// NOTE: the logo is a placeholder image for now - swap `placeholderLogo`.
 	const Logo = '/altcha.svg';
 </script>
 

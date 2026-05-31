@@ -235,7 +235,7 @@ function unwrapInfobox(raw: unknown): unknown {
 
 function getInfoboxImage(raw: Record<string, unknown>): string | undefined {
 	// `images` is the entity gallery; prefer Brave's proxied `src`, fall back to original.
-	// Skip entries Brave marks as logos — they're tiny favicons, not the hero photo.
+	// Skip entries Brave marks as logos - they're tiny favicons, not the hero photo.
 	if (Array.isArray(raw.images)) {
 		for (const img of raw.images) {
 			if (!isRecord(img) || img.logo === true) continue;
@@ -361,9 +361,7 @@ async function geocodePlaces(query: string, fetchImpl: typeof fetch): Promise<Se
 
 		const payload: unknown = await response.json();
 		const raw = Array.isArray(payload) ? payload : [];
-		const placeResults = raw
-			.map(normalizePlaceResult)
-			.filter((p): p is PlaceResult => p !== null);
+		const placeResults = raw.map(normalizePlaceResult).filter((p): p is PlaceResult => p !== null);
 
 		return { query, tab: 'maps', results: [], placeResults };
 	} finally {
@@ -379,7 +377,7 @@ function pruneRateLimitBuckets(now: number): void {
 	}
 }
 
-/** Reset a client's rate-limit bucket — used after they solve a challenge. */
+/** Reset a client's rate-limit bucket - used after they solve a challenge. */
 export function clearRateLimit(identifier: string): void {
 	rateLimitBuckets.delete(identifier);
 }
@@ -491,7 +489,7 @@ function getBraveSearchUrl(
 	country?: string,
 	count = 10
 ): URL {
-	// Shopping has no dedicated Brave endpoint — it runs against web search.
+	// Shopping has no dedicated Brave endpoint - it runs against web search.
 	const endpointTab: BraveEndpointTab = tab === 'shopping' ? 'web' : (tab as BraveEndpointTab);
 	const searchUrl = new URL(BRAVE_ENDPOINTS[endpointTab]);
 	searchUrl.searchParams.set('q', query);

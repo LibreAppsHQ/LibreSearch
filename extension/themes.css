@@ -1,4 +1,4 @@
-/* Theme palette overrides — mirror the main libresearch.ca site.
+/* Theme palette overrides - mirror the main libresearch.ca site.
    Defaults (the `dark` theme) live in each page's @theme block so
    Tailwind tree-shakes correctly. These selectors override at runtime
    when the user picks a different theme. */

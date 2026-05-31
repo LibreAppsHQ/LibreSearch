@@ -40,7 +40,7 @@
     <priority>0.4</priority>
   </url>
 
-  <!-- Policy pages — required but low traffic value -->
+  <!-- Policy pages - required but low traffic value -->
   <url>
     <loc>https://libresearch.ca/privacy</loc>
     <lastmod>2026-05-27</lastmod>

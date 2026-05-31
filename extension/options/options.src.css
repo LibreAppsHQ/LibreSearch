@@ -73,7 +73,7 @@ main > footer {
 	animation-delay: 260ms;
 }
 
-/* ── "Saved" status pill — slide + fade ───────────────── */
+/* ── "Saved" status pill - slide + fade ───────────────── */
 #status {
 	transform: translateY(4px);
 	transition:
@@ -89,15 +89,10 @@ main > footer {
 html,
 body {
 	margin: 0;
-	font-family:
-		-apple-system,
-		BlinkMacSystemFont,
-		'Segoe UI',
-		Roboto,
-		sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Radio tile control — visually selectable card backed by a hidden radio */
+/* Radio tile control - visually selectable card backed by a hidden radio */
 .radio-tile {
 	cursor: pointer;
 	display: flex;
@@ -162,7 +157,8 @@ body {
 	font: inherit;
 	font-size: 14px;
 	appearance: none;
-	background-image: linear-gradient(45deg, transparent 50%, var(--color-muted) 50%),
+	background-image:
+		linear-gradient(45deg, transparent 50%, var(--color-muted) 50%),
 		linear-gradient(135deg, var(--color-muted) 50%, transparent 50%);
 	background-position:
 		calc(100% - 18px) calc(50% - 2px),

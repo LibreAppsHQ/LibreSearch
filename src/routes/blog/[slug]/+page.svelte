@@ -91,7 +91,7 @@
 			<div>
 				<p class="font-semibold">Search without the surveillance.</p>
 				<p class="mt-1 text-sm text-[var(--app-muted)]">
-					No logging, no profiles, no ads — just results.
+					No logging, no profiles, no ads - just results.
 				</p>
 			</div>
 			<a
@@ -123,7 +123,7 @@
 								{categoryMeta[p.category].label}
 							</span>
 							<h3
-								class="mt-3 text-base font-semibold leading-6 transition group-hover:text-[var(--app-accent)]"
+								class="mt-3 text-base leading-6 font-semibold transition group-hover:text-[var(--app-accent)]"
 							>
 								{p.title}
 							</h3>

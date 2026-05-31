@@ -6,23 +6,23 @@
 	const principles = [
 		{
 			icon: 'fa-eye-slash',
-			title: 'We don\'t log searches',
+			title: "We don't log searches",
 			desc: 'Queries pass through our server, are forwarded to the upstream index, and the response is returned. The query is never written to a persistent log tied to an identity or IP.'
 		},
 		{
 			icon: 'fa-database',
-			title: 'We don\'t build profiles',
+			title: "We don't build profiles",
 			desc: 'There is no advertising profile, no behavioural model, no cohort assignment. We have nothing to sell because we never collect it.'
 		},
 		{
 			icon: 'fa-lock',
 			title: 'Local-first by default',
-			desc: 'Your search history, theme, region, and settings live entirely in your browser\'s localStorage. They are never synced to our servers.'
+			desc: "Your search history, theme, region, and settings live entirely in your browser's localStorage. They are never synced to our servers."
 		},
 		{
 			icon: 'fa-shield-halved',
 			title: 'Bot protection without surveillance',
-			desc: 'We use Altcha — a proof-of-work challenge your browser solves locally. No CAPTCHAs, no behavioural tracking, no third-party cookies.'
+			desc: 'We use Altcha - a proof-of-work challenge your browser solves locally. No CAPTCHAs, no behavioural tracking, no third-party cookies.'
 		}
 	];
 
@@ -30,7 +30,7 @@
 		{
 			name: 'Vercel',
 			role: 'Application hosting and CDN',
-			data: 'Receives HTTP requests to render pages. Logs include source IP and request path (retained per Vercel\'s defaults).',
+			data: "Receives HTTP requests to render pages. Logs include source IP and request path (retained per Vercel's defaults).",
 			region: 'Multiple regions; primarily Washington (us-east-1).',
 			url: 'https://vercel.com/legal/privacy-policy'
 		},
@@ -54,7 +54,7 @@
 		{ label: 'Operating entity', value: 'Arcbase HQ' },
 		{ label: 'Primary jurisdiction', value: 'Canada' },
 		{ label: 'License', value: 'AGPL-3.0 (source: github.com/Arcbasehq/LibreSearch)' },
-		{ label: 'Funding model', value: 'Donations — no ads, no data sales' },
+		{ label: 'Funding model', value: 'Donations - no ads, no data sales' },
 		{ label: 'Security contact', value: '/contact (subject: Security disclosure)' },
 		{ label: 'Security disclosure', value: '/.well-known/security.txt (RFC 9116)' }
 	];
@@ -70,7 +70,7 @@
 	<meta property="og:title" content="Trust Center - LibreSearch" />
 	<meta
 		property="og:description"
-		content="The full story on how we handle your data — sub-processors, retention, jurisdiction."
+		content="The full story on how we handle your data - sub-processors, retention, jurisdiction."
 	/>
 	<meta property="og:url" content="https://libresearch.ca/trust" />
 </svelte:head>
@@ -100,9 +100,7 @@
 		<h2 class="mt-12 text-xl font-semibold tracking-tight">Principles</h2>
 		<div class="mt-6 grid gap-4 sm:grid-cols-2">
 			{#each principles as p}
-				<div
-					class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6"
-				>
+				<div class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6">
 					<div
 						class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--app-accent)]/15 text-[var(--app-accent)]"
 					>
@@ -136,9 +134,7 @@
 		</p>
 		<div class="mt-6 space-y-4">
 			{#each subProcessors as s}
-				<div
-					class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6"
-				>
+				<div class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6">
 					<div class="flex flex-wrap items-baseline justify-between gap-3">
 						<h3 class="text-base font-semibold">{s.name}</h3>
 						<a
