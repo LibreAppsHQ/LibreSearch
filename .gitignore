@@ -33,3 +33,5 @@ vite.config.ts.timestamp-*
 .env.local
 .claude
 .agents
+
+support.libresearch.ca

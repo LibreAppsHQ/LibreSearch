@@ -112,7 +112,7 @@
 					necessary technical data, and only transiently:
 				</p>
 				<ul class="space-y-3">
-					{#each [{ t: 'Transient request data', d: 'When you search, your query passes through our server so it can be forwarded anonymously. It is used only to return your results and is not written to a persistent search log tied to you.' }, { t: 'Abuse protection', d: 'We apply rate limiting to prevent automated abuse. This may briefly reference an IP address in memory, but it is not stored to build a history of your activity.' }, { t: 'Aggregate health metrics', d: 'We may count anonymous, aggregate totals (such as total requests per day) to keep the service healthy. These contain no queries and no identifiers.' }] as item, i (i)}
+					{#each [{ t: 'Transient request data', d: 'When you search, your query passes through our server so it can be forwarded anonymously. It is used only to return your results and is not written to a persistent search log tied to you.' }, { t: 'Abuse protection', d: 'We apply rate limiting to prevent automated abuse. This may briefly reference an IP address in memory, but it is not stored to build a history of your activity.' }, { t: 'Aggregate health metrics', d: 'We may count anonymous, aggregate totals (such as total requests per day) to keep the service healthy. These contain no queries and no identifiers.' }, { t: 'Error diagnostics', d: 'When something breaks, our error-monitoring tool (Sentry) records technical details about the crash — error type, stack trace, browser and page. We disable personal-data collection and strip IP addresses, so these reports are not tied to your identity and contain no search queries.' }] as item, i (i)}
 						<li
 							class="flex gap-3 rounded-xl border border-(--app-border) bg-(--app-surface) p-4"
 						>
@@ -172,6 +172,16 @@
 					our anonymizing proxy but not your identity. We do not embed third-party advertising,
 					analytics, or social tracking scripts on LibreSearch. We have no business model that depends
 					on sharing your data, so we don't.
+				</p>
+				<p class="mt-3 text-sm leading-7 text-(--app-muted)">
+					The one diagnostic service we use is <a
+						href="https://sentry.io"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-(--app-accent) hover:underline">Sentry</a
+					> for error monitoring, so we can find and fix crashes. It only receives technical error
+					reports — configured with personal-data collection off and IP addresses removed — never
+					your searches or a profile of you.
 				</p>
 			</section>
 

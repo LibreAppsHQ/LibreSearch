@@ -1,3 +1,5 @@
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
+  '@tailwindcss/oxide': true
+  '@sentry/cli': true

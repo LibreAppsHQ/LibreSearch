@@ -34,14 +34,14 @@
 			title: 'Resources',
 			links: [
 				{ label: 'About Us', href: '/about', icon: null },
+				{ label: 'Browser Leak Test', href: '/fingerprint', icon: null },
 				{ label: 'Blog', href: '/blog', icon: null },
 				{ label: 'Compare', href: '/compare', icon: null },
 				{ label: 'Press', href: '/press', icon: null },
 				{ label: 'Contact', href: '/contact', icon: null },
 				{ label: 'Privacy Policy', href: '/privacy', icon: null },
 				{ label: 'Terms of Service', href: '/terms', icon: null },
-				{ label: 'Click me if interested in UI', href: '/design' },
-				{ label: 'Donate', href: '/donate'}
+				{ label: 'Donate', href: '/donate' }
 			]
 		}
 	];
@@ -112,7 +112,7 @@
 					</div>
 
 					{#if i < menuSections.length - 1}
-						<div class="border-t border-[#3a435b]" />
+						<div class="border-t border-[#3a435b]"></div>
 					{/if}
 				{/each}
 			</div>

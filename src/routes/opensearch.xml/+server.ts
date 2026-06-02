@@ -10,7 +10,7 @@ export const GET: RequestHandler = ({ url }) => {
   <ShortName>LibreSearch</ShortName>
   <Description>Search the web privately. No tracking, no ads.</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image width="16" height="16" type="image/png">${origin}/logo.png</Image>
+  <Image width="16" height="16" type="image/svg">${origin}/favicon.svg</Image>
   <Url type="text/html" method="get" template="${origin}/search?q={searchTerms}"/>
   <moz:SearchForm>${origin}/</moz:SearchForm>
 </OpenSearchDescription>`;

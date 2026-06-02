@@ -17,6 +17,37 @@
 
 	const releases: Release[] = [
 		{
+			version: '0.7.0',
+			date: '2026-06-02',
+			title: 'Spam protection, error monitoring, and a browser leak test',
+			entries: [
+				{
+					tag: 'feature',
+					text: 'New Browser Leak Test (/fingerprint) shows what your browser reveals — user agent, screen, GPU, timezone, canvas fingerprint and more — entirely in your browser, nothing logged'
+				},
+				{
+					tag: 'feature',
+					text: 'Contact form now has an ALTCHA proof-of-work captcha to stop spam, plus a direct email (info@libresearch.ca)'
+				},
+				{
+					tag: 'feature',
+					text: 'Added Sentry error monitoring so we can find and fix crashes — configured with personal-data collection off and IP addresses stripped'
+				},
+				{
+					tag: 'security',
+					text: 'ALTCHA challenge signing now fails closed in production if its secret is unset, instead of using a known fallback'
+				},
+				{
+					tag: 'docs',
+					text: 'Privacy policy updated to disclose the error-monitoring service and exactly what it does (and does not) receive'
+				},
+				{
+					tag: 'fix',
+					text: 'Footer “Support” link rendered white instead of the muted style; web-app manifest pointed at a missing icon; cleaned up the menu (moved Design to the footer)'
+				}
+			]
+		},
+		{
 			version: '0.6.1',
 			date: '2026-05-30',
 			title: 'Theme and accessibility fixes',

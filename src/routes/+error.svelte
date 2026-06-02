@@ -89,30 +89,6 @@
 			Search
 		</button>
 	</form>
-
-	<div class="flex flex-wrap items-center justify-center gap-3">
-		<a
-			href="/"
-			class="inline-flex items-center gap-2 rounded-2xl border border-(--app-border) bg-(--app-surface) px-5 py-2.5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
-		>
-			<i class="fa-solid fa-house text-xs"></i>
-			Home
-		</a>
-		<a
-			href="/about"
-			class="inline-flex items-center gap-2 rounded-2xl border border-(--app-border) bg-(--app-surface) px-5 py-2.5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
-		>
-			<i class="fa-solid fa-circle-info text-xs"></i>
-			About
-		</a>
-		<a
-			href="/contact"
-			class="inline-flex items-center gap-2 rounded-2xl border border-(--app-border) bg-(--app-surface) px-5 py-2.5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
-		>
-			<i class="fa-solid fa-envelope text-xs"></i>
-			Contact
-		</a>
-	</div>
 </main>
 
 <SiteFooter />

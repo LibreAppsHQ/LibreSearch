@@ -1,4 +1,26 @@
 import type { Handle } from '@sveltejs/kit';
+import { sequence } from '@sveltejs/kit/hooks';
+import * as Sentry from '@sentry/sveltekit';
+import { sentryHandle, handleErrorWithSentry } from '@sentry/sveltekit';
+
+Sentry.init({
+	dsn: 'https://c6f76c27eb2b5e689b2b18fe208334b3@o4511459621011456.ingest.us.sentry.io/4511459622125568',
+	// Privacy: never send default PII (e.g. IP addresses) to Sentry.
+	sendDefaultPii: false,
+	tracesSampleRate: 0.1,
+	// Strip any IP / user identifiers from the payload before it's sent.
+	beforeSend(event) {
+		if (event.user) {
+			delete event.user.ip_address;
+			delete event.user.email;
+		}
+		if (event.request?.headers) {
+			delete event.request.headers['X-Forwarded-For'];
+			delete event.request.headers['x-forwarded-for'];
+		}
+		return event;
+	}
+});
 
 const SECURITY_HEADERS: Record<string, string> = {
 	'X-Content-Type-Options': 'nosniff',
@@ -16,7 +38,8 @@ const SECURITY_HEADERS: Record<string, string> = {
 		"font-src 'self' data:",
 		// Web3Forms is the contact-form backend; vitals.vercel-insights.com is
 		// the Speed Insights beacon endpoint.
-		"connect-src 'self' https://api.web3forms.com https://vitals.vercel-insights.com",
+		// *.ingest.us.sentry.io is the Sentry error/trace ingest endpoint.
+		"connect-src 'self' https://api.web3forms.com https://vitals.vercel-insights.com https://*.ingest.us.sentry.io",
 		'frame-src https:',
 		"worker-src 'self' blob:",
 		"object-src 'none'",
@@ -26,7 +49,7 @@ const SECURITY_HEADERS: Record<string, string> = {
 	].join('; ')
 };
 
-export const handle: Handle = async ({ event, resolve }) => {
+const securityHandle: Handle = async ({ event, resolve }) => {
 	// Browsers and crawlers still probe /favicon.ico even when the page declares
 	// an SVG icon. We don't ship a .ico, so without this we'd 500/404 on every
 	// such probe. Redirect to the SVG we do have.
@@ -53,3 +76,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	return response;
 };
+
+// Sentry's request handler runs first, then our security/header handler.
+export const handle: Handle = sequence(sentryHandle(), securityHandle);
+
+// Reports unhandled server-side errors to Sentry.
+export const handleError = handleErrorWithSentry();

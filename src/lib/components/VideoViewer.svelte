@@ -84,17 +84,20 @@
 
 <svelte:window onkeydown={handleKey} />
 
-<!-- Backdrop -->
-<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+<!-- Backdrop — click to close; Escape handled by the window keydown above. -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
 <div
 	class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm"
 	onclick={onclose}
+	role="button"
+	tabindex="-1"
+	aria-label="Close video"
 >
 	<!-- Panel -->
-	<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
 	<div
 		class="relative w-full max-w-3xl overflow-hidden rounded-2xl bg-(--app-background) shadow-2xl shadow-black/60"
 		onclick={(e) => e.stopPropagation()}
+		role="presentation"
 	>
 		<!-- Close -->
 		<button

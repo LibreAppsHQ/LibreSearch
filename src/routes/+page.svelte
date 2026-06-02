@@ -152,9 +152,7 @@
 			<a href="/" class="inline-flex items-center gap-2.5" aria-label="LibreSearch home">
 				<Logo class="h-24 w-auto max-w-full sm:h-28" />
 			</a>
-			<h1 class="mt-3 text-base text-(--app-text) sm:text-lg">
-				Find anything. Tracked by no one.
-			</h1>
+			<h1 class="mt-3 text-base text-(--app-text) sm:text-lg">Privacy for everyone.</h1>
 
 			<div class="mt-6 w-full">
 				<SearchBar
@@ -232,7 +230,7 @@
 				</h2>
 				<p class="mt-6 text-lg text-white/85">
 					Most search engines log every query and tie it to a profile that follows you across the
-					web. We don't. No logs, no profiles, no tracking — your searches stay yours.
+					web. We don't. No search logs, no profiles, no tracking — your searches stay yours.
 				</p>
 				<p class="mt-4 text-lg text-white/85">
 					Make LibreSearch your default and reclaim your privacy in seconds — no account, no

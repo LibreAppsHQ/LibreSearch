@@ -44,7 +44,9 @@
 	let data = $derived(base.query ? base : (restored ?? base));
 
 	let query = $state('');
+	// svelte-ignore state_referenced_locally
 	let allResults = $state(data.results);
+	// svelte-ignore state_referenced_locally
 	let hasMore = $state(data.results.length >= (data.count ?? 10));
 	let activeVideo = $state<VideoResult | null>(null);
 

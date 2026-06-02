@@ -119,8 +119,19 @@
 							>
 						</li>
 						<li>
+							<a
+								href="https://support.libresearch.ca/"
+								class="text-(--app-muted) transition hover:text-(--app-text)">Support</a
+							>
+						</li>
+						<li>
 							<a href="/terms" class="text-(--app-muted) transition hover:text-(--app-text)"
 								>Terms</a
+							>
+						</li>
+						<li>
+							<a href="/design" class="text-(--app-muted) transition hover:text-(--app-text)"
+								>Design</a
 							>
 						</li>
 					</ul>

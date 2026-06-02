@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import { env } from '$env/dynamic/private';
+import { dev } from '$app/environment';
 
 // Self-hosted, privacy-friendly proof-of-work challenge (ALTCHA-compatible scheme).
 // No third-party service is contacted — challenges are signed with a server secret.
@@ -9,7 +10,12 @@ const DEFAULT_MAX_NUMBER = 50_000;
 const CHALLENGE_TTL_MS = 5 * 60_000;
 
 function getSecret(): string {
-	return env.ALTCHA_SECRET?.trim() || 'dev-insecure-altcha-secret-change-me';
+	const secret = env.ALTCHA_SECRET?.trim();
+	if (secret) return secret;
+	// Never silently fall back to a known secret in production — that would make
+	// every challenge forgeable. Only allow the dev placeholder locally.
+	if (!dev) throw new Error('ALTCHA_SECRET is not set — refusing to sign challenges in production.');
+	return 'dev-insecure-altcha-secret-change-me';
 }
 
 function sha256Hex(input: string): string {

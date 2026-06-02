@@ -185,7 +185,6 @@ ASSETS = [
     "/altcha.svg",
     "/background.jpg",
     "/og-image.png",
-    "/logo.png",
     "/opensearch.xml",
 ]
 

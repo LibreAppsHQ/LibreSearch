@@ -3,6 +3,10 @@
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
+	import AltchaWidget from '$lib/components/AltchaWidget.svelte';
+
+	// Where to reach us directly when the form isn't an option.
+	const contactEmail = 'info@libresearch.ca';
 
 	// Web3Forms posts the form to a public endpoint, then forwards the message
 	// to whatever inbox is tied to the access key. The key is intentionally
@@ -14,6 +18,7 @@
 	const subjectOptions = [
 		{ value: 'General', label: 'General inquiry' },
 		{ value: 'Bug', label: 'Report a bug' },
+		{ value: 'Support', label: 'Support' },
 		{ value: 'Privacy', label: 'Privacy / data request' },
 		{ value: 'Security', label: 'Security disclosure' },
 		{ value: 'Press', label: 'Press / media' }
@@ -25,6 +30,9 @@
 	let message = $state('');
 	// Honeypot — real users leave this empty; spam bots fill every field.
 	let botcheck = $state('');
+	// ALTCHA proof-of-work captcha must be solved before the form will send.
+	let captchaVerified = $state(false);
+	let altcha = $state<{ reset: () => void } | null>(null);
 	let submitting = $state(false);
 	let result = $state<{ type: 'success' | 'error'; msg: string } | null>(null);
 
@@ -34,6 +42,10 @@
 
 		if (!name.trim() || !email.trim() || !message.trim()) {
 			result = { type: 'error', msg: 'Please fill in your name, email, and message.' };
+			return;
+		}
+		if (!captchaVerified) {
+			result = { type: 'error', msg: 'Please complete the “I’m human” check below the message.' };
 			return;
 		}
 		if (!accessKey) {
@@ -72,6 +84,8 @@
 				email = '';
 				subject = 'General';
 				message = '';
+				captchaVerified = false;
+				altcha?.reset();
 			} else {
 				result = {
 					type: 'error',
@@ -111,9 +125,7 @@
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
-				Contact
-			</p>
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">Contact</p>
 			<SiteMenu class="justify-self-end" />
 		</div>
 	</div>
@@ -201,6 +213,11 @@
 						<span class="mt-1 block text-xs text-(--app-muted)">{message.length} / 5000</span>
 					</label>
 
+					<!-- Spam protection: self-hosted proof-of-work captcha (no third party). -->
+					<div class="mt-5">
+						<AltchaWidget bind:this={altcha} bind:verified={captchaVerified} />
+					</div>
+
 					{#if result}
 						<div
 							class={result.type === 'success'
@@ -214,7 +231,7 @@
 
 					<button
 						type="submit"
-						disabled={submitting}
+						disabled={submitting || !captchaVerified}
 						class="mt-6 inline-flex items-center gap-2 rounded-full bg-(--app-accent) px-6 py-2.5 text-sm font-semibold text-[#111] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						{#if submitting}
@@ -228,9 +245,7 @@
 				</form>
 			{:else}
 				<!-- Form disabled: backend not configured. -->
-				<div
-					class="rounded-2xl border border-(--app-border) bg-[#171b25]/80 p-7 backdrop-blur-sm"
-				>
+				<div class="rounded-2xl border border-(--app-border) bg-[#171b25]/80 p-7 backdrop-blur-sm">
 					<div
 						class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/15 text-amber-400"
 					>
@@ -240,8 +255,10 @@
 						Contact form is temporarily unavailable
 					</h2>
 					<p class="mt-3 text-sm leading-7 text-(--app-muted)">
-						We're getting it back online. In the meantime, you can file non-sensitive issues and
-						feature requests on our
+						We're getting it back online. In the meantime, email us directly at
+						<a href="mailto:{contactEmail}" class="text-(--app-accent) hover:underline"
+							>{contactEmail}</a
+						>, or file non-sensitive issues and feature requests on our
 						<a
 							href="https://github.com/Arcbasehq/LibreSearch/issues"
 							target="_blank"
@@ -256,6 +273,21 @@
 			<aside class="space-y-6">
 				<div class="rounded-2xl border border-(--app-border) bg-[#171b25]/60 p-6">
 					<h2 class="mb-3 text-sm font-semibold tracking-wider text-(--app-muted) uppercase">
+						Email us
+					</h2>
+					<a
+						href="mailto:{contactEmail}"
+						class="inline-flex items-center gap-2 text-sm font-medium text-(--app-accent) hover:underline"
+					>
+						<i class="fa-solid fa-envelope"></i>
+						{contactEmail}
+					</a>
+					<p class="mt-2 text-xs leading-6 text-(--app-muted)">
+						Prefer your own mail client? Reach us directly any time.
+					</p>
+				</div>
+				<div class="rounded-2xl border border-(--app-border) bg-[#171b25]/60 p-6">
+					<h2 class="mb-3 text-sm font-semibold tracking-wider text-(--app-muted) uppercase">
 						A few notes
 					</h2>
 					<ul class="space-y-3 text-sm leading-6 text-(--app-muted)">
@@ -264,12 +296,12 @@
 							Security reports get triaged within 72 hours.
 						</li>
 						<li>
-							<span class="text-(--app-text)">Privacy.</span> We don't log message metadata beyond
-							what's needed to read and respond.
+							<span class="text-(--app-text)">Privacy.</span> We don't log message metadata beyond what's
+							needed to read and respond.
 						</li>
 						<li>
-							<span class="text-(--app-text)">Bugs.</span> Non-sensitive bugs and feature requests
-							are best filed on our repo.
+							<span class="text-(--app-text)">Bugs.</span> Non-sensitive bugs and feature requests are
+							best filed on our repo.
 						</li>
 					</ul>
 				</div>

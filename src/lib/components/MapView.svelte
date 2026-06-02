@@ -4,6 +4,7 @@
 	let { places } = $props<{ places: PlaceResult[] }>();
 
 	// The currently focused place — drives the embedded map.
+	// svelte-ignore state_referenced_locally
 	let selected = $state<PlaceResult>(places[0]);
 
 	// Reset focus to the top hit whenever a new search comes in.
