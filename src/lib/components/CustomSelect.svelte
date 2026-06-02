@@ -88,11 +88,11 @@
 		bind:this={buttonEl}
 		type="button"
 		onclick={toggle}
-		class="flex items-center gap-1.5 px-2 py-1 text-xs font-medium text-[var(--app-text)] hover:text-[var(--app-accent)] transition  focus:outline-none"
+		class="flex items-center gap-1.5 px-2 py-1 text-xs font-medium text-(--app-text) hover:text-(--app-accent) transition  focus:outline-none"
 	>
 		<span>{currentLabel}</span>
 		<i
-			class="fa-solid fa-chevron-down text-[10px] text-[var(--app-muted)] transition-transform duration-150"
+			class="fa-solid fa-chevron-down text-[10px] text-(--app-muted) transition-transform duration-150"
 			class:rotate-180={open}
 		></i>
 	</button>
@@ -111,7 +111,7 @@
 
 		<!-- Dropdown -->
 		<div
-			class="fixed z-[61] min-w-[10rem] overflow-y-auto overscroll-contain rounded-sm border border-[var(--app-border)] bg-[var(--app-elevated)] shadow-2xl shadow-black/40"
+			class="fixed z-[61] min-w-[10rem] overflow-y-auto overscroll-contain rounded-sm border border-(--app-border) bg-(--app-elevated) shadow-2xl shadow-black/40"
 			style="{menuTop !== null ? `top:${menuTop}px;` : ''}{menuBottom !== null
 				? `bottom:${menuBottom}px;`
 				: ''} right:{menuRight}px; max-height:{menuMaxHeight}px;"
@@ -121,17 +121,17 @@
 				easing: cubicOut
 			}}
 		>
-			{#each options as opt}
+			{#each options as opt (opt.value)}
 				<button
 					type="button"
 					onclick={() => select(opt.value)}
 					class={opt.value === value
-						? 'flex w-full items-center justify-between gap-6 bg-[var(--app-hover)] px-4 py-2 text-left text-sm font-medium text-[var(--app-text)]'
-						: 'flex w-full items-center px-4 py-2 text-left text-sm text-[var(--app-muted)] transition hover:bg-[var(--app-hover)] hover:text-[var(--app-text)]'}
+						? 'flex w-full items-center justify-between gap-6 bg-(--app-hover) px-4 py-2 text-left text-sm font-medium text-(--app-text)'
+						: 'flex w-full items-center px-4 py-2 text-left text-sm text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)'}
 				>
 					{opt.label}
 					{#if opt.value === value}
-						<i class="fa-solid fa-check text-[10px] text-[var(--app-accent)]"></i>
+						<i class="fa-solid fa-check text-[10px] text-(--app-accent)"></i>
 					{/if}
 				</button>
 			{/each}

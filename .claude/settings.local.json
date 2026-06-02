@@ -97,7 +97,12 @@
       "Bash(curl -s \"http://localhost:5173/src/lib/components/SearchBar.svelte\")",
       "Bash(pkill -f \"vite dev\")",
       "Bash(kill 9203 18939 9740)",
-      "Bash([ -f \"src/routes/$r/+page.svelte\" ])"
+      "Bash([ -f \"src/routes/$r/+page.svelte\" ])",
+      "Bash(npx eslint *)",
+      "Bash(curl -s -m3 \"http://localhost:5173/api/stock?q=AAPL+stock\")",
+      "Bash(curl -s -m3 \"http://localhost:4173/api/stock?q=AAPL+stock\")",
+      "Bash(curl -s -m6 -A \"Mozilla/5.0\" \"https://query1.finance.yahoo.com/v8/finance/chart/AAPL?range=1mo&interval=1d\")",
+      "Bash(curl -s -m6 \"http://localhost:5173/api/stock?q=AAPL+stock\")"
     ]
   }
 }

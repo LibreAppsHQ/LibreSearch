@@ -67,13 +67,13 @@
 	<meta property="og:url" content="https://libresearch.ca/syntax" />
 </svelte:head>
 
-<header class="sticky top-0 z-20 bg-[var(--app-background)]">
+<header class="sticky top-0 z-20 bg-(--app-background)">
 	<div class="mx-auto w-full max-w-[1400px] px-6">
 		<div class="grid grid-cols-[1fr_auto_1fr] items-center py-5">
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-[var(--app-text)]">
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
 				Syntax
 			</p>
 			<SiteMenu class="justify-self-end" />
@@ -81,23 +81,23 @@
 	</div>
 </header>
 
-<main class="bg-[var(--app-background)] text-[var(--app-text)]">
+<main class="bg-(--app-background) text-(--app-text)">
 	<section class="mx-auto w-full max-w-[900px] px-6 py-12 sm:py-16">
 		<h1 class="text-3xl font-bold tracking-tight sm:text-4xl">Search syntax</h1>
-		<p class="mt-4 text-base leading-7 text-[var(--app-muted)]">
+		<p class="mt-4 text-base leading-7 text-(--app-muted)">
 			LibreSearch supports the same operators most search engines do, plus a system of
-			<a href="#bangs" class="text-[var(--app-accent)] hover:underline">bang shortcuts</a> for searching
+			<a href="#bangs" class="text-(--app-accent) hover:underline">bang shortcuts</a> for searching
 			other sites in one keystroke.
 		</p>
 
 		<!-- Operators -->
 		<h2 class="mt-12 text-xl font-semibold tracking-tight">Operators</h2>
 		<div
-			class="mt-6 overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)]"
+			class="mt-6 overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
 		>
 			<table class="w-full text-sm">
 				<thead
-					class="bg-[var(--app-hover)] text-left text-xs tracking-widest text-[var(--app-muted)] uppercase"
+					class="bg-(--app-hover) text-left text-xs tracking-widest text-(--app-muted) uppercase"
 				>
 					<tr>
 						<th class="px-5 py-3 font-semibold">Operator</th>
@@ -106,11 +106,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each operators as o}
-						<tr class="border-t border-[var(--app-border)]">
-							<td class="px-5 py-4 font-mono text-[var(--app-accent)]">{o.op}</td>
-							<td class="px-5 py-4 font-mono text-xs text-[var(--app-secondary)]">{o.example}</td>
-							<td class="px-5 py-4 leading-6 text-[var(--app-text)]">{o.desc}</td>
+					{#each operators as o, i (i)}
+						<tr class="border-t border-(--app-border)">
+							<td class="px-5 py-4 font-mono text-(--app-accent)">{o.op}</td>
+							<td class="px-5 py-4 font-mono text-xs text-(--app-secondary)">{o.example}</td>
+							<td class="px-5 py-4 leading-6 text-(--app-text)">{o.desc}</td>
 						</tr>
 					{/each}
 				</tbody>
@@ -119,19 +119,19 @@
 
 		<!-- Bangs -->
 		<h2 id="bangs" class="mt-14 text-xl font-semibold tracking-tight">Bang shortcuts</h2>
-		<p class="mt-3 text-sm leading-6 text-[var(--app-muted)]">
+		<p class="mt-3 text-sm leading-6 text-(--app-muted)">
 			Type a bang (e.g. <code
-				class="rounded bg-[var(--app-hover)] px-1.5 py-0.5 font-mono text-[var(--app-accent)]"
+				class="rounded bg-(--app-hover) px-1.5 py-0.5 font-mono text-(--app-accent)"
 				>!w turing machine</code
 			>) anywhere in your query to redirect the search to another site. Order doesn't matter — both
 			<code class="font-mono">!w turing</code> and <code class="font-mono">turing !w</code> work.
 		</p>
 		<div
-			class="mt-6 overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)]"
+			class="mt-6 overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
 		>
 			<table class="w-full text-sm">
 				<thead
-					class="bg-[var(--app-hover)] text-left text-xs tracking-widest text-[var(--app-muted)] uppercase"
+					class="bg-(--app-hover) text-left text-xs tracking-widest text-(--app-muted) uppercase"
 				>
 					<tr>
 						<th class="px-5 py-3 font-semibold">Bang</th>
@@ -139,10 +139,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each bangEntries as b}
-						<tr class="border-t border-[var(--app-border)]">
-							<td class="px-5 py-3 font-mono text-[var(--app-accent)]">!{b.key}</td>
-							<td class="px-5 py-3 text-[var(--app-text)]">{b.name}</td>
+					{#each bangEntries as b, i (i)}
+						<tr class="border-t border-(--app-border)">
+							<td class="px-5 py-3 font-mono text-(--app-accent)">!{b.key}</td>
+							<td class="px-5 py-3 text-(--app-text)">{b.name}</td>
 						</tr>
 					{/each}
 				</tbody>
@@ -152,9 +152,9 @@
 		<!-- Tips -->
 		<h2 class="mt-14 text-xl font-semibold tracking-tight">Tips</h2>
 		<ul class="mt-4 space-y-3">
-			{#each tips as t}
-				<li class="flex items-start gap-3 text-sm leading-6 text-[var(--app-text)]">
-					<i class="fa-solid fa-circle-info mt-1 text-[var(--app-accent)]"></i>
+			{#each tips as t, i (i)}
+				<li class="flex items-start gap-3 text-sm leading-6 text-(--app-text)">
+					<i class="fa-solid fa-circle-info mt-1 text-(--app-accent)"></i>
 					<span>{t}</span>
 				</li>
 			{/each}

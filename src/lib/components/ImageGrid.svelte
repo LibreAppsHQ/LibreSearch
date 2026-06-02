@@ -126,8 +126,8 @@
 		>
 			<div
 				class={selected === i
-					? 'overflow-hidden rounded-lg bg-[var(--app-surface)] ring-2 ring-[var(--app-accent)]'
-					: 'overflow-hidden rounded-lg bg-[var(--app-surface)]'}
+					? 'overflow-hidden rounded-lg bg-(--app-surface) ring-2 ring-(--app-accent)'
+					: 'overflow-hidden rounded-lg bg-(--app-surface)'}
 				style={`height:${ROW_HEIGHT}px;`}
 			>
 				<img
@@ -140,8 +140,8 @@
 					}}
 				/>
 			</div>
-			<p class="mt-2 truncate text-sm text-[var(--app-text)]">{image.title}</p>
-			<p class="truncate text-xs text-[var(--app-muted)]">{domain(image)}</p>
+			<p class="mt-2 truncate text-sm text-(--app-text)">{image.title}</p>
+			<p class="truncate text-xs text-(--app-muted)">{domain(image)}</p>
 		</button>
 
 		{#if active && selected !== null && i === rowEnd}
@@ -149,18 +149,18 @@
 			<div class="relative w-full basis-full">
 				<!-- Caret pointing up to the selected thumbnail -->
 				<i
-					class="fa-solid fa-chevron-up absolute -top-6 text-2xl text-[var(--app-accent)]"
+					class="fa-solid fa-chevron-up absolute -top-6 text-2xl text-(--app-accent)"
 					style={`left:${caretLeft}px;transform:translateX(-50%);`}
 				></i>
 
 				<div
-					class="relative rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-5"
+					class="relative rounded-2xl border border-(--app-border) bg-(--app-surface) p-5"
 				>
 					<button
 						type="button"
 						onclick={close}
 						aria-label="Close preview"
-						class="absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full text-[var(--app-muted)] transition hover:bg-[var(--app-hover)] hover:text-[var(--app-text)]"
+						class="absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
 					>
 						<i class="fa-solid fa-xmark"></i>
 					</button>
@@ -190,24 +190,24 @@
 								href={active.url}
 								target={openInNewTab ? '_blank' : '_self'}
 								rel="noreferrer noopener"
-								class="text-xl font-medium text-[var(--app-accent)] hover:underline"
+								class="text-xl font-medium text-(--app-accent) hover:underline"
 							>
 								{active.title}
 							</a>
-							<p class="mt-2 truncate text-sm text-[var(--app-muted)]">{active.url}</p>
+							<p class="mt-2 truncate text-sm text-(--app-muted)">{active.url}</p>
 
 							<a
 								href={active.url}
 								target={openInNewTab ? '_blank' : '_self'}
 								rel="noreferrer noopener"
-								class="mt-4 inline-flex items-center gap-2 text-sm text-[var(--app-accent)] hover:underline"
+								class="mt-4 inline-flex items-center gap-2 text-sm text-(--app-accent) hover:underline"
 							>
 								<i class="fa-solid fa-up-right-from-square text-xs"></i>
 								Visit {domain(active)}
 							</a>
 
 							{#if active.width && active.height}
-								<p class="mt-4 text-sm text-[var(--app-muted)]">
+								<p class="mt-4 text-sm text-(--app-muted)">
 									{active.width} × {active.height}
 								</p>
 							{/if}
@@ -217,7 +217,7 @@
 									href={active.imageUrl}
 									target="_blank"
 									rel="noreferrer noopener"
-									class="inline-flex items-center gap-2 rounded-full border border-[var(--app-border)] px-4 py-2 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+									class="inline-flex items-center gap-2 rounded-full border border-(--app-border) px-4 py-2 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
 								>
 									<i class="fa-solid fa-image text-xs"></i>
 									View image
@@ -225,7 +225,7 @@
 								<button
 									type="button"
 									onclick={copyUrl}
-									class="inline-flex items-center gap-2 rounded-full border border-[var(--app-border)] px-4 py-2 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+									class="inline-flex items-center gap-2 rounded-full border border-(--app-border) px-4 py-2 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
 								>
 									<i class="fa-solid {copied ? 'fa-check' : 'fa-copy'} text-xs"></i>
 									{copied ? 'Copied' : 'Copy URL'}
@@ -240,7 +240,7 @@
 							type="button"
 							onclick={() => step(-1)}
 							aria-label="Previous image"
-							class="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--app-border)] text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+							class="flex h-10 w-10 items-center justify-center rounded-full border border-(--app-border) text-(--app-text) transition hover:bg-(--app-hover)"
 						>
 							<i class="fa-solid fa-chevron-left text-xs"></i>
 						</button>
@@ -248,7 +248,7 @@
 							type="button"
 							onclick={() => step(1)}
 							aria-label="Next image"
-							class="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--app-border)] text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+							class="flex h-10 w-10 items-center justify-center rounded-full border border-(--app-border) text-(--app-text) transition hover:bg-(--app-hover)"
 						>
 							<i class="fa-solid fa-chevron-right text-xs"></i>
 						</button>

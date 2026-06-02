@@ -25,6 +25,7 @@
 			{ ids: ['block-ads', 'block-trackers'] },
 			{ ids: ['safe-search', 'filter-ads'] },
 			{ ids: ['strip-tracking', 'no-referrer'] },
+			{ ids: ['route-tor'] },
 			{ ids: ['request-method'] },
 			{ ids: ['save-history', 'history-retention'] },
 			{ ids: ['search-region'] }
@@ -157,12 +158,12 @@
 		onclick={() => handleToggle(id)}
 		class={checked
 			? 'relative h-6 w-11 shrink-0 rounded-full bg-[#2dd4bf] transition-colors'
-			: 'relative h-6 w-11 shrink-0 rounded-full bg-[var(--app-hover)] ring-1 ring-[var(--app-border)] transition-colors ring-inset'}
+			: 'relative h-6 w-11 shrink-0 rounded-full bg-(--app-hover) ring-1 ring-(--app-border) transition-colors ring-inset'}
 	>
 		<span
 			class={checked
 				? 'absolute top-0.5 left-0.5 h-5 w-5 translate-x-5 rounded-full bg-white shadow transition-transform'
-				: 'absolute top-0.5 left-0.5 h-5 w-5 translate-x-0 rounded-full bg-[var(--app-muted)] transition-transform'}
+				: 'absolute top-0.5 left-0.5 h-5 w-5 translate-x-0 rounded-full bg-(--app-muted) transition-transform'}
 		></span>
 	</button>
 {/snippet}
@@ -183,7 +184,7 @@
 	</div>
 
 	<!-- Underline tab bar (scroll anchors) -->
-	<div class="border-b border-[var(--app-border)] bg-[var(--app-background)]/95 backdrop-blur">
+	<div class="border-b border-(--app-border) bg-(--app-background)/95 backdrop-blur">
 		<div class="mx-auto w-full max-w-[1100px] px-4 sm:px-6">
 			<nav
 				class="-mb-px flex [scrollbar-width:none] items-center gap-7 overflow-x-auto [&::-webkit-scrollbar]:hidden"
@@ -193,8 +194,8 @@
 						type="button"
 						onclick={() => scrollToSection(section.id)}
 						class={activeSection === section.id
-							? 'shrink-0 border-b-2 border-[var(--app-accent)] py-3 text-sm font-semibold text-[var(--app-text)]'
-							: 'shrink-0 border-b-2 border-transparent py-3 text-sm font-medium text-[var(--app-muted)] transition hover:text-[var(--app-text)]'}
+							? 'shrink-0 border-b-2 border-(--app-accent) py-3 text-sm font-semibold text-(--app-text)'
+							: 'shrink-0 border-b-2 border-transparent py-3 text-sm font-medium text-(--app-muted) transition hover:text-(--app-text)'}
 					>
 						{section.label}
 					</button>
@@ -204,7 +205,7 @@
 	</div>
 </header>
 
-<main class="min-h-screen bg-[var(--app-background)] text-[var(--app-text)]">
+<main class="min-h-screen bg-(--app-background) text-(--app-text)">
 	<div class="mx-auto w-full max-w-[1100px] px-4 py-10 pb-32 sm:px-6">
 		<div class="flex flex-col gap-12 lg:flex-row lg:items-start">
 			<!-- Left: stacked sections -->
@@ -265,7 +266,7 @@
 						{/if}
 
 						<div
-							class="divide-y divide-[var(--app-border)] overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)]"
+							class="divide-y divide-(--app-border) overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
 						>
 							{#each categoryGroups[section.id] as group, gi (gi)}
 								{#each group.ids as id (id)}
@@ -273,10 +274,10 @@
 									{#if setting}
 										<div class="flex items-center justify-between gap-8 px-5 py-4">
 											<div class="min-w-0 space-y-0.5">
-												<p class="text-[15px] font-semibold text-[var(--app-text)]">
+												<p class="text-[15px] font-semibold text-(--app-text)">
 													{setting.name}
 												</p>
-												<p class="text-sm leading-5 text-[var(--app-muted)]">
+												<p class="text-sm leading-5 text-(--app-muted)">
 													{setting.description}
 												</p>
 											</div>
@@ -295,7 +296,7 @@
 								{/each}
 
 								{#if gi < categoryGroups[section.id].length - 1}
-									<div class="border-t border-[var(--app-border)]"></div>
+									<div class="border-t border-(--app-border)"></div>
 								{/if}
 							{/each}
 						</div>
@@ -310,14 +311,14 @@
 					onclick={save}
 					disabled={!isDirty}
 					class={isDirty
-						? 'w-full rounded-lg bg-[var(--app-accent)] px-5 py-2.5 text-sm font-semibold text-[#111111] transition hover:opacity-90'
-						: 'w-full cursor-default rounded-lg bg-[var(--app-accent)]/40 px-5 py-2.5 text-sm font-semibold text-[#111111]/70'}
+						? 'w-full rounded-lg bg-(--app-accent) px-5 py-2.5 text-sm font-semibold text-[#111111] transition hover:opacity-90'
+						: 'w-full cursor-default rounded-lg bg-(--app-accent)/40 px-5 py-2.5 text-sm font-semibold text-[#111111]/70'}
 				>
 					{savedFeedback ? 'Settings saved ✓' : 'Save your settings'}
 				</button>
 
-				<p class="mt-4 text-sm leading-6 text-[var(--app-muted)]">
-					This saves your settings <span class="font-semibold text-[var(--app-text)]"
+				<p class="mt-4 text-sm leading-6 text-(--app-muted)">
+					This saves your settings <span class="font-semibold text-(--app-text)"
 						>locally in your browser</span
 					>. LibreSearch never stores them on a server, and nothing is tied to your identity.
 				</p>
@@ -326,22 +327,22 @@
 					<button
 						type="button"
 						onclick={discard}
-						class="mt-3 text-sm text-[var(--app-muted)] underline-offset-2 transition hover:text-[var(--app-text)] hover:underline"
+						class="mt-3 text-sm text-(--app-muted) underline-offset-2 transition hover:text-(--app-text) hover:underline"
 					>
 						Discard changes
 					</button>
 				{/if}
 
-				<hr class="my-6 border-[var(--app-border)]" />
+				<hr class="my-6 border-(--app-border)" />
 
-				<p class="mb-3 text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
+				<p class="mb-3 text-xs font-semibold tracking-widest text-(--app-muted) uppercase">
 					Back up your settings
 				</p>
 				<div class="space-y-2">
 					<button
 						type="button"
 						onclick={exportSettings}
-						class="flex w-full items-center gap-2 rounded-lg border border-[var(--app-border)] px-4 py-2 text-sm text-[var(--app-muted)] transition hover:bg-[var(--app-hover)] hover:text-[var(--app-text)]"
+						class="flex w-full items-center gap-2 rounded-lg border border-(--app-border) px-4 py-2 text-sm text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
 					>
 						<i class="fa-solid fa-download text-xs"></i>
 						Export settings
@@ -349,7 +350,7 @@
 					<button
 						type="button"
 						onclick={triggerImport}
-						class="flex w-full items-center gap-2 rounded-lg border border-[var(--app-border)] px-4 py-2 text-sm text-[var(--app-muted)] transition hover:bg-[var(--app-hover)] hover:text-[var(--app-text)]"
+						class="flex w-full items-center gap-2 rounded-lg border border-(--app-border) px-4 py-2 text-sm text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
 					>
 						<i class="fa-solid fa-upload text-xs"></i>
 						Import settings

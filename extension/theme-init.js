@@ -9,7 +9,7 @@
 		}
 		document.documentElement.dataset.theme = t;
 		document.documentElement.style.colorScheme = t === 'light' || t === 'sand' ? 'light' : 'dark';
-	} catch (e) {
+	} catch {
 		/* localStorage blocked - fall back to the default dark theme */
 	}
 })();

@@ -224,6 +224,15 @@ const defaultSettings: Setting[] = [
 		]
 	},
 	{
+		id: 'ai-answers',
+		name: 'AI answers',
+		description:
+			'Show a short AI-written summary above web results. When on, your query and the top result snippets are sent to our AI provider to generate the answer. Off by default.',
+		category: 'privacy',
+		type: 'toggle',
+		checked: false
+	},
+	{
 		id: 'filter-ads',
 		name: 'Filter sponsored results',
 		description: 'Hide promoted and ad-labelled results from the page.',
@@ -243,6 +252,15 @@ const defaultSettings: Setting[] = [
 		id: 'no-referrer',
 		name: 'Hide referrer on clicks',
 		description: "Don't tell sites you came from LibreSearch when you open a result.",
+		category: 'privacy',
+		type: 'toggle',
+		checked: false
+	},
+	{
+		id: 'route-tor',
+		name: 'Route searches through Tor',
+		description:
+			'Send search and suggestion requests to the upstream providers over the Tor network, hiding the server’s IP. Requires a reachable Tor proxy on the server; falls back to a direct connection if unavailable.',
 		category: 'privacy',
 		type: 'toggle',
 		checked: false
@@ -290,15 +308,42 @@ const defaultSettings: Setting[] = [
 		value: '',
 		options: [
 			{ label: 'All regions', value: '' },
-			{ label: 'United States', value: 'US' },
-			{ label: 'United Kingdom', value: 'GB' },
-			{ label: 'Canada', value: 'CA' },
+			{ label: 'Argentina', value: 'AR' },
 			{ label: 'Australia', value: 'AU' },
-			{ label: 'Germany', value: 'DE' },
+			{ label: 'Austria', value: 'AT' },
+			{ label: 'Belgium', value: 'BE' },
+			{ label: 'Brazil', value: 'BR' },
+			{ label: 'Canada', value: 'CA' },
+			{ label: 'Chile', value: 'CL' },
+			{ label: 'China', value: 'CN' },
+			{ label: 'Denmark', value: 'DK' },
+			{ label: 'Finland', value: 'FI' },
 			{ label: 'France', value: 'FR' },
-			{ label: 'Japan', value: 'JP' },
+			{ label: 'Germany', value: 'DE' },
+			{ label: 'Hong Kong', value: 'HK' },
 			{ label: 'India', value: 'IN' },
-			{ label: 'Brazil', value: 'BR' }
+			{ label: 'Indonesia', value: 'ID' },
+			{ label: 'Italy', value: 'IT' },
+			{ label: 'Japan', value: 'JP' },
+			{ label: 'Malaysia', value: 'MY' },
+			{ label: 'Mexico', value: 'MX' },
+			{ label: 'Netherlands', value: 'NL' },
+			{ label: 'New Zealand', value: 'NZ' },
+			{ label: 'Norway', value: 'NO' },
+			{ label: 'Philippines', value: 'PH' },
+			{ label: 'Poland', value: 'PL' },
+			{ label: 'Portugal', value: 'PT' },
+			{ label: 'Russia', value: 'RU' },
+			{ label: 'Saudi Arabia', value: 'SA' },
+			{ label: 'South Africa', value: 'ZA' },
+			{ label: 'South Korea', value: 'KR' },
+			{ label: 'Spain', value: 'ES' },
+			{ label: 'Sweden', value: 'SE' },
+			{ label: 'Switzerland', value: 'CH' },
+			{ label: 'Taiwan', value: 'TW' },
+			{ label: 'Turkey', value: 'TR' },
+			{ label: 'United Kingdom', value: 'GB' },
+			{ label: 'United States', value: 'US' }
 		]
 	}
 ];

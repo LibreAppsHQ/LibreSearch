@@ -8,6 +8,8 @@
 	import Logo from '$lib/components/Logo.svelte';
 	import ResultsList from '$lib/components/ResultsList.svelte';
 	import InstantAnswer from '$lib/components/InstantAnswer.svelte';
+	import StockAnswer from '$lib/components/StockAnswer.svelte';
+	import AiAnswer from '$lib/components/AiAnswer.svelte';
 	import SearchTabs from '$lib/components/SearchTabs.svelte';
 	import Infobox from '$lib/components/Infobox.svelte';
 	import NewsResultItem from '$lib/components/NewsResultItem.svelte';
@@ -80,6 +82,8 @@
 		getSelect($settingsStore, 'safe-search', 'moderate') as 'strict' | 'moderate' | 'low'
 	);
 	let instantAnswers = $derived(getToggle($settingsStore, 'instant-answers', true));
+	// Opt-in: AI answers are off unless the user enables them in settings.
+	let aiAnswers = $derived(getToggle($settingsStore, 'ai-answers', false));
 
 	// Show skeletons while a search navigation is in flight so stale results
 	// aren't left frozen on screen during the server round-trip.
@@ -87,6 +91,9 @@
 		navigating.to?.url.pathname === '/search' && !!navigating.to?.url.searchParams.get('q')
 	);
 	let loadingTab = $derived((navigating.to?.url.searchParams.get('t') as typeof data.tab) || 'web');
+
+	// Filter controls (region/safe-search/time) are hidden behind the sliders toggle.
+	let showFilters = $state(false);
 
 	const freshnessLabels: Record<string, string> = {
 		pd: 'Past day',
@@ -97,15 +104,42 @@
 
 	const regionOptions = [
 		{ label: 'All regions', value: '' },
-		{ label: 'United States', value: 'US' },
-		{ label: 'United Kingdom', value: 'GB' },
-		{ label: 'Canada', value: 'CA' },
+		{ label: 'Argentina', value: 'AR' },
 		{ label: 'Australia', value: 'AU' },
-		{ label: 'Germany', value: 'DE' },
+		{ label: 'Austria', value: 'AT' },
+		{ label: 'Belgium', value: 'BE' },
+		{ label: 'Brazil', value: 'BR' },
+		{ label: 'Canada', value: 'CA' },
+		{ label: 'Chile', value: 'CL' },
+		{ label: 'China', value: 'CN' },
+		{ label: 'Denmark', value: 'DK' },
+		{ label: 'Finland', value: 'FI' },
 		{ label: 'France', value: 'FR' },
-		{ label: 'Japan', value: 'JP' },
+		{ label: 'Germany', value: 'DE' },
+		{ label: 'Hong Kong', value: 'HK' },
 		{ label: 'India', value: 'IN' },
-		{ label: 'Brazil', value: 'BR' }
+		{ label: 'Indonesia', value: 'ID' },
+		{ label: 'Italy', value: 'IT' },
+		{ label: 'Japan', value: 'JP' },
+		{ label: 'Malaysia', value: 'MY' },
+		{ label: 'Mexico', value: 'MX' },
+		{ label: 'Netherlands', value: 'NL' },
+		{ label: 'New Zealand', value: 'NZ' },
+		{ label: 'Norway', value: 'NO' },
+		{ label: 'Philippines', value: 'PH' },
+		{ label: 'Poland', value: 'PL' },
+		{ label: 'Portugal', value: 'PT' },
+		{ label: 'Russia', value: 'RU' },
+		{ label: 'Saudi Arabia', value: 'SA' },
+		{ label: 'South Africa', value: 'ZA' },
+		{ label: 'South Korea', value: 'KR' },
+		{ label: 'Spain', value: 'ES' },
+		{ label: 'Sweden', value: 'SE' },
+		{ label: 'Switzerland', value: 'CH' },
+		{ label: 'Taiwan', value: 'TW' },
+		{ label: 'Turkey', value: 'TR' },
+		{ label: 'United Kingdom', value: 'GB' },
+		{ label: 'United States', value: 'US' }
 	];
 
 	const timeOptions = [
@@ -128,6 +162,7 @@
 		if (data.freshness) params.set('f', data.freshness);
 		if (data.safe !== 'moderate') params.set('safe', data.safe);
 		if (data.region) params.set('region', data.region);
+		if (getToggle($settingsStore, 'route-tor', false)) params.set('tor', '1');
 		for (const [k, v] of Object.entries(overrides)) {
 			if (v === undefined || v === '') params.delete(k);
 			else params.set(k, v);
@@ -192,10 +227,10 @@
 	<meta name="robots" content="noindex, noarchive, nofollow" />
 </svelte:head>
 
-<main class="min-h-screen bg-[var(--app-background)] text-[var(--app-text)]">
+<main class="min-h-screen bg-(--app-background) text-(--app-text)">
 	<!-- Sticky header -->
 	<header
-		class="sticky top-0 z-20 border-b border-[var(--app-border)] bg-[var(--app-background)]/95 backdrop-blur"
+		class="sticky top-0 z-20 border-b border-(--app-border) bg-(--app-background)/95 backdrop-blur"
 	>
 		<div class="mx-auto w-full max-w-[1400px] px-4 sm:px-6">
 			<div class="flex items-center gap-4 py-3 sm:gap-6">
@@ -216,7 +251,7 @@
 				</div>
 				<a
 					href="/privacy"
-					class="hidden shrink-0 items-center gap-2 rounded-full bg-[var(--app-elevated)] px-4 py-2.5 text-sm font-medium text-[var(--app-secondary)] transition hover:opacity-90 md:inline-flex"
+					class="hidden shrink-0 items-center gap-2 rounded-full bg-(--app-elevated) px-4 py-2.5 text-sm font-medium text-(--app-secondary) transition hover:opacity-90 md:inline-flex"
 				>
 					<i class="fa-solid fa-shield-halved text-emerald-400"></i>
 					Private Search
@@ -231,7 +266,13 @@
 				<div
 					class="min-w-0 flex-1 [scrollbar-width:none] overflow-x-auto [&::-webkit-scrollbar]:hidden"
 				>
-					<SearchTabs current={data.tab} query={data.query} freshness={data.freshness} />
+					<SearchTabs
+						current={data.tab}
+						query={data.query}
+						freshness={data.freshness}
+						filtersOpen={showFilters}
+						ontogglefilters={() => (showFilters = !showFilters)}
+					/>
 				</div>
 			</div>
 		</div>
@@ -245,7 +286,7 @@
 	{:else}
 		<div class="mx-auto w-full max-w-[1200px] px-4 pt-5 pb-16 sm:px-6 sm:pr-6">
 			<!-- Filters row -->
-			{#if data.query}
+			{#if data.query && showFilters}
 				<div class="mb-5 flex flex-wrap items-center gap-3">
 					<CustomSelect
 						value={data.region ?? ''}
@@ -272,13 +313,13 @@
 			{/if}
 
 			{#if data.freshness && data.query}
-				<p class="mb-4 max-w-2xl text-xs text-[var(--app-muted)]">
-					Filtered: <span class="text-[var(--app-text)]">{freshnessLabels[data.freshness]}</span>
+				<p class="mb-4 max-w-2xl text-xs text-(--app-muted)">
+					Filtered: <span class="text-(--app-text)">{freshnessLabels[data.freshness]}</span>
 					·
 					<button
 						type="button"
 						onclick={() => navigate({ f: undefined })}
-						class="text-[var(--app-accent)] hover:underline">Clear</button
+						class="text-(--app-accent) hover:underline">Clear</button
 					>
 				</p>
 			{/if}
@@ -301,10 +342,14 @@
 						<SearchSkeleton tab={loadingTab} />
 					{:else if data.tab === 'web'}
 						{#if instantAnswers}
+							<StockAnswer query={data.query} />
 							<InstantAnswer query={data.query} />
 						{/if}
+						{#if aiAnswers && data.query}
+							<AiAnswer query={data.query} tab={data.tab} />
+						{/if}
 						{#if allResults.length > 0}
-							<p class="mb-3 text-xs font-medium text-[var(--app-muted)]">
+							<p class="mb-3 text-xs font-medium text-(--app-muted)">
 								Web results{currentPage > 1 ? ` · page ${currentPage}` : ''}
 							</p>
 							<ResultsList results={allResults} />
@@ -316,21 +361,21 @@
 											type="button"
 											aria-label="Previous page"
 											onclick={() => goToPage(currentPage - 1)}
-											class="flex h-11 items-center justify-center rounded-full bg-[var(--app-surface)] px-5 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+											class="flex h-11 items-center justify-center rounded-full bg-(--app-surface) px-5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
 										>
 											Prev
 										</button>
 									{/if}
 
-									{#each pageNumbers as p}
+									{#each pageNumbers as p, i (i)}
 										<button
 											type="button"
 											aria-label={`Page ${p}`}
 											aria-current={p === currentPage ? 'page' : undefined}
 											onclick={() => goToPage(p)}
 											class={p === currentPage
-												? 'flex h-11 w-11 items-center justify-center rounded-full bg-[var(--app-accent)] text-sm font-semibold text-[#111] transition'
-												: 'flex h-11 w-11 items-center justify-center rounded-full bg-[var(--app-surface)] text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]'}
+												? 'flex h-11 w-11 items-center justify-center rounded-full bg-(--app-accent) text-sm font-semibold text-[#111] transition'
+												: 'flex h-11 w-11 items-center justify-center rounded-full bg-(--app-surface) text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)'}
 										>
 											{p}
 										</button>
@@ -341,7 +386,7 @@
 											type="button"
 											aria-label="Next page"
 											onclick={() => goToPage(currentPage + 1)}
-											class="flex h-11 items-center justify-center rounded-full bg-[var(--app-surface)] px-6 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+											class="flex h-11 items-center justify-center rounded-full bg-(--app-surface) px-6 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
 										>
 											Next
 										</button>
@@ -351,12 +396,12 @@
 						{:else if data.query && !data.error}
 							<NoResults query={data.query} tab="web" />
 						{:else if !data.query}
-							<p class="text-sm text-[var(--app-muted)]">Search for something to begin.</p>
+							<p class="text-sm text-(--app-muted)">Search for something to begin.</p>
 						{/if}
 					{:else if data.tab === 'news'}
 						{#if data.newsResults && data.newsResults.length > 0}
 							<ol class="space-y-2">
-								{#each data.newsResults as result}
+								{#each data.newsResults as result (result.url)}
 									<li><NewsResultItem {result} /></li>
 								{/each}
 							</ol>
@@ -366,7 +411,7 @@
 					{:else if data.tab === 'videos'}
 						{#if data.videoResults && data.videoResults.length > 0}
 							<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-								{#each data.videoResults as result}
+								{#each data.videoResults as result (result.url)}
 									<VideoResultItem {result} onselect={(v) => (activeVideo = v)} />
 								{/each}
 							</div>
@@ -382,7 +427,7 @@
 						{/if}
 					{:else if data.tab === 'shopping'}
 						{#if allResults.length > 0}
-							<p class="mb-3 text-xs font-medium text-[var(--app-muted)]">Shopping results</p>
+							<p class="mb-3 text-xs font-medium text-(--app-muted)">Shopping results</p>
 							<ResultsList results={allResults} />
 						{:else if data.query && !data.error}
 							<NoResults query={data.query} tab="shopping" />

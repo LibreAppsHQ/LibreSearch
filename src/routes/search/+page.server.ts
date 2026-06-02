@@ -115,6 +115,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 	const filterAds = get('filterads') === '1';
 	const blockAds = get('blockads') === '1';
 	const blockTrackers = get('blocktrackers') === '1';
+	const useTor = get('tor') === '1';
 
 	const apiParams = new URLSearchParams({ q: query, t: tab });
 	// Brave's `offset` is a page index (skips offset × count results), max 9.
@@ -126,6 +127,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 	if (blockAds) apiParams.set('blockads', '1');
 	if (blockTrackers) apiParams.set('blocktrackers', '1');
 	if (enableCache) apiParams.set('enablecache', '1');
+	if (useTor) apiParams.set('tor', '1');
 	if (count !== 10) apiParams.set('count', String(count));
 
 	try {

@@ -185,13 +185,13 @@
 	<meta property="og:url" content="https://libresearch.ca/status" />
 </svelte:head>
 
-<header class="sticky top-0 z-20 bg-[var(--app-background)]">
+<header class="sticky top-0 z-20 bg-(--app-background)">
 	<div class="mx-auto w-full max-w-[1400px] px-6">
 		<div class="grid grid-cols-[1fr_auto_1fr] items-center py-5">
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-[var(--app-text)]">
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
 				Status
 			</p>
 			<SiteMenu class="justify-self-end" />
@@ -199,13 +199,13 @@
 	</div>
 </header>
 
-<main class="bg-[var(--app-background)] text-[var(--app-text)]">
+<main class="bg-(--app-background) text-(--app-text)">
 	<section class="mx-auto w-full max-w-[900px] px-6 py-12 sm:py-16">
 		<!-- Overall banner -->
 		<div
 			class="flex flex-col items-start gap-4 rounded-2xl border p-6 ring-1 sm:flex-row sm:items-center sm:justify-between {toneClasses[
 				overallCopy.tone
-			].bg} {toneClasses[overallCopy.tone].ring} border-[var(--app-border)]"
+			].bg} {toneClasses[overallCopy.tone].ring} border-(--app-border)"
 		>
 			<div class="flex items-center gap-4">
 				<div
@@ -221,7 +221,7 @@
 				</div>
 				<div>
 					<h1 class="text-xl font-bold tracking-tight">{overallCopy.title}</h1>
-					<p class="mt-1 text-xs text-[var(--app-muted)]">
+					<p class="mt-1 text-xs text-(--app-muted)">
 						Last checked {lastCheckedLabel} · auto-refresh every 60s
 					</p>
 				</div>
@@ -230,7 +230,7 @@
 				type="button"
 				onclick={runChecks}
 				disabled={checking}
-				class="inline-flex items-center gap-2 rounded-xl border border-[var(--app-border)] bg-[var(--app-surface)] px-4 py-2 text-xs text-[var(--app-text)] transition hover:bg-[var(--app-hover)] disabled:opacity-60"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-2 text-xs text-(--app-text) transition hover:bg-(--app-hover) disabled:opacity-60"
 			>
 				<i class="fa-solid fa-rotate {checking ? 'fa-spin' : ''}"></i>
 				{checking ? 'Checking' : 'Refresh now'}
@@ -239,12 +239,12 @@
 
 		<!-- Per-service rows -->
 		<div
-			class="mt-8 overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)]"
+			class="mt-8 overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
 		>
-			{#each checks as c, i}
+			{#each checks as c, i (i)}
 				<div
 					class="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between {i > 0
-						? 'border-t border-[var(--app-border)]'
+						? 'border-t border-(--app-border)'
 						: ''}"
 				>
 					<div class="flex items-center gap-4">
@@ -254,13 +254,13 @@
 							class:animate-pulse={c.status === 'pending'}
 						></span>
 						<div>
-							<p class="text-base font-semibold text-[var(--app-text)]">{c.name}</p>
-							<p class="mt-0.5 text-xs leading-5 text-[var(--app-muted)]">{c.desc}</p>
+							<p class="text-base font-semibold text-(--app-text)">{c.name}</p>
+							<p class="mt-0.5 text-xs leading-5 text-(--app-muted)">{c.desc}</p>
 						</div>
 					</div>
 					<div class="flex items-center gap-4 pl-7 sm:pl-0">
 						{#if c.latencyMs !== null}
-							<span class="font-mono text-xs text-[var(--app-muted)] tabular-nums">
+							<span class="font-mono text-xs text-(--app-muted) tabular-nums">
 								{c.latencyMs} ms
 							</span>
 						{/if}
@@ -279,10 +279,10 @@
 		<!-- Notes -->
 		<div class="mt-10 grid gap-4 sm:grid-cols-2">
 			<div
-				class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-5 text-sm leading-6 text-[var(--app-muted)]"
+				class="rounded-2xl border border-(--app-border) bg-(--app-surface) p-5 text-sm leading-6 text-(--app-muted)"
 			>
-				<div class="mb-2 flex items-center gap-2 text-[var(--app-text)]">
-					<i class="fa-solid fa-circle-info text-[var(--app-accent)]"></i>
+				<div class="mb-2 flex items-center gap-2 text-(--app-text)">
+					<i class="fa-solid fa-circle-info text-(--app-accent)"></i>
 					<span class="font-semibold">About these checks</span>
 				</div>
 				<p>
@@ -292,9 +292,9 @@
 				</p>
 			</div>
 			<div
-				class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-5 text-sm leading-6 text-[var(--app-muted)]"
+				class="rounded-2xl border border-(--app-border) bg-(--app-surface) p-5 text-sm leading-6 text-(--app-muted)"
 			>
-				<div class="mb-2 flex items-center gap-2 text-[var(--app-text)]">
+				<div class="mb-2 flex items-center gap-2 text-(--app-text)">
 					<i class="fa-solid fa-triangle-exclamation text-amber-400"></i>
 					<span class="font-semibold">Report an incident</span>
 				</div>
@@ -304,14 +304,14 @@
 						href="https://github.com/Arcbasehq/LibreSearch/issues"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="text-[var(--app-accent)] hover:underline">GitHub issues</a
+						class="text-(--app-accent) hover:underline">GitHub issues</a
 					>
-					tracker or via <a href="/contact" class="text-[var(--app-accent)] hover:underline">/contact</a>.
+					tracker or via <a href="/contact" class="text-(--app-accent) hover:underline">/contact</a>.
 				</p>
 			</div>
 		</div>
 
-		<p class="mt-8 text-xs text-[var(--app-muted)]">
+		<p class="mt-8 text-xs text-(--app-muted)">
 			Historic uptime data isn't tracked here yet. A dedicated status host (e.g.
 			status.libresearch.ca) is on the roadmap.
 		</p>

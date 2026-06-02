@@ -21,11 +21,11 @@
 
 {#if show}
 	<div class="leading-none tabular-nums select-none" aria-label="Current date and time">
-		<div class="text-5xl font-bold tracking-tight text-[var(--app-text)] sm:text-6xl">
+		<div class="text-5xl font-bold tracking-tight text-(--app-text) sm:text-6xl">
 			{timeLabel}
 		</div>
 		{#if showDate}
-			<div class="mt-2 text-base font-medium text-[var(--app-muted)] sm:text-lg">
+			<div class="mt-2 text-base font-medium text-(--app-muted) sm:text-lg">
 				{dateLabel}
 			</div>
 		{/if}

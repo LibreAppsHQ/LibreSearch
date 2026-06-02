@@ -27,31 +27,31 @@
 
 <div class="animate-fade-in mx-auto max-w-md py-14 text-center">
 	<div
-		class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[var(--app-surface)] text-[var(--app-muted)]"
+		class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-(--app-surface) text-(--app-muted)"
 	>
 		<i class="fa-solid fa-magnifying-glass text-xl"></i>
 	</div>
 
-	<h2 class="mt-5 text-lg font-semibold text-[var(--app-text)]">
+	<h2 class="mt-5 text-lg font-semibold text-(--app-text)">
 		No {tabMeta[tab].label.toLowerCase()} results{query ? ` for "${query}"` : ''}
 	</h2>
 
-	<ul class="mt-3 space-y-1 text-sm text-[var(--app-muted)]">
+	<ul class="mt-3 space-y-1 text-sm text-(--app-muted)">
 		<li>Check your spelling, or try different keywords.</li>
 		<li>Use fewer or more general terms.</li>
 	</ul>
 
 	<div class="mt-6">
-		<p class="mb-2.5 text-xs font-medium tracking-wide text-[var(--app-muted)] uppercase">
+		<p class="mb-2.5 text-xs font-medium tracking-wide text-(--app-muted) uppercase">
 			Try this search in
 		</p>
 		<div class="flex flex-wrap justify-center gap-2">
-			{#each others as t}
+			{#each others as t, i (i)}
 				<a
 					href={urlFor(t)}
-					class="inline-flex items-center gap-2 rounded-full border border-[var(--app-border)] bg-[var(--app-surface)] px-4 py-1.5 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+					class="inline-flex items-center gap-2 rounded-full border border-(--app-border) bg-(--app-surface) px-4 py-1.5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
 				>
-					<i class="fa-solid {tabMeta[t].icon} text-xs text-[var(--app-muted)]"></i>
+					<i class="fa-solid {tabMeta[t].icon} text-xs text-(--app-muted)"></i>
 					{tabMeta[t].label}
 				</a>
 			{/each}

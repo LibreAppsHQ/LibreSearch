@@ -75,13 +75,13 @@
 	<meta property="og:url" content="https://libresearch.ca/trust" />
 </svelte:head>
 
-<header class="sticky top-0 z-20 bg-[var(--app-background)]">
+<header class="sticky top-0 z-20 bg-(--app-background)">
 	<div class="mx-auto w-full max-w-[1400px] px-6">
 		<div class="grid grid-cols-[1fr_auto_1fr] items-center py-5">
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-[var(--app-text)]">
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
 				Trust Center
 			</p>
 			<SiteMenu class="justify-self-end" />
@@ -89,9 +89,9 @@
 	</div>
 </header>
 
-<main class="bg-[var(--app-background)] text-[var(--app-text)]">
+<main class="bg-(--app-background) text-(--app-text)">
 	<section class="mx-auto w-full max-w-[1000px] px-6 py-12 sm:py-16">
-		<p class="text-sm text-[var(--app-muted)]">
+		<p class="text-sm text-(--app-muted)">
 			This page is the long-form answer to "what does LibreSearch actually do with my data?" Short
 			answer: as little as physically possible.
 		</p>
@@ -99,15 +99,15 @@
 		<!-- Principles -->
 		<h2 class="mt-12 text-xl font-semibold tracking-tight">Principles</h2>
 		<div class="mt-6 grid gap-4 sm:grid-cols-2">
-			{#each principles as p}
-				<div class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6">
+			{#each principles as p, i (i)}
+				<div class="rounded-2xl border border-(--app-border) bg-(--app-surface) p-6">
 					<div
-						class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--app-accent)]/15 text-[var(--app-accent)]"
+						class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-(--app-accent)/15 text-(--app-accent)"
 					>
 						<i class="fa-solid {p.icon}"></i>
 					</div>
 					<h3 class="text-base font-semibold">{p.title}</h3>
-					<p class="mt-2 text-sm leading-6 text-[var(--app-muted)]">{p.desc}</p>
+					<p class="mt-2 text-sm leading-6 text-(--app-muted)">{p.desc}</p>
 				</div>
 			{/each}
 		</div>
@@ -115,40 +115,40 @@
 		<!-- Facts table -->
 		<h2 class="mt-14 text-xl font-semibold tracking-tight">At a glance</h2>
 		<dl
-			class="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-border)] sm:grid-cols-2"
+			class="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-border) sm:grid-cols-2"
 		>
-			{#each facts as f}
-				<div class="bg-[var(--app-surface)] p-5">
-					<dt class="text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase">
+			{#each facts as f, i (i)}
+				<div class="bg-(--app-surface) p-5">
+					<dt class="text-xs font-semibold tracking-widest text-(--app-muted) uppercase">
 						{f.label}
 					</dt>
-					<dd class="mt-1 text-sm text-[var(--app-text)]">{f.value}</dd>
+					<dd class="mt-1 text-sm text-(--app-text)">{f.value}</dd>
 				</div>
 			{/each}
 		</dl>
 
 		<!-- Sub-processors -->
 		<h2 class="mt-14 text-xl font-semibold tracking-tight">Sub-processors</h2>
-		<p class="mt-3 text-sm leading-6 text-[var(--app-muted)]">
+		<p class="mt-3 text-sm leading-6 text-(--app-muted)">
 			Third parties that may process data on our behalf. We keep this list as short as we can.
 		</p>
 		<div class="mt-6 space-y-4">
-			{#each subProcessors as s}
-				<div class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6">
+			{#each subProcessors as s, i (i)}
+				<div class="rounded-2xl border border-(--app-border) bg-(--app-surface) p-6">
 					<div class="flex flex-wrap items-baseline justify-between gap-3">
 						<h3 class="text-base font-semibold">{s.name}</h3>
 						<a
 							href={s.url}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="text-xs text-[var(--app-accent)] hover:underline"
+							class="text-xs text-(--app-accent) hover:underline"
 						>
 							Privacy policy <i class="fa-solid fa-up-right-from-square ml-1"></i>
 						</a>
 					</div>
-					<p class="mt-1 text-xs text-[var(--app-muted)]">{s.role}</p>
-					<p class="mt-3 text-sm leading-6 text-[var(--app-text)]">{s.data}</p>
-					<p class="mt-2 text-xs text-[var(--app-muted)]">
+					<p class="mt-1 text-xs text-(--app-muted)">{s.role}</p>
+					<p class="mt-3 text-sm leading-6 text-(--app-text)">{s.data}</p>
+					<p class="mt-2 text-xs text-(--app-muted)">
 						<i class="fa-solid fa-location-dot mr-1"></i>
 						{s.region}
 					</p>
@@ -160,21 +160,21 @@
 		<div class="mt-14 flex flex-wrap gap-3">
 			<a
 				href="/privacy"
-				class="inline-flex items-center gap-2 rounded-xl border border-[var(--app-border)] bg-[var(--app-surface)] px-4 py-2 text-sm text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-2 text-sm text-(--app-text) transition hover:bg-(--app-hover)"
 			>
 				<i class="fa-solid fa-shield-halved"></i>
 				Privacy policy
 			</a>
 			<a
 				href="/transparency"
-				class="inline-flex items-center gap-2 rounded-xl border border-[var(--app-border)] bg-[var(--app-surface)] px-4 py-2 text-sm text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-2 text-sm text-(--app-text) transition hover:bg-(--app-hover)"
 			>
 				<i class="fa-solid fa-file-contract"></i>
 				Transparency report
 			</a>
 			<a
 				href="/contact"
-				class="inline-flex items-center gap-2 rounded-xl border border-[var(--app-border)] bg-[var(--app-surface)] px-4 py-2 text-sm text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-2 text-sm text-(--app-text) transition hover:bg-(--app-hover)"
 			>
 				<i class="fa-solid fa-envelope"></i>
 				Contact us

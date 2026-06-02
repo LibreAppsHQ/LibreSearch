@@ -67,13 +67,13 @@
 	<meta property="og:url" content="https://libresearch.ca/transparency" />
 </svelte:head>
 
-<header class="sticky top-0 z-20 bg-[var(--app-background)]">
+<header class="sticky top-0 z-20 bg-(--app-background)">
 	<div class="mx-auto w-full max-w-[1400px] px-6">
 		<div class="grid grid-cols-[1fr_auto_1fr] items-center py-5">
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-[var(--app-text)]">
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
 				Transparency
 			</p>
 			<SiteMenu class="justify-self-end" />
@@ -81,30 +81,30 @@
 	</div>
 </header>
 
-<main class="bg-[var(--app-background)] text-[var(--app-text)]">
+<main class="bg-(--app-background) text-(--app-text)">
 	<section class="mx-auto w-full max-w-[900px] px-6 py-12 sm:py-16">
-		<p class="text-sm text-[var(--app-muted)]">
+		<p class="text-sm text-(--app-muted)">
 			This page is updated semi-annually with every legal demand, takedown notice, and voluntary
 			disclosure we receive. If we ever stop publishing it, assume the worst and ask why.
 		</p>
 
-		{#each reports as r}
+		{#each reports as r, i (i)}
 			<section class="mt-12">
 				<h2 class="text-xl font-semibold tracking-tight">{r.period}</h2>
-				<p class="mt-2 text-sm leading-6 text-[var(--app-text)]">{r.summary}</p>
+				<p class="mt-2 text-sm leading-6 text-(--app-text)">{r.summary}</p>
 
 				<div
-					class="mt-6 grid gap-px overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-border)] sm:grid-cols-2"
+					class="mt-6 grid gap-px overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-border) sm:grid-cols-2"
 				>
-					{#each r.stats as s}
-						<div class="bg-[var(--app-surface)] p-5">
+					{#each r.stats as s, i (i)}
+						<div class="bg-(--app-surface) p-5">
 							<div class="flex items-baseline gap-3">
-								<span class="text-3xl font-bold tracking-tight text-[var(--app-accent)]"
+								<span class="text-3xl font-bold tracking-tight text-(--app-accent)"
 									>{s.value}</span
 								>
-								<span class="text-sm font-medium text-[var(--app-text)]">{s.label}</span>
+								<span class="text-sm font-medium text-(--app-text)">{s.label}</span>
 							</div>
-							<p class="mt-2 text-xs leading-5 text-[var(--app-muted)]">{s.desc}</p>
+							<p class="mt-2 text-xs leading-5 text-(--app-muted)">{s.desc}</p>
 						</div>
 					{/each}
 				</div>
@@ -114,10 +114,10 @@
 		<!-- Policy -->
 		<h2 class="mt-14 text-xl font-semibold tracking-tight">How we respond to requests</h2>
 		<ol class="mt-4 space-y-3">
-			{#each policy as p, i}
-				<li class="flex items-start gap-3 text-sm leading-6 text-[var(--app-text)]">
+			{#each policy as p, i (i)}
+				<li class="flex items-start gap-3 text-sm leading-6 text-(--app-text)">
 					<span
-						class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--app-accent)]/15 text-xs font-semibold text-[var(--app-accent)]"
+						class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-(--app-accent)/15 text-xs font-semibold text-(--app-accent)"
 						>{i + 1}</span
 					>
 					<span>{p}</span>
@@ -125,9 +125,9 @@
 			{/each}
 		</ol>
 
-		<p class="mt-10 text-xs text-[var(--app-muted)]">
+		<p class="mt-10 text-xs text-(--app-muted)">
 			If you are a journalist or researcher and have questions about a specific number, write to
-			<a href="/contact" class="text-[var(--app-accent)] hover:underline">/contact</a>.
+			<a href="/contact" class="text-(--app-accent) hover:underline">/contact</a>.
 		</p>
 	</section>
 

@@ -9,8 +9,8 @@
 </script>
 
 <ol class={compact ? 'space-y-0' : 'space-y-2'}>
-	{#each results as result, i}
-		<li class="animate-slide-up" style="animation-delay:{i * 25}ms; animation-fill-mode:both;">
+	{#each results as result (result.url)}
+		<li>
 			<ResultItem {result} />
 		</li>
 	{/each}

@@ -86,20 +86,20 @@
 
 {#if visible && deferred}
 	<div
-		class="fixed right-4 bottom-4 z-40 flex w-[calc(100%-2rem)] max-w-sm items-center gap-4 rounded-2xl border border-[var(--app-border)] bg-[var(--app-background)]/95 p-4 shadow-2xl shadow-black/40 backdrop-blur-md animate-slide-up"
+		class="fixed right-4 bottom-4 z-40 flex w-[calc(100%-2rem)] max-w-sm items-center gap-4 rounded-2xl border border-(--app-border) bg-(--app-background)/95 p-4 shadow-2xl shadow-black/40 backdrop-blur-md animate-slide-up"
 		role="dialog"
 		aria-labelledby="install-prompt-title"
 	>
 		<div
-			class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--app-accent)]/15 text-[var(--app-accent)]"
+			class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-(--app-accent)/15 text-(--app-accent)"
 		>
 			<i class="fa-solid fa-download text-lg"></i>
 		</div>
 		<div class="min-w-0 flex-1">
-			<p id="install-prompt-title" class="text-sm font-semibold text-[var(--app-text)]">
+			<p id="install-prompt-title" class="text-sm font-semibold text-(--app-text)">
 				Install LibreSearch
 			</p>
-			<p class="mt-0.5 text-xs leading-5 text-[var(--app-muted)]">
+			<p class="mt-0.5 text-xs leading-5 text-(--app-muted)">
 				Add it to your home screen for one-tap, full-screen access.
 			</p>
 		</div>
@@ -108,7 +108,7 @@
 				type="button"
 				onclick={install}
 				disabled={installing}
-				class="rounded-lg bg-[var(--app-accent)] px-3 py-1.5 text-xs font-semibold text-[#0d1019] transition hover:opacity-90 disabled:opacity-60"
+				class="rounded-lg bg-(--app-accent) px-3 py-1.5 text-xs font-semibold text-[#0d1019] transition hover:opacity-90 disabled:opacity-60"
 			>
 				{installing ? 'Installing…' : 'Install'}
 			</button>
@@ -116,7 +116,7 @@
 				type="button"
 				onclick={dismiss}
 				aria-label="Dismiss install prompt"
-				class="rounded-lg p-1.5 text-[var(--app-muted)] transition hover:bg-[var(--app-hover)] hover:text-[var(--app-text)]"
+				class="rounded-lg p-1.5 text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
 			>
 				<i class="fa-solid fa-xmark text-sm"></i>
 			</button>

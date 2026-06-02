@@ -59,7 +59,7 @@
 	aria-label="Wipe — delete all history, settings, and data"
 	title="Delete everything"
 	onclick={swirl}
-	class="group inline-flex h-10 w-10 items-center justify-center rounded-lg text-[var(--app-text)] transition hover:bg-[var(--app-hover)] {triggerClass}"
+	class="group inline-flex h-10 w-10 items-center justify-center rounded-lg text-(--app-text) transition hover:bg-(--app-hover) {triggerClass}"
 >
 	<i
 		class="fa-solid fa-rotate text-xl transition group-hover:text-cyan-500 {swirling

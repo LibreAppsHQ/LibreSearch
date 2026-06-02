@@ -67,43 +67,43 @@
 
 <div class="mx-auto flex max-w-md flex-col items-center py-16 text-center">
 	<div
-		class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--app-accent)]/15 text-[var(--app-accent)]"
+		class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-(--app-accent)/15 text-(--app-accent)"
 	>
 		<i class="fa-solid fa-shield-halved text-2xl"></i>
 	</div>
 
-	<h1 class="text-xl font-semibold text-[var(--app-text)]">Quick security check</h1>
-	<p class="mt-2 text-sm leading-6 text-[var(--app-muted)]">
+	<h1 class="text-xl font-semibold text-(--app-text)">Quick security check</h1>
+	<p class="mt-2 text-sm leading-6 text-(--app-muted)">
 		We noticed unusual activity from your connection. Your browser is solving a quick puzzle to
 		confirm you're human — no clicks, no tracking, and nothing leaves your device.
 	</p>
 
 	<div
-		class="mt-6 flex w-full items-center justify-center gap-3 rounded-xl border border-[var(--app-border)] bg-[var(--app-surface)] px-5 py-4"
+		class="mt-6 flex w-full items-center justify-center gap-3 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-4"
 	>
 		{#if state === 'solving'}
-			<i class="fa-solid fa-spinner fa-spin text-[var(--app-accent)]"></i>
-			<span class="text-sm text-[var(--app-text)]">Verifying you're human…</span>
+			<i class="fa-solid fa-spinner fa-spin text-(--app-accent)"></i>
+			<span class="text-sm text-(--app-text)">Verifying you're human…</span>
 		{:else if state === 'verifying'}
-			<i class="fa-solid fa-spinner fa-spin text-[var(--app-accent)]"></i>
-			<span class="text-sm text-[var(--app-text)]">Confirming…</span>
+			<i class="fa-solid fa-spinner fa-spin text-(--app-accent)"></i>
+			<span class="text-sm text-(--app-text)">Confirming…</span>
 		{:else if state === 'done'}
 			<i class="fa-solid fa-circle-check text-emerald-400"></i>
-			<span class="text-sm text-[var(--app-text)]">Verified — loading your results…</span>
+			<span class="text-sm text-(--app-text)">Verified — loading your results…</span>
 		{:else}
 			<i class="fa-solid fa-triangle-exclamation text-rose-400"></i>
-			<span class="text-sm text-[var(--app-text)]">Verification failed.</span>
+			<span class="text-sm text-(--app-text)">Verification failed.</span>
 			<button
 				type="button"
 				onclick={run}
-				class="ml-2 rounded-lg bg-[var(--app-accent)] px-3 py-1 text-xs font-semibold text-[#111111] transition hover:opacity-90"
+				class="ml-2 rounded-lg bg-(--app-accent) px-3 py-1 text-xs font-semibold text-[#111111] transition hover:opacity-90"
 			>
 				Try again
 			</button>
 		{/if}
 	</div>
 
-	<p class="mt-4 text-xs text-[var(--app-muted)]">
+	<p class="mt-4 text-xs text-(--app-muted)">
 		Protected by ALTCHA · privacy-friendly, no CAPTCHA images
 	</p>
 </div>

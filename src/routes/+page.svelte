@@ -137,7 +137,7 @@
 	})}</script>`}
 </svelte:head>
 
-<main class="relative flex min-h-screen flex-col bg-[var(--app-background)] text-[var(--app-text)]">
+<main class="relative flex min-h-screen flex-col bg-(--app-background) text-(--app-text)">
 	<div class="absolute top-6 left-6 z-30">
 		<Clock />
 	</div>
@@ -152,7 +152,7 @@
 			<a href="/" class="inline-flex items-center gap-2.5" aria-label="LibreSearch home">
 				<Logo class="h-24 w-auto max-w-full sm:h-28" />
 			</a>
-			<h1 class="mt-3 text-base text-[var(--app-text)] sm:text-lg">
+			<h1 class="mt-3 text-base text-(--app-text) sm:text-lg">
 				Find anything. Tracked by no one.
 			</h1>
 
@@ -172,7 +172,7 @@
 		<a
 			href="#without-tracking"
 			aria-label="Scroll down"
-			class="absolute bottom-8 left-1/2 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border border-[var(--app-accent)] text-[var(--app-accent)] transition hover:bg-[var(--app-accent)]/10"
+			class="absolute bottom-8 left-1/2 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border border-(--app-accent) text-(--app-accent) transition hover:bg-(--app-accent)/10"
 		>
 			<i class="fas fa-chevron-down"></i>
 		</a>
@@ -253,9 +253,9 @@
 		<nav
 			class="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-white/90"
 		>
-			<a href="/privacy" class="transition hover:text-[var(--app-accent)]">Privacy Policy</a>
-			<a href="/about" class="transition hover:text-[var(--app-accent)]">About Us</a>
-			<a href="/press" class="transition hover:text-[var(--app-accent)]">Press</a>
+			<a href="/privacy" class="transition hover:text-(--app-accent)">Privacy Policy</a>
+			<a href="/about" class="transition hover:text-(--app-accent)">About Us</a>
+			<a href="/press" class="transition hover:text-(--app-accent)">Press</a>
 		</nav>
 	</footer>
 </main>

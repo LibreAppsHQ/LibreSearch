@@ -12,13 +12,25 @@ import {
 	type PlaceResult,
 	type SearchTab
 } from '$lib/search';
+import { getRedis } from './kv';
+import { consumeTokenBucket, type TokenBucketState } from './ratelimit';
+import { getTorFetch } from './tor';
 
 const RATE_LIMIT_BUCKET_CAPACITY = 20;
 const RATE_LIMIT_REFILL_INTERVAL_MS = 5_000;
 const RATE_LIMIT_STATE_TTL_MS = 5 * 60_000;
+// Redis-backed limiter uses an equivalent fixed window: at most CAPACITY requests
+// per (CAPACITY * REFILL_INTERVAL) burst window, shared across all instances.
+const RATE_LIMIT_WINDOW_MS = RATE_LIMIT_BUCKET_CAPACITY * RATE_LIMIT_REFILL_INTERVAL_MS;
 const REQUEST_TIMEOUT_MS = 8_000;
+// Soft TTL: results are served from cache without revalidation until this elapses.
 const CACHE_TTL_MS = 5 * 60_000;
+// Hard TTL: how long a stale entry may still be served (stale-while-revalidate
+// and stale-if-error) before it is dropped entirely.
+const CACHE_HARD_TTL_MS = 60 * 60_000;
 const CACHE_MAX_ENTRIES = 500;
+const REDIS_CACHE_PREFIX = 'search:';
+const REDIS_RATELIMIT_PREFIX = 'ratelimit:';
 
 // Tabs backed directly by a Brave Search endpoint. `shopping` reuses the web
 // endpoint; `maps` is served by Nominatim instead (see geocodePlaces).
@@ -31,18 +43,94 @@ const BRAVE_ENDPOINTS: Record<BraveEndpointTab, string> = {
 	images: 'https://api.search.brave.com/res/v1/images/search'
 };
 
+// Shopping has no dedicated Brave endpoint. We bias the query toward retail
+// intent so Brave returns store/product pages instead of articles, then rank
+// known shopping domains to the top so the tab feels like product search.
+const SHOPPING_QUERY_HINT = 'buy price for sale';
+const SHOPPING_DOMAINS = [
+	'amazon.',
+	'ebay.',
+	'etsy.',
+	'walmart.',
+	'target.',
+	'bestbuy.',
+	'newegg.',
+	'aliexpress.',
+	'wayfair.',
+	'homedepot.',
+	'lowes.',
+	'costco.',
+	'ikea.',
+	'shopify.',
+	'shop.',
+	'store.',
+	'macys.',
+	'nordstrom.',
+	'overstock.',
+	'rakuten.'
+];
+
+function shoppingRank(url: string): number {
+	let host: string;
+	try {
+		host = new URL(url).hostname.toLowerCase();
+	} catch {
+		return 1;
+	}
+	return SHOPPING_DOMAINS.some((d) => host.includes(d)) ? 0 : 1;
+}
+
 const NOMINATIM_ENDPOINT = 'https://nominatim.openstreetmap.org/search';
 
-type RateLimitState = {
-	tokens: number;
-	lastRefillAt: number;
-	updatedAt: number;
-};
+const rateLimitBuckets = new Map<string, TokenBucketState>();
 
-const rateLimitBuckets = new Map<string, RateLimitState>();
+// A cache envelope tracks two horizons: `staleAt` (after which we revalidate in
+// the background) and the hard expiry enforced by `expiresAt` / the Redis TTL.
+type CacheEnvelope = { response: SearchResponse; staleAt: number; storedAt: number };
+type LocalCacheEntry = { envelope: CacheEnvelope; expiresAt: number };
+const searchCache = new Map<string, LocalCacheEntry>();
 
-type CacheEntry = { response: SearchResponse; expiresAt: number };
-const searchCache = new Map<string, CacheEntry>();
+async function cacheGet(key: string): Promise<CacheEnvelope | null> {
+	const redis = getRedis();
+	if (redis) {
+		const hit = await redis.get<CacheEnvelope>(`${REDIS_CACHE_PREFIX}${key}`);
+		return hit ?? null;
+	}
+
+	const entry = searchCache.get(key);
+	if (!entry) return null;
+	if (entry.expiresAt <= Date.now()) {
+		searchCache.delete(key);
+		return null;
+	}
+	return entry.envelope;
+}
+
+async function cacheSet(key: string, envelope: CacheEnvelope): Promise<void> {
+	const redis = getRedis();
+	if (redis) {
+		await redis.set(`${REDIS_CACHE_PREFIX}${key}`, envelope, { px: CACHE_HARD_TTL_MS });
+		return;
+	}
+
+	// Hard size cap: evict the oldest entries first. Map preserves insertion order,
+	// so the first key is the oldest.
+	while (searchCache.size >= CACHE_MAX_ENTRIES) {
+		const oldestKey = searchCache.keys().next().value;
+		if (oldestKey === undefined) break;
+		searchCache.delete(oldestKey);
+	}
+	searchCache.set(key, { envelope, expiresAt: envelope.storedAt + CACHE_HARD_TTL_MS });
+}
+
+/** Run a best-effort background task, tied to the platform's waitUntil when available. */
+function scheduleBackground(
+	task: () => Promise<unknown>,
+	waitUntil?: (promise: Promise<unknown>) => void
+): void {
+	const settled = task().catch(() => {});
+	if (waitUntil) waitUntil(settled);
+}
 
 function makeCacheKey(
 	query: string,
@@ -377,45 +465,49 @@ function pruneRateLimitBuckets(now: number): void {
 	}
 }
 
-/** Reset a client's rate-limit bucket — used after they solve a challenge. */
-export function clearRateLimit(identifier: string): void {
+type RateLimitResult = { allowed: boolean; retryAfterSeconds: number };
+
+/** Reset a client's rate-limit budget — used after they solve a challenge. */
+export async function clearRateLimit(identifier: string): Promise<void> {
+	const redis = getRedis();
+	if (redis) {
+		await redis.del(`${REDIS_RATELIMIT_PREFIX}${identifier}`);
+		return;
+	}
 	rateLimitBuckets.delete(identifier);
 }
 
-export function consumeRateLimit(identifier: string): {
-	allowed: boolean;
-	retryAfterSeconds: number;
-} {
+export async function consumeRateLimit(identifier: string): Promise<RateLimitResult> {
+	const redis = getRedis();
+	if (redis) return consumeRateLimitRedis(redis, identifier);
+
 	const now = Date.now();
 	pruneRateLimitBuckets(now);
+	const decision = consumeTokenBucket(
+		rateLimitBuckets.get(identifier),
+		{ capacity: RATE_LIMIT_BUCKET_CAPACITY, refillIntervalMs: RATE_LIMIT_REFILL_INTERVAL_MS },
+		now
+	);
+	rateLimitBuckets.set(identifier, decision.state);
+	return { allowed: decision.allowed, retryAfterSeconds: decision.retryAfterSeconds };
+}
 
-	const existing = rateLimitBuckets.get(identifier) ?? {
-		tokens: RATE_LIMIT_BUCKET_CAPACITY,
-		lastRefillAt: now,
-		updatedAt: now
-	};
+// Distributed fixed-window limiter: one INCR per request, with the window TTL set
+// when the counter is first created. Shared across all serverless instances.
+async function consumeRateLimitRedis(
+	redis: NonNullable<ReturnType<typeof getRedis>>,
+	identifier: string
+): Promise<RateLimitResult> {
+	const key = `${REDIS_RATELIMIT_PREFIX}${identifier}`;
+	const count = await redis.incr(key);
+	if (count === 1) await redis.pexpire(key, RATE_LIMIT_WINDOW_MS);
 
-	const elapsed = now - existing.lastRefillAt;
-	const refillTokens = Math.floor(elapsed / RATE_LIMIT_REFILL_INTERVAL_MS);
-
-	if (refillTokens > 0) {
-		existing.tokens = Math.min(RATE_LIMIT_BUCKET_CAPACITY, existing.tokens + refillTokens);
-		existing.lastRefillAt += refillTokens * RATE_LIMIT_REFILL_INTERVAL_MS;
-	}
-
-	existing.updatedAt = now;
-
-	if (existing.tokens <= 0) {
-		rateLimitBuckets.set(identifier, existing);
-		const retryAfterSeconds = Math.max(
-			1,
-			Math.ceil((RATE_LIMIT_REFILL_INTERVAL_MS - (now - existing.lastRefillAt)) / 1000)
-		);
+	if (count > RATE_LIMIT_BUCKET_CAPACITY) {
+		const ttl = await redis.pttl(key);
+		const retryAfterSeconds = Math.max(1, Math.ceil((ttl > 0 ? ttl : RATE_LIMIT_WINDOW_MS) / 1000));
 		return { allowed: false, retryAfterSeconds };
 	}
 
-	existing.tokens -= 1;
-	rateLimitBuckets.set(identifier, existing);
 	return { allowed: true, retryAfterSeconds: 0 };
 }
 
@@ -478,7 +570,45 @@ function isBlockedDomain(url: string, blocklist: Set<string>): boolean {
 	}
 }
 
-const VALID_COUNTRIES = new Set(['US', 'GB', 'CA', 'AU', 'DE', 'FR', 'JP', 'IN', 'BR']);
+// The full set of country codes Brave Search accepts for the `country` param.
+const VALID_COUNTRIES = new Set([
+	'AR',
+	'AU',
+	'AT',
+	'BE',
+	'BR',
+	'CA',
+	'CL',
+	'DK',
+	'FI',
+	'FR',
+	'DE',
+	'HK',
+	'IN',
+	'ID',
+	'IT',
+	'JP',
+	'KR',
+	'MY',
+	'MX',
+	'NL',
+	'NZ',
+	'NO',
+	'CN',
+	'PL',
+	'PT',
+	'PH',
+	'RU',
+	'SA',
+	'ZA',
+	'ES',
+	'SE',
+	'CH',
+	'TW',
+	'TR',
+	'GB',
+	'US'
+]);
 
 function getBraveSearchUrl(
 	query: string,
@@ -489,10 +619,12 @@ function getBraveSearchUrl(
 	country?: string,
 	count = 10
 ): URL {
-	// Shopping has no dedicated Brave endpoint — it runs against web search.
+	// Shopping has no dedicated Brave endpoint — it runs against web search, but
+	// with a retail-intent hint appended so results lean toward stores/products.
 	const endpointTab: BraveEndpointTab = tab === 'shopping' ? 'web' : (tab as BraveEndpointTab);
 	const searchUrl = new URL(BRAVE_ENDPOINTS[endpointTab]);
-	searchUrl.searchParams.set('q', query);
+	const effectiveQuery = tab === 'shopping' ? `${query} ${SHOPPING_QUERY_HINT}` : query;
+	searchUrl.searchParams.set('q', effectiveQuery);
 	// Brave caps `count` at 20 for web/news/videos, but up to 100 for images.
 	const maxCount = endpointTab === 'images' ? 100 : 20;
 	searchUrl.searchParams.set('count', String(Math.min(Math.max(count, 1), maxCount)));
@@ -563,7 +695,8 @@ async function fetchBraveSearch(
 				: '';
 
 		if (tab === 'shopping') {
-			// Shopping reuses the web endpoint; surface its results under the shopping tab.
+			// Shopping runs against the web endpoint with a retail-biased query, then
+			// promotes known shopping domains so the tab surfaces stores, not articles.
 			const rawWeb =
 				isRecord(payload) && isRecord(payload.web) && Array.isArray(payload.web.results)
 					? payload.web.results
@@ -578,9 +711,14 @@ async function fetchBraveSearch(
 						!blockTrackers || !isRecord(r) || !isBlockedDomain(String(r.url ?? ''), TRACKER_DOMAINS)
 				)
 				.map(normalizeWebResult)
-				.filter((r): r is SearchResult => r !== null);
+				.filter((r): r is SearchResult => r !== null)
+				// Stable sort: retail domains first, original order preserved within groups.
+				.map((r, i) => ({ r, i }))
+				.sort((a, b) => shoppingRank(a.r.url) - shoppingRank(b.r.url) || a.i - b.i)
+				.map(({ r }) => r);
 
-			return { query: queryValue || query, tab: 'shopping', results };
+			// Echo the user's original query, not the retail-hinted one sent to Brave.
+			return { query, tab: 'shopping', results };
 		}
 
 		if (tab === 'web') {
@@ -681,7 +819,9 @@ export async function searchBrave(
 		blockAds?: boolean;
 		blockTrackers?: boolean;
 		useCache?: boolean;
+		useTor?: boolean;
 		count?: number;
+		waitUntil?: (promise: Promise<unknown>) => void;
 	} = {},
 	fetchImpl: typeof fetch = fetch
 ): Promise<SearchResponse> {
@@ -700,6 +840,26 @@ export async function searchBrave(
 	} = options;
 	const count = Math.min(Math.max(options.count ?? 10, 1), tab === 'images' ? 100 : 20);
 
+	// When Tor is requested, swap in a SOCKS5-dispatched fetch. If no proxy is
+	// configured the helper returns null and we fall back to the direct fetch, so
+	// search keeps working (just not anonymised).
+	const effectiveFetch = options.useTor ? (getTorFetch() ?? fetchImpl) : fetchImpl;
+
+	const runFetch = () =>
+		fetchBraveSearch(
+			normalizedQuery,
+			tab,
+			safesearch,
+			offset,
+			freshness,
+			effectiveFetch,
+			country,
+			filterAds,
+			blockAds,
+			blockTrackers,
+			count
+		);
+
 	if (options.useCache) {
 		const key = makeCacheKey(
 			normalizedQuery,
@@ -713,52 +873,33 @@ export async function searchBrave(
 			blockTrackers,
 			count
 		);
-		const now = Date.now();
+		const cached = await cacheGet(key);
 
-		// Return cached entry if still fresh
-		const cached = searchCache.get(key);
-		if (cached && cached.expiresAt > now) return cached.response;
+		if (cached) {
+			// Fresh enough — serve directly.
+			if (Date.now() < cached.staleAt) return cached.response;
 
-		// Evict all stale entries
-		for (const [k, v] of searchCache) {
-			if (v.expiresAt <= now) searchCache.delete(k);
+			// Stale but usable: serve immediately and refresh in the background
+			// (stale-while-revalidate). A failed refresh leaves the stale entry in
+			// place until its hard TTL, which doubles as stale-if-error behaviour.
+			scheduleBackground(async () => {
+				const fresh = await runFetch();
+				await cacheSet(key, {
+					response: fresh,
+					staleAt: Date.now() + CACHE_TTL_MS,
+					storedAt: Date.now()
+				});
+			}, options.waitUntil);
+
+			return cached.response;
 		}
 
-		const result = await fetchBraveSearch(
-			normalizedQuery,
-			tab,
-			safesearch,
-			offset,
-			freshness,
-			fetchImpl,
-			country,
-			filterAds,
-			blockAds,
-			blockTrackers,
-			count
-		);
-		// Hard size cap: evict the oldest entries first if we're full. Map iteration
-		// preserves insertion order, so the first key is the oldest.
-		while (searchCache.size >= CACHE_MAX_ENTRIES) {
-			const oldestKey = searchCache.keys().next().value;
-			if (oldestKey === undefined) break;
-			searchCache.delete(oldestKey);
-		}
-		searchCache.set(key, { response: result, expiresAt: now + CACHE_TTL_MS });
+		// Cold cache: fetch synchronously and store before returning.
+		const result = await runFetch();
+		const storedAt = Date.now();
+		await cacheSet(key, { response: result, staleAt: storedAt + CACHE_TTL_MS, storedAt });
 		return result;
 	}
 
-	return await fetchBraveSearch(
-		normalizedQuery,
-		tab,
-		safesearch,
-		offset,
-		freshness,
-		fetchImpl,
-		country,
-		filterAds,
-		blockAds,
-		blockTrackers,
-		count
-	);
+	return await runFetch();
 }

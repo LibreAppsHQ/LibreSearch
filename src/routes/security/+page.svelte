@@ -38,13 +38,13 @@
 	<meta property="og:url" content="https://libresearch.ca/security" />
 </svelte:head>
 
-<header class="sticky top-0 z-20 bg-[var(--app-background)]">
+<header class="sticky top-0 z-20 bg-(--app-background)">
 	<div class="mx-auto w-full max-w-[1400px] px-6">
 		<div class="grid grid-cols-[1fr_auto_1fr] items-center py-5">
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-[var(--app-text)]">
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
 				Security
 			</p>
 			<SiteMenu class="justify-self-end" />
@@ -52,22 +52,22 @@
 	</div>
 </header>
 
-<main class="bg-[var(--app-background)] text-[var(--app-text)]">
+<main class="bg-(--app-background) text-(--app-text)">
 	<section class="mx-auto w-full max-w-[900px] px-6 py-12 sm:py-16">
 		<h1 class="text-3xl font-bold tracking-tight sm:text-4xl">Reporting a vulnerability</h1>
-		<p class="mt-4 text-base leading-7 text-[var(--app-muted)]">
+		<p class="mt-4 text-base leading-7 text-(--app-muted)">
 			Found something? We want to hear from you. Send a detailed report — including steps to
 			reproduce and impact — via
-			<a class="text-[var(--app-accent)] hover:underline" href="/contact">/contact</a> and pick "Security
+			<a class="text-(--app-accent) hover:underline" href="/contact">/contact</a> and pick "Security
 			disclosure" as the subject. We'll reply with a secure channel for follow-up if the report warrants
 			one.
 		</p>
 
 		<div
-			class="mt-8 rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6 text-sm leading-7"
+			class="mt-8 rounded-2xl border border-(--app-border) bg-(--app-surface) p-6 text-sm leading-7"
 		>
-			<p class="font-semibold text-[var(--app-text)]">What to expect</p>
-			<ul class="mt-3 list-inside list-disc text-[var(--app-muted)]">
+			<p class="font-semibold text-(--app-text)">What to expect</p>
+			<ul class="mt-3 list-inside list-disc text-(--app-muted)">
 				<li>Acknowledgement within 72 hours</li>
 				<li>Triage and severity assessment within 7 days</li>
 				<li>Status updates at least every 14 days until resolution</li>
@@ -76,8 +76,8 @@
 		</div>
 
 		<h2 class="mt-14 text-xl font-semibold tracking-tight">In scope</h2>
-		<ul class="mt-4 space-y-2 text-sm leading-6 text-[var(--app-text)]">
-			{#each inScope as item}
+		<ul class="mt-4 space-y-2 text-sm leading-6 text-(--app-text)">
+			{#each inScope as item, i (i)}
 				<li class="flex items-start gap-2">
 					<i class="fa-solid fa-check mt-1 text-emerald-400"></i>
 					<span>{item}</span>
@@ -86,8 +86,8 @@
 		</ul>
 
 		<h2 class="mt-10 text-xl font-semibold tracking-tight">Out of scope</h2>
-		<ul class="mt-4 space-y-2 text-sm leading-6 text-[var(--app-text)]">
-			{#each outOfScope as item}
+		<ul class="mt-4 space-y-2 text-sm leading-6 text-(--app-text)">
+			{#each outOfScope as item, i (i)}
 				<li class="flex items-start gap-2">
 					<i class="fa-solid fa-xmark mt-1 text-rose-400"></i>
 					<span>{item}</span>
@@ -96,14 +96,14 @@
 		</ul>
 
 		<h2 class="mt-10 text-xl font-semibold tracking-tight">Safe harbour</h2>
-		<p class="mt-3 text-sm leading-6 text-[var(--app-muted)]">
+		<p class="mt-3 text-sm leading-6 text-(--app-muted)">
 			We will not pursue legal action against researchers who follow these guidelines:
 		</p>
 		<ol class="mt-4 space-y-3">
-			{#each safeHarbor as item, i}
-				<li class="flex items-start gap-3 text-sm leading-6 text-[var(--app-text)]">
+			{#each safeHarbor as item, i (i)}
+				<li class="flex items-start gap-3 text-sm leading-6 text-(--app-text)">
 					<span
-						class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--app-accent)]/15 text-xs font-semibold text-[var(--app-accent)]"
+						class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-(--app-accent)/15 text-xs font-semibold text-(--app-accent)"
 						>{i + 1}</span
 					>
 					<span>{item}</span>
@@ -112,15 +112,15 @@
 		</ol>
 
 		<h2 id="hall-of-fame" class="mt-14 text-xl font-semibold tracking-tight">Hall of fame</h2>
-		<p class="mt-3 text-sm leading-6 text-[var(--app-muted)]">
+		<p class="mt-3 text-sm leading-6 text-(--app-muted)">
 			Researchers who have responsibly disclosed issues. Want to be the first? File via
-			<a class="text-[var(--app-accent)] hover:underline" href="/contact">/contact</a>.
+			<a class="text-(--app-accent) hover:underline" href="/contact">/contact</a>.
 		</p>
-		<p class="mt-6 text-sm text-[var(--app-muted)] italic">No reports yet. Be the first.</p>
+		<p class="mt-6 text-sm text-(--app-muted) italic">No reports yet. Be the first.</p>
 
-		<p class="mt-10 text-xs text-[var(--app-muted)]">
+		<p class="mt-10 text-xs text-(--app-muted)">
 			Machine-readable contact info:
-			<a class="text-[var(--app-accent)] hover:underline" href="/.well-known/security.txt"
+			<a class="text-(--app-accent) hover:underline" href="/.well-known/security.txt"
 				>/.well-known/security.txt</a
 			>
 			(RFC 9116).

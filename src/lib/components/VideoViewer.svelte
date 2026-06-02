@@ -93,7 +93,7 @@
 	<!-- Panel -->
 	<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
 	<div
-		class="relative w-full max-w-3xl overflow-hidden rounded-2xl bg-[var(--app-background)] shadow-2xl shadow-black/60"
+		class="relative w-full max-w-3xl overflow-hidden rounded-2xl bg-(--app-background) shadow-2xl shadow-black/60"
 		onclick={(e) => e.stopPropagation()}
 	>
 		<!-- Close -->
@@ -120,7 +120,7 @@
 				></iframe>
 			</div>
 			<div class="flex items-center justify-between gap-4 px-5 py-3">
-				<p class="min-w-0 truncate text-sm font-medium text-[var(--app-text)]">{video.title}</p>
+				<p class="min-w-0 truncate text-sm font-medium text-(--app-text)">{video.title}</p>
 				<div class="flex shrink-0 items-center gap-3">
 					<span class="flex items-center gap-1 text-xs text-emerald-500">
 						<i class="fa-solid fa-shield-halved text-[10px]"></i>
@@ -129,7 +129,7 @@
 					<button
 						type="button"
 						onclick={watchOnSite}
-						class="text-xs text-[var(--app-muted)] transition hover:text-[var(--app-text)]"
+						class="text-xs text-(--app-muted) transition hover:text-(--app-text)"
 					>
 						Watch on {site}
 						<i class="fa-solid fa-arrow-up-right-from-square ml-0.5 text-[10px]"></i>
@@ -181,14 +181,14 @@
 					<button
 						type="button"
 						onclick={() => (watching = true)}
-						class="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--app-accent)] px-5 py-3 text-sm font-semibold text-[#111111] transition hover:opacity-90"
+						class="flex flex-1 items-center justify-center gap-2 rounded-xl bg-(--app-accent) px-5 py-3 text-sm font-semibold text-[#111111] transition hover:opacity-90"
 					>
 						<i class="fa-solid fa-play text-xs"></i>
 						Watch here
 					</button>
 				{:else}
 					<div
-						class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[var(--app-border)] px-5 py-3 text-sm text-[var(--app-muted)]"
+						class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-(--app-border) px-5 py-3 text-sm text-(--app-muted)"
 					>
 						<i class="fa-solid fa-circle-info text-xs"></i>
 						Can't embed this video
@@ -197,7 +197,7 @@
 				<button
 					type="button"
 					onclick={watchOnSite}
-					class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[var(--app-border)] bg-[var(--app-surface)] px-5 py-3 text-sm font-medium text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+					class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
 				>
 					<i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
 					Watch on {site}

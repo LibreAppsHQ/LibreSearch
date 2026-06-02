@@ -6,7 +6,12 @@ declare global {
 		// interface Locals {}
 		// interface PageData {}
 		// interface PageState {}
-		// interface Platform {}
+		interface Platform {
+			// Vercel exposes waitUntil() for background work via platform.context.
+			context?: {
+				waitUntil(promise: Promise<unknown>): void;
+			};
+		}
 	}
 }
 

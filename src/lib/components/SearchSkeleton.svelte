@@ -15,13 +15,13 @@
 
 	{#if tab === 'images'}
 		<div class="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
-			{#each grid as _}
+			{#each grid as _, i (i)}
 				<div class="skeleton aspect-square w-full rounded-xl"></div>
 			{/each}
 		</div>
 	{:else if tab === 'videos'}
 		<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-			{#each grid.slice(0, 6) as _}
+			{#each grid.slice(0, 6) as _, i (i)}
 				<div class="space-y-2">
 					<div class="skeleton aspect-video w-full rounded-xl"></div>
 					<div class="skeleton h-4 w-11/12 rounded"></div>
@@ -32,8 +32,8 @@
 	{:else if tab === 'maps'}
 		<div class="grid gap-6 lg:grid-cols-[minmax(0,360px)_1fr]">
 			<ol class="order-2 space-y-1.5 lg:order-1">
-				{#each rows as _}
-					<li class="space-y-2 rounded-xl bg-[var(--app-surface)] p-3.5">
+				{#each rows as _, i (i)}
+					<li class="space-y-2 rounded-xl bg-(--app-surface) p-3.5">
 						<div class="skeleton h-4 w-2/3 rounded"></div>
 						<div class="skeleton h-3 w-full rounded"></div>
 					</li>
@@ -43,7 +43,7 @@
 		</div>
 	{:else if tab === 'news'}
 		<ol class="space-y-4">
-			{#each rows as _}
+			{#each rows as _, i (i)}
 				<li class="flex gap-4">
 					<div class="skeleton h-[72px] w-28 shrink-0 rounded-xl"></div>
 					<div class="flex-1 space-y-2 py-1">
@@ -56,7 +56,7 @@
 		</ol>
 	{:else}
 		<ol class="space-y-6">
-			{#each rows as _}
+			{#each rows as _, i (i)}
 				<li class="space-y-2">
 					<div class="flex items-center gap-2.5">
 						<div class="skeleton h-7 w-7 shrink-0 rounded-full"></div>

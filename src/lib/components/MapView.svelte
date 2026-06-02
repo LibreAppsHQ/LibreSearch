@@ -47,14 +47,14 @@
 					onclick={() => (selected = place)}
 					aria-current={selected === place ? 'true' : undefined}
 					class={selected === place
-						? 'w-full rounded-xl border border-[var(--app-accent)] bg-[var(--app-surface)] p-3.5 text-left transition'
-						: 'w-full rounded-xl border border-transparent bg-[var(--app-surface)] p-3.5 text-left transition hover:bg-[var(--app-hover)]'}
+						? 'w-full rounded-xl border border-(--app-accent) bg-(--app-surface) p-3.5 text-left transition'
+						: 'w-full rounded-xl border border-transparent bg-(--app-surface) p-3.5 text-left transition hover:bg-(--app-hover)'}
 				>
-					<p class="font-medium text-[var(--app-text)]">{place.name}</p>
-					<p class="mt-0.5 text-sm text-[var(--app-muted)]">{place.displayName}</p>
+					<p class="font-medium text-(--app-text)">{place.name}</p>
+					<p class="mt-0.5 text-sm text-(--app-muted)">{place.displayName}</p>
 					{#if placeLabel(place)}
 						<span
-							class="mt-2 inline-block rounded-full bg-[var(--app-hover)] px-2 py-0.5 text-xs font-medium text-[var(--app-muted)] capitalize"
+							class="mt-2 inline-block rounded-full bg-(--app-hover) px-2 py-0.5 text-xs font-medium text-(--app-muted) capitalize"
 						>
 							{placeLabel(place)}
 						</span>
@@ -64,14 +64,14 @@
 							href={osmLink(place)}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="text-[var(--app-accent)] hover:underline"
+							class="text-(--app-accent) hover:underline"
 							onclick={(e) => e.stopPropagation()}>View on OSM</a
 						>
 						<a
 							href={directionsLink(place)}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="text-[var(--app-accent)] hover:underline"
+							class="text-(--app-accent) hover:underline"
 							onclick={(e) => e.stopPropagation()}>Directions</a
 						>
 					</div>
@@ -82,7 +82,7 @@
 
 	<!-- Map -->
 	<div class="order-1 lg:order-2">
-		<div class="sticky top-[120px] overflow-hidden rounded-2xl border border-[var(--app-border)]">
+		<div class="sticky top-[120px] overflow-hidden rounded-2xl border border-(--app-border)">
 			<iframe
 				title={`Map of ${selected.name}`}
 				src={embedSrc(selected)}
@@ -91,7 +91,7 @@
 				referrerpolicy="no-referrer"
 			></iframe>
 		</div>
-		<p class="mt-2 px-1 text-xs text-[var(--app-muted)]">
+		<p class="mt-2 px-1 text-xs text-(--app-muted)">
 			Map data © <a
 				href="https://www.openstreetmap.org/copyright"
 				target="_blank"

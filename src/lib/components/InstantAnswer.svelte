@@ -574,10 +574,10 @@
 
 {#if kind}
 	<section
-		class="mb-6 max-w-2xl overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)]"
+		class="mb-6 max-w-2xl overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
 	>
 		<div
-			class="border-b border-[var(--app-border)] px-5 py-2.5 text-xs font-semibold tracking-widest text-[var(--app-muted)] uppercase"
+			class="border-b border-(--app-border) px-5 py-2.5 text-xs font-semibold tracking-widest text-(--app-muted) uppercase"
 		>
 			{titles[kind]}
 		</div>
@@ -589,22 +589,22 @@
 					bind:value={expr}
 					aria-label="Calculator expression"
 					placeholder="Type an expression…"
-					class="w-full bg-transparent text-right text-2xl text-[var(--app-muted)] focus:outline-none"
+					class="w-full bg-transparent text-right text-2xl text-(--app-muted) focus:outline-none"
 				/>
-				<div class="mt-1 text-right text-4xl font-semibold text-[var(--app-text)] tabular-nums">
+				<div class="mt-1 text-right text-4xl font-semibold text-(--app-text) tabular-nums">
 					{calcResult || '0'}
 				</div>
 				<div class="mt-4 grid grid-cols-4 gap-2">
-					{#each calcKeys as row}
-						{#each row as key}
+					{#each calcKeys as row, i (i)}
+						{#each row as key, i (i)}
 							<button
 								type="button"
 								onclick={() => onCalcKey(key)}
 								class={key === '='
-									? 'flex h-12 items-center justify-center rounded-xl bg-[var(--app-accent)] text-lg font-semibold text-[#111] transition hover:opacity-90'
+									? 'flex h-12 items-center justify-center rounded-xl bg-(--app-accent) text-lg font-semibold text-[#111] transition hover:opacity-90'
 									: key === 'C'
-										? 'flex h-12 items-center justify-center rounded-xl bg-[var(--app-hover)] text-lg font-medium text-red-400 transition hover:opacity-90'
-										: 'flex h-12 items-center justify-center rounded-xl bg-[var(--app-hover)] text-lg font-medium text-[var(--app-text)] transition hover:opacity-90'}
+										? 'flex h-12 items-center justify-center rounded-xl bg-(--app-hover) text-lg font-medium text-red-400 transition hover:opacity-90'
+										: 'flex h-12 items-center justify-center rounded-xl bg-(--app-hover) text-lg font-medium text-(--app-text) transition hover:opacity-90'}
 							>
 								{key}
 							</button>
@@ -614,15 +614,15 @@
 			</div>
 		{:else if kind === 'password'}
 			<div class="p-5">
-				<div class="flex items-center gap-2 rounded-xl bg-[var(--app-hover)] px-4 py-3">
-					<code class="min-w-0 flex-1 truncate font-mono text-lg text-[var(--app-text)]"
+				<div class="flex items-center gap-2 rounded-xl bg-(--app-hover) px-4 py-3">
+					<code class="min-w-0 flex-1 truncate font-mono text-lg text-(--app-text)"
 						>{password || '-'}</code
 					>
 					<button
 						type="button"
 						aria-label="Regenerate"
 						onclick={generate}
-						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[var(--app-muted)] transition hover:bg-[var(--app-surface)] hover:text-[var(--app-text)]"
+						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-(--app-muted) transition hover:bg-(--app-surface) hover:text-(--app-text)"
 					>
 						<i class="fa-solid fa-rotate"></i>
 					</button>
@@ -630,13 +630,13 @@
 						type="button"
 						aria-label="Copy password"
 						onclick={() => copyText(password, (v) => (pwCopied = v))}
-						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[var(--app-muted)] transition hover:bg-[var(--app-surface)] hover:text-[var(--app-text)]"
+						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-(--app-muted) transition hover:bg-(--app-surface) hover:text-(--app-text)"
 					>
 						<i class={pwCopied ? 'fa-solid fa-check text-emerald-400' : 'fa-solid fa-copy'}></i>
 					</button>
 				</div>
 				<div class="mt-3 flex items-center gap-3">
-					<div class="h-1.5 flex-1 overflow-hidden rounded-full bg-[var(--app-hover)]">
+					<div class="h-1.5 flex-1 overflow-hidden rounded-full bg-(--app-hover)">
 						<div
 							class="h-full rounded-full transition-[width,background-color] {strength.bar}"
 						></div>
@@ -644,8 +644,8 @@
 					<span class="text-xs font-medium {strength.cls}">{strength.label}</span>
 				</div>
 				<div class="mt-5 flex items-center justify-between text-sm">
-					<label for="pw-length" class="text-[var(--app-muted)]">Length</label>
-					<span class="font-semibold text-[var(--app-text)] tabular-nums">{length}</span>
+					<label for="pw-length" class="text-(--app-muted)">Length</label>
+					<span class="font-semibold text-(--app-text) tabular-nums">{length}</span>
 				</div>
 				<input
 					id="pw-length"
@@ -653,16 +653,16 @@
 					min="6"
 					max="48"
 					bind:value={length}
-					class="mt-2 w-full accent-[var(--app-accent)]"
+					class="mt-2 w-full accent-(--app-accent)"
 				/>
 				<div class="mt-4 grid grid-cols-2 gap-2 text-sm">
-					{#each [{ key: 'lower', label: 'Lowercase (a-z)' }, { key: 'upper', label: 'Uppercase (A-Z)' }, { key: 'numbers', label: 'Numbers (0-9)' }, { key: 'symbols', label: 'Symbols (!@#)' }] as opt}
+					{#each [{ key: 'lower', label: 'Lowercase (a-z)' }, { key: 'upper', label: 'Uppercase (A-Z)' }, { key: 'numbers', label: 'Numbers (0-9)' }, { key: 'symbols', label: 'Symbols (!@#)' }] as opt, i (i)}
 						<label
-							class="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 transition hover:bg-[var(--app-hover)]"
+							class="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 transition hover:bg-(--app-hover)"
 						>
 							<input
 								type="checkbox"
-								class="accent-[var(--app-accent)]"
+								class="accent-(--app-accent)"
 								checked={opt.key === 'lower'
 									? useLower
 									: opt.key === 'upper'
@@ -678,7 +678,7 @@
 									else useSymbols = v;
 								}}
 							/>
-							<span class="text-[var(--app-text)]">{opt.label}</span>
+							<span class="text-(--app-text)">{opt.label}</span>
 						</label>
 					{/each}
 				</div>
@@ -687,19 +687,19 @@
 			<div class="p-5">
 				{#if unit}
 					<div class="flex items-baseline gap-3">
-						<span class="text-2xl text-[var(--app-muted)] tabular-nums"
+						<span class="text-2xl text-(--app-muted) tabular-nums"
 							>{fmt(unit.value)} {unit.from}</span
 						>
-						<i class="fa-solid fa-arrow-right text-sm text-[var(--app-muted)]"></i>
+						<i class="fa-solid fa-arrow-right text-sm text-(--app-muted)"></i>
 					</div>
-					<div class="mt-1 text-4xl font-semibold text-[var(--app-text)] tabular-nums">
-						{fmt(unit.result)} <span class="text-2xl text-[var(--app-muted)]">{unit.to}</span>
+					<div class="mt-1 text-4xl font-semibold text-(--app-text) tabular-nums">
+						{fmt(unit.result)} <span class="text-2xl text-(--app-muted)">{unit.to}</span>
 					</div>
 				{:else}
-					<p class="text-sm text-[var(--app-muted)]">
-						Try a conversion like <span class="text-[var(--app-text)]">10 km to miles</span>,
-						<span class="text-[var(--app-text)]">100 f to c</span>, or
-						<span class="text-[var(--app-text)]">5 gb to mb</span>.
+					<p class="text-sm text-(--app-muted)">
+						Try a conversion like <span class="text-(--app-text)">10 km to miles</span>,
+						<span class="text-(--app-text)">100 f to c</span>, or
+						<span class="text-(--app-text)">5 gb to mb</span>.
 					</p>
 				{/if}
 			</div>
@@ -709,20 +709,20 @@
 					type="color"
 					bind:value={color}
 					aria-label="Pick a color"
-					class="h-20 w-20 shrink-0 cursor-pointer rounded-xl border border-[var(--app-border)] bg-transparent"
+					class="h-20 w-20 shrink-0 cursor-pointer rounded-xl border border-(--app-border) bg-transparent"
 				/>
 				<div class="min-w-0 flex-1 space-y-1.5 text-sm">
-					{#each [{ label: 'HEX', value: color.toUpperCase() }, { label: 'RGB', value: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` }, { label: 'HSL', value: `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)` }] as row}
+					{#each [{ label: 'HEX', value: color.toUpperCase() }, { label: 'RGB', value: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` }, { label: 'HSL', value: `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)` }] as row, i (i)}
 						<button
 							type="button"
 							onclick={() => copyText(row.value, (v) => (colorCopied = v))}
-							class="flex w-full items-center gap-3 rounded-lg px-2 py-1.5 text-left transition hover:bg-[var(--app-hover)]"
+							class="flex w-full items-center gap-3 rounded-lg px-2 py-1.5 text-left transition hover:bg-(--app-hover)"
 						>
-							<span class="w-9 shrink-0 text-xs font-semibold text-[var(--app-muted)]"
+							<span class="w-9 shrink-0 text-xs font-semibold text-(--app-muted)"
 								>{row.label}</span
 							>
-							<code class="flex-1 truncate font-mono text-[var(--app-text)]">{row.value}</code>
-							<i class="fa-solid fa-copy text-xs text-[var(--app-muted)]"></i>
+							<code class="flex-1 truncate font-mono text-(--app-text)">{row.value}</code>
+							<i class="fa-solid fa-copy text-xs text-(--app-muted)"></i>
 						</button>
 					{/each}
 					{#if colorCopied}
@@ -732,7 +732,7 @@
 			</div>
 		{:else if kind === 'ip'}
 			<div class="flex items-center justify-between gap-4 p-5">
-				<code class="min-w-0 flex-1 truncate font-mono text-2xl text-[var(--app-text)]">
+				<code class="min-w-0 flex-1 truncate font-mono text-2xl text-(--app-text)">
 					{ipLoading ? 'Looking up…' : (ip ?? '')}
 				</code>
 				{#if ip && ip !== 'Unavailable'}
@@ -740,7 +740,7 @@
 						type="button"
 						aria-label="Copy IP"
 						onclick={() => copyText(ip ?? '', (v) => (ipCopied = v))}
-						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[var(--app-muted)] transition hover:bg-[var(--app-hover)] hover:text-[var(--app-text)]"
+						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
 					>
 						<i class={ipCopied ? 'fa-solid fa-check text-emerald-400' : 'fa-solid fa-copy'}></i>
 					</button>
@@ -748,11 +748,11 @@
 			</div>
 		{:else if kind === 'coin'}
 			<div class="flex flex-col items-center gap-4 p-6">
-				<div class="text-4xl font-bold text-[var(--app-text)]">{coin}</div>
+				<div class="text-4xl font-bold text-(--app-text)">{coin}</div>
 				<button
 					type="button"
 					onclick={flipCoin}
-					class="rounded-xl bg-[var(--app-accent)] px-6 py-2.5 text-sm font-semibold text-[#111] transition hover:opacity-90"
+					class="rounded-xl bg-(--app-accent) px-6 py-2.5 text-sm font-semibold text-[#111] transition hover:opacity-90"
 				>
 					Flip again
 				</button>
@@ -760,44 +760,44 @@
 		{:else if kind === 'dice'}
 			<div class="p-5">
 				<div class="flex flex-wrap items-center justify-center gap-3">
-					{#each diceRolls as roll}
+					{#each diceRolls as roll, i (i)}
 						<div
-							class="flex h-14 w-14 items-center justify-center rounded-xl bg-[var(--app-hover)] text-2xl font-bold text-[var(--app-text)]"
+							class="flex h-14 w-14 items-center justify-center rounded-xl bg-(--app-hover) text-2xl font-bold text-(--app-text)"
 						>
 							{roll}
 						</div>
 					{/each}
 				</div>
 				{#if diceRolls.length > 1}
-					<p class="mt-3 text-center text-sm text-[var(--app-muted)]">
-						Total: <span class="font-semibold text-[var(--app-text)]">{diceSum}</span>
+					<p class="mt-3 text-center text-sm text-(--app-muted)">
+						Total: <span class="font-semibold text-(--app-text)">{diceSum}</span>
 					</p>
 				{/if}
 				<div class="mt-5 flex items-center justify-center gap-3 text-sm">
-					<label class="flex items-center gap-1.5 text-[var(--app-muted)]">
+					<label class="flex items-center gap-1.5 text-(--app-muted)">
 						Dice
 						<input
 							type="number"
 							min="1"
 							max="10"
 							bind:value={diceCount}
-							class="w-14 rounded-lg bg-[var(--app-hover)] px-2 py-1 text-center text-[var(--app-text)] focus:outline-none"
+							class="w-14 rounded-lg bg-(--app-hover) px-2 py-1 text-center text-(--app-text) focus:outline-none"
 						/>
 					</label>
-					<label class="flex items-center gap-1.5 text-[var(--app-muted)]">
+					<label class="flex items-center gap-1.5 text-(--app-muted)">
 						Sides
 						<input
 							type="number"
 							min="2"
 							max="100"
 							bind:value={diceSides}
-							class="w-16 rounded-lg bg-[var(--app-hover)] px-2 py-1 text-center text-[var(--app-text)] focus:outline-none"
+							class="w-16 rounded-lg bg-(--app-hover) px-2 py-1 text-center text-(--app-text) focus:outline-none"
 						/>
 					</label>
 					<button
 						type="button"
 						onclick={rollDice}
-						class="rounded-xl bg-[var(--app-accent)] px-5 py-1.5 font-semibold text-[#111] transition hover:opacity-90"
+						class="rounded-xl bg-(--app-accent) px-5 py-1.5 font-semibold text-[#111] transition hover:opacity-90"
 					>
 						Roll
 					</button>
@@ -805,30 +805,30 @@
 			</div>
 		{:else if kind === 'rng'}
 			<div class="p-5">
-				<div class="text-center text-5xl font-bold text-[var(--app-text)] tabular-nums">
+				<div class="text-center text-5xl font-bold text-(--app-text) tabular-nums">
 					{rngValue}
 				</div>
 				<div class="mt-5 flex items-center justify-center gap-3 text-sm">
-					<label class="flex items-center gap-1.5 text-[var(--app-muted)]">
+					<label class="flex items-center gap-1.5 text-(--app-muted)">
 						Min
 						<input
 							type="number"
 							bind:value={rngMin}
-							class="w-20 rounded-lg bg-[var(--app-hover)] px-2 py-1 text-center text-[var(--app-text)] focus:outline-none"
+							class="w-20 rounded-lg bg-(--app-hover) px-2 py-1 text-center text-(--app-text) focus:outline-none"
 						/>
 					</label>
-					<label class="flex items-center gap-1.5 text-[var(--app-muted)]">
+					<label class="flex items-center gap-1.5 text-(--app-muted)">
 						Max
 						<input
 							type="number"
 							bind:value={rngMax}
-							class="w-20 rounded-lg bg-[var(--app-hover)] px-2 py-1 text-center text-[var(--app-text)] focus:outline-none"
+							class="w-20 rounded-lg bg-(--app-hover) px-2 py-1 text-center text-(--app-text) focus:outline-none"
 						/>
 					</label>
 					<button
 						type="button"
 						onclick={rollRng}
-						class="rounded-xl bg-[var(--app-accent)] px-5 py-1.5 font-semibold text-[#111] transition hover:opacity-90"
+						class="rounded-xl bg-(--app-accent) px-5 py-1.5 font-semibold text-[#111] transition hover:opacity-90"
 					>
 						Generate
 					</button>

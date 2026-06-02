@@ -11,14 +11,13 @@
 </script>
 
 <article
-	class="group overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-panel)]/30 transition hover:border-[var(--app-border)]"
+	class="group overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-panel)/30 transition hover:border-(--app-border)"
 >
-	<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
 	<a
 		href={result.url}
 		target={openInNewTab ? '_blank' : '_self'}
 		rel="noreferrer noopener"
-		class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--app-accent)]/50"
+		class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-(--app-accent)/50"
 		onclick={onselect
 			? (e) => {
 					e.preventDefault();
@@ -56,11 +55,11 @@
 		</div>
 		<div class="space-y-1 p-3">
 			<h2
-				class="line-clamp-2 text-sm leading-snug font-medium text-[var(--app-text)] group-hover:text-[var(--app-accent)]"
+				class="line-clamp-2 text-sm leading-snug font-medium text-(--app-text) group-hover:text-(--app-accent)"
 			>
 				{result.title}
 			</h2>
-			<div class="flex items-center gap-1.5 text-xs text-[var(--app-muted)]">
+			<div class="flex items-center gap-1.5 text-xs text-(--app-muted)">
 				{#if result.publisher}
 					<span>{result.publisher}</span>
 				{/if}

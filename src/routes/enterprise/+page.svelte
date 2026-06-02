@@ -115,13 +115,13 @@
 	<meta property="og:url" content="https://libresearch.ca/enterprise" />
 </svelte:head>
 
-<header class="sticky top-0 z-20 bg-[var(--app-background)]">
+<header class="sticky top-0 z-20 bg-(--app-background)">
 	<div class="mx-auto w-full max-w-[1400px] px-6">
 		<div class="grid grid-cols-[1fr_auto_1fr] items-center py-5">
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-[var(--app-text)]">
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
 				Enterprise
 			</p>
 			<SiteMenu class="justify-self-end" />
@@ -129,20 +129,20 @@
 	</div>
 </header>
 
-<main class="bg-[var(--app-background)] text-[var(--app-text)]">
+<main class="bg-(--app-background) text-(--app-text)">
 	<!-- Hero -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 py-16 text-center sm:py-24">
 		<span
-			class="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--app-border)] bg-[var(--app-surface)] px-3 py-1 text-xs font-semibold tracking-widest text-[var(--app-accent)] uppercase"
+			class="mb-6 inline-flex items-center gap-2 rounded-full border border-(--app-border) bg-(--app-surface) px-3 py-1 text-xs font-semibold tracking-widest text-(--app-accent) uppercase"
 		>
 			<i class="fa-solid fa-shield-halved"></i>
 			For IT admins
 		</span>
 		<h1 class="mx-auto max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
 			Default search,<br />
-			<span class="text-[var(--app-accent)]">across your whole fleet.</span>
+			<span class="text-(--app-accent)">across your whole fleet.</span>
 		</h1>
-		<p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[var(--app-muted)]">
+		<p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-(--app-muted)">
 			LibreSearch can be rolled out as the default search engine in Chrome, Edge, and Firefox using
 			the same Group Policy / MDM tools you already use. No telemetry, no query logging — defensible
 			under GDPR, HIPAA, and FERPA.
@@ -152,26 +152,26 @@
 	<!-- Why this matters -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 pb-12">
 		<div class="grid gap-6 sm:grid-cols-3">
-			{#each [{ icon: 'fa-eye-slash', title: 'No query logging', desc: 'Searches are never written to a persistent log tied to any user or IP.' }, { icon: 'fa-server', title: 'No third-party telemetry', desc: 'No Google Analytics, no Bing, no ad-tech embedded in the search frontend.' }, { icon: 'fa-file-contract', title: 'Compliance-friendly', desc: 'AGPL-licensed, auditable source, ready for review by your security team.' }] as item}
-				<div class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6">
+			{#each [{ icon: 'fa-eye-slash', title: 'No query logging', desc: 'Searches are never written to a persistent log tied to any user or IP.' }, { icon: 'fa-server', title: 'No third-party telemetry', desc: 'No Google Analytics, no Bing, no ad-tech embedded in the search frontend.' }, { icon: 'fa-file-contract', title: 'Compliance-friendly', desc: 'AGPL-licensed, auditable source, ready for review by your security team.' }] as item, i (i)}
+				<div class="rounded-2xl border border-(--app-border) bg-(--app-surface) p-6">
 					<div
-						class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--app-accent)]/15 text-[var(--app-accent)]"
+						class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-(--app-accent)/15 text-(--app-accent)"
 					>
 						<i class="fa-solid {item.icon}"></i>
 					</div>
 					<h3 class="text-lg font-semibold">{item.title}</h3>
-					<p class="mt-2 text-sm leading-6 text-[var(--app-muted)]">{item.desc}</p>
+					<p class="mt-2 text-sm leading-6 text-(--app-muted)">{item.desc}</p>
 				</div>
 			{/each}
 		</div>
 	</section>
 
-	<div class="border-t border-[var(--app-border)]"></div>
+	<div class="border-t border-(--app-border)"></div>
 
 	<!-- Deployment snippets -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 py-16 sm:py-20">
 		<p
-			class="mb-3 text-center text-xs font-semibold tracking-widest text-[var(--app-accent)] uppercase"
+			class="mb-3 text-center text-xs font-semibold tracking-widest text-(--app-accent) uppercase"
 		>
 			Deployment templates
 		</p>
@@ -180,28 +180,28 @@
 		</h2>
 
 		<div class="space-y-8">
-			{#each snippets as s}
+			{#each snippets as s, i (i)}
 				<article
-					class="overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)]"
+					class="overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
 				>
 					<header
-						class="flex items-start justify-between gap-4 border-b border-[var(--app-border)] p-6"
+						class="flex items-start justify-between gap-4 border-b border-(--app-border) p-6"
 					>
 						<div>
 							<div class="flex items-center gap-3">
-								<i class="{s.icon} text-2xl text-[var(--app-accent)]"></i>
+								<i class="{s.icon} text-2xl text-(--app-accent)"></i>
 								<h3 class="text-lg font-semibold">{s.title}</h3>
 							</div>
-							<p class="mt-1 text-xs text-[var(--app-muted)]">{s.platform}</p>
-							<p class="mt-3 text-sm leading-6 text-[var(--app-secondary)]">{s.path}</p>
+							<p class="mt-1 text-xs text-(--app-muted)">{s.platform}</p>
+							<p class="mt-3 text-sm leading-6 text-(--app-secondary)">{s.path}</p>
 						</div>
 						<button
 							type="button"
 							onclick={() => copy(s.id, s.code)}
-							class="inline-flex shrink-0 items-center gap-2 rounded-lg border border-[var(--app-border)] bg-[var(--app-hover)] px-3 py-2 text-xs text-[var(--app-text)] transition hover:bg-[var(--app-accent)]/15"
+							class="inline-flex shrink-0 items-center gap-2 rounded-lg border border-(--app-border) bg-(--app-hover) px-3 py-2 text-xs text-(--app-text) transition hover:bg-(--app-accent)/15"
 						>
 							{#if copied === s.id}
-								<i class="fa-solid fa-check text-[var(--app-accent)]"></i>
+								<i class="fa-solid fa-check text-(--app-accent)"></i>
 								Copied
 							{:else}
 								<i class="fa-solid fa-copy"></i>
@@ -210,7 +210,7 @@
 						</button>
 					</header>
 					<pre
-						class="overflow-x-auto bg-[#0d1019] p-6 text-xs leading-relaxed text-[var(--app-secondary)]"><code
+						class="overflow-x-auto bg-[#0d1019] p-6 text-xs leading-relaxed text-(--app-secondary)"><code
 							>{s.code}</code
 						></pre>
 				</article>
@@ -218,28 +218,28 @@
 		</div>
 	</section>
 
-	<div class="border-t border-[var(--app-border)]"></div>
+	<div class="border-t border-(--app-border)"></div>
 
 	<!-- Contact -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 py-16 text-center sm:py-20">
 		<h2 class="text-2xl font-bold tracking-tight sm:text-3xl">
 			Need a DPA, audit log, or signed agreement?
 		</h2>
-		<p class="mx-auto mt-4 max-w-xl text-sm leading-6 text-[var(--app-muted)]">
+		<p class="mx-auto mt-4 max-w-xl text-sm leading-6 text-(--app-muted)">
 			We're happy to walk your security team through the architecture, sign a Data Processing
 			Agreement, or scope a private deployment for higher-volume use.
 		</p>
 		<div class="mt-8 flex flex-wrap items-center justify-center gap-4">
 			<a
 				href="/contact"
-				class="inline-flex items-center gap-2 rounded-xl bg-[var(--app-accent)] px-5 py-3 text-sm font-semibold text-[#0d1019] transition hover:opacity-90"
+				class="inline-flex items-center gap-2 rounded-xl bg-(--app-accent) px-5 py-3 text-sm font-semibold text-[#0d1019] transition hover:opacity-90"
 			>
 				<i class="fa-solid fa-envelope"></i>
 				Contact us
 			</a>
 			<a
 				href="/privacy"
-				class="inline-flex items-center gap-2 rounded-xl border border-[var(--app-border)] bg-[var(--app-surface)] px-5 py-3 text-sm font-semibold text-[var(--app-text)] transition hover:bg-[var(--app-hover)]"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-text) transition hover:bg-(--app-hover)"
 			>
 				<i class="fa-solid fa-shield-halved"></i>
 				Read the privacy policy

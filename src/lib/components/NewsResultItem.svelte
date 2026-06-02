@@ -7,12 +7,12 @@
 	let openInNewTab = $derived(getToggle($settingsStore, 'open-new-tab', true));
 </script>
 
-<article class="group rounded-2xl px-1 py-1 transition hover:bg-[var(--app-hover)]">
+<article class="group rounded-2xl px-1 py-1 transition hover:bg-(--app-hover)">
 	<a
 		href={result.url}
 		target={openInNewTab ? '_blank' : '_self'}
 		rel="noreferrer noopener"
-		class="flex gap-4 rounded-2xl px-3 py-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--app-accent)]/50"
+		class="flex gap-4 rounded-2xl px-3 py-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--app-accent)/50"
 	>
 		{#if result.thumbnail}
 			<img
@@ -25,7 +25,7 @@
 			/>
 		{/if}
 		<div class="min-w-0 space-y-1">
-			<div class="flex items-center gap-1.5 text-xs text-[var(--app-muted)]">
+			<div class="flex items-center gap-1.5 text-xs text-(--app-muted)">
 				{#if result.siteName}
 					<span class="font-medium">{result.siteName}</span>
 				{/if}
@@ -37,12 +37,12 @@
 				{/if}
 			</div>
 			<h2
-				class="line-clamp-2 leading-snug font-medium text-[var(--app-accent)] group-hover:underline"
+				class="line-clamp-2 leading-snug font-medium text-(--app-accent) group-hover:underline"
 			>
 				{result.title}
 			</h2>
 			{#if result.snippet}
-				<p class="line-clamp-2 text-sm leading-5 text-[var(--app-muted)]">{result.snippet}</p>
+				<p class="line-clamp-2 text-sm leading-5 text-(--app-muted)">{result.snippet}</p>
 			{/if}
 		</div>
 	</a>
