@@ -17,6 +17,33 @@
 
 	const releases: Release[] = [
 		{
+			version: '0.7.0',
+			date: '2026-06-01',
+			title: 'Search over Tor',
+			entries: [
+				{
+					tag: 'feature',
+					text: 'New “Route searches through Tor” privacy setting sends every upstream request — web, images, videos, news, shopping, maps, and autocomplete — over the Tor network, hiding the server’s IP'
+				},
+				{
+					tag: 'feature',
+					text: 'Tor circuit viewer: an onion button next to the search bar opens a dropdown showing the live guard → middle → exit relays, with country and IP for each hop'
+				},
+				{
+					tag: 'feature',
+					text: 'New /tor page explaining what Tor is, why to use it, its limits, and how to turn it on'
+				},
+				{
+					tag: 'security',
+					text: 'Tor routing is fail-closed and uses socks5h so DNS resolves over Tor — no local DNS leaks, and no silent fallback to a direct connection if the proxy is unreachable'
+				},
+				{
+					tag: 'feature',
+					text: 'Filters (region, safe search, time) now collapse behind a sliders toggle next to the search tabs'
+				}
+			]
+		},
+		{
 			version: '0.6.1',
 			date: '2026-05-30',
 			title: 'Theme and accessibility fixes',
