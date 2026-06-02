@@ -162,7 +162,6 @@
 		if (data.freshness) params.set('f', data.freshness);
 		if (data.safe !== 'moderate') params.set('safe', data.safe);
 		if (data.region) params.set('region', data.region);
-		if (getToggle($settingsStore, 'route-tor', false)) params.set('tor', '1');
 		for (const [k, v] of Object.entries(overrides)) {
 			if (v === undefined || v === '') params.delete(k);
 			else params.set(k, v);

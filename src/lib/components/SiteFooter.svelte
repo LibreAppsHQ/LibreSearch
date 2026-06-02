@@ -84,9 +84,6 @@
 								>Changelog</a
 							>
 						</li>
-						<li>
-							<a href="/tor" class="text-(--app-muted) transition hover:text-(--app-text)">Tor</a>
-						</li>
 					</ul>
 				</div>
 				<div class="space-y-3">

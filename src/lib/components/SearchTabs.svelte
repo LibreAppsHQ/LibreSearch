@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SearchTab } from '$lib/search';
-	import { settingsStore, getSelect, getToggle } from '$lib/stores/settings';
+	import { settingsStore, getSelect } from '$lib/stores/settings';
 
 	let { current, query, freshness, filtersOpen, ontogglefilters } = $props<{
 		current: SearchTab;
@@ -21,14 +21,11 @@
 
 	// POST keeps the query out of the URL, so tabs become form submits rather than links.
 	let isPost = $derived(getSelect($settingsStore, 'request-method', 'GET') === 'POST');
-	// Preserve the Tor toggle when switching tabs so it doesn't silently turn off.
-	let routeTor = $derived(getToggle($settingsStore, 'route-tor', false));
 
 	function tabHref(tabId: SearchTab): string {
 		const params = new URLSearchParams({ q: query });
 		if (tabId !== 'web') params.set('t', tabId);
 		if (freshness) params.set('f', freshness);
-		if (routeTor) params.set('tor', '1');
 		return `/search?${params}`;
 	}
 
@@ -46,7 +43,6 @@
 				<input type="hidden" name="q" value={query} />
 				{#if tab.id !== 'web'}<input type="hidden" name="t" value={tab.id} />{/if}
 				{#if freshness}<input type="hidden" name="f" value={freshness} />{/if}
-				{#if routeTor}<input type="hidden" name="tor" value="1" />{/if}
 				<button type="submit" class={tabClass(tab.id)}>{tab.label}</button>
 			</form>
 		{:else}

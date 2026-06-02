@@ -67,7 +67,6 @@ export const GET: RequestHandler = async (event) => {
 	const blockAds = event.url.searchParams.get('blockads') === '1';
 	const blockTrackers = event.url.searchParams.get('blocktrackers') === '1';
 	const useCache = event.url.searchParams.get('enablecache') === '1';
-	const useTor = event.url.searchParams.get('tor') === '1';
 	const rawCount = parseInt(event.url.searchParams.get('count') ?? '', 10);
 	// Images can return up to 100; other tabs are capped at 20 by Brave.
 	const maxCount = tab === 'images' ? 100 : 20;
@@ -86,7 +85,6 @@ export const GET: RequestHandler = async (event) => {
 				blockAds,
 				blockTrackers,
 				useCache,
-				useTor,
 				count,
 				waitUntil: event.platform?.context?.waitUntil
 			},
@@ -96,21 +94,6 @@ export const GET: RequestHandler = async (event) => {
 			headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex, nofollow' }
 		});
 	} catch (error) {
-		if (error instanceof Error && /TOR_PROXY_UNREACHABLE/.test(error.message)) {
-			return json(
-				{
-					query,
-					tab,
-					results: [],
-					error:
-						'Tor routing is on, but the Tor proxy could not be reached. Start a Tor daemon (or turn off "Route searches through Tor" in settings).'
-				},
-				{
-					headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex, nofollow' },
-					status: 200
-				}
-			);
-		}
 		if (!env.BRAVE_SEARCH_API_KEY) {
 			return json(
 				{ query, tab, results: [], error: 'Search backend not configured yet.' },

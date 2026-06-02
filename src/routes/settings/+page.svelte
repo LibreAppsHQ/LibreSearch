@@ -25,7 +25,6 @@
 			{ ids: ['block-ads', 'block-trackers'] },
 			{ ids: ['safe-search', 'filter-ads'] },
 			{ ids: ['strip-tracking', 'no-referrer'] },
-			{ ids: ['route-tor'] },
 			{ ids: ['request-method'] },
 			{ ids: ['save-history', 'history-retention'] },
 			{ ids: ['search-region'] }

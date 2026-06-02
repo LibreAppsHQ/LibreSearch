@@ -1,6 +1,5 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { consumeRateLimit } from '$lib/server/search';
-import { getTorFetch } from '$lib/server/tor';
 
 export const GET: RequestHandler = async ({ url, fetch, request, getClientAddress }) => {
 	const clientKey =
@@ -22,13 +21,8 @@ export const GET: RequestHandler = async ({ url, fetch, request, getClientAddres
 		return json([], { headers: { 'Cache-Control': 'no-store' } });
 	}
 
-	// Route the upstream suggestion fetch through Tor when the client asks and a
-	// proxy is configured; otherwise fall back to SvelteKit's direct fetch.
-	const upstreamFetch =
-		url.searchParams.get('tor') === '1' ? (getTorFetch() ?? fetch) : fetch;
-
 	try {
-		const response = await upstreamFetch(
+		const response = await fetch(
 			`https://duckduckgo.com/ac/?q=${encodeURIComponent(q)}&type=list`,
 			{
 				headers: { 'User-Agent': 'LibreSearch/1.0' },

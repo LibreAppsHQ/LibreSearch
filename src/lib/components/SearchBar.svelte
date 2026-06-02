@@ -45,66 +45,12 @@
 	let blockTrackers = $derived(getToggle($settingsStore, 'block-trackers'));
 	let searchRegion = $derived(getSelect($settingsStore, 'search-region'));
 	let enableCache = $derived(getToggle($settingsStore, 'enable-cache', false));
-	let routeTor = $derived(getToggle($settingsStore, 'route-tor', false));
 	let resultsPerPage = $derived(getSelect($settingsStore, 'results-per-page', '10'));
 	let requestMethod = $derived<'get' | 'post'>(
 		getSelect($settingsStore, 'request-method', 'GET') === 'POST' ? 'post' : 'get'
 	);
 
 	let history = $derived($historyStore);
-
-	// Tor circuit viewer — the dropdown next to the search bar that shows which
-	// guard/middle/exit relays our searches are travelling through.
-	type TorHop = {
-		role: 'guard' | 'middle' | 'exit';
-		nickname: string;
-		fingerprint: string;
-		ip: string | null;
-		country: string | null;
-	};
-	let circuitOpen = $state(false);
-	let circuitLoading = $state(false);
-	let circuitConfigured = $state(true);
-	let circuitHops = $state<TorHop[]>([]);
-	let circuitError = $state(false);
-
-	async function loadCircuit() {
-		circuitLoading = true;
-		circuitError = false;
-		try {
-			const res = await fetch('/api/tor/circuit', { cache: 'no-store' });
-			const data = (await res.json().catch(() => null)) as {
-				configured?: boolean;
-				circuit?: { hops?: TorHop[] } | null;
-			} | null;
-			circuitConfigured = data?.configured ?? false;
-			circuitHops = data?.circuit?.hops ?? [];
-			if (circuitConfigured && circuitHops.length === 0) circuitError = true;
-		} catch {
-			circuitError = true;
-			circuitHops = [];
-		} finally {
-			circuitLoading = false;
-		}
-	}
-
-	function toggleCircuit() {
-		circuitOpen = !circuitOpen;
-		if (circuitOpen) void loadCircuit();
-	}
-
-	const flagEmoji = (cc: string | null) => {
-		if (!cc || cc.length !== 2) return '🌐';
-		return String.fromCodePoint(
-			...[...cc.toUpperCase()].map((c) => 0x1f1e6 + c.charCodeAt(0) - 65)
-		);
-	};
-
-	const roleLabel: Record<TorHop['role'], string> = {
-		guard: 'Guard (entry)',
-		middle: 'Middle',
-		exit: 'Exit'
-	};
 
 	const normalizedSuggestions = $derived.by(() => {
 		const seen = new Set<string>();
@@ -206,9 +152,7 @@
 			suggestionController = controller;
 
 			try {
-				const suggestUrl =
-					`/api/suggest?q=${encodeURIComponent(next)}` + (routeTor ? '&tor=1' : '');
-				const response = await fetch(suggestUrl, {
+				const response = await fetch(`/api/suggest?q=${encodeURIComponent(next)}`, {
 					cache: 'no-store',
 					credentials: 'omit',
 					headers: { accept: 'application/json' },
@@ -316,9 +260,6 @@
 	{#if resultsPerPage === '20'}
 		<input type="hidden" name="count" value="20" />
 	{/if}
-	{#if routeTor}
-		<input type="hidden" name="tor" value="1" />
-	{/if}
 
 	<div
 		class={pill
@@ -327,19 +268,6 @@
 				? 'flex w-full items-center rounded-full border border-transparent bg-(--app-elevated) px-5 py-3 transition focus-within:ring-2 focus-within:ring-slate-500/20'
 				: 'flex w-full items-center rounded-xl border border-(--app-border) bg-transparent px-5 py-2 transition focus-within:border-slate-500/60 focus-within:ring-2 focus-within:ring-slate-500/20'}
 	>
-		{#if routeTor}
-			<button
-				type="button"
-				aria-label="View Tor circuit"
-				aria-expanded={circuitOpen}
-				title="View Tor circuit"
-				onclick={toggleCircuit}
-				class="mr-2 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-(--app-accent) transition hover:bg-(--app-accent)/15 focus-visible:outline-none"
-			>
-				<i class="fa-solid fa-circle-nodes text-[15px]"></i>
-			</button>
-		{/if}
-
 		<input
 			bind:this={inputElement}
 			bind:value={query}
@@ -393,93 +321,6 @@
 			{/if}
 		</div>
 	</div>
-
-	{#if routeTor && circuitOpen}
-		<div class="relative">
-			<div
-				class="absolute top-2 right-0 left-0 z-30 overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-elevated) p-4 shadow-2xl ring-1 shadow-black/40 ring-black/5"
-				transition:fly={{ y: -6, duration: $reducedMotion ? 0 : 160, easing: cubicOut }}
-			>
-				<div class="mb-3 flex items-center justify-between">
-					<span class="flex items-center gap-2 text-sm font-semibold text-(--app-text)">
-						<i class="fa-solid fa-circle-nodes text-(--app-accent)"></i>
-						Tor circuit
-					</span>
-					<button
-						type="button"
-						aria-label="Close"
-						onclick={() => (circuitOpen = false)}
-						class="inline-flex h-6 w-6 items-center justify-center rounded text-(--app-muted) transition hover:text-(--app-text)"
-					>
-						<i class="fa-solid fa-xmark text-xs"></i>
-					</button>
-				</div>
-
-				{#if circuitLoading}
-					<p class="px-1 py-3 text-sm text-(--app-muted)">
-						<i class="fa-solid fa-spinner fa-spin mr-2"></i>Reading circuit…
-					</p>
-				{:else if !circuitConfigured}
-					<p class="px-1 py-2 text-sm text-(--app-muted)">
-						The Tor control port isn't available, so the live circuit can't be shown. Searches still
-						route through Tor.
-					</p>
-				{:else if circuitError || circuitHops.length === 0}
-					<p class="px-1 py-2 text-sm text-(--app-muted)">
-						No active circuit found yet. Run a search, then reopen this.
-					</p>
-				{:else}
-					<p class="mb-3 px-1 text-xs text-(--app-muted)">
-						Your request travels through these relays before reaching the search provider.
-					</p>
-					<ol class="space-y-1">
-						<li class="flex items-center gap-3 px-1 py-1.5 text-sm text-(--app-muted)">
-							<span class="flex h-7 w-7 items-center justify-center text-(--app-accent)">
-								<i class="fa-solid fa-desktop"></i>
-							</span>
-							<span>This device</span>
-						</li>
-						{#each circuitHops as hop, i (hop.fingerprint)}
-							<li
-								class="flex items-center gap-3 rounded-lg px-1 py-1.5"
-								class:bg-transparent={true}
-							>
-								<span
-									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-(--app-accent)/15 text-xs font-semibold text-(--app-accent)"
-									>{i + 1}</span
-								>
-								<span class="text-lg leading-none">{flagEmoji(hop.country)}</span>
-								<div class="min-w-0 flex-1">
-									<p class="truncate text-sm font-medium text-(--app-text)">
-										{hop.nickname}
-										<span class="ml-1 text-[11px] font-normal text-(--app-muted)"
-											>{roleLabel[hop.role]}</span
-										>
-									</p>
-									<p class="truncate text-[11px] text-(--app-muted)">
-										{hop.country ?? '??'} · {hop.ip ?? 'unknown IP'}
-									</p>
-								</div>
-							</li>
-						{/each}
-						<li class="flex items-center gap-3 px-1 py-1.5 text-sm text-(--app-muted)">
-							<span class="flex h-7 w-7 items-center justify-center text-emerald-400">
-								<i class="fa-solid fa-globe"></i>
-							</span>
-							<span>Search provider</span>
-						</li>
-					</ol>
-					<button
-						type="button"
-						onclick={loadCircuit}
-						class="mt-3 inline-flex items-center gap-2 text-xs font-medium text-(--app-accent) hover:underline"
-					>
-						<i class="fa-solid fa-rotate text-[11px]"></i>Refresh
-					</button>
-				{/if}
-			</div>
-		</div>
-	{/if}
 
 	{#if isOpen && dropdownItems.length > 0}
 		<div class="relative">

@@ -257,15 +257,6 @@ const defaultSettings: Setting[] = [
 		checked: false
 	},
 	{
-		id: 'route-tor',
-		name: 'Route searches through Tor',
-		description:
-			'Send search and suggestion requests to the upstream providers over the Tor network, hiding the server’s IP. Requires a reachable Tor proxy on the server; falls back to a direct connection if unavailable.',
-		category: 'privacy',
-		type: 'toggle',
-		checked: false
-	},
-	{
 		id: 'request-method',
 		name: 'HTTP request method',
 		description: 'POST hides your query from the URL and browser tab. GET includes them.',

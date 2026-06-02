@@ -14,7 +14,6 @@ import {
 } from '$lib/search';
 import { getRedis } from './kv';
 import { consumeTokenBucket, type TokenBucketState } from './ratelimit';
-import { getTorFetch } from './tor';
 
 const RATE_LIMIT_BUCKET_CAPACITY = 20;
 const RATE_LIMIT_REFILL_INTERVAL_MS = 5_000;
@@ -819,7 +818,6 @@ export async function searchBrave(
 		blockAds?: boolean;
 		blockTrackers?: boolean;
 		useCache?: boolean;
-		useTor?: boolean;
 		count?: number;
 		waitUntil?: (promise: Promise<unknown>) => void;
 	} = {},
@@ -840,11 +838,6 @@ export async function searchBrave(
 	} = options;
 	const count = Math.min(Math.max(options.count ?? 10, 1), tab === 'images' ? 100 : 20);
 
-	// When Tor is requested, swap in a SOCKS5-dispatched fetch. If no proxy is
-	// configured the helper returns null and we fall back to the direct fetch, so
-	// search keeps working (just not anonymised).
-	const effectiveFetch = options.useTor ? (getTorFetch() ?? fetchImpl) : fetchImpl;
-
 	const runFetch = () =>
 		fetchBraveSearch(
 			normalizedQuery,
@@ -852,7 +845,7 @@ export async function searchBrave(
 			safesearch,
 			offset,
 			freshness,
-			effectiveFetch,
+			fetchImpl,
 			country,
 			filterAds,
 			blockAds,
