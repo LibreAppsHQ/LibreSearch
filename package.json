@@ -52,5 +52,13 @@
 		"@upstash/redis": "^1.35.0",
 		"@vercel/analytics": "^2.0.1",
 		"@vercel/speed-insights": "^2.0.0"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"@parcel/watcher",
+			"esbuild",
+			"@tailwindcss/oxide",
+			"@sentry/cli"
+		]
 	}
 }

@@ -35,3 +35,5 @@ vite.config.ts.timestamp-*
 .agents
 
 support.libresearch.ca
+# Local-only: this pnpm fork stores build-approvals here; CI pnpm v9 rejects it.
+pnpm-workspace.yaml
