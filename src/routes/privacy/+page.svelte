@@ -96,7 +96,7 @@
 			<section id="overview" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Overview</h2>
 				<p class="text-sm leading-7 text-(--app-muted)">
-					LibreSearch is a private search engine operated by Arcbase. We designed it so that the
+					LibreSearch is a private search engine operated by LibreSearch. We designed it so that the
 					most private option is the default — and the only option. We do not run ads, we do not
 					build advertising profiles, and we do not sell data. This page explains the small amount
 					of data that is involved in running the service and the large amount we deliberately never

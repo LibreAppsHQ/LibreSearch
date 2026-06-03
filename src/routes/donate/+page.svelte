@@ -147,7 +147,7 @@
 		<div class="grid gap-6 sm:grid-cols-3">
 			{#each tiers as tier, i (i)}
 				<div
-					class="rounded-2xl border bg-[#171b25]/80 p-7 backdrop-blur-sm {tier.featured
+					class="rounded-2xl border bg-(--app-card) p-7 backdrop-blur-sm {tier.featured
 						? 'border-(--app-accent)'
 						: 'border-(--app-border)'}"
 				>
@@ -181,7 +181,7 @@
 		<div class="mx-auto max-w-[640px]">
 			<!-- Crypto -->
 			<div
-				class="flex flex-col gap-4 rounded-2xl border border-(--app-border) bg-[#171b25]/80 p-7 backdrop-blur-sm"
+				class="flex flex-col gap-4 rounded-2xl border border-(--app-border) bg-(--app-card) p-7 backdrop-blur-sm"
 			>
 				<div>
 					<p class="mb-1 text-lg font-semibold">Crypto</p>
@@ -204,7 +204,7 @@
 							<button
 								type="button"
 								onclick={() => copy(wallet.ticker, wallet.address)}
-								class="flex w-full items-center gap-3 rounded-lg bg-[#171b25]/80 px-3 py-2 text-left transition hover:bg-(--app-hover)"
+								class="flex w-full items-center gap-3 rounded-lg bg-(--app-card) px-3 py-2 text-left transition hover:bg-(--app-hover)"
 							>
 								<code class="flex-1 truncate font-mono text-xs text-(--app-text)"
 									>{wallet.address}</code
@@ -247,7 +247,7 @@
 			<div class="space-y-3">
 				{#each [{ icon: 'fa-server', label: 'Servers and bandwidth for the search proxy', color: 'text-(--app-accent)', bg: 'bg-(--app-accent)/10' }, { icon: 'fa-shield-halved', label: 'Bot protection and abuse prevention', color: 'text-blue-400', bg: 'bg-blue-500/10' }, { icon: 'fa-code', label: 'Development of new features', color: 'text-emerald-400', bg: 'bg-emerald-500/10' }, { icon: 'fa-globe', label: 'Domains, certificates, and uptime monitoring', color: 'text-violet-400', bg: 'bg-violet-500/10' }] as item, i (i)}
 					<div
-						class="flex items-center gap-4 rounded-2xl border border-(--app-border) bg-[#171b25]/80 px-5 py-4 backdrop-blur-sm"
+						class="flex items-center gap-4 rounded-2xl border border-(--app-border) bg-(--app-card) px-5 py-4 backdrop-blur-sm"
 					>
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl {item.bg} {item.color}"

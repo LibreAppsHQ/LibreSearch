@@ -50,6 +50,8 @@ function createThemeStore() {
 	let initialized = false;
 	const { subscribe, set } = writable<ThemeKey>('dark');
 
+	// NOTE: the pre-paint inline script in src/app.html duplicates this palette to
+	// avoid a theme flash. Keep both in sync when changing colors.
 	function applyThemeStyles(themeKey: ThemeKey) {
 		if (typeof document === 'undefined') return;
 		const palette = themes[themeKey];
@@ -69,6 +71,9 @@ function createThemeStore() {
 			'--app-elevated',
 			isLight ? palette.panel : themeKey === 'slate' ? '#272c39' : '#2e3443'
 		);
+		// Card / control surface. Dark themes keep the near-black panel they were
+		// hardcoded to; light themes use their light panel so text stays readable.
+		root.style.setProperty('--app-card', isLight ? palette.panel : '#171b25');
 		root.style.setProperty('--app-secondary', isLight ? '#3f3b36' : '#d4d4d8');
 		root.style.setProperty('--app-border', isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.08)');
 		root.style.setProperty(
@@ -85,6 +90,8 @@ function createThemeStore() {
 			isLight ? 'rgba(0,0,0,0.11)' : 'rgba(255,255,255,0.12)'
 		);
 		root.dataset.theme = themeKey;
+		// Keep the browser UI chrome (mobile address bar) matched to the theme.
+		document.querySelector('meta[name="theme-color"]')?.setAttribute('content', palette.background);
 	}
 
 	return {

@@ -12,6 +12,7 @@
 	import AiAnswer from '$lib/components/AiAnswer.svelte';
 	import SearchTabs from '$lib/components/SearchTabs.svelte';
 	import Infobox from '$lib/components/Infobox.svelte';
+	import FeedbackModal from '$lib/components/FeedbackModal.svelte';
 	import NewsResultItem from '$lib/components/NewsResultItem.svelte';
 	import VideoResultItem from '$lib/components/VideoResultItem.svelte';
 	import VideoViewer from '$lib/components/VideoViewer.svelte';
@@ -47,8 +48,9 @@
 	// svelte-ignore state_referenced_locally
 	let allResults = $state(data.results);
 	// svelte-ignore state_referenced_locally
-	let hasMore = $state(data.results.length >= (data.count ?? 10));
+	let hasMore = $state(false);
 	let activeVideo = $state<VideoResult | null>(null);
+	let feedbackOpen = $state(false);
 
 	$effect(() => {
 		// Don't clobber what the user is actively typing in the search box.
@@ -56,7 +58,19 @@
 		const typing = input instanceof HTMLInputElement && input.name === 'q';
 		if (!typing) query = data.query;
 		allResults = data.results;
-		hasMore = data.tab === 'web' && data.results.length >= (data.count ?? 10);
+		const c = data.count ?? 10;
+		hasMore =
+			data.tab === 'web' || data.tab === 'shopping'
+				? data.results.length >= c
+				: data.tab === 'news'
+					? (data.newsResults?.length ?? 0) >= c
+					: data.tab === 'videos'
+						? (data.videoResults?.length ?? 0) >= c
+						: data.tab === 'images'
+							? (data.imageResults?.length ?? 0) >= c
+							: data.tab === 'maps'
+								? (data.placeResults?.length ?? 0) >= c
+								: false;
 	});
 
 	// Persist the live search so a POST back-navigation can restore it.
@@ -333,6 +347,48 @@
 								? 'w-full'
 								: 'max-w-2xl'}
 				>
+					{#snippet pagination()}
+						{#if currentPage > 1 || hasMore}
+							<nav class="mt-10 flex items-center justify-center gap-2.5" aria-label="Pagination">
+								{#if currentPage > 1}
+									<button
+										type="button"
+										aria-label="Previous page"
+										onclick={() => goToPage(currentPage - 1)}
+										class="flex h-9 items-center justify-center rounded-full bg-(--app-surface) px-4 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+									>
+										Prev
+									</button>
+								{/if}
+
+								{#each pageNumbers as p, i (i)}
+									<button
+										type="button"
+										aria-label={`Page ${p}`}
+										aria-current={p === currentPage ? 'page' : undefined}
+										onclick={() => goToPage(p)}
+										class={p === currentPage
+											? 'flex h-9 w-9 items-center justify-center rounded-full bg-(--app-accent) text-sm font-semibold text-[#111] transition'
+											: 'flex h-9 w-9 items-center justify-center rounded-full bg-(--app-surface) text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)'}
+									>
+										{p}
+									</button>
+								{/each}
+
+								{#if canGoNext}
+									<button
+										type="button"
+										aria-label="Next page"
+										onclick={() => goToPage(currentPage + 1)}
+										class="flex h-9 items-center justify-center rounded-full bg-(--app-surface) px-5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+									>
+										Next
+									</button>
+								{/if}
+							</nav>
+						{/if}
+					{/snippet}
+
 					{#if loading}
 						<SearchSkeleton tab={loadingTab} />
 					{:else if data.tab === 'web'}
@@ -348,46 +404,7 @@
 								Web results{currentPage > 1 ? ` · page ${currentPage}` : ''}
 							</p>
 							<ResultsList results={allResults} />
-
-							{#if currentPage > 1 || hasMore}
-								<nav class="mt-10 flex items-center justify-center gap-2.5" aria-label="Pagination">
-									{#if currentPage > 1}
-										<button
-											type="button"
-											aria-label="Previous page"
-											onclick={() => goToPage(currentPage - 1)}
-											class="flex h-9 items-center justify-center rounded-full bg-(--app-surface) px-4 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
-										>
-											Prev
-										</button>
-									{/if}
-
-									{#each pageNumbers as p, i (i)}
-										<button
-											type="button"
-											aria-label={`Page ${p}`}
-											aria-current={p === currentPage ? 'page' : undefined}
-											onclick={() => goToPage(p)}
-											class={p === currentPage
-												? 'flex h-9 w-9 items-center justify-center rounded-full bg-(--app-accent) text-sm font-semibold text-[#111] transition'
-												: 'flex h-9 w-9 items-center justify-center rounded-full bg-(--app-surface) text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)'}
-										>
-											{p}
-										</button>
-									{/each}
-
-									{#if canGoNext}
-										<button
-											type="button"
-											aria-label="Next page"
-											onclick={() => goToPage(currentPage + 1)}
-											class="flex h-9 items-center justify-center rounded-full bg-(--app-surface) px-5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
-										>
-											Next
-										</button>
-									{/if}
-								</nav>
-							{/if}
+							{@render pagination()}
 						{:else if data.query && !data.error}
 							<NoResults query={data.query} tab="web" />
 						{:else if !data.query}
@@ -400,6 +417,7 @@
 									<li><NewsResultItem {result} /></li>
 								{/each}
 							</ol>
+							{@render pagination()}
 						{:else if data.query && !data.error}
 							<NoResults query={data.query} tab="news" />
 						{/if}
@@ -410,6 +428,7 @@
 									<VideoResultItem {result} onselect={(v) => (activeVideo = v)} />
 								{/each}
 							</div>
+							{@render pagination()}
 						{:else if data.query && !data.error}
 							<NoResults query={data.query} tab="videos" />
 						{/if}
@@ -417,6 +436,7 @@
 						{#if data.imageResults && data.imageResults.length > 0}
 							<ImageRelated query={data.query} />
 							<ImageGrid images={data.imageResults} />
+							{@render pagination()}
 						{:else if data.query && !data.error}
 							<NoResults query={data.query} tab="images" />
 						{/if}
@@ -424,12 +444,14 @@
 						{#if allResults.length > 0}
 							<p class="mb-3 text-xs font-medium text-(--app-muted)">Shopping results</p>
 							<ResultsList results={allResults} />
+							{@render pagination()}
 						{:else if data.query && !data.error}
 							<NoResults query={data.query} tab="shopping" />
 						{/if}
 					{:else if data.tab === 'maps'}
 						{#if data.placeResults && data.placeResults.length > 0}
 							<MapView places={data.placeResults} />
+							{@render pagination()}
 						{:else if data.query && !data.error}
 							<NoResults query={data.query} tab="maps" />
 						{/if}
@@ -439,8 +461,13 @@
 				<!-- Right column: knowledge panel -->
 				{#if data.infobox && data.tab === 'web' && !loading}
 					<div class="hidden w-[380px] shrink-0 lg:block">
-						<div class="sticky top-[120px]">
-							<Infobox infobox={data.infobox} />
+						<Infobox infobox={data.infobox} />
+						<div class="mt-2 flex justify-end">
+							<button
+								type="button"
+								onclick={() => (feedbackOpen = true)}
+								class="text-xs text-(--app-accent) hover:underline">Feedback</button
+							>
 						</div>
 					</div>
 				{/if}
@@ -449,20 +476,34 @@
 	{/if}
 </main>
 
-<footer class="bg-[#1b1e21] px-6 py-5">
+<!-- Floating feedback button (stays fixed while scrolling) -->
+<button
+	type="button"
+	onclick={() => (feedbackOpen = true)}
+	class="fixed right-5 bottom-5 z-40 inline-flex cursor-pointer items-center gap-1 rounded-full bg-black px-2 py-1 text-[10px] text-[#a7b2fc]"
+>
+	Feedback
+	<i class="fa-regular fa-message text-[13px] text-[#a7b2fc]"></i>
+</button>
+
+{#if feedbackOpen}
+	<FeedbackModal onclose={() => (feedbackOpen = false)} />
+{/if}
+
+<footer class="border-t border-(--app-border) bg-(--app-background) px-6 py-9">
 	<div class="mx-auto grid w-full max-w-7xl grid-cols-3 items-center gap-6">
 		<!-- Left: logo + copyright -->
 		<div class="flex shrink-0 flex-col gap-1">
 			<a href="/" aria-label="LibreSearch home">
 				<Logo class="h-14 w-auto" />
 			</a>
-			<p class="text-xs text-white/90">
+			<p class="text-xs text-(--app-muted)">
 				&copy; {new Date().getFullYear()} LibreSearch. All rights reserved.
 			</p>
 		</div>
 
 		<!-- Center: nav links -->
-		<nav class="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-white/90">
+		<nav class="text-md flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-(--app-muted)">
 			<a href="/privacy" class="transition hover:text-(--app-text)">Privacy Policy</a>
 			<a href="/about" class="transition hover:text-(--app-text)">About Us</a>
 			<a href="/press" class="transition hover:text-(--app-text)">Press</a>

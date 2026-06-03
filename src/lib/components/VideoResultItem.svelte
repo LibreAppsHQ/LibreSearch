@@ -30,6 +30,8 @@
 				<img
 					src={result.thumbnail}
 					alt={result.title}
+					loading="lazy"
+					decoding="async"
 					class="h-full w-full object-cover"
 					onerror={(e) => {
 						(e.currentTarget as HTMLImageElement).style.display = 'none';

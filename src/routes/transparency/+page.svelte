@@ -60,6 +60,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/transparency" />
 	<meta property="og:title" content="Transparency Report - LibreSearch" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta
 		property="og:description"
 		content="What we received, what we disclosed, what we pushed back on."

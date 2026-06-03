@@ -96,7 +96,7 @@
 			<section id="acceptance" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Acceptance of these terms</h2>
 				<p class="text-sm leading-7 text-(--app-muted)">
-					LibreSearch is a private search engine operated by Arcbase. By using it, you agree to
+					LibreSearch is a private search engine operated by LibreSearch. By using it, you agree to
 					these terms. If you don't agree, please don't use the service. These terms work alongside
 					our
 					<a href="/privacy" class="text-(--app-accent) hover:underline">Privacy Policy</a>, which
@@ -119,7 +119,7 @@
 					To keep LibreSearch fast and available for everyone, please don't:
 				</p>
 				<ul class="grid gap-3 sm:grid-cols-2">
-					{#each ['Send automated, scripted, or bulk queries', 'Scrape, harvest, or resell our results', 'Attempt to bypass rate limits or security checks', 'Probe, scan, or disrupt the service or its infrastructure', 'Use the service to break the law or infringe others', 'Misrepresent or impersonate LibreSearch or Arcbase'] as item, i (i)}
+					{#each ['Send automated, scripted, or bulk queries', 'Scrape, harvest, or resell our results', 'Attempt to bypass rate limits or security checks', 'Probe, scan, or disrupt the service or its infrastructure', 'Use the service to break the law or infringe others', 'Misrepresent or impersonate LibreSearch or LibreSearch'] as item, i (i)}
 						<li
 							class="flex items-center gap-3 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-3"
 						>
@@ -150,7 +150,7 @@
 			<section id="intellectual-property" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Intellectual property</h2>
 				<p class="text-sm leading-7 text-(--app-muted)">
-					The LibreSearch name, logo, and interface are the property of Arcbase. Please don't copy,
+					The LibreSearch name, logo, and interface are the property of LibreSearch. Please don't copy,
 					stretch, recolor, or otherwise misuse our brand assets — see the
 					<a href="/press" class="text-(--app-accent) hover:underline">press page</a> for approved usage.
 					Content surfaced in results remains the property of its respective owners.
@@ -169,7 +169,7 @@
 			<section id="liability" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Limitation of liability</h2>
 				<p class="text-sm leading-7 text-(--app-muted)">
-					To the maximum extent permitted by law, Arcbase will not be liable for any indirect,
+					To the maximum extent permitted by law, LibreSearch will not be liable for any indirect,
 					incidental, or consequential damages arising from your use of — or inability to use -
 					LibreSearch, including reliance on any search result or linked content.
 				</p>

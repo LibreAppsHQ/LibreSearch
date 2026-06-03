@@ -12,6 +12,41 @@
 		<meta name="apple-mobile-web-app-title" content="LibreSearch" />
 		<meta name="application-name" content="LibreSearch" />
 		<link rel="manifest" href="/manifest.json" />
+		<!-- Apply the saved theme before first paint to avoid a dark-mode flash on
+		     light/sand. Keep this palette in sync with src/lib/stores/theme.ts. -->
+		<script>
+			(function () {
+				try {
+					var themes = {
+						dark: { background: '#171b25', panel: '#474747', accent: '#8ab4f8', text: '#fafafa' },
+						light: { background: '#f5f5f2', panel: '#ffffff', accent: '#5d7cff', text: '#111111' },
+						slate: { background: '#16181d', panel: '#23262d', accent: '#7dd3fc', text: '#f8fafc' },
+						sand: { background: '#f2ede4', panel: '#fffaf1', accent: '#c38b4d', text: '#201a15' }
+					};
+					var k = localStorage.getItem('LibreSearch:theme');
+					if (!k || !themes[k]) k = 'dark';
+					var p = themes[k];
+					var isLight = k === 'light' || k === 'sand';
+					var s = document.documentElement.style;
+					s.setProperty('--app-background', p.background);
+					s.setProperty('--app-panel', p.panel);
+					s.setProperty('--app-accent', p.accent);
+					s.setProperty('--app-text', p.text);
+					s.setProperty('--app-muted', isLight ? '#5f5b55' : '#9ca3af');
+					s.setProperty('--app-elevated', isLight ? p.panel : k === 'slate' ? '#272c39' : '#2e3443');
+					s.setProperty('--app-card', isLight ? p.panel : '#171b25');
+					s.setProperty('--app-secondary', isLight ? '#3f3b36' : '#d4d4d8');
+					s.setProperty('--app-border', isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.08)');
+					s.setProperty('--app-surface', isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.025)');
+					s.setProperty('--app-hover', isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)');
+					s.setProperty('--app-skeleton', isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)');
+					s.setProperty('--app-skeleton-shine', isLight ? 'rgba(0,0,0,0.11)' : 'rgba(255,255,255,0.12)');
+					document.documentElement.dataset.theme = k;
+					var tc = document.querySelector('meta[name="theme-color"]');
+					if (tc) tc.setAttribute('content', p.background);
+				} catch (e) {}
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

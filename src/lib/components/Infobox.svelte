@@ -19,13 +19,15 @@
 	});
 </script>
 
-<aside class="overflow-hidden rounded-sm border border-(--app-border) bg-[#171b25]">
+<aside class="rounded-sm border border-(--app-border) bg-(--app-card)">
 	<!-- Hero image -->
 	{#if infobox.imageUrl}
 		<img
 			src={infobox.imageUrl}
 			alt={infobox.title}
-			class="h-56 w-full object-cover"
+			loading="lazy"
+			decoding="async"
+			class="h-56 w-full rounded-t-sm object-cover"
 			onerror={(e) => {
 				(e.currentTarget as HTMLImageElement).style.display = 'none';
 			}}
@@ -43,7 +45,7 @@
 	</div>
 
 	{#if infobox.description}
-		<div class="border-t border-(--app-border) p-5">
+		<div class="border-t border-(--app-border) px-5 pt-5 pb-4">
 			<p
 				class={expanded
 					? 'text-sm leading-6 text-(--app-text)'
@@ -52,29 +54,27 @@
 				{infobox.description}
 			</p>
 
-			<div class="mt-4 flex items-center justify-between">
-				{#if sourceLabel && infobox.url}
-					<a
-						href={infobox.url}
-						target="_blank"
-						rel="noreferrer noopener"
-						class="text-sm text-(--app-accent) underline-offset-2 hover:underline"
-					>
-						{sourceLabel}
-					</a>
-				{:else}
-					<span></span>
-				{/if}
-
-				<button
-					type="button"
-					onclick={() => (expanded = !expanded)}
-					class="inline-flex items-center gap-2 rounded-md border border-(--app-border) bg-(--app-surface) px-4 py-1.5 text-sm text-(--app-text) transition hover:bg-(--app-hover)"
+			{#if sourceLabel && infobox.url}
+				<a
+					href={infobox.url}
+					target="_blank"
+					rel="noreferrer noopener"
+					class="mt-4 block text-sm text-(--app-muted) underline"
 				>
-					{expanded ? 'See less' : 'See more'}
-					<i class="fa-solid {expanded ? 'fa-minus' : 'fa-plus'} text-[10px]"></i>
-				</button>
-			</div>
+					{sourceLabel}
+				</a>
+			{/if}
+		</div>
+
+		<div class="relative -mb-5 flex justify-center">
+			<button
+				type="button"
+				onclick={() => (expanded = !expanded)}
+				class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-(--app-border) bg-(--app-card) px-8 py-2 text-sm text-(--app-text) transition"
+			>
+				{expanded ? 'See less' : 'See more'}
+				<i class="fa-solid {expanded ? 'fa-minus' : 'fa-plus'} text-[10px]"></i>
+			</button>
 		</div>
 	{/if}
 

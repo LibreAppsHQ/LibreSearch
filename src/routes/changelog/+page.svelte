@@ -17,6 +17,37 @@
 
 	const releases: Release[] = [
 		{
+			version: '0.8.0',
+			date: '2026-06-03',
+			title: 'Theming polish and accessibility',
+			entries: [
+				{
+					tag: 'feature',
+					text: 'Dropdowns are fully keyboard-operable with arrow keys, Home/End, type-ahead, and proper screen-reader roles'
+				},
+				{
+					tag: 'fix',
+					text: 'Light and Sand themes: cards, info panels, the contact form, and dropdowns no longer render dark-on-dark — every surface is theme-aware'
+				},
+				{
+					tag: 'fix',
+					text: 'No more dark-mode flash on load — the saved theme is applied before the first paint, and the mobile address bar now matches the theme'
+				},
+				{
+					tag: 'security',
+					text: 'Opted out of ad-targeting browser APIs (Topics / FLoC) and added a cross-origin isolation header'
+				},
+				{
+					tag: 'perf',
+					text: 'Result images (web, news, video, knowledge panel) now lazy-load and decode off the main thread for faster, smoother scrolling'
+				},
+				{
+					tag: 'docs',
+					text: 'Every page now ships a social preview image for richer link sharing'
+				}
+			]
+		},
+		{
 			version: '0.7.0',
 			date: '2026-06-02',
 			title: 'Spam protection, error monitoring, and a browser leak test',
@@ -182,6 +213,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/changelog" />
 	<meta property="og:title" content="Changelog - LibreSearch" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta property="og:description" content="Everything that's shipped in LibreSearch, by release." />
 	<meta property="og:url" content="https://libresearch.ca/changelog" />
 </svelte:head>

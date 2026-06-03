@@ -134,6 +134,7 @@
 					src={image.thumbnail}
 					alt={image.title}
 					loading="lazy"
+					decoding="async"
 					class="h-full w-full object-cover transition duration-300 group-hover:opacity-90"
 					onerror={(e) => {
 						(e.currentTarget as HTMLImageElement).style.display = 'none';

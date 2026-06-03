@@ -51,7 +51,7 @@
 	];
 
 	const facts = [
-		{ label: 'Operating entity', value: 'Arcbase HQ' },
+		{ label: 'Operating entity', value: 'LibreSearch HQ' },
 		{ label: 'Primary jurisdiction', value: 'Canada' },
 		{ label: 'License', value: 'AGPL-3.0 (source: github.com/Arcbasehq/LibreSearch)' },
 		{ label: 'Funding model', value: 'Donations — no ads, no data sales' },
@@ -68,6 +68,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/trust" />
 	<meta property="og:title" content="Trust Center - LibreSearch" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta
 		property="og:description"
 		content="The full story on how we handle your data — sub-processors, retention, jurisdiction."

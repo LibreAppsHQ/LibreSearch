@@ -84,6 +84,8 @@
 							alt=""
 							width="18"
 							height="18"
+							loading="lazy"
+							decoding="async"
 							class="h-[18px] w-[18px]"
 							onerror={(e) => {
 								(e.currentTarget as HTMLImageElement).style.display = 'none';

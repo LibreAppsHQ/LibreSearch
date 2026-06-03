@@ -267,8 +267,8 @@
 		class={pill
 			? 'flex w-full items-center rounded-full border border-indigo-400/60 bg-transparent px-5 py-2.5 transition focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-400/20'
 			: compact
-				? 'flex w-full items-center rounded-full border border-transparent bg-(--app-elevated) px-5 py-3 transition focus-within:ring-2 focus-within:ring-slate-500/20'
-				: 'flex w-full items-center rounded-xl border border-(--app-border) bg-transparent px-5 py-2 transition focus-within:border-slate-500/60 focus-within:ring-2 focus-within:ring-slate-500/20'}
+				? `flex w-full items-center rounded-t-[26px] border border-transparent bg-(--app-elevated) px-5 py-3 transition ${isOpen ? 'rounded-b-none' : 'rounded-b-[26px] focus-within:ring-2 focus-within:ring-slate-500/20'}`
+				: `flex w-full items-center border border-(--app-border) px-5 py-2 transition focus-within:ring-2 focus-within:ring-slate-500/20 ${isOpen ? 'rounded-t-xl border-b-0 bg-(--app-elevated)' : 'rounded-xl bg-transparent focus-within:border-slate-500/60'}`}
 	>
 		<input
 			bind:this={inputElement}
@@ -327,7 +327,7 @@
 	{#if isOpen && dropdownItems.length > 0}
 		<div class="relative">
 			<div
-				class="absolute top-2 right-0 left-0 z-20 overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-elevated) p-2 shadow-2xl ring-1 shadow-black/40 ring-black/5"
+				class={`absolute right-0 left-0 z-20 overflow-hidden shadow-2xl shadow-black/40 ${compact ? 'top-0 rounded-b-2xl border-t border-(--app-border)/60 bg-(--app-elevated) pt-1.5 pb-3' : pill ? 'top-4 rounded-2xl border border-(--app-border) bg-(--app-elevated) py-2' : 'top-0 rounded-b-xl border-x border-b border-(--app-border) bg-(--app-elevated) pb-2'}`}
 				transition:fly={{ y: -6, duration: $reducedMotion ? 0 : 160, easing: cubicOut }}
 			>
 				{#if hasHistory}
@@ -351,9 +351,9 @@
 				{#each dropdownItems as item, index (item.type + item.text)}
 					{@const m = splitMatch(item.text)}
 					<div
-					class={index === activeIndex
-						? 'group flex w-full items-center gap-3 rounded-md bg-(--app-surface) px-3 py-2.5'
-						: 'group flex w-full items-center gap-3 rounded-md px-3 py-2.5 transition hover:bg-(--app-hover)'}
+						class={index === activeIndex
+							? 'group flex w-full items-center gap-3 rounded-md bg-(--app-surface) px-3 py-2.5'
+							: 'group flex w-full items-center gap-3 rounded-md px-3 py-2.5 transition hover:bg-(--app-hover)'}
 					>
 						{#if item.type === 'history' || showSuggestionIcons}
 							<i

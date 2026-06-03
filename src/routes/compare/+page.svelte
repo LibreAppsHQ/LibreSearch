@@ -149,12 +149,12 @@
 	<!-- Comparison table -->
 	<section class="mx-auto w-full max-w-[1200px] px-4 pb-16 sm:px-6">
 		<div
-			class="overflow-x-auto rounded-2xl border border-(--app-border) bg-[#171b25]/80 backdrop-blur-sm"
+			class="overflow-x-auto rounded-2xl border border-(--app-border) bg-(--app-card) backdrop-blur-sm"
 		>
 			<table class="w-full min-w-[820px] border-collapse text-sm">
 				<thead>
 					<tr class="border-b border-(--app-border)">
-						<th class="sticky left-0 z-10 bg-[#171b25] px-5 py-4 text-left font-semibold"
+						<th class="sticky left-0 z-10 bg-(--app-card) px-5 py-4 text-left font-semibold"
 							>Feature</th
 						>
 						{#each engines as engine (engine.name)}
@@ -165,7 +165,7 @@
 									title={engine.name}
 									class={`mx-auto rounded-xl object-contain ${engine.size ?? DEFAULT_LOGO_SIZE} ${
 										engine.accent
-											? 'ring-1 ring-(--app-accent) ring-offset-4 ring-offset-[#171b25]'
+											? 'ring-1 ring-(--app-accent) ring-offset-4 ring-offset-(--app-card)'
 											: ''
 									}`}
 									loading="lazy"
@@ -186,7 +186,7 @@
 						</tr>
 						{#each section.rows as row (row.label)}
 							<tr class="border-t border-(--app-border)/40">
-								<td class="sticky left-0 z-10 bg-[#171b25] px-5 py-4">
+								<td class="sticky left-0 z-10 bg-(--app-card) px-5 py-4">
 									<p class="font-medium text-(--app-text)">{row.label}</p>
 									{#if row.note}
 										<p class="mt-1 text-xs text-(--app-muted)">{row.note}</p>
@@ -226,7 +226,7 @@
 
 	<!-- Methodology note -->
 	<section class="mx-auto w-full max-w-[900px] px-6 pb-20">
-		<div class="rounded-2xl border border-(--app-border) bg-[#171b25]/60 p-7">
+		<div class="rounded-2xl border border-(--app-border) bg-(--app-card) p-7">
 			<h2 class="mb-3 text-lg font-semibold">How we put this together</h2>
 			<ul class="space-y-3 text-sm leading-7 text-(--app-muted)">
 				<li>

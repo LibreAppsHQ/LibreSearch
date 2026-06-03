@@ -26,8 +26,12 @@ const SECURITY_HEADERS: Record<string, string> = {
 	'X-Content-Type-Options': 'nosniff',
 	'X-Frame-Options': 'DENY',
 	'Referrer-Policy': 'no-referrer',
-	'Permissions-Policy': 'geolocation=(), microphone=(), camera=(), payment=(), usb=()',
+	// Disable powerful features, and opt out of ad-targeting APIs (Topics / legacy
+	// FLoC) — important for a privacy-first search engine.
+	'Permissions-Policy':
+		'geolocation=(), microphone=(), camera=(), payment=(), usb=(), browsing-topics=(), interest-cohort=()',
 	'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+	'Cross-Origin-Opener-Policy': 'same-origin',
 	'X-DNS-Prefetch-Control': 'off',
 	'Content-Security-Policy': [
 		"default-src 'self'",

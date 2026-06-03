@@ -178,6 +178,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/status" />
 	<meta property="og:title" content="System Status - LibreSearch" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta property="og:description" content="Real-time health of LibreSearch services." />
 	<meta property="og:url" content="https://libresearch.ca/status" />
 </svelte:head>
@@ -301,11 +302,6 @@
 				</p>
 			</div>
 		</div>
-
-		<p class="mt-8 text-xs text-(--app-muted)">
-			Historic uptime data isn't tracked here yet. A dedicated status host (e.g.
-			status.libresearch.ca) is on the roadmap.
-		</p>
 	</section>
 
 	<SiteFooter />

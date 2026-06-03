@@ -63,6 +63,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/syntax" />
 	<meta property="og:title" content="Search syntax - LibreSearch" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta property="og:description" content="The full operator and bang reference for LibreSearch." />
 	<meta property="og:url" content="https://libresearch.ca/syntax" />
 </svelte:head>

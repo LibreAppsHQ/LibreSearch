@@ -111,6 +111,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/contact" />
 	<meta property="og:title" content="Contact - LibreSearch" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta
 		property="og:description"
 		content="Reach the LibreSearch team about privacy, security, press, or general feedback."
@@ -147,8 +148,8 @@
 				<!-- Form -->
 				<form
 					onsubmit={submit}
-				class="rounded-lg border border-(--app-border) bg-[#171b25] p-7"
-				novalidate
+					class="rounded-lg border border-(--app-border) bg-(--app-card) p-7"
+					novalidate
 				>
 					<!-- Honeypot: real users never see/fill this; bots autofill it. -->
 					<input
@@ -170,8 +171,8 @@
 								required
 								autocomplete="name"
 								maxlength="100"
-							class="w-full rounded-md border border-(--app-border) bg-transparent px-4 py-2.5 text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
-							placeholder="Your name"
+								class="w-full rounded-md border border-(--app-border) bg-transparent px-4 py-2.5 text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
+								placeholder="Your name"
 							/>
 						</label>
 						<label class="block">
@@ -182,8 +183,8 @@
 								required
 								autocomplete="email"
 								maxlength="200"
-							class="w-full rounded-md border border-(--app-border) bg-transparent px-4 py-2.5 text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
-							placeholder="you@example.com"
+								class="w-full rounded-md border border-(--app-border) bg-transparent px-4 py-2.5 text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
+								placeholder="you@example.com"
 							/>
 						</label>
 					</div>
@@ -192,7 +193,7 @@
 						<span class="mb-2 block text-sm font-medium text-(--app-text)">Topic</span>
 						<select
 							bind:value={subject}
-							class="w-full rounded-md border border-(--app-border) bg-[#171b25] px-4 py-2.5 text-(--app-text) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
+							class="w-full rounded-md border border-(--app-border) bg-(--app-card) px-4 py-2.5 text-(--app-text) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
 						>
 							{#each subjectOptions as opt (opt.value)}
 								<option value={opt.value}>{opt.label}</option>
@@ -221,8 +222,8 @@
 					{#if result}
 						<div
 							class={result.type === 'success'
-							? 'mt-5 rounded-md border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-300'
-							: 'mt-5 rounded-md border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300'}
+								? 'mt-5 rounded-md border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-300'
+								: 'mt-5 rounded-md border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300'}
 							role={result.type === 'success' ? 'status' : 'alert'}
 						>
 							{result.msg}
@@ -245,9 +246,9 @@
 				</form>
 			{:else}
 				<!-- Form disabled: backend not configured. -->
-			<div class="rounded-lg border border-(--app-border) bg-[#171b25] p-7">
-				<div
-					class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-amber-500/15 text-amber-400"
+				<div class="rounded-lg border border-(--app-border) bg-(--app-card) p-7">
+					<div
+						class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-amber-500/15 text-amber-400"
 					>
 						<i class="fa-solid fa-envelope-open-text text-xl"></i>
 					</div>
@@ -271,9 +272,9 @@
 
 			<!-- Sidebar: notes -->
 			<aside class="space-y-6">
-			<div class="rounded-lg border border-(--app-border) bg-[#171b25] p-6">
-				<h2 class="mb-3 text-sm font-semibold tracking-wider text-(--app-muted) uppercase">
-					Email us
+				<div class="rounded-lg border border-(--app-border) bg-(--app-card) p-6">
+					<h2 class="mb-3 text-sm font-semibold tracking-wider text-(--app-muted) uppercase">
+						Email us
 					</h2>
 					<a
 						href="mailto:{contactEmail}"
@@ -286,9 +287,9 @@
 						Prefer your own mail client? Reach us directly any time.
 					</p>
 				</div>
-			<div class="rounded-lg border border-(--app-border) bg-[#171b25] p-6">
-				<h2 class="mb-3 text-sm font-semibold tracking-wider text-(--app-muted) uppercase">
-					A few notes
+				<div class="rounded-lg border border-(--app-border) bg-(--app-card) p-6">
+					<h2 class="mb-3 text-sm font-semibold tracking-wider text-(--app-muted) uppercase">
+						A few notes
 					</h2>
 					<ul class="space-y-3 text-sm leading-6 text-(--app-muted)">
 						<li>

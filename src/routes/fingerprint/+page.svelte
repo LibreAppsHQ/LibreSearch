@@ -211,6 +211,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/fingerprint" />
 	<meta property="og:title" content="Browser Leak Test | LibreSearch" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta
 		property="og:description"
 		content="What does your browser reveal about you? A private, in-browser fingerprint report."
@@ -247,7 +248,7 @@
 	<section class="mx-auto w-full max-w-[1100px] px-6 pb-20">
 		<!-- Summary -->
 		<div
-			class="mb-8 flex flex-col gap-4 rounded-2xl border border-(--app-border) bg-[#171b25]/80 p-6 sm:flex-row sm:items-center sm:justify-between"
+			class="mb-8 flex flex-col gap-4 rounded-2xl border border-(--app-border) bg-(--app-card) p-6 sm:flex-row sm:items-center sm:justify-between"
 		>
 			<div>
 				<p class="text-sm font-semibold tracking-wider text-(--app-muted) uppercase">Your IP</p>
@@ -298,7 +299,7 @@
 		</div>
 
 		<!-- Defenses -->
-		<div class="mt-8 rounded-2xl border border-(--app-border) bg-[#171b25]/60 p-6">
+		<div class="mt-8 rounded-2xl border border-(--app-border) bg-(--app-card) p-6">
 			<h2 class="mb-3 text-sm font-semibold tracking-wider text-(--app-muted) uppercase">
 				How to leak less
 			</h2>

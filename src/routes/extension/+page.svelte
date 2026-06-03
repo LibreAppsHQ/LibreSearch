@@ -81,6 +81,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/extension" />
 	<meta property="og:title" content="LibreSearch browser extension" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta
 		property="og:description"
 		content="Private search in your toolbar. No tracking, no profiles, no ads."

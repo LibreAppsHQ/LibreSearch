@@ -108,6 +108,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/enterprise" />
 	<meta property="og:title" content="LibreSearch for Enterprise" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta
 		property="og:description"
 		content="Roll out a private, no-tracking search engine across your fleet with ready-to-deploy policy templates."
@@ -206,7 +207,7 @@
 						</button>
 					</header>
 					<pre
-						class="overflow-x-auto bg-[#0d1019] p-6 text-xs leading-relaxed text-(--app-secondary)"><code
+						class="overflow-x-auto bg-[#0d1019] p-6 text-xs leading-relaxed text-[#d4d4d8]"><code
 							>{s.code}</code
 						></pre>
 				</article>

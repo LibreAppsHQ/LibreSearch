@@ -18,6 +18,8 @@
 			<img
 				src={result.thumbnail}
 				alt=""
+				loading="lazy"
+				decoding="async"
 				class="h-[72px] w-28 shrink-0 rounded-md object-cover"
 				onerror={(e) => {
 					(e.currentTarget as HTMLImageElement).style.display = 'none';

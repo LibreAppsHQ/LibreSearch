@@ -5,7 +5,7 @@
 
 	const facts = [
 		{ label: 'What it is', value: 'An independent, privacy-first search engine.' },
-		{ label: 'Maker', value: 'Built by Arcbase.' },
+		{ label: 'Maker', value: 'Built by LibreSearch.' },
 		{ label: 'Business model', value: 'No ads, no profiles, no selling of data.' },
 		{ label: 'Data stored', value: 'None — searches are never logged or tied to you.' },
 		{ label: 'Where settings live', value: 'Locally in your browser, never on a server.' },
@@ -20,7 +20,7 @@
 	];
 
 	const boilerplate =
-		'LibreSearch is an independent, privacy-first search engine built by Arcbase. It delivers real web results without logging your queries, building a profile on you, or selling your attention. There are no ads and no trackers, and your settings live entirely in your own browser — never on a server.';
+		'LibreSearch is an independent, privacy-first search engine built by LibreSearch. It delivers real web results without logging your queries, building a profile on you, or selling your attention. There are no ads and no trackers, and your settings live entirely in your own browser — never on a server.';
 
 	let copied = $state(false);
 

@@ -35,6 +35,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/security" />
 	<meta property="og:title" content="Security - LibreSearch" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta property="og:url" content="https://libresearch.ca/security" />
 </svelte:head>
 
