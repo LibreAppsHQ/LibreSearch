@@ -178,9 +178,9 @@
 	</div>
 
 	<!-- Footer -->
-	<footer class="px-6 py-3">
+	<footer class="bg-[#0c0d0e] px-6 py-3">
 		<nav
-			class="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-(--app-muted)"
+			class="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-white/90"
 		>
 			<a href="/privacy" class="transition hover:text-(--app-accent)">Privacy Policy</a>
 			<a href="/about" class="transition hover:text-(--app-accent)">About Us</a>
