@@ -574,7 +574,7 @@
 
 {#if kind}
 	<section
-		class="mb-6 max-w-2xl overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
+		class="mb-6 max-w-2xl overflow-hidden rounded-lg border border-(--app-border) bg-(--app-surface)"
 	>
 		<div
 			class="border-b border-(--app-border) px-5 py-2.5 text-xs font-semibold tracking-widest text-(--app-muted) uppercase"
@@ -600,11 +600,11 @@
 							<button
 								type="button"
 								onclick={() => onCalcKey(key)}
-								class={key === '='
-									? 'flex h-12 items-center justify-center rounded-xl bg-(--app-accent) text-lg font-semibold text-[#111] transition hover:opacity-90'
-									: key === 'C'
-										? 'flex h-12 items-center justify-center rounded-xl bg-(--app-hover) text-lg font-medium text-red-400 transition hover:opacity-90'
-										: 'flex h-12 items-center justify-center rounded-xl bg-(--app-hover) text-lg font-medium text-(--app-text) transition hover:opacity-90'}
+						class={key === '='
+								? 'flex h-12 items-center justify-center rounded-md bg-(--app-accent) text-lg font-semibold text-[#111] transition hover:opacity-90'
+								: key === 'C'
+									? 'flex h-12 items-center justify-center rounded-md bg-(--app-hover) text-lg font-medium text-red-400 transition hover:opacity-90'
+									: 'flex h-12 items-center justify-center rounded-md bg-(--app-hover) text-lg font-medium text-(--app-text) transition hover:opacity-90'}
 							>
 								{key}
 							</button>
@@ -614,7 +614,7 @@
 			</div>
 		{:else if kind === 'password'}
 			<div class="p-5">
-				<div class="flex items-center gap-2 rounded-xl bg-(--app-hover) px-4 py-3">
+				<div class="flex items-center gap-2 rounded-md bg-(--app-hover) px-4 py-3">
 					<code class="min-w-0 flex-1 truncate font-mono text-lg text-(--app-text)"
 						>{password || '-'}</code
 					>
@@ -622,7 +622,7 @@
 						type="button"
 						aria-label="Regenerate"
 						onclick={generate}
-						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-(--app-muted) transition hover:bg-(--app-surface) hover:text-(--app-text)"
+						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-(--app-muted) transition hover:bg-(--app-surface) hover:text-(--app-text)"
 					>
 						<i class="fa-solid fa-rotate"></i>
 					</button>
@@ -630,7 +630,7 @@
 						type="button"
 						aria-label="Copy password"
 						onclick={() => copyText(password, (v) => (pwCopied = v))}
-						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-(--app-muted) transition hover:bg-(--app-surface) hover:text-(--app-text)"
+						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-(--app-muted) transition hover:bg-(--app-surface) hover:text-(--app-text)"
 					>
 						<i class={pwCopied ? 'fa-solid fa-check text-emerald-400' : 'fa-solid fa-copy'}></i>
 					</button>
@@ -657,8 +657,8 @@
 				/>
 				<div class="mt-4 grid grid-cols-2 gap-2 text-sm">
 					{#each [{ key: 'lower', label: 'Lowercase (a-z)' }, { key: 'upper', label: 'Uppercase (A-Z)' }, { key: 'numbers', label: 'Numbers (0-9)' }, { key: 'symbols', label: 'Symbols (!@#)' }] as opt, i (i)}
-						<label
-							class="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 transition hover:bg-(--app-hover)"
+					<label
+						class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 transition hover:bg-(--app-hover)"
 						>
 							<input
 								type="checkbox"
@@ -709,14 +709,14 @@
 					type="color"
 					bind:value={color}
 					aria-label="Pick a color"
-					class="h-20 w-20 shrink-0 cursor-pointer rounded-xl border border-(--app-border) bg-transparent"
+					class="h-20 w-20 shrink-0 cursor-pointer rounded-md border border-(--app-border) bg-transparent"
 				/>
 				<div class="min-w-0 flex-1 space-y-1.5 text-sm">
 					{#each [{ label: 'HEX', value: color.toUpperCase() }, { label: 'RGB', value: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` }, { label: 'HSL', value: `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)` }] as row, i (i)}
 						<button
 							type="button"
 							onclick={() => copyText(row.value, (v) => (colorCopied = v))}
-							class="flex w-full items-center gap-3 rounded-lg px-2 py-1.5 text-left transition hover:bg-(--app-hover)"
+							class="flex w-full items-center gap-3 rounded-md px-2 py-1.5 text-left transition hover:bg-(--app-hover)"
 						>
 							<span class="w-9 shrink-0 text-xs font-semibold text-(--app-muted)">{row.label}</span>
 							<code class="flex-1 truncate font-mono text-(--app-text)">{row.value}</code>
@@ -738,7 +738,7 @@
 						type="button"
 						aria-label="Copy IP"
 						onclick={() => copyText(ip ?? '', (v) => (ipCopied = v))}
-						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
+						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
 					>
 						<i class={ipCopied ? 'fa-solid fa-check text-emerald-400' : 'fa-solid fa-copy'}></i>
 					</button>
@@ -750,7 +750,7 @@
 				<button
 					type="button"
 					onclick={flipCoin}
-					class="rounded-xl bg-(--app-accent) px-6 py-2.5 text-sm font-semibold text-[#111] transition hover:opacity-90"
+					class="rounded-md bg-(--app-accent) px-6 py-2.5 text-sm font-semibold text-[#111] transition hover:opacity-90"
 				>
 					Flip again
 				</button>
@@ -760,7 +760,7 @@
 				<div class="flex flex-wrap items-center justify-center gap-3">
 					{#each diceRolls as roll, i (i)}
 						<div
-							class="flex h-14 w-14 items-center justify-center rounded-xl bg-(--app-hover) text-2xl font-bold text-(--app-text)"
+							class="flex h-14 w-14 items-center justify-center rounded-md bg-(--app-hover) text-2xl font-bold text-(--app-text)"
 						>
 							{roll}
 						</div>
@@ -779,7 +779,7 @@
 							min="1"
 							max="10"
 							bind:value={diceCount}
-							class="w-14 rounded-lg bg-(--app-hover) px-2 py-1 text-center text-(--app-text) focus:outline-none"
+							class="w-14 rounded-md bg-(--app-hover) px-2 py-1 text-center text-(--app-text) focus:outline-none"
 						/>
 					</label>
 					<label class="flex items-center gap-1.5 text-(--app-muted)">
@@ -789,13 +789,13 @@
 							min="2"
 							max="100"
 							bind:value={diceSides}
-							class="w-16 rounded-lg bg-(--app-hover) px-2 py-1 text-center text-(--app-text) focus:outline-none"
+							class="w-16 rounded-md bg-(--app-hover) px-2 py-1 text-center text-(--app-text) focus:outline-none"
 						/>
 					</label>
 					<button
 						type="button"
 						onclick={rollDice}
-						class="rounded-xl bg-(--app-accent) px-5 py-1.5 font-semibold text-[#111] transition hover:opacity-90"
+						class="rounded-md bg-(--app-accent) px-5 py-1.5 font-semibold text-[#111] transition hover:opacity-90"
 					>
 						Roll
 					</button>
@@ -812,7 +812,7 @@
 						<input
 							type="number"
 							bind:value={rngMin}
-							class="w-20 rounded-lg bg-(--app-hover) px-2 py-1 text-center text-(--app-text) focus:outline-none"
+							class="w-20 rounded-md bg-(--app-hover) px-2 py-1 text-center text-(--app-text) focus:outline-none"
 						/>
 					</label>
 					<label class="flex items-center gap-1.5 text-(--app-muted)">
@@ -820,13 +820,13 @@
 						<input
 							type="number"
 							bind:value={rngMax}
-							class="w-20 rounded-lg bg-(--app-hover) px-2 py-1 text-center text-(--app-text) focus:outline-none"
+							class="w-20 rounded-md bg-(--app-hover) px-2 py-1 text-center text-(--app-text) focus:outline-none"
 						/>
 					</label>
 					<button
 						type="button"
 						onclick={rollRng}
-						class="rounded-xl bg-(--app-accent) px-5 py-1.5 font-semibold text-[#111] transition hover:opacity-90"
+						class="rounded-md bg-(--app-accent) px-5 py-1.5 font-semibold text-[#111] transition hover:opacity-90"
 					>
 						Generate
 					</button>

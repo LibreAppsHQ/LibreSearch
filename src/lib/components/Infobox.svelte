@@ -19,7 +19,7 @@
 	});
 </script>
 
-<aside class="overflow-hidden rounded-2xl border border-(--app-border) bg-[#171b25]">
+<aside class="overflow-hidden rounded-sm border border-(--app-border) bg-[#171b25]">
 	<!-- Hero image -->
 	{#if infobox.imageUrl}
 		<img
@@ -69,7 +69,7 @@
 				<button
 					type="button"
 					onclick={() => (expanded = !expanded)}
-					class="inline-flex items-center gap-2 rounded-full border border-(--app-border) bg-(--app-surface) px-4 py-1.5 text-sm text-(--app-text) transition hover:bg-(--app-hover)"
+					class="inline-flex items-center gap-2 rounded-md border border-(--app-border) bg-(--app-surface) px-4 py-1.5 text-sm text-(--app-text) transition hover:bg-(--app-hover)"
 				>
 					{expanded ? 'See less' : 'See more'}
 					<i class="fa-solid {expanded ? 'fa-minus' : 'fa-plus'} text-[10px]"></i>

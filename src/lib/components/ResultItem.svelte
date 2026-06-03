@@ -63,14 +63,14 @@
 	});
 </script>
 
-<article class="group rounded-2xl px-1 transition hover:bg-(--app-hover)">
+<article class="group rounded px-1 transition hover:bg-(--app-hover)">
 	<a
 		{href}
 		target={openInNewTab ? '_blank' : '_self'}
 		rel={noReferrer ? 'noreferrer noopener' : 'noopener'}
 		class={compact
-			? 'block rounded-2xl px-3 py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--app-accent)/50'
-			: 'block rounded-2xl px-3 py-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--app-accent)/50'}
+			? 'block rounded px-3 py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--app-accent)/50'
+			: 'block rounded px-3 py-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--app-accent)/50'}
 	>
 		<div class={compact ? 'space-y-0.5' : 'space-y-1'}>
 			<!-- Site breadcrumb row -->

@@ -86,12 +86,12 @@
 
 {#if visible && deferred}
 	<div
-		class="animate-slide-up fixed right-4 bottom-4 z-40 flex w-[calc(100%-2rem)] max-w-sm items-center gap-4 rounded-2xl border border-(--app-border) bg-(--app-background)/95 p-4 shadow-2xl shadow-black/40 backdrop-blur-md"
+		class="animate-slide-up fixed right-4 bottom-4 z-40 flex w-[calc(100%-2rem)] max-w-sm items-center gap-4 rounded-lg border border-(--app-border) bg-(--app-background)/95 p-4 shadow-xl shadow-black/30 backdrop-blur-sm"
 		role="dialog"
 		aria-labelledby="install-prompt-title"
 	>
 		<div
-			class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-(--app-accent)/15 text-(--app-accent)"
+			class="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-(--app-accent)/15 text-(--app-accent)"
 		>
 			<i class="fa-solid fa-download text-lg"></i>
 		</div>

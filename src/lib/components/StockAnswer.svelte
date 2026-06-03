@@ -110,7 +110,7 @@
 
 {#if match && (loading || quote)}
 	<section
-		class="mb-6 max-w-2xl overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
+		class="mb-6 max-w-2xl overflow-hidden rounded-sm border border-(--app-border) bg-(--app-surface)"
 		aria-label="Stock quote"
 	>
 		{#if loading && !quote}

@@ -251,13 +251,6 @@
 						/>
 					</div>
 				</div>
-				<a
-					href="/privacy"
-					class="hidden shrink-0 items-center gap-2 rounded-full bg-(--app-elevated) px-4 py-2.5 text-sm font-medium text-(--app-secondary) transition hover:opacity-90 md:inline-flex"
-				>
-					<i class="fa-solid fa-shield-halved text-emerald-400"></i>
-					Private Search
-				</a>
 				<BurnButton class="shrink-0" />
 				<SiteMenu class="shrink-0" />
 			</div>
@@ -363,7 +356,7 @@
 											type="button"
 											aria-label="Previous page"
 											onclick={() => goToPage(currentPage - 1)}
-											class="flex h-11 items-center justify-center rounded-full bg-(--app-surface) px-5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+											class="flex h-9 items-center justify-center rounded-full bg-(--app-surface) px-4 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
 										>
 											Prev
 										</button>
@@ -376,8 +369,8 @@
 											aria-current={p === currentPage ? 'page' : undefined}
 											onclick={() => goToPage(p)}
 											class={p === currentPage
-												? 'flex h-11 w-11 items-center justify-center rounded-full bg-(--app-accent) text-sm font-semibold text-[#111] transition'
-												: 'flex h-11 w-11 items-center justify-center rounded-full bg-(--app-surface) text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)'}
+												? 'flex h-9 w-9 items-center justify-center rounded-full bg-(--app-accent) text-sm font-semibold text-[#111] transition'
+												: 'flex h-9 w-9 items-center justify-center rounded-full bg-(--app-surface) text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)'}
 										>
 											{p}
 										</button>
@@ -388,7 +381,7 @@
 											type="button"
 											aria-label="Next page"
 											onclick={() => goToPage(currentPage + 1)}
-											class="flex h-11 items-center justify-center rounded-full bg-(--app-surface) px-6 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+											class="flex h-9 items-center justify-center rounded-full bg-(--app-surface) px-5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
 										>
 											Next
 										</button>
@@ -456,7 +449,49 @@
 	{/if}
 </main>
 
-<SiteFooter />
+<footer class="bg-[#1b1e21] px-6 py-5">
+	<div class="mx-auto grid w-full max-w-7xl grid-cols-3 items-center gap-6">
+		<!-- Left: logo + copyright -->
+		<div class="flex shrink-0 flex-col gap-1">
+			<a href="/" aria-label="LibreSearch home">
+				<Logo class="h-14 w-auto" />
+			</a>
+			<p class="text-xs text-white/90">
+				&copy; {new Date().getFullYear()} LibreSearch. All rights reserved.
+			</p>
+		</div>
+
+		<!-- Center: nav links -->
+		<nav class="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-white/90">
+			<a href="/privacy" class="transition hover:text-(--app-text)">Privacy Policy</a>
+			<a href="/about" class="transition hover:text-(--app-text)">About Us</a>
+			<a href="/press" class="transition hover:text-(--app-text)">Press</a>
+			<a href="/blog" class="transition hover:text-(--app-text)">Blog</a>
+		</nav>
+
+		<!-- Right: social icons -->
+		<div class="flex items-center justify-end gap-2">
+			<a
+				href="https://github.com/Arcbasehq/LibreSearch"
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label="GitHub"
+				class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-white transition hover:bg-indigo-500"
+			>
+				<i class="fa-brands fa-github text-sm"></i>
+			</a>
+			<a
+				href="https://mastodon.social/@libresearch"
+				target="_blank"
+				rel="me noopener noreferrer"
+				aria-label="Mastodon"
+				class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-white transition hover:bg-indigo-500"
+			>
+				<i class="fa-brands fa-mastodon text-sm"></i>
+			</a>
+		</div>
+	</div>
+</footer>
 
 {#if activeVideo}
 	<VideoViewer video={activeVideo} onclose={() => (activeVideo = null)} />

@@ -147,7 +147,7 @@
 	{@html jsonLd}
 </svelte:head>
 
-<main class="relative flex min-h-screen flex-col bg-(--app-background) text-(--app-text)">
+<main class="relative flex h-screen flex-col bg-(--app-background) text-(--app-text)">
 	<div class="absolute top-6 left-6 z-30">
 		<Clock />
 	</div>
@@ -157,7 +157,7 @@
 	</div>
 
 	<!-- Centered hero -->
-	<div class="relative flex min-h-screen flex-col items-center px-6 pt-[21vh]">
+	<div class="relative flex flex-1 flex-col items-center px-6 pt-[21vh]">
 		<div class="w-full max-w-xl text-center">
 			<a href="/" class="inline-flex items-center gap-2.5" aria-label="LibreSearch home">
 				<Logo class="h-24 w-auto max-w-full sm:h-28" />
@@ -188,54 +188,3 @@
 		</nav>
 	</footer>
 </main>
-
-{#if showDefaultModal}
-	<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-	<div
-		class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
-		onclick={() => (showDefaultModal = false)}
-	>
-		<div
-			bind:this={dialogEl}
-			tabindex="-1"
-			class="w-full max-w-md rounded-xl bg-white p-6 text-[#0c0d0e] shadow-xl focus:outline-none"
-			role="dialog"
-			aria-modal="true"
-			aria-labelledby="default-modal-title"
-			onclick={(e) => e.stopPropagation()}
-		>
-			<div class="flex items-start justify-between gap-4">
-				<h3 id="default-modal-title" class="text-xl font-bold">
-					Set LibreSearch as your default in {defaultSteps[browser].name}
-				</h3>
-				<button
-					type="button"
-					class="-mt-1 -mr-1 rounded p-1 text-2xl leading-none text-black/50 transition hover:text-black"
-					aria-label="Close"
-					onclick={() => (showDefaultModal = false)}
-				>
-					×
-				</button>
-			</div>
-
-			<ol class="mt-4 list-decimal space-y-3 pl-5 text-sm text-black/80">
-				{#each defaultSteps[browser].steps as step, i (i)}
-					<li>{step}</li>
-				{/each}
-			</ol>
-
-			<p class="mt-4 text-xs text-black/50">
-				Browsers don’t allow a site to change your default search engine for you — it’s a one-time
-				setting you confirm yourself.
-			</p>
-
-			<button
-				type="button"
-				class="mt-6 w-full rounded-md bg-[#5b5bf0] px-4 py-2.5 font-medium text-white transition hover:bg-[#4a4ae0]"
-				onclick={() => (showDefaultModal = false)}
-			>
-				Got it
-			</button>
-		</div>
-	</div>
-{/if}

@@ -223,8 +223,8 @@
 										onclick={() => themeStore.setTheme(key)}
 										class="group flex flex-col items-center gap-2"
 									>
-										<div
-											class="relative h-[76px] w-[104px] overflow-hidden rounded-xl border-2 transition"
+						<div
+							class="relative h-[76px] w-[104px] overflow-hidden rounded-lg border-2 transition"
 											style="background:{theme.background}; border-color:{$themeStore === key
 												? theme.accent
 												: 'rgba(255,255,255,0.12)'}"
@@ -265,7 +265,7 @@
 						{/if}
 
 						<div
-							class="divide-y divide-(--app-border) overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
+							class="divide-y divide-(--app-border) overflow-hidden rounded-lg border border-(--app-border) bg-(--app-surface)"
 						>
 							{#each categoryGroups[section.id] as group, gi (gi)}
 								{#each group.ids as id (id)}

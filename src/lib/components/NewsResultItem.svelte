@@ -7,18 +7,18 @@
 	let openInNewTab = $derived(getToggle($settingsStore, 'open-new-tab', true));
 </script>
 
-<article class="group rounded-2xl px-1 py-1 transition hover:bg-(--app-hover)">
+<article class="group rounded px-1 py-1 transition hover:bg-(--app-hover)">
 	<a
 		href={result.url}
 		target={openInNewTab ? '_blank' : '_self'}
 		rel="noreferrer noopener"
-		class="flex gap-4 rounded-2xl px-3 py-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--app-accent)/50"
+		class="flex gap-4 rounded px-3 py-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--app-accent)/50"
 	>
 		{#if result.thumbnail}
 			<img
 				src={result.thumbnail}
 				alt=""
-				class="h-[72px] w-28 shrink-0 rounded-xl object-cover"
+				class="h-[72px] w-28 shrink-0 rounded-md object-cover"
 				onerror={(e) => {
 					(e.currentTarget as HTMLImageElement).style.display = 'none';
 				}}

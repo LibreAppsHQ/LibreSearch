@@ -27,6 +27,12 @@
 	--app-hover: rgba(255, 255, 255, 0.06);
 	--app-skeleton: rgba(255, 255, 255, 0.06);
 	--app-skeleton-shine: rgba(255, 255, 255, 0.12);
+	/* Radius scale — chips/small=3px, controls/inputs=6px, panels/cards=8px, overlays=10px */
+	--radius-xs: 3px;
+	--radius-sm: 4px;
+	--radius-md: 6px;
+	--radius-lg: 8px;
+	--radius-overlay: 10px;
 	background: var(--app-background);
 	color: var(--app-text);
 	font-family:
@@ -129,7 +135,7 @@ select {
 	position: relative;
 	overflow: hidden;
 	background: var(--app-skeleton);
-	border-radius: 0.5rem;
+	border-radius: var(--radius-sm);
 }
 
 .skeleton::after {

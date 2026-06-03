@@ -52,15 +52,15 @@
 
 {#if loading || answer}
 	<section
-		class="mb-5 rounded-2xl border border-(--app-border) bg-(--app-surface) p-4"
+		class="mb-5 rounded-lg border border-(--app-border) bg-(--app-surface) p-4"
 		aria-label="AI answer"
 	>
 		<div class="mb-2 flex items-center gap-2 text-xs font-semibold text-(--app-accent)">
 			<i class="fa-solid fa-wand-magic-sparkles"></i>
 			<span>AI answer</span>
-			<span class="rounded-full bg-(--app-hover) px-2 py-0.5 text-[10px] text-(--app-muted)"
-				>Beta</span
-			>
+		<span class="rounded bg-(--app-hover) px-2 py-0.5 text-[10px] text-(--app-muted)"
+			>Beta</span
+		>
 		</div>
 
 		{#if loading}
@@ -76,7 +76,7 @@
 							target="_blank"
 							rel="noopener noreferrer"
 							title={source.title}
-							class="inline-flex max-w-[220px] items-center gap-1.5 rounded-full bg-(--app-hover) px-2.5 py-1 text-[11px] text-(--app-secondary) transition hover:opacity-80"
+							class="inline-flex max-w-[220px] items-center gap-1.5 rounded bg-(--app-hover) px-2.5 py-1 text-[11px] text-(--app-secondary) transition hover:opacity-80"
 						>
 							<span class="text-(--app-muted)">{i + 1}</span>
 							<span class="truncate">{hostname(source.url)}</span>

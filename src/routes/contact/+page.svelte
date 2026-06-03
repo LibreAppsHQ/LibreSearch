@@ -123,7 +123,7 @@
 	<div class="mx-auto w-full max-w-[1400px] px-6">
 		<div class="grid grid-cols-[1fr_auto_1fr] items-center py-5">
 			<a href="/" class="justify-self-start">
-				<Logo class="h-10 w-25 rounded-full" />
+				<Logo class="h-10 w-25" />
 			</a>
 			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">Contact</p>
 			<SiteMenu class="justify-self-end" />
@@ -147,8 +147,8 @@
 				<!-- Form -->
 				<form
 					onsubmit={submit}
-					class="rounded-2xl border border-(--app-border) bg-[#171b25]/80 p-7 backdrop-blur-sm"
-					novalidate
+				class="rounded-lg border border-(--app-border) bg-[#171b25] p-7"
+				novalidate
 				>
 					<!-- Honeypot: real users never see/fill this; bots autofill it. -->
 					<input
@@ -170,8 +170,8 @@
 								required
 								autocomplete="name"
 								maxlength="100"
-								class="w-full rounded-xl border border-(--app-border) bg-transparent px-4 py-2.5 text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
-								placeholder="Your name"
+							class="w-full rounded-md border border-(--app-border) bg-transparent px-4 py-2.5 text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
+							placeholder="Your name"
 							/>
 						</label>
 						<label class="block">
@@ -182,8 +182,8 @@
 								required
 								autocomplete="email"
 								maxlength="200"
-								class="w-full rounded-xl border border-(--app-border) bg-transparent px-4 py-2.5 text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
-								placeholder="you@example.com"
+							class="w-full rounded-md border border-(--app-border) bg-transparent px-4 py-2.5 text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
+							placeholder="you@example.com"
 							/>
 						</label>
 					</div>
@@ -192,7 +192,7 @@
 						<span class="mb-2 block text-sm font-medium text-(--app-text)">Topic</span>
 						<select
 							bind:value={subject}
-							class="w-full rounded-xl border border-(--app-border) bg-[#171b25] px-4 py-2.5 text-(--app-text) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
+							class="w-full rounded-md border border-(--app-border) bg-[#171b25] px-4 py-2.5 text-(--app-text) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
 						>
 							{#each subjectOptions as opt (opt.value)}
 								<option value={opt.value}>{opt.label}</option>
@@ -207,7 +207,7 @@
 							required
 							rows="6"
 							maxlength="5000"
-							class="w-full resize-y rounded-xl border border-(--app-border) bg-transparent px-4 py-3 text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
+							class="w-full resize-y rounded-md border border-(--app-border) bg-transparent px-4 py-3 text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
 							placeholder="What's on your mind?"
 						></textarea>
 						<span class="mt-1 block text-xs text-(--app-muted)">{message.length} / 5000</span>
@@ -221,8 +221,8 @@
 					{#if result}
 						<div
 							class={result.type === 'success'
-								? 'mt-5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-300'
-								: 'mt-5 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300'}
+							? 'mt-5 rounded-md border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-300'
+							: 'mt-5 rounded-md border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300'}
 							role={result.type === 'success' ? 'status' : 'alert'}
 						>
 							{result.msg}
@@ -232,7 +232,7 @@
 					<button
 						type="submit"
 						disabled={submitting || !captchaVerified}
-						class="mt-6 inline-flex items-center gap-2 rounded-full bg-(--app-accent) px-6 py-2.5 text-sm font-semibold text-[#111] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+						class="mt-6 inline-flex items-center gap-2 rounded-md bg-(--app-accent) px-6 py-2.5 text-sm font-semibold text-[#111] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						{#if submitting}
 							<i class="fa-solid fa-circle-notch fa-spin text-xs"></i>
@@ -245,9 +245,9 @@
 				</form>
 			{:else}
 				<!-- Form disabled: backend not configured. -->
-				<div class="rounded-2xl border border-(--app-border) bg-[#171b25]/80 p-7 backdrop-blur-sm">
-					<div
-						class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/15 text-amber-400"
+			<div class="rounded-lg border border-(--app-border) bg-[#171b25] p-7">
+				<div
+					class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-amber-500/15 text-amber-400"
 					>
 						<i class="fa-solid fa-envelope-open-text text-xl"></i>
 					</div>
@@ -271,9 +271,9 @@
 
 			<!-- Sidebar: notes -->
 			<aside class="space-y-6">
-				<div class="rounded-2xl border border-(--app-border) bg-[#171b25]/60 p-6">
-					<h2 class="mb-3 text-sm font-semibold tracking-wider text-(--app-muted) uppercase">
-						Email us
+			<div class="rounded-lg border border-(--app-border) bg-[#171b25] p-6">
+				<h2 class="mb-3 text-sm font-semibold tracking-wider text-(--app-muted) uppercase">
+					Email us
 					</h2>
 					<a
 						href="mailto:{contactEmail}"
@@ -286,9 +286,9 @@
 						Prefer your own mail client? Reach us directly any time.
 					</p>
 				</div>
-				<div class="rounded-2xl border border-(--app-border) bg-[#171b25]/60 p-6">
-					<h2 class="mb-3 text-sm font-semibold tracking-wider text-(--app-muted) uppercase">
-						A few notes
+			<div class="rounded-lg border border-(--app-border) bg-[#171b25] p-6">
+				<h2 class="mb-3 text-sm font-semibold tracking-wider text-(--app-muted) uppercase">
+					A few notes
 					</h2>
 					<ul class="space-y-3 text-sm leading-6 text-(--app-muted)">
 						<li>

@@ -48,7 +48,7 @@
 	<div class="mx-auto w-full max-w-[1400px] px-6">
 		<div class="grid grid-cols-[1fr_auto_1fr] items-center py-5">
 			<a href="/" class="justify-self-start">
-				<Logo class="h-10 w-25 rounded-full" />
+				<Logo class="h-10 w-25" />
 			</a>
 			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
 				About Us
@@ -149,9 +149,9 @@
 
 		<div class="grid gap-6 sm:grid-cols-3">
 			{#each [{ icon: 'fa-eye-slash', title: 'No tracking', color: 'text-emerald-400', bg: 'bg-emerald-500/15', desc: 'Search queries are not stored or associated with an identity.' }, { icon: 'fa-database', title: 'No profiles', color: 'text-blue-400', bg: 'bg-blue-500/15', desc: 'We do not build advertising or behavioral profiles from search activity.' }, { icon: 'fa-lock', title: 'Local storage', color: 'text-violet-400', bg: 'bg-violet-500/15', desc: 'Settings and preferences remain in the browser and are not synced.' }] as pillar, i (i)}
-				<div class="rounded-2xl border border-(--app-border) bg-[#171b25]/80 p-7 backdrop-blur-sm">
+				<div class="rounded-sm border border-(--app-border) bg-[#171b25]/80 p-7 backdrop-blur-sm">
 					<div
-						class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl {pillar.bg} {pillar.color}"
+						class="mb-4 flex h-12 w-12 items-center justify-center rounded-sm {pillar.bg} {pillar.color}"
 					>
 						<i class="fa-solid {pillar.icon} text-xl"></i>
 					</div>
@@ -184,9 +184,9 @@
 			<div class="space-y-3">
 				{#each [{ icon: 'fa-keyboard', label: 'You enter a query', color: 'text-(--app-accent)', bg: 'bg-(--app-accent)/10' }, { icon: 'fa-server', label: 'Request is proxied anonymously', color: 'text-blue-400', bg: 'bg-blue-500/10' }, { icon: 'fa-globe', label: 'Results are returned', color: 'text-emerald-400', bg: 'bg-emerald-500/10' }, { icon: 'fa-display', label: 'No data is stored', color: 'text-violet-400', bg: 'bg-violet-500/10' }] as step, i (i)}
 					<div
-						class="flex items-center gap-4 rounded-2xl border border-(--app-border) bg-[#171b25]/80 px-5 py-4"
+						class="flex items-center gap-4 rounded-sm border border-(--app-border) bg-[#171b25]/80 px-5 py-4"
 					>
-						<div class="flex h-9 w-9 items-center justify-center rounded-xl {step.bg} {step.color}">
+						<div class="flex h-9 w-9 items-center justify-center rounded-md {step.bg} {step.color}">
 							<i class="fa-solid {step.icon} text-sm"></i>
 						</div>
 						<span class="text-sm font-medium">{step.label}</span>
@@ -205,7 +205,7 @@
 
 		<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 			{#each [{ icon: 'fa-newspaper', title: 'News', desc: 'Top stories from across the web.' }, { icon: 'fa-play', title: 'Videos', desc: 'Search video content.' }, { icon: 'fa-image', title: 'Images', desc: 'Visual search results.' }, { icon: 'fa-bolt', title: 'Instant answers', desc: 'Quick factual summaries.' }, { icon: 'fa-clock-rotate-left', title: 'Search history', desc: 'Optional local history.' }, { icon: 'fa-palette', title: 'Themes', desc: 'Light and dark modes.' }] as f, i (i)}
-				<div class="flex gap-4 rounded-2xl border border-(--app-border) bg-[#171b25]/80 p-5">
+				<div class="flex gap-4 rounded-sm border border-(--app-border) bg-[#171b25] p-5">
 					<div class="flex h-8 w-8 items-center justify-center rounded-lg text-(--app-accent)">
 						<i class="fa-solid {f.icon} text-sm"></i>
 					</div>
@@ -228,7 +228,7 @@
 
 		<div class="space-y-3">
 			{#each [{ q: 'Do you log searches?', a: 'No. Queries are not stored or tied to identity.' }, { q: 'Do I need an account?', a: 'No account is required.' }, { q: 'How is this funded?', a: 'The project is independently maintained.' }, { q: 'Where is data stored?', a: 'Settings remain in the browser locally.' }, { q: 'Where do results come from?', a: 'An independent index and proxy system.' }] as item, i (i)}
-				<details class="group rounded-2xl border border-(--app-border) bg-[#171b25]/80 px-6 py-5">
+				<details class="group rounded-sm border border-(--app-border) bg-[#171b25] px-6 py-5">
 					<summary
 						class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold"
 					>

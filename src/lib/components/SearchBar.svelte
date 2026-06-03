@@ -222,6 +222,7 @@
 
 	onMount(() => {
 		historyStore.load();
+		inputElement?.focus();
 		return () => {
 			suggestionController?.abort();
 			if (suggestionTimer) clearTimeout(suggestionTimer);
@@ -350,9 +351,9 @@
 				{#each dropdownItems as item, index (item.type + item.text)}
 					{@const m = splitMatch(item.text)}
 					<div
-						class={index === activeIndex
-							? 'group flex w-full items-center gap-3 rounded-xl bg-(--app-surface) px-3 py-2.5'
-							: 'group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 transition hover:bg-(--app-hover)'}
+					class={index === activeIndex
+						? 'group flex w-full items-center gap-3 rounded-md bg-(--app-surface) px-3 py-2.5'
+						: 'group flex w-full items-center gap-3 rounded-md px-3 py-2.5 transition hover:bg-(--app-hover)'}
 					>
 						{#if item.type === 'history' || showSuggestionIcons}
 							<i
