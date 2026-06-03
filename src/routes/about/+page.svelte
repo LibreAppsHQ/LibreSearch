@@ -99,9 +99,6 @@
 					There are no query logs, no user profiles, and no cross-site tracking. Searches are not
 					tied to an identity.
 				</p>
-<<<<<<< HEAD
-=======
->>>>>>> 8fa4add (removed make it your default button on the about page)
 			</div>
 
 			<img
