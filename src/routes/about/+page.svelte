@@ -100,14 +100,6 @@
 					tied to an identity.
 				</p>
 <<<<<<< HEAD
-
-				<button
-					type="button"
-					onclick={openDefaultModal}
-					class="mt-8 inline-block rounded-md border border-white px-6 py-3 text-base font-medium text-white transition hover:bg-white hover:text-[#5b5bf0]"
-				>
-					Make it your default
-				</button>
 =======
 >>>>>>> 8fa4add (removed make it your default button on the about page)
 			</div>
