@@ -175,15 +175,6 @@
 				/>
 			</div>
 		</div>
-
-		<!-- Scroll-down indicator -->
-		<a
-			href="#without-tracking"
-			aria-label="Scroll down"
-			class="absolute bottom-8 left-1/2 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border border-(--app-accent) text-(--app-accent) transition hover:bg-(--app-accent)/10"
-		>
-			<i class="fas fa-chevron-down"></i>
-		</a>
 	</div>
 
 	<!-- Footer -->
