@@ -191,9 +191,7 @@
 
 	<!-- Features -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 py-16 sm:py-20">
-		<p
-			class="mb-3 text-center text-xs font-semibold tracking-widest text-(--app-accent) uppercase"
-		>
+		<p class="mb-3 text-center text-xs font-semibold tracking-widest text-(--app-accent) uppercase">
 			What it does
 		</p>
 		<h2 class="mb-12 text-center text-2xl font-bold tracking-tight sm:text-3xl">
@@ -220,9 +218,7 @@
 
 	<!-- Permissions -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 py-16 sm:py-20">
-		<p
-			class="mb-3 text-center text-xs font-semibold tracking-widest text-(--app-accent) uppercase"
-		>
+		<p class="mb-3 text-center text-xs font-semibold tracking-widest text-(--app-accent) uppercase">
 			Permissions, explained
 		</p>
 		<h2 class="mb-4 text-center text-2xl font-bold tracking-tight sm:text-3xl">

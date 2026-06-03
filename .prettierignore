@@ -7,3 +7,7 @@ bun.lockb
 
 # Miscellaneous
 /static/
+
+# Generated (Tailwind CLI --minify output for the browser extension)
+/extension/options/options.css
+/extension/popup/popup.css

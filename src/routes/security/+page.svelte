@@ -58,9 +58,8 @@
 		<p class="mt-4 text-base leading-7 text-(--app-muted)">
 			Found something? We want to hear from you. Send a detailed report — including steps to
 			reproduce and impact — via
-			<a class="text-(--app-accent) hover:underline" href="/contact">/contact</a> and pick "Security
-			disclosure" as the subject. We'll reply with a secure channel for follow-up if the report warrants
-			one.
+			<a class="text-(--app-accent) hover:underline" href="/contact">/contact</a> and pick "Security disclosure"
+			as the subject. We'll reply with a secure channel for follow-up if the report warrants one.
 		</p>
 
 		<div

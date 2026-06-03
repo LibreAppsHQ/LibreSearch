@@ -304,8 +304,8 @@
 			</h2>
 			<ul class="space-y-2 text-sm leading-6 text-(--app-muted)">
 				<li>
-					<span class="text-(--app-text)">Use a privacy-hardened browser</span> — Tor Browser or
-					Firefox with resist-fingerprinting normalise most of these values.
+					<span class="text-(--app-text)">Use a privacy-hardened browser</span> — Tor Browser or Firefox
+					with resist-fingerprinting normalise most of these values.
 				</li>
 				<li>
 					<span class="text-(--app-text)">Hide your IP</span> — a VPN or Tor replaces the address shown

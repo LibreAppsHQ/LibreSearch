@@ -73,9 +73,7 @@
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
-				Syntax
-			</p>
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">Syntax</p>
 			<SiteMenu class="justify-self-end" />
 		</div>
 	</div>
@@ -86,15 +84,13 @@
 		<h1 class="text-3xl font-bold tracking-tight sm:text-4xl">Search syntax</h1>
 		<p class="mt-4 text-base leading-7 text-(--app-muted)">
 			LibreSearch supports the same operators most search engines do, plus a system of
-			<a href="#bangs" class="text-(--app-accent) hover:underline">bang shortcuts</a> for searching
-			other sites in one keystroke.
+			<a href="#bangs" class="text-(--app-accent) hover:underline">bang shortcuts</a> for searching other
+			sites in one keystroke.
 		</p>
 
 		<!-- Operators -->
 		<h2 class="mt-12 text-xl font-semibold tracking-tight">Operators</h2>
-		<div
-			class="mt-6 overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
-		>
+		<div class="mt-6 overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)">
 			<table class="w-full text-sm">
 				<thead
 					class="bg-(--app-hover) text-left text-xs tracking-widest text-(--app-muted) uppercase"
@@ -126,9 +122,7 @@
 			>) anywhere in your query to redirect the search to another site. Order doesn't matter — both
 			<code class="font-mono">!w turing</code> and <code class="font-mono">turing !w</code> work.
 		</p>
-		<div
-			class="mt-6 overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
-		>
+		<div class="mt-6 overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)">
 			<table class="w-full text-sm">
 				<thead
 					class="bg-(--app-hover) text-left text-xs tracking-widest text-(--app-muted) uppercase"

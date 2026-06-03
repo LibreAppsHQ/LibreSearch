@@ -8,8 +8,7 @@
  *  - a bare "tsla"      → candidate ticker, but only shown when it resolves to an
  *                         EXACT ticker so ordinary words never pop a card
  */
-const STOCK_KEYWORD =
-	/\b(stocks?|shares?|share\s+price|stock\s+price|ticker|nyse|nasdaq)\b/;
+const STOCK_KEYWORD = /\b(stocks?|shares?|share\s+price|stock\s+price|ticker|nyse|nasdaq)\b/;
 
 const STRIP =
 	/\b(stock\s+price|share\s+price|stocks?|shares?|ticker|price|quote|of|the|for|on|nyse|nasdaq)\b/g;
@@ -68,11 +67,7 @@ export function detectStockTerm(query: string): StockMatch | null {
 
 	// Keyword form — "tesla stock", "share price of caterpillar".
 	if (STOCK_KEYWORD.test(lower)) {
-		const term = lower
-			.replace(STRIP, ' ')
-			.replace(/\$/g, ' ')
-			.replace(/\s+/g, ' ')
-			.trim();
+		const term = lower.replace(STRIP, ' ').replace(/\$/g, ' ').replace(/\s+/g, ' ').trim();
 		if (term) return { term, exact: false };
 	}
 

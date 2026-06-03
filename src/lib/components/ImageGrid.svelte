@@ -153,9 +153,7 @@
 					style={`left:${caretLeft}px;transform:translateX(-50%);`}
 				></i>
 
-				<div
-					class="relative rounded-2xl border border-(--app-border) bg-(--app-surface) p-5"
-				>
+				<div class="relative rounded-2xl border border-(--app-border) bg-(--app-surface) p-5">
 					<button
 						type="button"
 						onclick={close}

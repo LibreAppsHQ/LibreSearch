@@ -170,9 +170,7 @@
 
 	<!-- Deployment snippets -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 py-16 sm:py-20">
-		<p
-			class="mb-3 text-center text-xs font-semibold tracking-widest text-(--app-accent) uppercase"
-		>
+		<p class="mb-3 text-center text-xs font-semibold tracking-widest text-(--app-accent) uppercase">
 			Deployment templates
 		</p>
 		<h2 class="mb-12 text-center text-2xl font-bold tracking-tight sm:text-3xl">
@@ -184,9 +182,7 @@
 				<article
 					class="overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
 				>
-					<header
-						class="flex items-start justify-between gap-4 border-b border-(--app-border) p-6"
-					>
+					<header class="flex items-start justify-between gap-4 border-b border-(--app-border) p-6">
 						<div>
 							<div class="flex items-center gap-3">
 								<i class="{s.icon} text-2xl text-(--app-accent)"></i>

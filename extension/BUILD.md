@@ -8,7 +8,7 @@ minifier, bundler, or transpiler).
 ## Generated files
 
 | Shipped file          | Source file               |
-|-----------------------|---------------------------|
+| --------------------- | ------------------------- |
 | `popup/popup.css`     | `popup/popup.src.css`     |
 | `options/options.css` | `options/options.src.css` |
 

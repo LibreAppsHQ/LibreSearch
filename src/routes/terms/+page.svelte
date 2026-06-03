@@ -61,8 +61,8 @@
 		</div>
 		<h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Terms of Service</h1>
 		<p class="mx-auto mt-4 max-w-lg text-base leading-7 text-(--app-muted)">
-			The short, plain-language agreement for using LibreSearch. No dense legalese — just what you can
-			expect from us, and what we ask of you.
+			The short, plain-language agreement for using LibreSearch. No dense legalese — just what you
+			can expect from us, and what we ask of you.
 		</p>
 		<p class="mt-4 text-xs font-medium tracking-wide text-(--app-muted) uppercase">
 			Last updated · {lastUpdated}
@@ -77,9 +77,7 @@
 		<!-- Sticky table of contents -->
 		<aside class="hidden lg:block">
 			<nav class="sticky top-28 space-y-1">
-				<p
-					class="mb-3 px-3 text-xs font-semibold tracking-widest text-(--app-muted) uppercase"
-				>
+				<p class="mb-3 px-3 text-xs font-semibold tracking-widest text-(--app-muted) uppercase">
 					On this page
 				</p>
 				{#each sections as s, i (i)}
@@ -98,10 +96,11 @@
 			<section id="acceptance" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Acceptance of these terms</h2>
 				<p class="text-sm leading-7 text-(--app-muted)">
-					LibreSearch is a private search engine operated by Arcbase. By using it, you agree to these
-					terms. If you don't agree, please don't use the service. These terms work alongside our
-					<a href="/privacy" class="text-(--app-accent) hover:underline">Privacy Policy</a>,
-					which explains how we handle data.
+					LibreSearch is a private search engine operated by Arcbase. By using it, you agree to
+					these terms. If you don't agree, please don't use the service. These terms work alongside
+					our
+					<a href="/privacy" class="text-(--app-accent) hover:underline">Privacy Policy</a>, which
+					explains how we handle data.
 				</p>
 			</section>
 
@@ -131,9 +130,7 @@
 				</ul>
 				<p class="mt-4 text-sm leading-7 text-(--app-muted)">
 					We use measures such as rate limiting and a privacy-friendly
-					<a href="/design" class="text-(--app-accent) hover:underline"
-						>proof-of-work challenge</a
-					>
+					<a href="/design" class="text-(--app-accent) hover:underline">proof-of-work challenge</a>
 					to detect and slow down abuse. Automated traffic may be challenged or blocked.
 				</p>
 			</section>
@@ -155,17 +152,17 @@
 				<p class="text-sm leading-7 text-(--app-muted)">
 					The LibreSearch name, logo, and interface are the property of Arcbase. Please don't copy,
 					stretch, recolor, or otherwise misuse our brand assets — see the
-					<a href="/press" class="text-(--app-accent) hover:underline">press page</a> for approved
-					usage. Content surfaced in results remains the property of its respective owners.
+					<a href="/press" class="text-(--app-accent) hover:underline">press page</a> for approved usage.
+					Content surfaced in results remains the property of its respective owners.
 				</p>
 			</section>
 
 			<section id="no-warranty" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">No warranty</h2>
 				<p class="text-sm leading-7 text-(--app-muted)">
-					LibreSearch is provided "as is" and "as available", without warranties of any kind, whether
-					express or implied. We don't promise the service will be error-free, secure, or fit for a
-					particular purpose, to the fullest extent permitted by law.
+					LibreSearch is provided "as is" and "as available", without warranties of any kind,
+					whether express or implied. We don't promise the service will be error-free, secure, or
+					fit for a particular purpose, to the fullest extent permitted by law.
 				</p>
 			</section>
 
@@ -182,7 +179,8 @@
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Changes to these terms</h2>
 				<p class="text-sm leading-7 text-(--app-muted)">
 					We may update these terms from time to time. When we do, we'll revise the "last updated"
-					date above. Continuing to use LibreSearch after a change means you accept the updated terms.
+					date above. Continuing to use LibreSearch after a change means you accept the updated
+					terms.
 				</p>
 			</section>
 

@@ -125,9 +125,7 @@
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
-				Compare
-			</p>
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">Compare</p>
 			<SiteMenu class="justify-self-end" />
 		</div>
 	</div>
@@ -232,13 +230,13 @@
 			<h2 class="mb-3 text-lg font-semibold">How we put this together</h2>
 			<ul class="space-y-3 text-sm leading-7 text-(--app-muted)">
 				<li>
-					<span class="text-(--app-text)">Sources.</span> Each engine's public privacy policy
-					and product documentation as of the latest review. Where a vendor's claims and independent
+					<span class="text-(--app-text)">Sources.</span> Each engine's public privacy policy and
+					product documentation as of the latest review. Where a vendor's claims and independent
 					reporting disagree, we mark the row <em>Partial</em>.
 				</li>
 				<li>
-					<span class="text-(--app-text)">"No filter bubble."</span> Means results are not tailored
-					to a user profile built from prior searches. It does not mean results are identical across regions
+					<span class="text-(--app-text)">"No filter bubble."</span> Means results are not tailored to
+					a user profile built from prior searches. It does not mean results are identical across regions
 					or languages.
 				</li>
 				<li>
@@ -247,8 +245,8 @@
 					on partner indices on purpose, and we're upfront about ours.
 				</li>
 				<li>
-					<span class="text-(--app-text)">Spotted something off?</span> Open an issue or email us
-					and we'll fix the row — accuracy matters more here than marketing.
+					<span class="text-(--app-text)">Spotted something off?</span> Open an issue or email us and
+					we'll fix the row — accuracy matters more here than marketing.
 				</li>
 			</ul>
 		</div>

@@ -80,6 +80,7 @@
 
 		<div class="mt-10 border-t border-(--app-border) pt-10">
 			<div class="prose-app">
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -- trusted, static authored post content -->
 				{@html post.body}
 			</div>
 		</div>

@@ -3,8 +3,10 @@
 
 	let { places } = $props<{ places: PlaceResult[] }>();
 
-	// The currently focused place — drives the embedded map.
+	// The currently focused place — drives the embedded map. It's $state (not
+	// $derived) because clicks reassign it; an effect re-syncs it to the top hit.
 	// svelte-ignore state_referenced_locally
+	// eslint-disable-next-line svelte/prefer-writable-derived
 	let selected = $state<PlaceResult>(places[0]);
 
 	// Reset focus to the top hit whenever a new search comes in.
@@ -13,6 +15,7 @@
 	});
 
 	function embedSrc(place: PlaceResult): string {
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity -- transient, not reactive state
 		const params = new URLSearchParams({ layer: 'mapnik' });
 		if (place.boundingBox) {
 			const [south, north, west, east] = place.boundingBox;

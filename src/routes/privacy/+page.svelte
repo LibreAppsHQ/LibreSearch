@@ -77,9 +77,7 @@
 		<!-- Sticky table of contents -->
 		<aside class="hidden lg:block">
 			<nav class="sticky top-28 space-y-1">
-				<p
-					class="mb-3 px-3 text-xs font-semibold tracking-widest text-(--app-muted) uppercase"
-				>
+				<p class="mb-3 px-3 text-xs font-semibold tracking-widest text-(--app-muted) uppercase">
 					On this page
 				</p>
 				{#each sections as s, i (i)}
@@ -98,10 +96,11 @@
 			<section id="overview" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Overview</h2>
 				<p class="text-sm leading-7 text-(--app-muted)">
-					LibreSearch is a private search engine operated by Arcbase. We designed it so that the most
-					private option is the default — and the only option. We do not run ads, we do not build
-					advertising profiles, and we do not sell data. This page explains the small amount of data
-					that is involved in running the service and the large amount we deliberately never touch.
+					LibreSearch is a private search engine operated by Arcbase. We designed it so that the
+					most private option is the default — and the only option. We do not run ads, we do not
+					build advertising profiles, and we do not sell data. This page explains the small amount
+					of data that is involved in running the service and the large amount we deliberately never
+					touch.
 				</p>
 			</section>
 
@@ -113,9 +112,7 @@
 				</p>
 				<ul class="space-y-3">
 					{#each [{ t: 'Transient request data', d: 'When you search, your query passes through our server so it can be forwarded anonymously. It is used only to return your results and is not written to a persistent search log tied to you.' }, { t: 'Abuse protection', d: 'We apply rate limiting to prevent automated abuse. This may briefly reference an IP address in memory, but it is not stored to build a history of your activity.' }, { t: 'Aggregate health metrics', d: 'We may count anonymous, aggregate totals (such as total requests per day) to keep the service healthy. These contain no queries and no identifiers.' }, { t: 'Error diagnostics', d: 'When something breaks, our error-monitoring tool (Sentry) records technical details about the crash — error type, stack trace, browser and page. We disable personal-data collection and strip IP addresses, so these reports are not tied to your identity and contain no search queries.' }] as item, i (i)}
-						<li
-							class="flex gap-3 rounded-xl border border-(--app-border) bg-(--app-surface) p-4"
-						>
+						<li class="flex gap-3 rounded-xl border border-(--app-border) bg-(--app-surface) p-4">
 							<i class="fa-solid fa-circle-info mt-1 shrink-0 text-sm text-(--app-accent)"></i>
 							<div>
 								<p class="text-sm font-semibold text-(--app-text)">{item.t}</p>
@@ -170,8 +167,8 @@
 				<p class="text-sm leading-7 text-(--app-muted)">
 					To return results we rely on an upstream search index, which receives your query through
 					our anonymizing proxy but not your identity. We do not embed third-party advertising,
-					analytics, or social tracking scripts on LibreSearch. We have no business model that depends
-					on sharing your data, so we don't.
+					analytics, or social tracking scripts on LibreSearch. We have no business model that
+					depends on sharing your data, so we don't.
 				</p>
 				<p class="mt-3 text-sm leading-7 text-(--app-muted)">
 					The one diagnostic service we use is <a
@@ -179,9 +176,9 @@
 						target="_blank"
 						rel="noopener noreferrer"
 						class="text-(--app-accent) hover:underline">Sentry</a
-					> for error monitoring, so we can find and fix crashes. It only receives technical error
-					reports — configured with personal-data collection off and IP addresses removed — never
-					your searches or a profile of you.
+					> for error monitoring, so we can find and fix crashes. It only receives technical error reports
+					— configured with personal-data collection off and IP addresses removed — never your searches
+					or a profile of you.
 				</p>
 			</section>
 

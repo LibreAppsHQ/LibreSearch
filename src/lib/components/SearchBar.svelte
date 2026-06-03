@@ -53,6 +53,7 @@
 	let history = $derived($historyStore);
 
 	const normalizedSuggestions = $derived.by(() => {
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity -- transient dedupe set, not reactive state
 		const seen = new Set<string>();
 		return suggestions.filter((item) => {
 			const n = item.trim().toLowerCase();
@@ -330,9 +331,7 @@
 			>
 				{#if hasHistory}
 					<div class="flex items-center justify-between px-3 pt-1 pb-2">
-						<span
-							class="text-[11px] font-semibold tracking-wider text-(--app-muted) uppercase"
-						>
+						<span class="text-[11px] font-semibold tracking-wider text-(--app-muted) uppercase">
 							Recent searches
 						</span>
 						<button

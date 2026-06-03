@@ -85,9 +85,7 @@
 			<div class="mt-2 space-y-6">
 				{#each menuSections as section, i (i)}
 					<div>
-						<p
-							class="px-0.5 text-xs font-semibold tracking-widest text-(--app-muted) uppercase"
-						>
+						<p class="px-0.5 text-xs font-semibold tracking-widest text-(--app-muted) uppercase">
 							{section.title}
 						</p>
 

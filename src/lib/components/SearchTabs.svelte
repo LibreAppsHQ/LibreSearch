@@ -23,6 +23,7 @@
 	let isPost = $derived(getSelect($settingsStore, 'request-method', 'GET') === 'POST');
 
 	function tabHref(tabId: SearchTab): string {
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity -- transient, not reactive state
 		const params = new URLSearchParams({ q: query });
 		if (tabId !== 'web') params.set('t', tabId);
 		if (freshness) params.set('f', freshness);

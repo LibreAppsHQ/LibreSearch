@@ -6,6 +6,7 @@
 
 	type State = 'idle' | 'solving' | 'verifying' | 'done' | 'error';
 
+	// eslint-disable-next-line no-useless-assignment -- write-only bindable prop default
 	let { verified = $bindable(false) }: { verified?: boolean } = $props();
 	let state = $state<State>('idle');
 

@@ -36,9 +36,7 @@
 					<span>{result.age}</span>
 				{/if}
 			</div>
-			<h2
-				class="line-clamp-2 leading-snug font-medium text-(--app-accent) group-hover:underline"
-			>
+			<h2 class="line-clamp-2 leading-snug font-medium text-(--app-accent) group-hover:underline">
 				{result.title}
 			</h2>
 			{#if result.snippet}

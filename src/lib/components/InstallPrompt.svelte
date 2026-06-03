@@ -86,7 +86,7 @@
 
 {#if visible && deferred}
 	<div
-		class="fixed right-4 bottom-4 z-40 flex w-[calc(100%-2rem)] max-w-sm items-center gap-4 rounded-2xl border border-(--app-border) bg-(--app-background)/95 p-4 shadow-2xl shadow-black/40 backdrop-blur-md animate-slide-up"
+		class="animate-slide-up fixed right-4 bottom-4 z-40 flex w-[calc(100%-2rem)] max-w-sm items-center gap-4 rounded-2xl border border-(--app-border) bg-(--app-background)/95 p-4 shadow-2xl shadow-black/40 backdrop-blur-md"
 		role="dialog"
 		aria-labelledby="install-prompt-title"
 	>

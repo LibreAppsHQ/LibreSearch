@@ -99,9 +99,7 @@
 					{#each r.stats as s, i (i)}
 						<div class="bg-(--app-surface) p-5">
 							<div class="flex items-baseline gap-3">
-								<span class="text-3xl font-bold tracking-tight text-(--app-accent)"
-									>{s.value}</span
-								>
+								<span class="text-3xl font-bold tracking-tight text-(--app-accent)">{s.value}</span>
 								<span class="text-sm font-medium text-(--app-text)">{s.label}</span>
 							</div>
 							<p class="mt-2 text-xs leading-5 text-(--app-muted)">{s.desc}</p>

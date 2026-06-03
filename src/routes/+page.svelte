@@ -4,7 +4,7 @@
 	import BurnButton from '$lib/components/BurnButton.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import Clock from '$lib/components/Clock.svelte';
-	import { settingsStore, getToggle, getSelect } from '$lib/stores/settings';
+	import { settingsStore, getSelect } from '$lib/stores/settings';
 
 	let query = $state('');
 	let safesearch = $derived(
@@ -92,6 +92,29 @@
 		dialogEl?.focus();
 		return () => window.removeEventListener('keydown', onKey);
 	});
+
+	// Built in the script block so the inline <script> tag doesn't trip the
+	// Svelte ESLint parser. The closing tag is split so the HTML parser doesn't
+	// end the block early.
+	const jsonLd =
+		`<script type="application/ld+json">` +
+		JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'WebSite',
+			name: 'LibreSearch',
+			url: 'https://libresearch.ca',
+			description: 'A private search engine with no tracking, no profiles, and no ads.',
+			potentialAction: {
+				'@type': 'SearchAction',
+				target: {
+					'@type': 'EntryPoint',
+					urlTemplate: 'https://libresearch.ca/search?q={search_term_string}'
+				},
+				'query-input': 'required name=search_term_string'
+			}
+		}) +
+		'</' +
+		'script>';
 </script>
 
 <svelte:head>
@@ -120,21 +143,8 @@
 	/>
 
 	<!-- JSON-LD: WebSite + SearchAction -->
-	{@html `<script type="application/ld+json">${JSON.stringify({
-		'@context': 'https://schema.org',
-		'@type': 'WebSite',
-		name: 'LibreSearch',
-		url: 'https://libresearch.ca',
-		description: 'A private search engine with no tracking, no profiles, and no ads.',
-		potentialAction: {
-			'@type': 'SearchAction',
-			target: {
-				'@type': 'EntryPoint',
-				urlTemplate: 'https://libresearch.ca/search?q={search_term_string}'
-			},
-			'query-input': 'required name=search_term_string'
-		}
-	})}</script>`}
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -- trusted, static structured data -->
+	{@html jsonLd}
 </svelte:head>
 
 <main class="relative flex min-h-screen flex-col bg-(--app-background) text-(--app-text)">
@@ -264,7 +274,6 @@
 		class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
 		onclick={() => (showDefaultModal = false)}
 	>
-		<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 		<div
 			bind:this={dialogEl}
 			tabindex="-1"
@@ -289,7 +298,7 @@
 			</div>
 
 			<ol class="mt-4 list-decimal space-y-3 pl-5 text-sm text-black/80">
-				{#each defaultSteps[browser].steps as step}
+				{#each defaultSteps[browser].steps as step, i (i)}
 					<li>{step}</li>
 				{/each}
 			</ol>

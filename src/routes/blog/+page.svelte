@@ -38,9 +38,7 @@
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
-				Blog
-			</p>
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">Blog</p>
 			<SiteMenu class="justify-self-end" />
 		</div>
 	</div>

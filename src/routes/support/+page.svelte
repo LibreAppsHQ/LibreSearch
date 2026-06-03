@@ -143,10 +143,7 @@
 
 	<!-- Open Graph -->
 	<meta property="og:title" content="Support - LibreSearch" />
-	<meta
-		property="og:description"
-		content="LibreSearch Help Center. How can we help?"
-	/>
+	<meta property="og:description" content="LibreSearch Help Center. How can we help?" />
 	<meta property="og:url" content="https://support.libresearch.ca" />
 	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 
@@ -208,8 +205,12 @@
 	</div>
 
 	<!-- Hero -->
-	<section class="relative z-10 mx-auto w-full max-w-[1100px] px-6 pt-16 pb-10 text-center sm:pt-24">
-		<h1 class="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-white drop-shadow-sm sm:text-5xl lg:text-6xl">
+	<section
+		class="relative z-10 mx-auto w-full max-w-[1100px] px-6 pt-16 pb-10 text-center sm:pt-24"
+	>
+		<h1
+			class="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-white drop-shadow-sm sm:text-5xl lg:text-6xl"
+		>
 			How can we help?
 		</h1>
 
@@ -232,7 +233,7 @@
 				bind:value={query}
 				placeholder="Search the help center"
 				aria-label="Search the help center"
-				class="w-full rounded-full border border-(--app-border) bg-white/95 py-4 pr-5 pl-13 text-base text-gray-900 shadow-lg outline-none transition placeholder:text-gray-500 focus:ring-2 focus:ring-(--app-accent)"
+				class="w-full rounded-full border border-(--app-border) bg-white/95 py-4 pr-5 pl-13 text-base text-gray-900 shadow-lg transition outline-none placeholder:text-gray-500 focus:ring-2 focus:ring-(--app-accent)"
 			/>
 		</div>
 	</section>
@@ -249,13 +250,59 @@
 						class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-(--app-accent)/15 text-(--app-accent)"
 					>
 						{#if cat.icon === 'rocket'}
-							<svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+							<svg
+								class="h-7 w-7"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.8"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><path
+									d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"
+								/><path
+									d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"
+								/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path
+									d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"
+								/></svg
+							>
 						{:else if cat.icon === 'search'}
-							<svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+							<svg
+								class="h-7 w-7"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.8"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg
+							>
 						{:else if cat.icon === 'shield'}
-							<svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+							<svg
+								class="h-7 w-7"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.8"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path
+									d="M9 12l2 2 4-4"
+								/></svg
+							>
 						{:else}
-							<svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+							<svg
+								class="h-7 w-7"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.8"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><circle cx="12" cy="12" r="3" /><path
+									d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+								/></svg
+							>
 						{/if}
 					</span>
 					<h2 class="text-lg font-semibold text-(--app-accent)">{cat.title}</h2>
@@ -301,7 +348,9 @@
 
 	<!-- Still need help -->
 	<section class="relative z-10 border-t border-(--app-border) bg-(--app-surface)">
-		<div class="mx-auto flex w-full max-w-[1100px] flex-col items-center gap-4 px-6 py-14 text-center">
+		<div
+			class="mx-auto flex w-full max-w-[1100px] flex-col items-center gap-4 px-6 py-14 text-center"
+		>
 			<h2 class="text-2xl font-bold tracking-tight text-(--app-text)">Still need help?</h2>
 			<p class="max-w-xl text-(--app-muted)">
 				Can’t find what you’re looking for? Our team reads every message — no bots, no tracking.

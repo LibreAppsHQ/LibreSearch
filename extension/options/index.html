@@ -11,7 +11,7 @@
 		/>
 		<script src="../theme-init.js"></script>
 	</head>
-	<body class="min-h-screen bg-bg text-text">
+	<body class="bg-bg text-text min-h-screen">
 		<main class="mx-auto w-full max-w-2xl px-6 py-12">
 			<header class="mb-10 flex items-center gap-4">
 				<img src="../logo-128.png" alt="" width="44" height="44" class="rounded-lg" />
@@ -23,8 +23,8 @@
 			<form id="settings-form" class="space-y-8">
 				<!-- Theme -->
 				<fieldset>
-					<legend class="mb-2 text-sm font-semibold text-text">Theme</legend>
-					<p class="mb-3 text-xs text-muted">Appearance of the popup and this page.</p>
+					<legend class="text-text mb-2 text-sm font-semibold">Theme</legend>
+					<p class="text-muted mb-3 text-xs">Appearance of the popup and this page.</p>
 					<div class="grid grid-cols-2 gap-2 sm:grid-cols-5">
 						<label class="radio-tile">
 							<input type="radio" name="theme" value="auto" />
@@ -51,10 +51,8 @@
 
 				<!-- Default tab -->
 				<fieldset>
-					<legend class="mb-2 text-sm font-semibold text-text">Default search category</legend>
-					<p class="mb-3 text-xs text-muted">
-						Which tab is selected when you open the popup.
-					</p>
+					<legend class="text-text mb-2 text-sm font-semibold">Default search category</legend>
+					<p class="text-muted mb-3 text-xs">Which tab is selected when you open the popup.</p>
 					<div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
 						<label class="radio-tile">
 							<input type="radio" name="defaultTab" value="" />
@@ -77,8 +75,8 @@
 
 				<!-- Safe search -->
 				<fieldset>
-					<legend class="mb-2 text-sm font-semibold text-text">Safe search</legend>
-					<p class="mb-3 text-xs text-muted">Filter explicit content from results.</p>
+					<legend class="text-text mb-2 text-sm font-semibold">Safe search</legend>
+					<p class="text-muted mb-3 text-xs">Filter explicit content from results.</p>
 					<div class="grid grid-cols-3 gap-2">
 						<label class="radio-tile">
 							<input type="radio" name="safeSearch" value="strict" />
@@ -97,8 +95,8 @@
 
 				<!-- Region -->
 				<fieldset>
-					<legend class="mb-2 text-sm font-semibold text-text">Region</legend>
-					<p class="mb-3 text-xs text-muted">Bias results to a specific country.</p>
+					<legend class="text-text mb-2 text-sm font-semibold">Region</legend>
+					<p class="text-muted mb-3 text-xs">Bias results to a specific country.</p>
 					<select id="region" name="region" class="select">
 						<option value="">Any (default)</option>
 						<option value="us">United States</option>
@@ -119,8 +117,8 @@
 
 				<!-- Open in -->
 				<fieldset>
-					<legend class="mb-2 text-sm font-semibold text-text">Open results in</legend>
-					<p class="mb-3 text-xs text-muted">Where popup searches go.</p>
+					<legend class="text-text mb-2 text-sm font-semibold">Open results in</legend>
+					<p class="text-muted mb-3 text-xs">Where popup searches go.</p>
 					<div class="grid grid-cols-2 gap-2">
 						<label class="radio-tile">
 							<input type="radio" name="openIn" value="newTab" />
@@ -134,21 +132,21 @@
 				</fieldset>
 
 				<!-- Actions -->
-				<div class="flex items-center justify-between border-t border-border pt-6">
+				<div class="border-border flex items-center justify-between border-t pt-6">
 					<button
 						type="button"
 						id="reset"
-						class="text-xs text-muted transition-colors hover:text-text"
+						class="text-muted hover:text-text text-xs transition-colors"
 					>
 						Reset to defaults
 					</button>
 					<div class="flex items-center gap-3">
-						<span id="status" class="text-xs text-ok opacity-0 transition-opacity">
+						<span id="status" class="text-ok text-xs opacity-0 transition-opacity">
 							<i class="fa-solid fa-check"></i> Saved
 						</span>
 						<button
 							type="submit"
-							class="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-bg transition-opacity hover:opacity-90"
+							class="bg-accent text-bg rounded-lg px-4 py-2 text-sm font-semibold transition-opacity hover:opacity-90"
 						>
 							Save settings
 						</button>
@@ -156,12 +154,9 @@
 				</div>
 			</form>
 
-			<footer class="mt-12 border-t border-border pt-6 text-center text-xs text-muted">
+			<footer class="border-border text-muted mt-12 border-t pt-6 text-center text-xs">
 				LibreSearch extension · v0.1.0 ·
-				<a
-					href="https://libresearch.ca/privacy"
-					target="_blank"
-					class="text-accent hover:underline"
+				<a href="https://libresearch.ca/privacy" target="_blank" class="text-accent hover:underline"
 					>Privacy policy</a
 				>
 			</footer>

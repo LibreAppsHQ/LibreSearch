@@ -1,64 +1,64 @@
 {
-  "manifest_version": 3,
-  "name": "LibreSearch",
-  "short_name": "LibreSearch",
-  "version": "0.1.0",
-  "description": "Private search without tracking, profiles, or ads. Toolbar popup, address-bar shortcut, and right-click search for LibreSearch.",
-  "homepage_url": "https://libresearch.ca",
-  "author": "LibreSearch",
+	"manifest_version": 3,
+	"name": "LibreSearch",
+	"short_name": "LibreSearch",
+	"version": "0.1.0",
+	"description": "Private search without tracking, profiles, or ads. Toolbar popup, address-bar shortcut, and right-click search for LibreSearch.",
+	"homepage_url": "https://libresearch.ca",
+	"author": "LibreSearch",
 
-  "icons": {
-    "16": "logo-16.png",
-    "48": "logo-48.png",
-    "128": "logo-128.png"
-  },
+	"icons": {
+		"16": "logo-16.png",
+		"48": "logo-48.png",
+		"128": "logo-128.png"
+	},
 
-  "action": {
-    "default_title": "LibreSearch",
-    "default_popup": "popup/index.html",
-    "default_icon": {
-      "16": "logo-16.png",
-      "48": "logo-48.png",
-      "128": "logo-128.png"
-    }
-  },
+	"action": {
+		"default_title": "LibreSearch",
+		"default_popup": "popup/index.html",
+		"default_icon": {
+			"16": "logo-16.png",
+			"48": "logo-48.png",
+			"128": "logo-128.png"
+		}
+	},
 
-  "background": {
-    "service_worker": "background.js",
-    "scripts": ["background.js"]
-  },
+	"background": {
+		"service_worker": "background.js",
+		"scripts": ["background.js"]
+	},
 
-  "options_ui": {
-    "page": "options/index.html",
-    "open_in_tab": true
-  },
+	"options_ui": {
+		"page": "options/index.html",
+		"open_in_tab": true
+	},
 
-  "omnibox": {
-    "keyword": "libre"
-  },
+	"omnibox": {
+		"keyword": "libre"
+	},
 
-  "permissions": ["contextMenus", "storage"],
+	"permissions": ["contextMenus", "storage"],
 
-  "host_permissions": [],
+	"host_permissions": [],
 
-  "chrome_settings_overrides": {
-    "search_provider": {
-      "name": "LibreSearch",
-      "keyword": "libresearch",
-      "search_url": "https://libresearch.ca/search?q={searchTerms}",
-      "favicon_url": "logo-16.png",
-      "encoding": "UTF-8",
-      "is_default": false
-    }
-  },
+	"chrome_settings_overrides": {
+		"search_provider": {
+			"name": "LibreSearch",
+			"keyword": "libresearch",
+			"search_url": "https://libresearch.ca/search?q={searchTerms}",
+			"favicon_url": "logo-16.png",
+			"encoding": "UTF-8",
+			"is_default": false
+		}
+	},
 
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "libresearch@arcbase.one",
-      "strict_min_version": "115.0",
-      "data_collection_permissions": {
-        "required": ["none"]
-      }
-    }
-  }
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "libresearch@arcbase.one",
+			"strict_min_version": "115.0",
+			"data_collection_permissions": {
+				"required": ["none"]
+			}
+		}
+	}
 }

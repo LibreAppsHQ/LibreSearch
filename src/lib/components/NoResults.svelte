@@ -19,6 +19,7 @@
 	let others = $derived((Object.keys(tabMeta) as SearchTab[]).filter((t) => t !== tab));
 
 	function urlFor(t: SearchTab): string {
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity -- transient, not reactive state
 		const params = new URLSearchParams({ q: query });
 		if (t !== 'web') params.set('t', t);
 		return `/search?${params}`;

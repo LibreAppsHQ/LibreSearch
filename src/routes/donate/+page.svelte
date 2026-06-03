@@ -103,9 +103,7 @@
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
-				Donate
-			</p>
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">Donate</p>
 			<SiteMenu class="justify-self-end" />
 		</div>
 	</div>
@@ -122,8 +120,8 @@
 			<span class="text-(--app-accent)">Just your support.</span>
 		</h1>
 		<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-white">
-			LibreSearch refuses to sell ads or profile your searches, which means the only thing keeping the
-			servers on is people like you. Every contribution goes straight to infrastructure.
+			LibreSearch refuses to sell ads or profile your searches, which means the only thing keeping
+			the servers on is people like you. Every contribution goes straight to infrastructure.
 		</p>
 		<div class="mt-10 flex flex-wrap items-center justify-center gap-4">
 			<a
@@ -140,9 +138,7 @@
 
 	<!-- Tiers -->
 	<section id="tiers" class="mx-auto w-full max-w-[1100px] px-6 py-12 sm:py-20">
-		<p
-			class="mb-3 text-center text-xs font-semibold tracking-widest text-(--app-accent) uppercase"
-		>
+		<p class="mb-3 text-center text-xs font-semibold tracking-widest text-(--app-accent) uppercase">
 			Ways to give
 		</p>
 		<h2 class="mb-12 text-center text-2xl font-bold tracking-tight">
@@ -175,12 +171,12 @@
 
 	<!-- Methods -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 py-12 sm:py-20">
-		<p
-			class="mb-3 text-center text-xs font-semibold tracking-widest text-(--app-accent) uppercase"
-		>
+		<p class="mb-3 text-center text-xs font-semibold tracking-widest text-(--app-accent) uppercase">
 			Choose a method
 		</p>
-		<h2 class="mb-12 text-center text-2xl font-bold tracking-tight">Every dollar keeps us online.</h2>
+		<h2 class="mb-12 text-center text-2xl font-bold tracking-tight">
+			Every dollar keeps us online.
+		</h2>
 
 		<div class="mx-auto max-w-[640px]">
 			<!-- Crypto -->

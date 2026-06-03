@@ -159,6 +159,7 @@
 	];
 
 	function buildUrl(overrides: Record<string, string | undefined>): string {
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity -- transient, not reactive state
 		const params = new URLSearchParams({ q: data.query });
 		if (data.tab !== 'web') params.set('t', data.tab);
 		if (data.freshness) params.set('f', data.freshness);

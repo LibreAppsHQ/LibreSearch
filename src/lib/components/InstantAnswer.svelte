@@ -718,9 +718,7 @@
 							onclick={() => copyText(row.value, (v) => (colorCopied = v))}
 							class="flex w-full items-center gap-3 rounded-lg px-2 py-1.5 text-left transition hover:bg-(--app-hover)"
 						>
-							<span class="w-9 shrink-0 text-xs font-semibold text-(--app-muted)"
-								>{row.label}</span
-							>
+							<span class="w-9 shrink-0 text-xs font-semibold text-(--app-muted)">{row.label}</span>
 							<code class="flex-1 truncate font-mono text-(--app-text)">{row.value}</code>
 							<i class="fa-solid fa-copy text-xs text-(--app-muted)"></i>
 						</button>

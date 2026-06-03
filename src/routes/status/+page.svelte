@@ -178,10 +178,7 @@
 	/>
 	<link rel="canonical" href="https://libresearch.ca/status" />
 	<meta property="og:title" content="System Status - LibreSearch" />
-	<meta
-		property="og:description"
-		content="Real-time health of LibreSearch services."
-	/>
+	<meta property="og:description" content="Real-time health of LibreSearch services." />
 	<meta property="og:url" content="https://libresearch.ca/status" />
 </svelte:head>
 
@@ -191,9 +188,7 @@
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
-				Status
-			</p>
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">Status</p>
 			<SiteMenu class="justify-self-end" />
 		</div>
 	</div>
@@ -213,10 +208,7 @@
 						overallCopy.tone
 					].bg} {toneClasses[overallCopy.tone].text}"
 				>
-					<i
-						class="fa-solid {overallCopy.icon} text-xl {overall === 'pending'
-							? 'fa-spin'
-							: ''}"
+					<i class="fa-solid {overallCopy.icon} text-xl {overall === 'pending' ? 'fa-spin' : ''}"
 					></i>
 				</div>
 				<div>
@@ -238,9 +230,7 @@
 		</div>
 
 		<!-- Per-service rows -->
-		<div
-			class="mt-8 overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)"
-		>
+		<div class="mt-8 overflow-hidden rounded-2xl border border-(--app-border) bg-(--app-surface)">
 			{#each checks as c, i (i)}
 				<div
 					class="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between {i > 0
@@ -306,7 +296,8 @@
 						rel="noopener noreferrer"
 						class="text-(--app-accent) hover:underline">GitHub issues</a
 					>
-					tracker or via <a href="/contact" class="text-(--app-accent) hover:underline">/contact</a>.
+					tracker or via
+					<a href="/contact" class="text-(--app-accent) hover:underline">/contact</a>.
 				</p>
 			</div>
 		</div>

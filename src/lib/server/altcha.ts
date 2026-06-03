@@ -14,7 +14,8 @@ function getSecret(): string {
 	if (secret) return secret;
 	// Never silently fall back to a known secret in production — that would make
 	// every challenge forgeable. Only allow the dev placeholder locally.
-	if (!dev) throw new Error('ALTCHA_SECRET is not set — refusing to sign challenges in production.');
+	if (!dev)
+		throw new Error('ALTCHA_SECRET is not set — refusing to sign challenges in production.');
 	return 'dev-insecure-altcha-secret-change-me';
 }
 
