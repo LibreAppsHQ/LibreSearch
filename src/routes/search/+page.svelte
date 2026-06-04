@@ -490,20 +490,20 @@
 	<FeedbackModal onclose={() => (feedbackOpen = false)} />
 {/if}
 
-<footer class="border-t border-(--app-border) bg-(--app-background) px-6 py-9">
+<footer class="bg-[#1b1e21] px-6 py-9">
 	<div class="mx-auto grid w-full max-w-7xl grid-cols-3 items-center gap-6">
 		<!-- Left: logo + copyright -->
 		<div class="flex shrink-0 flex-col gap-1">
 			<a href="/" aria-label="LibreSearch home">
 				<Logo class="h-14 w-auto" />
 			</a>
-			<p class="text-xs text-(--app-muted)">
+			<p class="text-xs text-white/90">
 				&copy; {new Date().getFullYear()} LibreSearch. All rights reserved.
 			</p>
 		</div>
 
 		<!-- Center: nav links -->
-		<nav class="text-md flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-(--app-muted)">
+		<nav class="text-md flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-white/90">
 			<a href="/privacy" class="transition hover:text-(--app-text)">Privacy Policy</a>
 			<a href="/about" class="transition hover:text-(--app-text)">About Us</a>
 			<a href="/press" class="transition hover:text-(--app-text)">Press</a>
