@@ -187,6 +187,15 @@
 				>
 					<i class="fa-brands fa-mastodon text-base"></i>
 				</a>
+				<a
+					href="https://x.com/libresearchca"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="X"
+					class="text-(--app-muted) transition hover:text-(--app-text)"
+				>
+					<i class="fa-brands fa-x-twitter text-base"></i>
+				</a>
 			</div>
 		</div>
 	</div>

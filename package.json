@@ -51,7 +51,8 @@
 		"@sentry/sveltekit": "^10.55.0",
 		"@upstash/redis": "^1.35.0",
 		"@vercel/analytics": "^2.0.1",
-		"@vercel/speed-insights": "^2.0.0"
+		"@vercel/speed-insights": "^2.0.0",
+		"node-appwrite": "^26.0.0"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [

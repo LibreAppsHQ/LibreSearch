@@ -2,6 +2,8 @@ import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import * as Sentry from '@sentry/sveltekit';
 import { sentryHandle, handleErrorWithSentry } from '@sentry/sveltekit';
+import { getUser } from '$lib/server/appwrite';
+import { getPlan } from '$lib/server/plan';
 
 Sentry.init({
 	dsn: 'https://c6f76c27eb2b5e689b2b18fe208334b3@o4511459621011456.ingest.us.sentry.io/4511459622125568',
@@ -43,7 +45,8 @@ const SECURITY_HEADERS: Record<string, string> = {
 		// Web3Forms is the contact-form backend; vitals.vercel-insights.com is
 		// the Speed Insights beacon endpoint.
 		// *.ingest.us.sentry.io is the Sentry error/trace ingest endpoint.
-		"connect-src 'self' https://api.web3forms.com https://vitals.vercel-insights.com https://*.ingest.us.sentry.io",
+		// *.cloud.appwrite.io is the Appwrite Cloud API (auth + databases).
+		"connect-src 'self' https://api.web3forms.com https://vitals.vercel-insights.com https://*.ingest.us.sentry.io https://*.cloud.appwrite.io",
 		'frame-src https:',
 		"worker-src 'self' blob:",
 		"object-src 'none'",
@@ -51,6 +54,15 @@ const SECURITY_HEADERS: Record<string, string> = {
 		"form-action 'self'",
 		'upgrade-insecure-requests'
 	].join('; ')
+};
+
+// Resolve the logged-in user (if any) from the session cookie and attach it,
+// plus their plan, to event.locals for downstream loaders and endpoints.
+const authHandle: Handle = async ({ event, resolve }) => {
+	const user = await getUser(event);
+	event.locals.user = user;
+	event.locals.plan = user ? await getPlan(user.id) : 'free';
+	return resolve(event);
 };
 
 const securityHandle: Handle = async ({ event, resolve }) => {
@@ -82,7 +94,7 @@ const securityHandle: Handle = async ({ event, resolve }) => {
 };
 
 // Sentry's request handler runs first, then our security/header handler.
-export const handle: Handle = sequence(sentryHandle(), securityHandle);
+export const handle: Handle = sequence(sentryHandle(), authHandle, securityHandle);
 
 // Reports unhandled server-side errors to Sentry.
 export const handleError = handleErrorWithSentry();

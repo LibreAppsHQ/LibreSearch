@@ -530,6 +530,15 @@
 			>
 				<i class="fa-brands fa-mastodon text-sm"></i>
 			</a>
+			<a
+				href="https://x.com/libresearchca"
+				target="_blank"
+				rel="me noopener noreferrer"
+				aria-label="X"
+				class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-white transition hover:bg-indigo-500"
+			>
+				<i class="fa-brands fa-x-twitter text-sm"></i>
+			</a>
 		</div>
 	</div>
 </footer>

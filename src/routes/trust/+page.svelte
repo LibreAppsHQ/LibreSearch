@@ -47,6 +47,13 @@
 			data: 'Anonymous, aggregated page-view counts and Core Web Vitals. No cookies, no cross-site tracking, no personal data.',
 			region: 'United States.',
 			url: 'https://vercel.com/docs/analytics/privacy-policy'
+		},
+		{
+			name: 'Sentry',
+			role: 'Error monitoring (crash diagnostics only)',
+			data: 'Receives technical error reports — error type, stack trace, browser, and page — only when something breaks. Personal-data collection is disabled and IP addresses are stripped, so reports carry no search queries and are not tied to your identity.',
+			region: 'United States.',
+			url: 'https://sentry.io/privacy/'
 		}
 	];
 

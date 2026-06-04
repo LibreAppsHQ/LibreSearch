@@ -39,3 +39,6 @@ support.libresearch.ca
 pnpm-workspace.yaml
 starter-for-svelte/
 starter-for-svelte/
+
+src/routes/account
+src/routes/auth

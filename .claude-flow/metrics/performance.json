@@ -1,79 +1,17 @@
 {
-  "timestamp": "2026-06-04T18:27:26.491Z",
-  "mode": "headless",
-  "workerType": "optimize",
-  "model": "sonnet",
-  "durationMs": 70670,
-  "executionId": "optimize_1780597575821_4822ep",
-  "success": true,
-  "findings": {
-    "sections": [
-      {
-        "title": "Performance Analysis",
-        "content": "\n",
-        "level": 2
-      },
-      {
-        "title": "1. Redundant Computations",
-        "content": "\n**`parseUnit` called twice per query change** (`InstantAnswer.svelte:352, 478`)\n\n`detectAnswer()` calls `parseUnit(query)` internally to return `'unit'`, then the component separately calls `let unit = $derived(parseUnit(query))`. Every query change runs the unit regex twice.\n\n```svelte\n<!-- current -->\nlet kind = $derived(detectAnswer(query));    // calls parseUnit internally\nlet unit = $derived(parseUnit(query));       // calls it again\n\n<!-- fix: pass the unit result through detectAnswer or memoize -->\nlet unitResult = $derived(parseUnit(query));\nlet kind = $derived(detectAnswer(query, unitResult));  // accept pre-computed\n```\n\nOr restructure `detectAnswer` to return both `kind` and the unit result:\n\n```ts\nexport function detectAnswer(query: string): { kind: AnswerKind; unit: UnitResult | null } { ... }\n```\n\n---\n\n**`isBlockedDomain` converts a `Set` to an array on every call** (`server/search.ts:565`)\n\n```ts\n// current — spreads the Set into a temporary array on each call\nreturn [...blocklist].some((d) => hostname === d || hostname.endsWith('.' + d));\n\n// fix — iterate the Set directly (no allocation)\nfor (const d of blocklist) {\n    if (hostname === d || hostname.endsWith('.' + d)) return true;\n}\nreturn false;\n```\n\nThis runs per result, per filter type (ads + trackers = 2 calls), on every search response.\n\n---\n\n**`shoppingRank` sort key not memoized** (`server/search.ts:715`)\n\nThe sort comparator calls `shoppingRank(a.r.url)` multiple times per element during sort. `shoppingRank` creates a `new URL()` on every call.\n\n```ts\n// current\n.map((r, i) => ({ r, i }))\n.sort((a, b) => shoppingRank(a.r.url) - shoppingRank(b.r.url) || a.i - b.i)\n\n// fix — compute rank once per element\n.map((r, i) => ({ r, i, rank: shoppingRank(r.url) }))\n.sort((a, b) => a.rank - b.rank || a.i - b.i)\n```\n\n---\n\n**`makeCacheKey` uses `JSON.stringify`** (`server/search.ts:146`)\n\nCalled on every cached search request. `JSON.stringify` with 10 fields allocates a new object and serializes it. A simple template string is ~10x faster:\n\n```ts\nfunction makeCacheKey(...params): string {\n    return `${query}|${tab}|${safesearch}|${offset}|${freshness ?? ''}|${country ?? ''}|${filterAds}|${blockAds}|${blockTrackers}|${count}`;\n}\n```\n\n---\n\n",
-        "level": 3
-      },
-      {
-        "title": "2. Caching Opportunities",
-        "content": "\n**`hostname()` in `AiAnswer.svelte` recomputed per render** (`AiAnswer.svelte:12`)\n\nThe `hostname()` function creates a `new URL()` for each source citation on every render. With Svelte 5, derive it once:\n\n```svelte\nlet hostnames = $derived(sources.map(s => {\n    try { return new URL(s.url).hostname.replace(/^www\\./, ''); }\n    catch { return s.url; }\n}));\n```\n\n---\n\n**`AiAnswer.svelte` fetch has no debounce** (`AiAnswer.svelte:21`)\n\nThe `$effect` fires on every `query` change. If search results update query while typing, this fires once per keystroke. Add a short debounce:\n\n```svelte\n$effect(() => {\n    const q = query;\n    if (!q || tab !== 'web') { answer = null; sources = []; loading = false; return; }\n    \n    loading = true;\n    const controller = new AbortController();\n    const timer = setTimeout(() => {\n        fetch(`/api/answer?q=${encodeURIComponent(q)}`, { signal: controller.signal })\n            .then(...)\n    }, 300);  // debounce\n    \n    return () => { clearTimeout(timer); controller.abort(); };\n});\n```\n\n---\n\n",
-        "level": 3
-      },
-      {
-        "title": "3. Memory Leak Risk",
-        "content": "\n**Lazy-only pruning in `security.ts`, `altcha.ts`, and `server/search.ts`**\n\nAll three in-memory Maps (`clients`, `usedSignatures`, `rateLimitBuckets`) are only pruned when their respective write functions are called. On a long-running server with traffic that drops off, entries can accumulate indefinitely.\n\n```ts\n// Add a periodic sweep — run once at module load\nsetInterval(() => {\n    const now = Date.now();\n    prune(now);  // or pruneUsed / pruneRateLimitBuckets\n}, 5 * 60_000);\n```\n\nThis is low-risk on serverless (instances are short-lived) but matters for `node` deploys.\n\n---\n\n",
-        "level": 3
-      },
-      {
-        "title": "4. No True N+1 Patterns",
-        "content": "\nThe server layer makes one API call per search request (Brave or Nominatim), with caching. The stocks module chains calls (search → quote → candles) but these are sequential within a single request, not looping. No N+1 found.\n\n---\n\n",
-        "level": 3
-      },
-      {
-        "title": "Summary Table",
-        "content": "| Issue | File | Impact | Fix |\n|-------|------|--------|-----|\n| `parseUnit` called twice per query | `InstantAnswer.svelte:352,478` | Redundant regex per keystroke | Share result between `detectAnswer` and `unit` derived |\n| Set spread in `isBlockedDomain` | `server/search.ts:565` | Array allocation per result per filter | Iterate Set directly |\n| `shoppingRank` sort key not memoized | `server/search.ts:715` | Extra `new URL()` calls during sort | Pre-map rank before sort |\n| `JSON.stringify` in cache key | `server/search.ts:146` | Unnecessary allocation on hot path | Use template string |\n| `hostname()` recomputed per render | `AiAnswer.svelte:12` | `new URL()` per citation per render | `$derived` on sources array |\n| No debounce on AI answer fetch | `AiAnswer.svelte:21` | Excess API calls if query updates mid-keystroke | 300ms debounce |\n| Unbounded Map growth (lazy prune only) | `security.ts`, `altcha.ts`, `search.ts` | Memory leak on long-running servers | Add `setInterval` sweep |",
-        "level": 3
-      }
-    ],
-    "codeBlocks": [
-      {
-        "language": "svelte",
-        "code": "<!-- current -->\nlet kind = $derived(detectAnswer(query));    // calls parseUnit internally\nlet unit = $derived(parseUnit(query));       // calls it again\n\n<!-- fix: pass the unit result through detectAnswer or memoize -->\nlet unitResult = $derived(parseUnit(query));\nlet kind = $derived(detectAnswer(query, unitResult));  // accept pre-computed"
-      },
-      {
-        "language": "ts",
-        "code": "export function detectAnswer(query: string): { kind: AnswerKind; unit: UnitResult | null } { ... }"
-      },
-      {
-        "language": "ts",
-        "code": "// current — spreads the Set into a temporary array on each call\nreturn [...blocklist].some((d) => hostname === d || hostname.endsWith('.' + d));\n\n// fix — iterate the Set directly (no allocation)\nfor (const d of blocklist) {\n    if (hostname === d || hostname.endsWith('.' + d)) return true;\n}\nreturn false;"
-      },
-      {
-        "language": "ts",
-        "code": "// current\n.map((r, i) => ({ r, i }))\n.sort((a, b) => shoppingRank(a.r.url) - shoppingRank(b.r.url) || a.i - b.i)\n\n// fix — compute rank once per element\n.map((r, i) => ({ r, i, rank: shoppingRank(r.url) }))\n.sort((a, b) => a.rank - b.rank || a.i - b.i)"
-      },
-      {
-        "language": "ts",
-        "code": "function makeCacheKey(...params): string {\n    return `${query}|${tab}|${safesearch}|${offset}|${freshness ?? ''}|${country ?? ''}|${filterAds}|${blockAds}|${blockTrackers}|${count}`;\n}"
-      },
-      {
-        "language": "svelte",
-        "code": "let hostnames = $derived(sources.map(s => {\n    try { return new URL(s.url).hostname.replace(/^www\\./, ''); }\n    catch { return s.url; }\n}));"
-      },
-      {
-        "language": "svelte",
-        "code": "$effect(() => {\n    const q = query;\n    if (!q || tab !== 'web') { answer = null; sources = []; loading = false; return; }\n    \n    loading = true;\n    const controller = new AbortController();\n    const timer = setTimeout(() => {\n        fetch(`/api/answer?q=${encodeURIComponent(q)}`, { signal: controller.signal })\n            .then(...)\n    }, 300);  // debounce\n    \n    return () => { clearTimeout(timer); controller.abort(); };\n});"
-      },
-      {
-        "language": "ts",
-        "code": "// Add a periodic sweep — run once at module load\nsetInterval(() => {\n    const now = Date.now();\n    prune(now);  // or pruneUsed / pruneRateLimitBuckets\n}, 5 * 60_000);"
-      }
-    ]
+  "timestamp": "2026-06-04T21:22:32.467Z",
+  "mode": "local",
+  "memoryUsage": {
+    "rss": 506081280,
+    "heapTotal": 29659136,
+    "heapUsed": 27092400,
+    "external": 370598893,
+    "arrayBuffers": 90489824
   },
-  "rawOutputPreview": "Now I have a full picture. Here's the analysis — this is SvelteKit (Svelte 5), not React, so I'll address \"re-renders\" as Svelte reactivity overhead.\n\n---\n\n## Performance Analysis\n\n### 1. Redundant Computations\n\n**`parseUnit` called twice per query change** (`InstantAnswer.svelte:352, 478`)\n\n`detectAnswer()` calls `parseUnit(query)` internally to return `'unit'`, then the component separately calls `let unit = $derived(parseUnit(query))`. Every query change runs the unit regex twice.\n\n```svelte\n<!-- current -->\nlet kind = $derived(detectAnswer(query));    // calls parseUnit internally\nlet unit = $derived(parseUnit(query));       // calls it again\n\n<!-- fix: pass the unit result through detectAnswer or memoize -->\nlet unitResult = $derived(parseUnit(query));\nlet kind = $derived(detectAnswer(query, unitResult));  // accept pre-computed\n```\n\nOr restructure `detectAnswer` to return both `kind` and the unit result:\n\n```ts\nexport function detectAnswer(query: string): { kind: AnswerKind; unit: UnitResult | null } { ... }\n```\n\n---\n\n**`isBlockedDomain` converts a `Set` to an array on every call** (`server/search.ts:565`)\n\n```ts\n// current — spreads the Set into a temporary array on each call\nreturn [...blocklist].some((d) => hostname === d || hostname.endsWith('.' + d));\n\n// fix — iterate the Set directly (no allocation)\nfor (const d of blocklist) {\n    if (hostname === d || hostname.endsWith('.' + d)) return true;\n}\nreturn false;\n```\n\nThis runs per result, per filter type (ads + trackers = 2 calls), on every search response.\n\n---\n\n**`shoppingRank` sort key not memoized** (`server/search.ts:715`)\n\nThe sort comparator calls `shoppingRank(a.r.url)` multiple times per element during sort. `shoppingRank` creates a `new URL()` on every call.\n\n```ts\n// current\n.map((r, i) => ({ r, i }))\n.sort((a, b) => shoppingRank(a.r.url) - shoppingRank(b.r.url) || a.i - b.i)\n\n// fix — compute rank once per element\n.map((r, i) => ({ r, i, rank: shoppingRank(r.url) }))\n.sort((a, b) => a.rank - b.",
-  "rawOutputLength": 5421
+  "uptime": 10817.921867371,
+  "optimizations": {
+    "cacheHitRate": 0.78,
+    "avgResponseTime": 45
+  },
+  "note": "Install Claude Code CLI for AI-powered optimization suggestions"
 }
