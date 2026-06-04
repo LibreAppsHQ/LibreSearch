@@ -5,6 +5,8 @@
 	import { settingsStore, getToggle } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
 	import { onMount } from 'svelte';
+	import { beforeNavigate } from '$app/navigation';
+	import { updated } from '$app/state';
 	import InstallPrompt from '$lib/components/InstallPrompt.svelte';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
@@ -13,6 +15,16 @@
 
 	let keyboardShortcut = $derived(getToggle($settingsStore, 'keyboard-shortcut'));
 	let reduceMotion = $derived(getToggle($settingsStore, 'reduce-motion', false));
+
+	// When a new version has been deployed, do a full-page navigation instead of
+	// a client-side one. This fetches the new HTML (and its current asset hashes)
+	// so we never request a chunk that no longer exists on the server.
+	beforeNavigate((navigation) => {
+		if (updated.current && navigation.to?.url) {
+			navigation.cancel();
+			window.location.href = navigation.to.url.href;
+		}
+	});
 
 	// Vercel SDKs must run client-side inside lifecycle
 	onMount(() => {

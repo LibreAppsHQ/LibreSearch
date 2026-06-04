@@ -20,5 +20,21 @@ Sentry.init({
 	}
 });
 
+// After a new deploy, an already-open page may still reference JS/CSS asset
+// hashes from the previous build. Vite fires `vite:preloadError` when one of
+// those stale chunks can't be fetched; reload once to pull the fresh HTML +
+// asset graph. The timestamp guard prevents a reload loop when the asset is
+// genuinely missing (e.g. CDN outage) instead of just stale, while still
+// allowing a fresh reload for a later deploy in the same tab session.
+if (typeof window !== 'undefined') {
+	window.addEventListener('vite:preloadError', () => {
+		const RELOAD_KEY = 'preload-error-reloaded-at';
+		const last = Number(sessionStorage.getItem(RELOAD_KEY) ?? 0);
+		if (Date.now() - last < 10_000) return;
+		sessionStorage.setItem(RELOAD_KEY, String(Date.now()));
+		window.location.reload();
+	});
+}
+
 // Reports unhandled client-side errors to Sentry.
 export const handleError = handleErrorWithSentry();
