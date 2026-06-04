@@ -50,6 +50,20 @@
 		'We do not engage in voluntary disclosure of user data to law enforcement absent a valid legal process or a clear emergency exception.',
 		'This report is updated semi-annually. The next scheduled update is January 2027.'
 	];
+
+	const jsonLd =
+		`<script type="application/ld+json">` +
+		JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'WebPage',
+			name: 'Transparency Report - LibreSearch',
+			url: 'https://libresearch.ca/transparency',
+			description:
+				'Counts of government requests, court orders, takedowns, and voluntary disclosures received by LibreSearch. Updated semi-annually.',
+			isPartOf: { '@type': 'WebSite', name: 'LibreSearch', url: 'https://libresearch.ca' }
+		}) +
+		'</' +
+		'script>';
 </script>
 
 <svelte:head>
@@ -66,6 +80,7 @@
 		content="What we received, what we disclosed, what we pushed back on."
 	/>
 	<meta property="og:url" content="https://libresearch.ca/transparency" />
+	{@html jsonLd}
 </svelte:head>
 
 <header class="sticky top-0 z-20 bg-(--app-background)">
@@ -84,6 +99,7 @@
 
 <main class="bg-(--app-background) text-(--app-text)">
 	<section class="mx-auto w-full max-w-[900px] px-6 py-12 sm:py-16">
+		<h1 class="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">Transparency Report</h1>
 		<p class="text-sm text-(--app-muted)">
 			This page is updated semi-annually with every legal demand, takedown notice, and voluntary
 			disclosure we receive. If we ever stop publishing it, assume the worst and ask why.

@@ -58,6 +58,20 @@
 		{ label: 'Security contact', value: '/contact (subject: Security disclosure)' },
 		{ label: 'Security disclosure', value: '/.well-known/security.txt (RFC 9116)' }
 	];
+
+	const jsonLd =
+		`<script type="application/ld+json">` +
+		JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'WebPage',
+			name: 'Trust Center - LibreSearch',
+			url: 'https://libresearch.ca/trust',
+			description:
+				"How LibreSearch handles your data: what we store, what we don't, who our sub-processors are, and where our infrastructure lives.",
+			isPartOf: { '@type': 'WebSite', name: 'LibreSearch', url: 'https://libresearch.ca' }
+		}) +
+		'</' +
+		'script>';
 </script>
 
 <svelte:head>
@@ -74,6 +88,7 @@
 		content="The full story on how we handle your data — sub-processors, retention, jurisdiction."
 	/>
 	<meta property="og:url" content="https://libresearch.ca/trust" />
+	{@html jsonLd}
 </svelte:head>
 
 <header class="sticky top-0 z-20 bg-(--app-background)">
@@ -92,6 +107,7 @@
 
 <main class="bg-(--app-background) text-(--app-text)">
 	<section class="mx-auto w-full max-w-[1000px] px-6 py-12 sm:py-16">
+		<h1 class="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">Trust Center</h1>
 		<p class="text-sm text-(--app-muted)">
 			This page is the long-form answer to "what does LibreSearch actually do with my data?" Short
 			answer: as little as physically possible.

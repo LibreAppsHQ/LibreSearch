@@ -53,6 +53,20 @@
 	// Group bangs by category for the table. We label by the URL host as a stable
 	// fallback if no curated grouping exists.
 	const bangEntries = Object.entries(BANGS).map(([key, b]) => ({ key, ...b }));
+
+	const jsonLd =
+		`<script type="application/ld+json">` +
+		JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'TechArticle',
+			headline: 'LibreSearch search syntax',
+			url: 'https://libresearch.ca/syntax',
+			description:
+				'Operators and bangs for LibreSearch. Use site:, filetype:, intitle:, exclusions, exact phrases, and one-tap bangs to search other sites.',
+			isPartOf: { '@type': 'WebSite', name: 'LibreSearch', url: 'https://libresearch.ca' }
+		}) +
+		'</' +
+		'script>';
 </script>
 
 <svelte:head>
@@ -66,6 +80,7 @@
 	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta property="og:description" content="The full operator and bang reference for LibreSearch." />
 	<meta property="og:url" content="https://libresearch.ca/syntax" />
+	{@html jsonLd}
 </svelte:head>
 
 <header class="sticky top-0 z-20 bg-(--app-background)">

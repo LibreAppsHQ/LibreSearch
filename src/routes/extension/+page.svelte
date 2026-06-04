@@ -71,6 +71,22 @@
 			why: 'Persists your preferences (default tab, region, theme) across browser sessions and devices.'
 		}
 	];
+
+	const jsonLd =
+		`<script type="application/ld+json">` +
+		JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'SoftwareApplication',
+			name: 'LibreSearch browser extension',
+			url: 'https://libresearch.ca/extension',
+			applicationCategory: 'BrowserApplication',
+			operatingSystem: 'Chrome, Edge, Firefox',
+			description:
+				'Search the web privately from your toolbar, address bar, or right-click menu. The LibreSearch extension adds zero-tracking search to Chrome, Edge, and Firefox.',
+			offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
+		}) +
+		'</' +
+		'script>';
 </script>
 
 <svelte:head>
@@ -87,6 +103,7 @@
 		content="Private search in your toolbar. No tracking, no profiles, no ads."
 	/>
 	<meta property="og:url" content="https://libresearch.ca/extension" />
+	{@html jsonLd}
 </svelte:head>
 
 <header class="sticky top-0 z-20 bg-(--app-background)">

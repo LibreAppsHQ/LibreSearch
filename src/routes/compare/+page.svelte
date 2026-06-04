@@ -3,6 +3,20 @@
 	import Logo from '$lib/components/Logo.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 
+	const jsonLd =
+		`<script type="application/ld+json">` +
+		JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'WebPage',
+			name: 'Compare LibreSearch',
+			url: 'https://libresearch.ca/compare',
+			description:
+				'See how LibreSearch stacks up against Google, Bing, DuckDuckGo, Brave Search, and Startpage on privacy and features.',
+			isPartOf: { '@type': 'WebSite', name: 'LibreSearch', url: 'https://libresearch.ca' }
+		}) +
+		'</' +
+		'script>';
+
 	// Engines we compare against. Order matters — LibreSearch sits first so it
 	// reads as "us vs the rest" left-to-right.
 	// `size` overrides the default 64×64 logo box. Wide wordmarks (Bing) get a
@@ -116,6 +130,19 @@
 		content="See how LibreSearch stacks up against Google, Bing, DuckDuckGo, Brave Search, and Startpage on privacy and features."
 	/>
 	<meta name="robots" content="index, follow" />
+	<link rel="canonical" href="https://libresearch.ca/compare" />
+	<meta property="og:title" content="Compare - LibreSearch" />
+	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
+	<meta
+		property="og:description"
+		content="See how LibreSearch stacks up against Google, Bing, DuckDuckGo, Brave Search, and Startpage on privacy and features."
+	/>
+	<meta property="og:url" content="https://libresearch.ca/compare" />
+	<meta
+		name="twitter:description"
+		content="See how LibreSearch stacks up against Google, Bing, DuckDuckGo, Brave Search, and Startpage on privacy and features."
+	/>
+	{@html jsonLd}
 </svelte:head>
 
 <!-- Sticky header — matches /about layout -->

@@ -101,6 +101,20 @@
 			submitting = false;
 		}
 	}
+
+	const jsonLd =
+		`<script type="application/ld+json">` +
+		JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'ContactPage',
+			name: 'Contact - LibreSearch',
+			url: 'https://libresearch.ca/contact',
+			description:
+				'Get in touch with the LibreSearch team — feedback, privacy questions, security disclosures, or press inquiries.',
+			isPartOf: { '@type': 'WebSite', name: 'LibreSearch', url: 'https://libresearch.ca' }
+		}) +
+		'</' +
+		'script>';
 </script>
 
 <svelte:head>
@@ -117,6 +131,7 @@
 		content="Reach the LibreSearch team about privacy, security, press, or general feedback."
 	/>
 	<meta property="og:url" content="https://libresearch.ca/contact" />
+	{@html jsonLd}
 </svelte:head>
 
 <!-- Sticky header — matches /about and /compare -->

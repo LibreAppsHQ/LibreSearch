@@ -203,6 +203,20 @@
 			]
 		}
 	];
+
+	const jsonLd =
+		`<script type="application/ld+json">` +
+		JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'WebPage',
+			name: 'Changelog - LibreSearch',
+			url: 'https://libresearch.ca/changelog',
+			description:
+				'Release notes for LibreSearch. New features, fixes, performance work, and security improvements, dated and tagged.',
+			isPartOf: { '@type': 'WebSite', name: 'LibreSearch', url: 'https://libresearch.ca' }
+		}) +
+		'</' +
+		'script>';
 </script>
 
 <svelte:head>
@@ -216,6 +230,7 @@
 	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta property="og:description" content="Everything that's shipped in LibreSearch, by release." />
 	<meta property="og:url" content="https://libresearch.ca/changelog" />
+	{@html jsonLd}
 </svelte:head>
 
 <header class="sticky top-0 z-20 bg-(--app-background)">
@@ -234,6 +249,7 @@
 
 <main class="bg-(--app-background) text-(--app-text)">
 	<section class="mx-auto w-full max-w-[900px] px-6 py-12 sm:py-16">
+		<h1 class="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">Changelog</h1>
 		<p class="text-sm text-(--app-muted)">
 			Every release, dated and tagged. Subscribe via
 			<a

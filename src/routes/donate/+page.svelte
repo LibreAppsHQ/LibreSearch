@@ -69,10 +69,24 @@
 			copied = null;
 		}
 	}
+
+	const jsonLd =
+		`<script type="application/ld+json">` +
+		JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'WebPage',
+			name: 'Donate - LibreSearch',
+			url: 'https://libresearch.ca/donate',
+			description:
+				'LibreSearch runs on donations, not ads. Support a private search engine that never logs your queries or sells your data.',
+			isPartOf: { '@type': 'WebSite', name: 'LibreSearch', url: 'https://libresearch.ca' }
+		}) +
+		'</' +
+		'script>';
 </script>
 
 <svelte:head>
-	<title>Donate</title>
+	<title>Donate - LibreSearch</title>
 	<meta
 		name="description"
 		content="LibreSearch runs on donations, not ads. Support a private search engine that never logs your queries or sells your data."
@@ -94,6 +108,7 @@
 		name="twitter:description"
 		content="LibreSearch runs on donations, not ads. Support a private search engine that never logs your queries or sells your data."
 	/>
+	{@html jsonLd}
 </svelte:head>
 
 <!-- Sticky header -->

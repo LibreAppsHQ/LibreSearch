@@ -11,7 +11,7 @@
 			'@type': 'Organization',
 			name: 'LibreSearch',
 			url: 'https://libresearch.ca',
-			logo: 'https://libresearch.ca/favicon.png',
+			logo: 'https://libresearch.ca/favicon.svg',
 			description: 'A private search engine with no tracking, no profiles, and no ads.',
 			sameAs: []
 		}) +
@@ -20,7 +20,7 @@
 </script>
 
 <svelte:head>
-	<title>About Us</title>
+	<title>About - LibreSearch</title>
 	<meta
 		name="description"
 		content="LibreSearch is a private search engine that does not log queries, build profiles, or show ads. Learn how it works and its privacy model."
