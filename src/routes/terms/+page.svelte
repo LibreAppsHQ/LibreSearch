@@ -150,8 +150,8 @@
 			<section id="intellectual-property" class="scroll-mt-28">
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Intellectual property</h2>
 				<p class="text-sm leading-7 text-(--app-muted)">
-					The LibreSearch name, logo, and interface are the property of LibreSearch. Please don't copy,
-					stretch, recolor, or otherwise misuse our brand assets — see the
+					The LibreSearch name, logo, and interface are the property of LibreSearch. Please don't
+					copy, stretch, recolor, or otherwise misuse our brand assets — see the
 					<a href="/press" class="text-(--app-accent) hover:underline">press page</a> for approved usage.
 					Content surfaced in results remains the property of its respective owners.
 				</p>

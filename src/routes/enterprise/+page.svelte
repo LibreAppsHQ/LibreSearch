@@ -206,8 +206,7 @@
 							{/if}
 						</button>
 					</header>
-					<pre
-						class="overflow-x-auto bg-[#0d1019] p-6 text-xs leading-relaxed text-[#d4d4d8]"><code
+					<pre class="overflow-x-auto bg-[#0d1019] p-6 text-xs leading-relaxed text-[#d4d4d8]"><code
 							>{s.code}</code
 						></pre>
 				</article>

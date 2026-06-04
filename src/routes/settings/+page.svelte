@@ -223,8 +223,8 @@
 										onclick={() => themeStore.setTheme(key)}
 										class="group flex flex-col items-center gap-2"
 									>
-						<div
-							class="relative h-[76px] w-[104px] overflow-hidden rounded-sm border-2 transition"
+										<div
+											class="relative h-[76px] w-[104px] overflow-hidden rounded-sm border-2 transition"
 											style="background:{theme.background}; border-color:{$themeStore === key
 												? theme.accent
 												: 'rgba(255,255,255,0.12)'}"

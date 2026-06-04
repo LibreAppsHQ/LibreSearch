@@ -1,0 +1,73 @@
+{
+  "timestamp": "2026-06-04T18:36:15.873Z",
+  "mode": "headless",
+  "workerType": "audit",
+  "model": "haiku",
+  "durationMs": 98552,
+  "executionId": "audit_1780598077321_j5p8vh",
+  "success": true,
+  "findings": {
+    "vulnerabilities": [
+      {
+        "severity": "low",
+        "file": "src/hooks.server.ts",
+        "line": 7,
+        "description": "Sentry DSN is publicly exposed in code. While this is acceptable (DSNs are meant to be public), it reveals organization and project IDs. Monitor for suspicious error reports."
+      },
+      {
+        "severity": "low",
+        "file": "src/hooks.server.ts",
+        "line": 39,
+        "description": "CSP allows 'unsafe-inline' for scripts. Required for Vercel Analytics integration but increases XSS attack surface. Consider using nonce-based CSP instead."
+      },
+      {
+        "severity": "low",
+        "file": "src/hooks.server.ts",
+        "line": 40,
+        "description": "CSP allows 'unsafe-inline' for styles. Used by Tailwind CSS. Could be mitigated with subresource integrity checks."
+      },
+      {
+        "severity": "low",
+        "file": ".claude/helpers/memory.js",
+        "line": 35,
+        "description": "No input validation on set() method values. If these values are later used in template contexts or evaluated, could create injection vector. Local use mitigates risk."
+      },
+      {
+        "severity": "low",
+        "file": ".claude/helpers/session.js",
+        "line": 42,
+        "description": "No input validation on context values stored in session.context. If used in unsafe contexts later, could cause issues. Currently low risk as data is local."
+      }
+    ],
+    "riskScore": 18,
+    "strengths": [
+      "Proper use of environment variables for all secrets (GROQ_API_KEY, FINNHUB_API_KEY, Upstash credentials)",
+      "No hardcoded secrets or API keys found",
+      "Safe URL parameter handling using searchParams.set() (prevents injection)",
+      "No eval() or Function() usage - custom safe math parser instead",
+      "Proper use of execFileSync over execSync to prevent shell injection",
+      "Comprehensive input validation on all API endpoints",
+      "Rate limiting implemented across search endpoints",
+      "ALTCHA challenge system with proper secret handling (fails closed in production)",
+      "Good error handling - doesn't leak sensitive information",
+      "Proper CORS restrictions and security headers",
+      "No XSS vulnerabilities detected",
+      "No SQL injection risks (no database queries in provided code)",
+      "Sentry configured to strip PII (IP addresses, emails)"
+    ],
+    "recommendations": [
+      "Consider using nonce-based CSP for inline scripts instead of 'unsafe-inline' if possible",
+      "Add input validation wrapper for memory.js and session.js helper functions",
+      "Monitor Sentry for suspicious error patterns that might indicate attacks",
+      "Run 'npm audit' regularly to check for vulnerable dependencies",
+      "Keep all API keys (GROQ, Finnhub, Brave Search) properly rotated and never committed",
+      "Consider adding request signing/HMAC validation for sensitive API endpoints",
+      "Audit access logs for rate limit violations (already detecting in code)",
+      "Use HTTPS only (already configured via HSTS header)",
+      "Review and audit honeypot/bot detection logic periodically",
+      "Consider implementing additional bot detection beyond the 'website' honeypot field"
+    ]
+  },
+  "rawOutputPreview": "Based on my comprehensive security analysis of the LibreSearch codebase, here's the vulnerability report:\n\n```json\n{\n  \"vulnerabilities\": [\n    {\n      \"severity\": \"low\",\n      \"file\": \"src/hooks.server.ts\",\n      \"line\": 7,\n      \"description\": \"Sentry DSN is publicly exposed in code. While this is acceptable (DSNs are meant to be public), it reveals organization and project IDs. Monitor for suspicious error reports.\"\n    },\n    {\n      \"severity\": \"low\",\n      \"file\": \"src/hooks.server.ts\",\n      \"line\": 39,\n      \"description\": \"CSP allows 'unsafe-inline' for scripts. Required for Vercel Analytics integration but increases XSS attack surface. Consider using nonce-based CSP instead.\"\n    },\n    {\n      \"severity\": \"low\",\n      \"file\": \"src/hooks.server.ts\",\n      \"line\": 40,\n      \"description\": \"CSP allows 'unsafe-inline' for styles. Used by Tailwind CSS. Could be mitigated with subresource integrity checks.\"\n    },\n    {\n      \"severity\": \"low\",\n      \"file\": \".claude/helpers/memory.js\",\n      \"line\": 35,\n      \"description\": \"No input validation on set() method values. If these values are later used in template contexts or evaluated, could create injection vector. Local use mitigates risk.\"\n    },\n    {\n      \"severity\": \"low\",\n      \"file\": \".claude/helpers/session.js\",\n      \"line\": 42,\n      \"description\": \"No input validation on context values stored in session.context. If used in unsafe contexts later, could cause issues. Currently low risk as data is local.\"\n    }\n  ],\n  \"riskScore\": 18,\n  \"strengths\": [\n    \"Proper use of environment variables for all secrets (GROQ_API_KEY, FINNHUB_API_KEY, Upstash credentials)\",\n    \"No hardcoded secrets or API keys found\",\n    \"Safe URL parameter handling using searchParams.set() (prevents injection)\",\n    \"No eval() or Function() usage - custom safe math parser instead\",\n    \"Proper use of execFileSync over execSync to prevent shell injection\",\n    \"Comprehensive input validation on all API endpoints\",\n    \"Rate limit",
+  "rawOutputLength": 3646
+}

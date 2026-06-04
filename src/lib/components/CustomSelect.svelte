@@ -169,7 +169,10 @@
 	}
 </script>
 
-<svelte:window onresize={() => open && closeMenu(false)} onscroll={() => open && closeMenu(false)} />
+<svelte:window
+	onresize={() => open && closeMenu(false)}
+	onscroll={() => open && closeMenu(false)}
+/>
 
 <div class="relative">
 	<button

@@ -104,5 +104,9 @@
       "Bash(curl -s -m6 -A \"Mozilla/5.0\" \"https://query1.finance.yahoo.com/v8/finance/chart/AAPL?range=1mo&interval=1d\")",
       "Bash(curl -s -m6 \"http://localhost:5173/api/stock?q=AAPL+stock\")"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "claude-flow"
+  ],
+  "enableAllProjectMcpServers": true
 }

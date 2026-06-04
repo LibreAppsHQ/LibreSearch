@@ -600,11 +600,11 @@
 							<button
 								type="button"
 								onclick={() => onCalcKey(key)}
-						class={key === '='
-								? 'flex h-12 items-center justify-center rounded-md bg-(--app-accent) text-lg font-semibold text-[#111] transition hover:opacity-90'
-								: key === 'C'
-									? 'flex h-12 items-center justify-center rounded-md bg-(--app-hover) text-lg font-medium text-red-400 transition hover:opacity-90'
-									: 'flex h-12 items-center justify-center rounded-md bg-(--app-hover) text-lg font-medium text-(--app-text) transition hover:opacity-90'}
+								class={key === '='
+									? 'flex h-12 items-center justify-center rounded-md bg-(--app-accent) text-lg font-semibold text-[#111] transition hover:opacity-90'
+									: key === 'C'
+										? 'flex h-12 items-center justify-center rounded-md bg-(--app-hover) text-lg font-medium text-red-400 transition hover:opacity-90'
+										: 'flex h-12 items-center justify-center rounded-md bg-(--app-hover) text-lg font-medium text-(--app-text) transition hover:opacity-90'}
 							>
 								{key}
 							</button>
@@ -657,8 +657,8 @@
 				/>
 				<div class="mt-4 grid grid-cols-2 gap-2 text-sm">
 					{#each [{ key: 'lower', label: 'Lowercase (a-z)' }, { key: 'upper', label: 'Uppercase (A-Z)' }, { key: 'numbers', label: 'Numbers (0-9)' }, { key: 'symbols', label: 'Symbols (!@#)' }] as opt, i (i)}
-					<label
-						class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 transition hover:bg-(--app-hover)"
+						<label
+							class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 transition hover:bg-(--app-hover)"
 						>
 							<input
 								type="checkbox"

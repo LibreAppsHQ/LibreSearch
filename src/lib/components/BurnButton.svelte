@@ -9,6 +9,7 @@
 	// sticky, blurred search-results header) can't trap our position:fixed
 	// element inside its stacking context. Same trick SiteMenu uses.
 	function portal(node: HTMLElement) {
+		if (typeof document === 'undefined') return {};
 		document.body.appendChild(node);
 		return {
 			destroy() {

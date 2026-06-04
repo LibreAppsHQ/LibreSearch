@@ -38,6 +38,7 @@
 	});
 
 	$effect(() => {
+		if (!browser) return;
 		if (reduceMotion) {
 			document.documentElement.setAttribute('data-reduce-motion', '');
 		} else {

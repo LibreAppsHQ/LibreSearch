@@ -58,9 +58,7 @@
 		<div class="mb-2 flex items-center gap-2 text-xs font-semibold text-(--app-accent)">
 			<i class="fa-solid fa-wand-magic-sparkles"></i>
 			<span>AI answer</span>
-		<span class="rounded bg-(--app-hover) px-2 py-0.5 text-[10px] text-(--app-muted)"
-			>Beta</span
-		>
+			<span class="rounded bg-(--app-hover) px-2 py-0.5 text-[10px] text-(--app-muted)">Beta</span>
 		</div>
 
 		{#if loading}
