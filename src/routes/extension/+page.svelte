@@ -32,9 +32,9 @@
 		{
 			name: 'Mozilla Firefox',
 			icon: 'fa-firefox-browser',
-			status: 'pending',
-			url: null,
-			note: 'Coming after Edge approval, via Mozilla Add-ons.'
+			status: 'available',
+			url: 'https://addons.mozilla.org/en-US/firefox/addon/libresearch/',
+			note: 'Approved.'
 		}
 	];
 

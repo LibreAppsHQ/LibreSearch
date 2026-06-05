@@ -1,12 +1,63 @@
 {
-  "timestamp": "2026-06-04T21:20:42.281Z",
-  "mode": "local",
-  "checks": {
-    "envFilesProtected": false,
-    "gitIgnoreExists": true,
-    "noHardcodedSecrets": true
+  "timestamp": "2026-06-05T04:38:10.863Z",
+  "mode": "headless",
+  "workerType": "audit",
+  "model": "haiku",
+  "durationMs": 79560,
+  "executionId": "audit_1780634211303_9wztmn",
+  "success": true,
+  "findings": {
+    "vulnerabilities": [
+      {
+        "severity": "high",
+        "file": "libresearch-extension-key.pem",
+        "line": null,
+        "description": "Private key file committed to git history. Although currently in .gitignore, git history retains the private key (visible in commits 9824c8a, 3d127d5). This exposes the extension signing key to anyone with repository access. REMEDIATION: Run `git-filter-repo --invert-paths --paths libresearch-extension-key.pem` to remove from all history, then rotate the key."
+      },
+      {
+        "severity": "high",
+        "file": ".claude/helpers/memory.js",
+        "line": 26,
+        "description": "Sensitive data stored in plain text JSON files (`.claude-flow/data/memory.json`) with no encryption or access controls. User sessions, API keys, or credentials stored here are exposed on disk. No file permission validation; any process running as the same user can read/modify the file."
+      },
+      {
+        "severity": "high",
+        "file": ".claude/helpers/session.js",
+        "line": 15,
+        "description": "Session context stored in plain text JSON files (`.claude-flow/sessions/current.json`) with no encryption. Session secrets, user data, or credentials in the context object are exposed on disk with world-readable default file permissions depending on umask."
+      },
+      {
+        "severity": "medium",
+        "file": ".claude/helpers/github-safe.js",
+        "line": 98,
+        "description": "Temporary files containing user input are not securely deleted. Cleanup errors are silently caught (`try { unlinkSync(tmpFile); } catch (_) { /* ignore cleanup errors */ }`). If the process crashes mid-cleanup or file permissions prevent deletion, the temp file containing the GitHub body (potentially with secrets) persists on disk."
+      },
+      {
+        "severity": "medium",
+        "file": ".claude/helpers/router.js",
+        "line": 45,
+        "description": "Regular expression patterns are not validated for ReDoS (Regular Expression Denial of Service). The `buildPattern()` function creates dynamically-built regexes from user-controlled TASK_PATTERNS without catastrophic backtracking analysis. Low risk in current context (static patterns), but pattern arrays are mutable."
+      },
+      {
+        "severity": "low",
+        "file": ".claude/helpers/statusline.js",
+        "line": 20,
+        "description": "Silently falls back to reading package.json from multiple hardcoded paths without explicit validation. If a symlink at one path points to an attacker-controlled file, the version string could be manipulated. Impact is cosmetic (statusline display), but demonstrates lack of defensive file operations."
+      }
+    ],
+    "riskScore": 68,
+    "recommendations": [
+      "IMMEDIATE: Remove libresearch-extension-key.pem from git history using git-filter-repo or BFG. This private key is exposed to anyone with repository access.",
+      "Implement encryption for memory.js and session.js files using Node.js crypto module. Example: encrypt data before writeFileSync, decrypt on fs.readFileSync.",
+      "Add file permission validation (chmod 0600 / umask) to memory and session files to ensure only the owning process can read/modify.",
+      "Modify github-safe.js cleanup to use secure deletion: overwrite the temp file with random bytes before unlinking, or use a dedicated secure-delete library.",
+      "Add explicit validation in memory.js and session.js to detect and reject storage of secrets (API keys, tokens). Use pattern matching to warn/block sensitive data.",
+      "Audit the .env.local and environment variable handling to ensure API_KEY values (BRAVE_SEARCH_API_KEY, GROQ_API_KEY, APPWRITE_API_KEY) are never logged or leaked to console output.",
+      "Enable HTTP security headers: add Strict-Transport-Security, X-Content-Type-Options: nosniff, X-Frame-Options: deny, CSP headers in vercel.json or middleware.",
+      "Implement rate limiting and CSRF protection on public API endpoints (especially /api/search) to prevent abuse and token exfiltration.",
+      "Consider adding audit logging for sensitive operations (authentication, API key usage) to detect unauthorized access."
+    ]
   },
-  "riskLevel": "low",
-  "recommendations": [],
-  "note": "Install Claude Code CLI for AI-powered security analysis"
+  "rawOutputPreview": "Based on my analysis of the LibreSearch codebase, here's the security vulnerability report:\n\n```json\n{\n  \"vulnerabilities\": [\n    {\n      \"severity\": \"high\",\n      \"file\": \"libresearch-extension-key.pem\",\n      \"line\": null,\n      \"description\": \"Private key file committed to git history. Although currently in .gitignore, git history retains the private key (visible in commits 9824c8a, 3d127d5). This exposes the extension signing key to anyone with repository access. REMEDIATION: Run `git-filter-repo --invert-paths --paths libresearch-extension-key.pem` to remove from all history, then rotate the key.\"\n    },\n    {\n      \"severity\": \"high\",\n      \"file\": \".claude/helpers/memory.js\",\n      \"line\": 26,\n      \"description\": \"Sensitive data stored in plain text JSON files (`.claude-flow/data/memory.json`) with no encryption or access controls. User sessions, API keys, or credentials stored here are exposed on disk. No file permission validation; any process running as the same user can read/modify the file.\"\n    },\n    {\n      \"severity\": \"high\",\n      \"file\": \".claude/helpers/session.js\",\n      \"line\": 15,\n      \"description\": \"Session context stored in plain text JSON files (`.claude-flow/sessions/current.json`) with no encryption. Session secrets, user data, or credentials in the context object are exposed on disk with world-readable default file permissions depending on umask.\"\n    },\n    {\n      \"severity\": \"medium\",\n      \"file\": \".claude/helpers/github-safe.js\",\n      \"line\": 98,\n      \"description\": \"Temporary files containing user input are not securely deleted. Cleanup errors are silently caught (`try { unlinkSync(tmpFile); } catch (_) { /* ignore cleanup errors */ }`). If the process crashes mid-cleanup or file permissions prevent deletion, the temp file containing the GitHub body (potentially with secrets) persists on disk.\"\n    },\n    {\n      \"severity\": \"medium\",\n      \"file\": \".claude/helpers/router.js\",\n      \"line\": 45,\n      \"description\": \"Regular exp",
+  "rawOutputLength": 4740
 }

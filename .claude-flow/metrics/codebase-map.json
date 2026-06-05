@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-04T21:22:15.855Z",
+  "timestamp": "2026-06-05T04:37:15.937Z",
   "projectRoot": "/home/stormz/Desktop/LibreSearch",
   "structure": {
     "hasPackageJson": true,
@@ -7,5 +7,5 @@
     "hasClaudeConfig": true,
     "hasClaudeFlow": true
   },
-  "scannedAt": 1780608135855
+  "scannedAt": 1780634235937
 }
