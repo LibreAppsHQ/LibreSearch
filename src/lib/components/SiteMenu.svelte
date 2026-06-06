@@ -28,7 +28,10 @@
 		},
 		{
 			title: 'Products',
-			links: [{ label: 'LibreSearch Extension', href: '/extension', icon: '/ex-icon.png' }]
+			links: [
+				{ label: 'LibreSearch Extension', href: '/extension', icon: '/ex-icon.png' },
+				{ label: 'LibreGuard', href: '/extension', icon: '/guard.png' }
+			]
 		},
 		{
 			title: 'Resources',
