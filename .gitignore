@@ -30,6 +30,7 @@ vite.config.ts.timestamp-*
 .env.local
 .claude
 .agents
+.codegraph
 
 support.libresearch.ca
 # Local-only: this pnpm fork stores build-approvals here; CI pnpm v9 rejects it.
@@ -39,3 +40,5 @@ starter-for-svelte/
 
 src/routes/account
 src/routes/auth
+
+CLAUDE.md
