@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Logo from '$lib/components/Logo.svelte';
+	import { APP_VERSION } from '$lib/version';
 </script>
 
 <footer class="border-t border-(--app-border) bg-(--app-background)">
@@ -165,7 +166,7 @@
 				<span class="text-(--app-muted)">·</span>
 				<span
 					class="rounded-full border border-(--app-border) bg-(--app-background)/80 px-2 py-0.5 text-xs text-(--app-muted) backdrop-blur-sm"
-					>v0.5.0</span
+					>v{APP_VERSION}</span
 				>
 			</div>
 			<div class="flex items-center gap-4">
@@ -177,6 +178,14 @@
 					class="text-(--app-muted) transition hover:text-(--app-text)"
 				>
 					<i class="fa-brands fa-github text-base"></i>
+				</a>
+				<a
+					href="/feed.xml"
+					data-sveltekit-reload
+					aria-label="Blog RSS feed"
+					class="text-(--app-muted) transition hover:text-(--app-text)"
+				>
+					<i class="fa-solid fa-rss text-base"></i>
 				</a>
 				<a
 					href="https://mastodon.social/@libresearch"

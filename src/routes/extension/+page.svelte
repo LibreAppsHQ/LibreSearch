@@ -4,6 +4,9 @@
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
 
 	type StoreStatus = 'available' | 'pending' | 'planned';
 
@@ -164,9 +167,24 @@
 		}
 	];
 
-	let active = $state('search');
+	// svelte-ignore state_referenced_locally -- seeded from ?product= on load
+	let active = $state(data.initialProduct);
+
+	function selectProduct(id: string) {
+		active = id;
+		if (typeof history !== 'undefined') {
+			const url = new URL(window.location.href);
+			if (id === 'guard') {
+				url.searchParams.set('product', 'guard');
+			} else {
+				url.searchParams.delete('product');
+			}
+			history.replaceState({}, '', url);
+		}
+	}
 
 	const current = $derived(products.find((p) => p.id === active) ?? products[0]);
+	const usesCrx = $derived(current.browsers.some((b) => b.url?.endsWith('.crx')));
 
 	const jsonLd =
 		`<script type="application/ld+json">` +
@@ -223,7 +241,7 @@
 			{#each products as p}
 				<button
 					type="button"
-					onclick={() => (active = p.id)}
+					onclick={() => selectProduct(p.id)}
 					class="flex flex-1 items-center justify-center gap-2.5 rounded-full px-4 py-2.5 text-sm font-semibold transition-all {active === p.id
 						? 'bg-(--app-background) text-(--app-text) shadow-xs'
 						: 'text-(--app-muted) hover:text-(--app-text)'}"
@@ -314,6 +332,45 @@
 						</div>
 					{/each}
 				</div>
+
+				{#if usesCrx}
+					<div
+						class="mt-8 rounded-2xl border border-(--app-border) bg-(--app-surface) p-6 text-left"
+					>
+						<p class="text-xs font-semibold tracking-widest text-(--app-accent) uppercase">
+							Installing from .crx
+						</p>
+						<h3 class="mt-2 text-base font-semibold text-(--app-text)">
+							Chrome, Brave, Edge, Vivaldi, or Opera
+						</h3>
+						<p class="mt-2 text-sm leading-6 text-(--app-muted)">
+							These browsers are not in a web store yet, so you install from a downloaded
+							<code class="rounded bg-(--app-hover) px-1 py-0.5 text-xs">.crx</code> file. The
+							steps are the same for Chromium-based browsers.
+						</p>
+						<ol class="mt-4 space-y-2.5 text-sm leading-6 text-(--app-text)">
+							<li>1. Click <strong>Install</strong> above and save the <code class="text-xs">.crx</code> file.</li>
+							<li>
+								2. Open your browser's extensions page (<code class="text-xs"
+									>chrome://extensions</code
+								>
+								or <code class="text-xs">edge://extensions</code>).
+							</li>
+							<li>3. Turn on <strong>Developer mode</strong> (toggle in the top-right corner).</li>
+							<li>4. Drag the downloaded <code class="text-xs">.crx</code> onto the page, then confirm.</li>
+						</ol>
+						<p class="mt-4 text-xs leading-5 text-(--app-muted)">
+							If drag-and-drop is blocked, use <strong>Load unpacked</strong> after extracting the
+							extension from
+							<a
+								href="https://github.com/{current.githubPath}"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="text-(--app-accent) hover:underline">GitHub</a
+							>.
+						</p>
+					</div>
+				{/if}
 
 				<p class="mt-6 text-center text-xs text-(--app-muted)">
 					Power users can sideload the development build from

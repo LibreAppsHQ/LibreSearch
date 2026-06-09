@@ -30,7 +30,7 @@
 			title: 'Products',
 			links: [
 				{ label: 'LibreSearch Extension', href: '/extension', icon: '/ex-icon.png' },
-				{ label: 'LibreGuard', href: '/extension', icon: '/guard.png' }
+				{ label: 'LibreGuard', href: '/extension?product=guard', icon: '/guard.png' }
 			]
 		},
 		{

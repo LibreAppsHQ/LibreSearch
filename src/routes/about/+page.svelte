@@ -13,7 +13,11 @@
 			url: 'https://libresearch.ca',
 			logo: 'https://libresearch.ca/favicon.svg',
 			description: 'A private search engine with no tracking, no profiles, and no ads.',
-			sameAs: []
+			sameAs: [
+				'https://github.com/Arcbasehq/LibreSearch',
+				'https://mastodon.social/@libresearch',
+				'https://x.com/libresearchca'
+			]
 		}) +
 		'</' +
 		'script>';
