@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export type SettingCategory = 'general' | 'appearance' | 'privacy';
+export type SettingCategory = 'general' | 'appearance' | 'privacy' | 'eco';
 
 export interface ToggleSetting {
 	id: string;
@@ -336,6 +336,98 @@ const defaultSettings: Setting[] = [
 			{ label: 'United Kingdom', value: 'GB' },
 			{ label: 'United States', value: 'US' }
 		]
+	},
+
+	// ── Eco ──────────────────────────────────────────────────────
+	{
+		id: 'eco-mode',
+		name: 'Eco mode',
+		description:
+			'Enable all eco optimizations: low-power defaults, fewer requests, and world-impact features below.',
+		category: 'eco',
+		type: 'toggle',
+		checked: false
+	},
+	{
+		id: 'eco-hide-backgrounds',
+		name: 'Hide decorative backgrounds',
+		description: 'Remove decorative homepage backgrounds to save GPU and battery.',
+		category: 'eco',
+		type: 'toggle',
+		checked: false
+	},
+	{
+		id: 'eco-skip-suggestions',
+		name: 'Skip autocomplete requests',
+		description: 'Stop fetching suggestion data while typing to reduce network usage.',
+		category: 'eco',
+		type: 'toggle',
+		checked: false
+	},
+	{
+		id: 'eco-skip-rich-answers',
+		name: 'Skip rich answers',
+		description: 'Disable instant answers and AI summaries to use less bandwidth and processing.',
+		category: 'eco',
+		type: 'toggle',
+		checked: false
+	},
+	{
+		id: 'eco-skip-favicons',
+		name: 'Skip favicons',
+		description: 'Do not load site icons beside search results.',
+		category: 'eco',
+		type: 'toggle',
+		checked: false
+	},
+	{
+		id: 'eco-prefer-dark',
+		name: 'Prefer dark display',
+		description: 'Use the Dark theme to reduce screen power draw on OLED and LCD displays.',
+		category: 'eco',
+		type: 'toggle',
+		checked: false
+	},
+	{
+		id: 'eco-impact-tips',
+		name: 'Sustainability tips',
+		description: 'Show rotating tips about reducing digital carbon footprint while you search.',
+		category: 'eco',
+		type: 'toggle',
+		checked: false
+	},
+	{
+		id: 'eco-green-shortcuts',
+		name: 'Environmental search shortcuts',
+		description: 'Show quick links on the homepage to explore climate and conservation topics.',
+		category: 'eco',
+		type: 'toggle',
+		checked: false
+	},
+	{
+		id: 'eco-support-charities',
+		name: 'Highlight environmental causes',
+		description: 'Show links to trusted tree-planting and conservation nonprofits you can support.',
+		category: 'eco',
+		type: 'toggle',
+		checked: false
+	},
+	{
+		id: 'eco-local-results',
+		name: 'Prefer local results',
+		description:
+			'Use your browser locale for regional results when none is set, reducing long-distance data routing.',
+		category: 'eco',
+		type: 'toggle',
+		checked: false
+	},
+	{
+		id: 'eco-cap-results',
+		name: 'Limit results per search',
+		description: 'Cap each search at 10 results to lower shared data-center load.',
+		category: 'eco',
+		type: 'toggle',
+		checked: false
 	}
 ];
 
@@ -349,6 +441,12 @@ export function getSelect(settings: Setting[], id: string, defaultValue = ''): s
 	const s = settings.find((s) => s.id === id);
 	if (!s || s.type !== 'select') return defaultValue;
 	return s.value;
+}
+
+/** True when eco mode is on, or the specific eco setting is enabled. */
+export function ecoActive(settings: Setting[], id: string): boolean {
+	if (getToggle(settings, 'eco-mode', false)) return true;
+	return getToggle(settings, id, false);
 }
 
 function mergeWithDefaults(stored: unknown[]): Setting[] {

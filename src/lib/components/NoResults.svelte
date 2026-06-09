@@ -50,7 +50,7 @@
 			{#each others as t, i (i)}
 				<a
 					href={urlFor(t)}
-					class="inline-flex items-center gap-2 rounded-md border border-(--app-border) bg-(--app-surface) px-4 py-1.5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+					class="inline-flex items-center gap-2 rounded-md border border-(--app-border) bg-(--app-surface) px-4 py-1.5 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 				>
 					<i class="fa-solid {tabMeta[t].icon} text-xs text-(--app-muted)"></i>
 					{tabMeta[t].label}

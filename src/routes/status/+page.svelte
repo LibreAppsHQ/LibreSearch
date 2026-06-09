@@ -223,7 +223,7 @@
 				type="button"
 				onclick={runChecks}
 				disabled={checking}
-				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-2 text-xs text-(--app-text) transition hover:bg-(--app-hover) disabled:opacity-60"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-2 text-xs text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover) disabled:opacity-60"
 			>
 				<i class="fa-solid fa-rotate {checking ? 'fa-spin' : ''}"></i>
 				{checking ? 'Checking' : 'Refresh now'}

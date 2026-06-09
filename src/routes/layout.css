@@ -26,6 +26,9 @@
 	--app-border: rgba(255, 255, 255, 0.08);
 	--app-surface: rgba(255, 255, 255, 0.025);
 	--app-hover: rgba(255, 255, 255, 0.06);
+	--app-button: color-mix(in srgb, var(--app-text) 72%, var(--app-muted));
+	--app-button-hover: var(--app-text);
+	--app-toggle-knob: color-mix(in srgb, var(--app-text) 75%, var(--app-muted));
 	--app-skeleton: rgba(255, 255, 255, 0.06);
 	--app-skeleton-shine: rgba(255, 255, 255, 0.12);
 	/* Radius scale — chips/small=3px, controls/inputs=6px, panels/cards=8px, overlays=10px */
@@ -74,6 +77,12 @@ input,
 textarea,
 select {
 	font: inherit;
+}
+
+@layer base {
+	button {
+		color: var(--app-button);
+	}
 }
 
 ::selection {

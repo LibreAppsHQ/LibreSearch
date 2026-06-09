@@ -55,7 +55,7 @@
 	aria-label="Open menu"
 	aria-expanded={open}
 	onclick={() => (open = true)}
-	class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-(--app-text) transition hover:bg-(--app-hover) {triggerClass}"
+	class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-secondary) {triggerClass}"
 >
 	<i class="fa-solid fa-bars text-xl"></i>
 </button>
@@ -79,7 +79,7 @@
 					type="button"
 					aria-label="Close menu"
 					onclick={() => (open = false)}
-					class="inline-flex h-9 w-9 items-center justify-center rounded-lg text-(--app-text) transition hover:bg-(--app-hover)"
+					class="inline-flex h-9 w-9 items-center justify-center rounded-lg transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 				>
 					<i class="fa-solid fa-xmark text-xl"></i>
 				</button>
@@ -97,7 +97,7 @@
 								<a
 									href={link.href}
 									onclick={() => (open = false)}
-									class="flex items-center gap-2 rounded-lg px-2 py-2 text-sm text-(--app-text) transition hover:bg-(--app-hover)"
+									class="flex items-center gap-2 rounded-lg px-2 py-2 text-sm text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 								>
 									{#if link.icon}
 										{#if link.icon.startsWith('/')}

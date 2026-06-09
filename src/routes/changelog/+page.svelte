@@ -17,6 +17,37 @@
 
 	const releases: Release[] = [
 		{
+			version: '0.9.0',
+			date: '2026-06-08',
+			title: 'Eco tools, About refresh, and search polish',
+			entries: [
+				{
+					tag: 'feature',
+					text: 'Eco settings tab — low-power mode, sustainability tips, environmental shortcuts, charity links, local results, and result caps'
+				},
+				{
+					tag: 'feature',
+					text: 'Homepage quick settings, wave background, and RSS feed at /feed.xml'
+				},
+				{
+					tag: 'feature',
+					text: 'About page redesign with full-screen clouds hero and eco section'
+				},
+				{
+					tag: 'fix',
+					text: 'Search results page no longer auto-opens the autocomplete dropdown on every search'
+				},
+				{
+					tag: 'fix',
+					text: 'Instant answers, AI summaries, and knowledge panels only appear on page 1 of results'
+				},
+				{
+					tag: 'perf',
+					text: 'Softer button styling site-wide and optional eco optimizations to cut network and GPU use'
+				}
+			]
+		},
+		{
 			version: '0.8.0',
 			date: '2026-06-03',
 			title: 'Theming polish and accessibility',

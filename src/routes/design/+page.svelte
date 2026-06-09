@@ -105,7 +105,7 @@
 				href="https://www.startpage.com"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) px-5 py-2.5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) px-5 py-2.5 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 			>
 				Visit Startpage
 				<i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>

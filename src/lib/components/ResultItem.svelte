@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { settingsStore, getToggle } from '$lib/stores/settings';
+	import { settingsStore, getToggle, ecoActive } from '$lib/stores/settings';
 
 	let { result } = $props<{
 		result: {
@@ -14,7 +14,9 @@
 	}>();
 
 	let openInNewTab = $derived(getToggle($settingsStore, 'open-new-tab'));
-	let showFavicons = $derived(getToggle($settingsStore, 'show-favicons'));
+	let showFavicons = $derived(
+		getToggle($settingsStore, 'show-favicons') && !ecoActive($settingsStore, 'eco-skip-favicons')
+	);
 	let showSitelinks = $derived(getToggle($settingsStore, 'show-sitelinks'));
 	let showAge = $derived(getToggle($settingsStore, 'show-age'));
 	let compact = $derived(getToggle($settingsStore, 'compact-results', false));

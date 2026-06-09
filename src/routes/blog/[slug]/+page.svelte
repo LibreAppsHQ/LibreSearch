@@ -52,7 +52,7 @@
 	<article class="mx-auto w-full max-w-[760px] px-6 py-12 sm:py-16">
 		<a
 			href="/blog"
-			class="inline-flex items-center gap-2 text-sm text-(--app-muted) transition hover:text-(--app-text)"
+			class="inline-flex items-center gap-2 text-sm text-(--app-muted) transition hover:text-(--app-button-hover)"
 		>
 			<i class="fa-solid fa-arrow-left text-xs"></i>
 			All posts

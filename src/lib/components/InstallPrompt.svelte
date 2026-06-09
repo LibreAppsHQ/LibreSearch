@@ -116,7 +116,7 @@
 				type="button"
 				onclick={dismiss}
 				aria-label="Dismiss install prompt"
-				class="rounded-lg p-1.5 text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
+				class="rounded-lg p-1.5 text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 			>
 				<i class="fa-solid fa-xmark text-sm"></i>
 			</button>

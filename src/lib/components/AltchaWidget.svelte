@@ -94,7 +94,7 @@
 			class="flex h-5 w-5 shrink-0 items-center justify-center rounded border border-(--app-border) bg-transparent transition hover:border-(--app-accent) focus:ring-2 focus:ring-(--app-accent)/30 focus:outline-none"
 			aria-label="Verify you're human"
 		></button>
-		<button type="button" onclick={run} class="text-left text-sm text-(--app-text)">
+		<button type="button" onclick={run} class="text-left text-sm text-(--app-button) hover:text-(--app-button-hover)">
 			{#if state === 'error'}
 				Verification failed — tap to retry
 			{:else}

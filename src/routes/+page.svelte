@@ -4,12 +4,16 @@
 	import BurnButton from '$lib/components/BurnButton.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import Clock from '$lib/components/Clock.svelte';
-	import { settingsStore, getSelect } from '$lib/stores/settings';
+	import Background from '$lib/components/WaveBackground.svelte';
+	import QuickSettings from '$lib/components/QuickSettings.svelte';
+	import EcoWorldPanel from '$lib/components/EcoWorldPanel.svelte';
+	import { settingsStore, getSelect, ecoActive } from '$lib/stores/settings';
 
 	let query = $state('');
 	let safesearch = $derived(
 		getSelect($settingsStore, 'safe-search', 'moderate') as 'strict' | 'moderate' | 'low'
 	);
+	let hideBackgrounds = $derived(ecoActive($settingsStore, 'eco-hide-backgrounds'));
 
 	let showDefaultModal = $state(false);
 
@@ -147,44 +151,57 @@
 	{@html jsonLd}
 </svelte:head>
 
-<main class="relative flex h-screen flex-col bg-(--app-background) text-(--app-text)">
-	<div class="absolute top-6 left-6 z-30">
-		<Clock />
-	</div>
-	<div class="absolute top-6 right-6 z-30 flex items-center gap-1">
-		<BurnButton />
-		<SiteMenu />
-	</div>
+<main class="relative flex min-h-dvh flex-col bg-(--app-background) text-(--app-text)">
+	{#if !hideBackgrounds}
+		<Background />
+	{/if}
 
-	<!-- Centered hero -->
-	<div class="relative flex flex-1 flex-col items-center px-6 pt-[21vh]">
-		<div class="w-full max-w-xl text-center">
-			<a href="/" class="inline-flex items-center gap-2.5" aria-label="LibreSearch home">
-				<Logo class="h-24 w-auto max-w-full sm:h-28" />
-			</a>
-			<h1 class="mt-3 text-base text-(--app-text) sm:text-lg">Privacy for everyone.</h1>
+	<div class="relative z-10 flex flex-1 flex-col">
+		<div class="absolute top-6 left-6 z-30">
+			<Clock />
+		</div>
+		<div class="absolute top-6 right-6 z-30 flex items-center gap-1">
+			<BurnButton />
+			<SiteMenu />
+		</div>
 
-			<div class="mt-6 w-full">
-				<SearchBar
-					bind:query
-					placeholder="Search privately"
-					showButton={true}
-					action="/search"
-					compact={true}
-					{safesearch}
-				/>
+		<!-- Centered hero -->
+		<div class="relative flex flex-1 flex-col items-center px-6 pt-[21vh]">
+			<div class="w-full max-w-xl text-center">
+				<a href="/" class="inline-flex items-center gap-2.5" aria-label="LibreSearch home">
+					<Logo class="h-24 w-auto max-w-full sm:h-28" />
+				</a>
+				<h1 class="mt-3 text-base text-(--app-text) sm:text-lg">Privacy for everyone.</h1>
+
+				<div class="mt-6 w-full">
+					<SearchBar
+						bind:query
+						placeholder="Search privately"
+						showButton={true}
+						action="/search"
+						compact={true}
+						autoFocus={true}
+						{safesearch}
+					/>
+				</div>
+
+				<EcoWorldPanel variant="home" />
 			</div>
 		</div>
-	</div>
 
-	<!-- Footer -->
-	<footer class="bg-[#0c0d0e] px-6 py-3">
-		<nav
-			class="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-white/90"
+		<QuickSettings />
+
+		<!-- Footer -->
+		<footer
+			class="border-t border-(--app-border)/50 bg-[color-mix(in_srgb,var(--app-background)_94%,#000)] px-6 py-3"
 		>
-			<a href="/privacy" class="transition hover:text-(--app-accent)">Privacy Policy</a>
-			<a href="/about" class="transition hover:text-(--app-accent)">About Us</a>
-			<a href="/press" class="transition hover:text-(--app-accent)">Press</a>
-		</nav>
-	</footer>
+			<nav
+				class="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-(--app-muted)"
+			>
+				<a href="/privacy" class="transition hover:text-(--app-accent)">Privacy Policy</a>
+				<a href="/about" class="transition hover:text-(--app-accent)">About Us</a>
+				<a href="/press" class="transition hover:text-(--app-accent)">Press</a>
+			</nav>
+		</footer>
+	</div>
 </main>

@@ -22,27 +22,27 @@
 					<p class="text-xs font-semibold tracking-widest text-(--app-muted) uppercase">Search</p>
 					<ul class="space-y-2 text-sm">
 						<li>
-							<a href="/" class="text-(--app-muted) transition hover:text-(--app-text)">Home</a>
+							<a href="/" class="text-(--app-muted) transition hover:text-(--app-button-hover)">Home</a>
 						</li>
 						<li>
-							<a href="/search?q=news" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/search?q=news" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>News</a
 							>
 						</li>
 						<li>
 							<a
 								href="/search?q=videos&t=videos"
-								class="text-(--app-muted) transition hover:text-(--app-text)">Videos</a
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Videos</a
 							>
 						</li>
 						<li>
 							<a
 								href="/search?q=images&t=images"
-								class="text-(--app-muted) transition hover:text-(--app-text)">Images</a
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Images</a
 							>
 						</li>
 						<li>
-							<a href="/syntax" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/syntax" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Syntax</a
 							>
 						</li>
@@ -52,36 +52,36 @@
 					<p class="text-xs font-semibold tracking-widest text-(--app-muted) uppercase">Product</p>
 					<ul class="space-y-2 text-sm">
 						<li>
-							<a href="/about" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/about" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>About</a
 							>
 						</li>
 						<li>
-							<a href="/donate" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/donate" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Donate</a
 							>
 						</li>
 						<li>
-							<a href="/settings" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/settings" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Settings</a
 							>
 						</li>
 						<li>
 							<a
 								href="/settings#appearance"
-								class="text-(--app-muted) transition hover:text-(--app-text)">Themes</a
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Themes</a
 							>
 						</li>
 						<li>
-							<a href="/extension" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/extension" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Extension</a
 							>
 						</li>
 						<li>
-							<a href="/blog" class="text-(--app-muted) transition hover:text-(--app-text)">Blog</a>
+							<a href="/blog" class="text-(--app-muted) transition hover:text-(--app-button-hover)">Blog</a>
 						</li>
 						<li>
-							<a href="/changelog" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/changelog" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Changelog</a
 							>
 						</li>
@@ -91,33 +91,33 @@
 					<p class="text-xs font-semibold tracking-widest text-(--app-muted) uppercase">Company</p>
 					<ul class="space-y-2 text-sm">
 						<li>
-							<a href="/press" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/press" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Press</a
 							>
 						</li>
 						<li>
-							<a href="/enterprise" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/enterprise" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Enterprise</a
 							>
 						</li>
 						<li>
-							<a href="/contact" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/contact" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Contact</a
 							>
 						</li>
 						<li>
 							<a
 								href="https://support.libresearch.ca/"
-								class="text-(--app-muted) transition hover:text-(--app-text)">Support</a
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Support</a
 							>
 						</li>
 						<li>
-							<a href="/terms" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/terms" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Terms</a
 							>
 						</li>
 						<li>
-							<a href="/design" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/design" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Design</a
 							>
 						</li>
@@ -127,27 +127,27 @@
 					<p class="text-xs font-semibold tracking-widest text-(--app-muted) uppercase">Trust</p>
 					<ul class="space-y-2 text-sm">
 						<li>
-							<a href="/privacy" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/privacy" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Privacy</a
 							>
 						</li>
 						<li>
-							<a href="/trust" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/trust" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Trust Center</a
 							>
 						</li>
 						<li>
-							<a href="/transparency" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/transparency" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Transparency</a
 							>
 						</li>
 						<li>
-							<a href="/security" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/security" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Security</a
 							>
 						</li>
 						<li>
-							<a href="/status" class="text-(--app-muted) transition hover:text-(--app-text)"
+							<a href="/status" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Status</a
 							>
 						</li>
@@ -175,7 +175,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 					aria-label="GitHub"
-					class="text-(--app-muted) transition hover:text-(--app-text)"
+					class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 				>
 					<i class="fa-brands fa-github text-base"></i>
 				</a>
@@ -183,7 +183,7 @@
 					href="/feed.xml"
 					data-sveltekit-reload
 					aria-label="Blog RSS feed"
-					class="text-(--app-muted) transition hover:text-(--app-text)"
+					class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 				>
 					<i class="fa-solid fa-rss text-base"></i>
 				</a>
@@ -192,7 +192,7 @@
 					target="_blank"
 					rel="me noopener noreferrer"
 					aria-label="Mastodon"
-					class="text-(--app-muted) transition hover:text-(--app-text)"
+					class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 				>
 					<i class="fa-brands fa-mastodon text-base"></i>
 				</a>
@@ -201,7 +201,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 					aria-label="X"
-					class="text-(--app-muted) transition hover:text-(--app-text)"
+					class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 				>
 					<i class="fa-brands fa-x-twitter text-base"></i>
 				</a>

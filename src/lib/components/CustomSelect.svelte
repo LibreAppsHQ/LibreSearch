@@ -186,8 +186,8 @@
 		onclick={toggle}
 		onkeydown={handleKeydown}
 		class={open
-			? 'flex min-w-[10rem] items-center justify-between gap-3 rounded-sm border border-(--app-text)/70 bg-(--app-card) px-3 py-1 text-sm font-medium text-(--app-text) focus:outline-none'
-			: 'flex min-w-[10rem] items-center justify-between gap-3 rounded-sm border border-(--app-border) bg-(--app-card) px-3 py-1 text-sm font-medium text-(--app-text) transition hover:border-(--app-muted) focus:outline-none'}
+			? 'flex min-w-[10rem] items-center justify-between gap-3 rounded-sm border border-(--app-button)/70 bg-(--app-card) px-3 py-1 text-sm font-medium text-(--app-button) focus:outline-none'
+			: 'flex min-w-[10rem] items-center justify-between gap-3 rounded-sm border border-(--app-border) bg-(--app-card) px-3 py-1 text-sm font-medium text-(--app-button) transition hover:border-(--app-muted) hover:text-(--app-button-hover) focus:outline-none'}
 	>
 		<span>{currentLabel}</span>
 		<i
@@ -236,8 +236,8 @@
 						i === activeIndex ? 'bg-(--app-hover)' : ''
 					} ${
 						opt.value === value
-							? 'font-medium text-(--app-text)'
-							: 'text-(--app-muted) hover:text-(--app-text)'
+							? 'font-medium text-(--app-button-hover)'
+							: 'text-(--app-muted) hover:text-(--app-button-hover)'
 					}`}
 				>
 					{opt.label}

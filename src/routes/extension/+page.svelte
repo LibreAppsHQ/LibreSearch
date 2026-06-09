@@ -102,7 +102,7 @@
 		{
 			id: 'guard',
 			name: 'LibreGuard',
-			tagline: 'Browse like nobody\'s watching.',
+			tagline: "Browse like nobody's watching.",
 			description:
 				'LibreGuard strips out ads, trackers, and malicious requests before they reach you. Lightweight, open source, and entirely yours — no data leaves your browser.',
 			heroIcon: '/guard.png',
@@ -242,9 +242,10 @@
 				<button
 					type="button"
 					onclick={() => selectProduct(p.id)}
-					class="flex flex-1 items-center justify-center gap-2.5 rounded-full px-4 py-2.5 text-sm font-semibold transition-all {active === p.id
-						? 'bg-(--app-background) text-(--app-text) shadow-xs'
-						: 'text-(--app-muted) hover:text-(--app-text)'}"
+					class="flex flex-1 items-center justify-center gap-2.5 rounded-full px-4 py-2.5 text-sm font-semibold transition-all {active ===
+					p.id
+						? 'bg-(--app-background) text-(--app-button-hover) shadow-xs'
+						: 'text-(--app-muted) hover:text-(--app-button-hover)'}"
 				>
 					<img src={p.heroIcon} alt="" class="h-5 w-5 rounded-sm" />
 					<span>{p.name}</span>
@@ -256,9 +257,7 @@
 	<!-- Hero -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 py-12 text-center sm:py-16">
 		{#key current.id}
-			<div
-				transition:fly={{ y: 12, duration: 250, easing: cubicOut }}
-			>
+			<div transition:fly={{ y: 12, duration: 250, easing: cubicOut }}>
 				<span
 					class="mb-6 inline-flex items-center gap-2 rounded-full border border-(--app-border) bg-(--app-surface) px-3 py-1 text-xs font-semibold tracking-widest uppercase {current.accent}"
 				>
@@ -280,9 +279,7 @@
 	<!-- Install row -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 pb-16">
 		{#key current.id}
-			<div
-				transition:fly={{ y: 12, duration: 250, easing: cubicOut }}
-			>
+			<div transition:fly={{ y: 12, duration: 250, easing: cubicOut }}>
 				<div class="grid gap-4 sm:grid-cols-3">
 					{#each current.browsers as b, i (i)}
 						<div
@@ -345,11 +342,14 @@
 						</h3>
 						<p class="mt-2 text-sm leading-6 text-(--app-muted)">
 							These browsers are not in a web store yet, so you install from a downloaded
-							<code class="rounded bg-(--app-hover) px-1 py-0.5 text-xs">.crx</code> file. The
-							steps are the same for Chromium-based browsers.
+							<code class="rounded bg-(--app-hover) px-1 py-0.5 text-xs">.crx</code> file. The steps are
+							the same for Chromium-based browsers.
 						</p>
 						<ol class="mt-4 space-y-2.5 text-sm leading-6 text-(--app-text)">
-							<li>1. Click <strong>Install</strong> above and save the <code class="text-xs">.crx</code> file.</li>
+							<li>
+								1. Click <strong>Install</strong> above and save the
+								<code class="text-xs">.crx</code> file.
+							</li>
 							<li>
 								2. Open your browser's extensions page (<code class="text-xs"
 									>chrome://extensions</code
@@ -357,7 +357,9 @@
 								or <code class="text-xs">edge://extensions</code>).
 							</li>
 							<li>3. Turn on <strong>Developer mode</strong> (toggle in the top-right corner).</li>
-							<li>4. Drag the downloaded <code class="text-xs">.crx</code> onto the page, then confirm.</li>
+							<li>
+								4. Drag the downloaded <code class="text-xs">.crx</code> onto the page, then confirm.
+							</li>
 						</ol>
 						<p class="mt-4 text-xs leading-5 text-(--app-muted)">
 							If drag-and-drop is blocked, use <strong>Load unpacked</strong> after extracting the
@@ -390,14 +392,16 @@
 	<!-- Features -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 py-16 sm:py-20">
 		{#key current.id}
-			<div
-				transition:fly={{ y: 12, duration: 250, easing: cubicOut }}
-			>
-				<p class="mb-3 text-center text-xs font-semibold tracking-widest uppercase {current.accent}">
+			<div transition:fly={{ y: 12, duration: 250, easing: cubicOut }}>
+				<p
+					class="mb-3 text-center text-xs font-semibold tracking-widest uppercase {current.accent}"
+				>
 					What it does
 				</p>
 				<h2 class="mb-12 text-center text-2xl font-bold tracking-tight sm:text-3xl">
-					{active === 'search' ? 'Search without leaving the page you\'re on.' : 'Browse without being watched.'}
+					{active === 'search'
+						? "Search without leaving the page you're on."
+						: 'Browse without being watched.'}
 				</h2>
 				<div class="grid gap-6 sm:grid-cols-2">
 					{#each current.features as f, i (i)}
@@ -423,14 +427,16 @@
 	<!-- Permissions -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 py-16 sm:py-20">
 		{#key current.id}
-			<div
-				transition:fly={{ y: 12, duration: 250, easing: cubicOut }}
-			>
-				<p class="mb-3 text-center text-xs font-semibold tracking-widest uppercase {current.accent}">
+			<div transition:fly={{ y: 12, duration: 250, easing: cubicOut }}>
+				<p
+					class="mb-3 text-center text-xs font-semibold tracking-widest uppercase {current.accent}"
+				>
 					Permissions, explained
 				</p>
 				<h2 class="mb-4 text-center text-2xl font-bold tracking-tight sm:text-3xl">
-					{active === 'search' ? 'The extension asks for as little as possible.' : 'Nothing leaves your browser.'}
+					{active === 'search'
+						? 'The extension asks for as little as possible.'
+						: 'Nothing leaves your browser.'}
 				</h2>
 				<p class="mx-auto mb-12 max-w-2xl text-center text-sm leading-6 text-(--app-muted)">
 					{active === 'search'
@@ -457,28 +463,26 @@
 	<!-- CTA -->
 	<section class="mx-auto w-full max-w-[1100px] px-6 py-16 text-center sm:py-20">
 		{#key current.id}
-			<div
-				transition:fly={{ y: 12, duration: 250, easing: cubicOut }}
-			>
+			<div transition:fly={{ y: 12, duration: 250, easing: cubicOut }}>
 				{#if active === 'search'}
 					<h2 class="text-2xl font-bold tracking-tight sm:text-3xl">Open source, AGPL-3.0</h2>
 					<p class="mx-auto mt-4 max-w-lg text-sm leading-6 text-(--app-muted)">
-						Read the code, file an issue, or fork it. The extension lives in the same repository as the
-						LibreSearch website.
+						Read the code, file an issue, or fork it. The extension lives in the same repository as
+						the LibreSearch website.
 					</p>
 					<div class="mt-8 flex flex-wrap items-center justify-center gap-4">
 						<a
 							href="https://github.com/{current.githubPath}"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-text) transition-colors hover:bg-(--app-hover)"
+							class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-button) transition-colors hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 						>
 							<i class="fa-brands fa-github"></i>
 							View source
 						</a>
 						<a
 							href="/privacy"
-							class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-text) transition-colors hover:bg-(--app-hover)"
+							class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-button) transition-colors hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 						>
 							<i class="fa-solid fa-shield-halved"></i>
 							Privacy policy
@@ -495,14 +499,14 @@
 							href="https://github.com/{current.githubPath}"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-text) transition-colors hover:bg-(--app-hover)"
+							class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-button) transition-colors hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 						>
 							<i class="fa-brands fa-github"></i>
 							View source
 						</a>
 						<a
 							href="/privacy"
-							class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-text) transition-colors hover:bg-(--app-hover)"
+							class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-button) transition-colors hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 						>
 							<i class="fa-solid fa-shield-halved"></i>
 							Privacy policy

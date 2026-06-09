@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
-	import { settingsStore, getToggle, getSelect } from '$lib/stores/settings';
+	import { settingsStore, getToggle, getSelect, ecoActive } from '$lib/stores/settings';
 	import { reducedMotion } from '$lib/stores/motion';
 	import { historyStore } from '$lib/stores/history';
 
@@ -13,7 +13,8 @@
 		compact = false,
 		showButton = true,
 		safesearch = 'moderate',
-		pill = false
+		pill = false,
+		autoFocus = false
 	} = $props<{
 		query?: string;
 		placeholder?: string;
@@ -22,6 +23,7 @@
 		showButton?: boolean;
 		safesearch?: 'strict' | 'moderate' | 'low';
 		pill?: boolean;
+		autoFocus?: boolean;
 	}>();
 
 	let formElement: HTMLFormElement | null = null;
@@ -38,6 +40,7 @@
 	let suggestionNonce = 0;
 
 	let autocompleteEnabled = $derived(getToggle($settingsStore, 'autocomplete'));
+	let skipSuggestions = $derived(ecoActive($settingsStore, 'eco-skip-suggestions'));
 	let showSuggestionIcons = $derived(getToggle($settingsStore, 'show-suggestion-icons', false));
 	let saveHistory = $derived(getToggle($settingsStore, 'save-history'));
 	let filterAds = $derived(getToggle($settingsStore, 'filter-ads'));
@@ -46,6 +49,17 @@
 	let searchRegion = $derived(getSelect($settingsStore, 'search-region'));
 	let enableCache = $derived(getToggle($settingsStore, 'enable-cache', false));
 	let resultsPerPage = $derived(getSelect($settingsStore, 'results-per-page', '10'));
+	let capResults = $derived(ecoActive($settingsStore, 'eco-cap-results'));
+	let useLocalRegion = $derived(ecoActive($settingsStore, 'eco-local-results'));
+
+	function browserRegion(): string {
+		if (typeof navigator === 'undefined') return '';
+		const match = navigator.language.match(/-([A-Za-z]{2})$/);
+		return match ? match[1].toUpperCase() : '';
+	}
+
+	let effectiveRegion = $derived(searchRegion || (useLocalRegion ? browserRegion() : ''));
+	let effectiveResultsPerPage = $derived(capResults ? '10' : resultsPerPage);
 	let requestMethod = $derived<'get' | 'post'>(
 		getSelect($settingsStore, 'request-method', 'GET') === 'POST' ? 'post' : 'get'
 	);
@@ -92,6 +106,13 @@
 		keyboardSelected = false;
 	}
 
+	function handleFocus(): void {
+		// On the results page the query is pre-filled — only show the dropdown
+		// after the user starts typing, not on every focus/navigation.
+		if (query.trim()) return;
+		openDropdown();
+	}
+
 	function closeDropdown(): void {
 		isOpen = false;
 		activeIndex = -1;
@@ -129,6 +150,13 @@
 		const next = value.trim();
 
 		if (suggestionTimer) clearTimeout(suggestionTimer);
+
+		if (skipSuggestions) {
+			suggestionController?.abort();
+			suggestions = [];
+			closeDropdown();
+			return;
+		}
 
 		if (!next) {
 			suggestionController?.abort();
@@ -222,7 +250,7 @@
 
 	onMount(() => {
 		historyStore.load();
-		inputElement?.focus();
+		if (autoFocus) inputElement?.focus();
 		return () => {
 			suggestionController?.abort();
 			if (suggestionTimer) clearTimeout(suggestionTimer);
@@ -230,7 +258,16 @@
 	});
 </script>
 
-<form bind:this={formElement} class="w-full" method={requestMethod} {action}>
+<form
+	bind:this={formElement}
+	class="w-full"
+	method={requestMethod}
+	{action}
+	onsubmit={() => {
+		closeDropdown();
+		suggestions = [];
+	}}
+>
 	<!-- Honeypot: bots fill this, humans don't -->
 	<input
 		type="text"
@@ -253,13 +290,13 @@
 	{#if blockTrackers}
 		<input type="hidden" name="blocktrackers" value="1" />
 	{/if}
-	{#if searchRegion}
-		<input type="hidden" name="region" value={searchRegion} />
+	{#if effectiveRegion}
+		<input type="hidden" name="region" value={effectiveRegion} />
 	{/if}
 	{#if enableCache}
 		<input type="hidden" name="enablecache" value="1" />
 	{/if}
-	{#if resultsPerPage === '20'}
+	{#if effectiveResultsPerPage === '20'}
 		<input type="hidden" name="count" value="20" />
 	{/if}
 
@@ -286,7 +323,7 @@
 				: compact
 					? 'min-w-0 flex-1 bg-transparent pr-2.5 text-base text-(--app-text) placeholder:text-(--app-muted) focus:outline-none sm:text-[17px]'
 					: 'min-w-0 flex-1 bg-transparent pr-3 text-lg text-(--app-text) placeholder:text-(--app-muted) focus:outline-none sm:text-xl'}
-			onfocus={openDropdown}
+			onfocus={handleFocus}
 			oninput={(event) => fetchSuggestions((event.currentTarget as HTMLInputElement).value)}
 			onblur={() => setTimeout(closeDropdown, 150)}
 			onkeydown={handleKeydown}
@@ -302,7 +339,7 @@
 						suggestions = [];
 						document.querySelector<HTMLInputElement>('input[name="q"]')?.focus();
 					}}
-					class="inline-flex h-7 w-7 items-center justify-center text-(--app-muted) transition hover:text-(--app-text) focus-visible:outline-none"
+					class="inline-flex h-7 w-7 items-center justify-center text-(--app-muted) transition hover:text-(--app-button-hover) focus-visible:outline-none"
 				>
 					<i class="fa-solid fa-xmark text-[15px]"></i>
 				</button>
@@ -387,7 +424,7 @@
 							<button
 								type="button"
 								aria-label="Remove “{item.text}” from history"
-								class="ml-auto inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-(--app-muted) opacity-0 transition group-hover:opacity-100 hover:bg-(--app-hover) hover:text-(--app-text) focus-visible:opacity-100"
+								class="ml-auto inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-(--app-muted) opacity-0 transition group-hover:opacity-100 hover:bg-(--app-hover) hover:text-(--app-button-hover) focus-visible:opacity-100"
 								onmousedown={(event) => removeHistory(item.text, event)}
 							>
 								<i class="fa-solid fa-xmark text-xs"></i>
@@ -397,7 +434,7 @@
 								type="button"
 								aria-label="Add “{item.text}” to the search box"
 								title="Append to search"
-								class="ml-auto inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-(--app-muted) opacity-0 transition group-hover:opacity-100 hover:bg-(--app-hover) hover:text-(--app-text) focus-visible:opacity-100"
+								class="ml-auto inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-(--app-muted) opacity-0 transition group-hover:opacity-100 hover:bg-(--app-hover) hover:text-(--app-button-hover) focus-visible:opacity-100"
 								onmousedown={(event) => {
 									event.preventDefault();
 									appendQuery(item.text);

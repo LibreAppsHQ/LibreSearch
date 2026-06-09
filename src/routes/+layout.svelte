@@ -2,7 +2,7 @@
 	import './layout.css';
 	import { browser, dev } from '$app/environment';
 	import { themeStore } from '$lib/stores/theme';
-	import { settingsStore, getToggle } from '$lib/stores/settings';
+	import { settingsStore, getToggle, ecoActive } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
 	import { onMount } from 'svelte';
 	import { beforeNavigate } from '$app/navigation';
@@ -14,7 +14,10 @@
 	let { children } = $props();
 
 	let keyboardShortcut = $derived(getToggle($settingsStore, 'keyboard-shortcut'));
-	let reduceMotion = $derived(getToggle($settingsStore, 'reduce-motion', false));
+	let reduceMotion = $derived(
+		getToggle($settingsStore, 'reduce-motion', false) || ecoActive($settingsStore, 'eco-mode')
+	);
+	let ecoPreferDark = $derived(ecoActive($settingsStore, 'eco-prefer-dark'));
 
 	// When a new version has been deployed, do a full-page navigation instead of
 	// a client-side one. This fetches the new HTML (and its current asset hashes)
@@ -44,6 +47,11 @@
 		} else {
 			document.documentElement.removeAttribute('data-reduce-motion');
 		}
+	});
+
+	$effect(() => {
+		if (!browser) return;
+		if (ecoPreferDark) themeStore.setTheme('dark');
 	});
 
 	function handleKeydown(event: KeyboardEvent) {

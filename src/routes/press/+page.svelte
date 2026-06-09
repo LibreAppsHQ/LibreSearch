@@ -90,7 +90,7 @@
 			</a>
 			<a
 				href="#assets"
-				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) px-5 py-2.5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) px-5 py-2.5 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 			>
 				<i class="fa-solid fa-download text-xs"></i>
 				Brand assets
@@ -131,7 +131,7 @@
 				<button
 					type="button"
 					onclick={copyBoilerplate}
-					class="mt-5 inline-flex items-center gap-2 rounded-lg border border-(--app-border) px-4 py-2 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+					class="mt-5 inline-flex items-center gap-2 rounded-lg border border-(--app-border) px-4 py-2 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 				>
 					<i class="fa-solid {copied ? 'fa-check text-emerald-400' : 'fa-copy'} text-xs"></i>
 					{copied ? 'Copied' : 'Copy boilerplate'}

@@ -70,7 +70,7 @@
 			<button
 				type="button"
 				onclick={() => (expanded = !expanded)}
-				class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-(--app-border) bg-(--app-card) px-8 py-2 text-sm text-(--app-text) transition"
+				class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-(--app-border) bg-(--app-card) px-8 py-2 text-sm text-(--app-button) transition hover:text-(--app-button-hover)"
 			>
 				{expanded ? 'See less' : 'See more'}
 				<i class="fa-solid {expanded ? 'fa-minus' : 'fa-plus'} text-[10px]"></i>

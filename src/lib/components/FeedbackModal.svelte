@@ -119,11 +119,11 @@
 						}`}
 					>
 						<span
-							class="flex h-12 w-12 items-center justify-center rounded-full bg-(--app-surface) text-2xl text-(--app-text)"
+							class="flex h-12 w-12 items-center justify-center rounded-full bg-(--app-surface) text-2xl text-(--app-button)"
 						>
 							<i class="fa-solid {r.icon}"></i>
 						</span>
-						<span class="text-xs text-(--app-text)">{r.label}</span>
+						<span class="text-xs text-(--app-button)">{r.label}</span>
 						<span
 							class={`h-4 w-4 rounded-full border-2 ${rating === r.value ? 'border-(--app-accent) bg-(--app-accent)' : 'border-(--app-muted)'}`}
 						></span>

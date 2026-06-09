@@ -132,7 +132,7 @@
 					<button
 						type="button"
 						onclick={watchOnSite}
-						class="text-xs text-(--app-muted) transition hover:text-(--app-text)"
+						class="text-xs text-(--app-muted) transition hover:text-(--app-button-hover)"
 					>
 						Watch on {site}
 						<i class="fa-solid fa-arrow-up-right-from-square ml-0.5 text-[10px]"></i>
@@ -200,7 +200,7 @@
 				<button
 					type="button"
 					onclick={watchOnSite}
-					class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+					class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 				>
 					<i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
 					Watch on {site}

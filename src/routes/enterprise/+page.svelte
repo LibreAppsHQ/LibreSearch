@@ -195,7 +195,7 @@
 						<button
 							type="button"
 							onclick={() => copy(s.id, s.code)}
-							class="inline-flex shrink-0 items-center gap-2 rounded-lg border border-(--app-border) bg-(--app-hover) px-3 py-2 text-xs text-(--app-text) transition hover:bg-(--app-accent)/15"
+							class="inline-flex shrink-0 items-center gap-2 rounded-lg border border-(--app-border) bg-(--app-hover) px-3 py-2 text-xs text-(--app-button) transition hover:bg-(--app-accent)/15 hover:text-(--app-button-hover)"
 						>
 							{#if copied === s.id}
 								<i class="fa-solid fa-check text-(--app-accent)"></i>
@@ -235,7 +235,7 @@
 			</a>
 			<a
 				href="/privacy"
-				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-text) transition hover:bg-(--app-hover)"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-button) transition hover:text-(--app-button-hover) hover:bg-(--app-hover)"
 			>
 				<i class="fa-solid fa-shield-halved"></i>
 				Read the privacy policy

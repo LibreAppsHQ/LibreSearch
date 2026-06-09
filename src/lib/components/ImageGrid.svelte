@@ -159,7 +159,7 @@
 						type="button"
 						onclick={close}
 						aria-label="Close preview"
-						class="absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
+						class="absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 					>
 						<i class="fa-solid fa-xmark"></i>
 					</button>
@@ -216,7 +216,7 @@
 									href={active.imageUrl}
 									target="_blank"
 									rel="noreferrer noopener"
-									class="inline-flex items-center gap-2 rounded-full border border-(--app-border) px-4 py-2 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+									class="inline-flex items-center gap-2 rounded-full border border-(--app-border) px-4 py-2 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 								>
 									<i class="fa-solid fa-image text-xs"></i>
 									View image
@@ -224,7 +224,7 @@
 								<button
 									type="button"
 									onclick={copyUrl}
-									class="inline-flex items-center gap-2 rounded-full border border-(--app-border) px-4 py-2 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+									class="inline-flex items-center gap-2 rounded-full border border-(--app-border) px-4 py-2 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 								>
 									<i class="fa-solid {copied ? 'fa-check' : 'fa-copy'} text-xs"></i>
 									{copied ? 'Copied' : 'Copy URL'}
@@ -239,7 +239,7 @@
 							type="button"
 							onclick={() => step(-1)}
 							aria-label="Previous image"
-							class="flex h-10 w-10 items-center justify-center rounded-full border border-(--app-border) text-(--app-text) transition hover:bg-(--app-hover)"
+							class="flex h-10 w-10 items-center justify-center rounded-full border border-(--app-border) text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 						>
 							<i class="fa-solid fa-chevron-left text-xs"></i>
 						</button>
@@ -247,7 +247,7 @@
 							type="button"
 							onclick={() => step(1)}
 							aria-label="Next image"
-							class="flex h-10 w-10 items-center justify-center rounded-full border border-(--app-border) text-(--app-text) transition hover:bg-(--app-hover)"
+							class="flex h-10 w-10 items-center justify-center rounded-full border border-(--app-border) text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 						>
 							<i class="fa-solid fa-chevron-right text-xs"></i>
 						</button>

@@ -604,7 +604,7 @@
 									? 'flex h-12 items-center justify-center rounded-md bg-(--app-accent) text-lg font-semibold text-[#111] transition hover:opacity-90'
 									: key === 'C'
 										? 'flex h-12 items-center justify-center rounded-md bg-(--app-hover) text-lg font-medium text-red-400 transition hover:opacity-90'
-										: 'flex h-12 items-center justify-center rounded-md bg-(--app-hover) text-lg font-medium text-(--app-text) transition hover:opacity-90'}
+										: 'flex h-12 items-center justify-center rounded-md bg-(--app-hover) text-lg font-medium text-(--app-button) transition hover:opacity-90'}
 							>
 								{key}
 							</button>
@@ -622,7 +622,7 @@
 						type="button"
 						aria-label="Regenerate"
 						onclick={generate}
-						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-(--app-muted) transition hover:bg-(--app-surface) hover:text-(--app-text)"
+						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-(--app-muted) transition hover:bg-(--app-surface) hover:text-(--app-button-hover)"
 					>
 						<i class="fa-solid fa-rotate"></i>
 					</button>
@@ -630,7 +630,7 @@
 						type="button"
 						aria-label="Copy password"
 						onclick={() => copyText(password, (v) => (pwCopied = v))}
-						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-(--app-muted) transition hover:bg-(--app-surface) hover:text-(--app-text)"
+						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-(--app-muted) transition hover:bg-(--app-surface) hover:text-(--app-button-hover)"
 					>
 						<i class={pwCopied ? 'fa-solid fa-check text-emerald-400' : 'fa-solid fa-copy'}></i>
 					</button>
@@ -730,7 +730,7 @@
 			</div>
 		{:else if kind === 'ip'}
 			<div class="flex items-center justify-between gap-4 p-5">
-				<code class="min-w-0 flex-1 truncate font-mono text-2xl text-(--app-text)">
+				<code class="min-w-0 flex-1 truncate font-mono text-2xl text-(--app-button)">
 					{ipLoading ? 'Looking up…' : (ip ?? '')}
 				</code>
 				{#if ip && ip !== 'Unavailable'}
@@ -738,7 +738,7 @@
 						type="button"
 						aria-label="Copy IP"
 						onclick={() => copyText(ip ?? '', (v) => (ipCopied = v))}
-						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
+						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 					>
 						<i class={ipCopied ? 'fa-solid fa-check text-emerald-400' : 'fa-solid fa-copy'}></i>
 					</button>
@@ -760,7 +760,7 @@
 				<div class="flex flex-wrap items-center justify-center gap-3">
 					{#each diceRolls as roll, i (i)}
 						<div
-							class="flex h-14 w-14 items-center justify-center rounded-md bg-(--app-hover) text-2xl font-bold text-(--app-text)"
+							class="flex h-14 w-14 items-center justify-center rounded-md bg-(--app-hover) text-2xl font-bold text-(--app-button)"
 						>
 							{roll}
 						</div>

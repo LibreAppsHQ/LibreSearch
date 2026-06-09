@@ -83,7 +83,7 @@
 				{#each sections as s, i (i)}
 					<a
 						href={`#${s.id}`}
-						class="block rounded-lg px-3 py-1.5 text-sm text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
+						class="block rounded-lg px-3 py-1.5 text-sm text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 					>
 						{s.label}
 					</a>

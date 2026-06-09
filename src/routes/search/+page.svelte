@@ -24,7 +24,8 @@
 	import BurnButton from '$lib/components/BurnButton.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 	import AltchaChallenge from '$lib/components/AltchaChallenge.svelte';
-	import { settingsStore, getToggle, getSelect } from '$lib/stores/settings';
+	import EcoWorldPanel from '$lib/components/EcoWorldPanel.svelte';
+	import { settingsStore, getToggle, getSelect, ecoActive } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
 	import type { VideoResult } from '$lib/search';
 
@@ -85,6 +86,7 @@
 
 	const MAX_PAGE = 10; // Brave caps offset at 9 → page 10 is the last reachable page
 	let currentPage = $derived(data.page ?? 1);
+	let showInfoboxPanel = $derived(Boolean(data.infobox) && data.tab === 'web' && currentPage === 1);
 	let canGoNext = $derived(hasMore && currentPage < MAX_PAGE);
 	let pageNumbers = $derived.by(() => {
 		const start = Math.max(1, currentPage - 2);
@@ -97,9 +99,12 @@
 	let safesearch = $derived(
 		getSelect($settingsStore, 'safe-search', 'moderate') as 'strict' | 'moderate' | 'low'
 	);
-	let instantAnswers = $derived(getToggle($settingsStore, 'instant-answers', true));
+	let skipRichAnswers = $derived(ecoActive($settingsStore, 'eco-skip-rich-answers'));
+	let instantAnswers = $derived(
+		getToggle($settingsStore, 'instant-answers', true) && !skipRichAnswers
+	);
 	// Opt-in: AI answers are off unless the user enables them in settings.
-	let aiAnswers = $derived(getToggle($settingsStore, 'ai-answers', false));
+	let aiAnswers = $derived(getToggle($settingsStore, 'ai-answers', false) && !skipRichAnswers);
 
 	// Show skeletons while a search navigation is in flight so stale results
 	// aren't left frozen on screen during the server round-trip.
@@ -334,14 +339,14 @@
 			{/if}
 
 			<!-- Two-column grid: left = results, right = infobox (web tab only) -->
-			<div class={data.infobox && data.tab === 'web' && !loading ? 'flex gap-8' : ''}>
+			<div class={showInfoboxPanel && !loading ? 'flex gap-8' : ''}>
 				<!-- Left / main column -->
 				<div
 					class={loading
 						? loadingTab === 'images' || loadingTab === 'videos' || loadingTab === 'maps'
 							? 'w-full'
 							: 'max-w-2xl'
-						: data.infobox && data.tab === 'web'
+						: showInfoboxPanel
 							? 'max-w-2xl min-w-0 flex-1'
 							: data.tab === 'images' || data.tab === 'videos' || data.tab === 'maps'
 								? 'w-full'
@@ -355,7 +360,7 @@
 										type="button"
 										aria-label="Previous page"
 										onclick={() => goToPage(currentPage - 1)}
-										class="flex h-9 items-center justify-center rounded-full bg-(--app-surface) px-4 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+										class="flex h-9 items-center justify-center rounded-full bg-(--app-surface) px-4 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 									>
 										Prev
 									</button>
@@ -369,7 +374,7 @@
 										onclick={() => goToPage(p)}
 										class={p === currentPage
 											? 'flex h-9 w-9 items-center justify-center rounded-full bg-(--app-accent) text-sm font-semibold text-[#111] transition'
-											: 'flex h-9 w-9 items-center justify-center rounded-full bg-(--app-surface) text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)'}
+											: 'flex h-9 w-9 items-center justify-center rounded-full bg-(--app-surface) text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)'}
 									>
 										{p}
 									</button>
@@ -380,7 +385,7 @@
 										type="button"
 										aria-label="Next page"
 										onclick={() => goToPage(currentPage + 1)}
-										class="flex h-9 items-center justify-center rounded-full bg-(--app-surface) px-5 text-sm font-medium text-(--app-text) transition hover:bg-(--app-hover)"
+										class="flex h-9 items-center justify-center rounded-full bg-(--app-surface) px-5 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 									>
 										Next
 									</button>
@@ -392,11 +397,14 @@
 					{#if loading}
 						<SearchSkeleton tab={loadingTab} />
 					{:else if data.tab === 'web'}
-						{#if instantAnswers}
+						{#if currentPage === 1}
+							<EcoWorldPanel variant="search" />
+						{/if}
+						{#if instantAnswers && currentPage === 1}
 							<StockAnswer query={data.query} />
 							<InstantAnswer query={data.query} />
 						{/if}
-						{#if aiAnswers && data.query}
+						{#if aiAnswers && data.query && currentPage === 1}
 							<AiAnswer query={data.query} tab={data.tab} />
 						{/if}
 						{#if allResults.length > 0}
@@ -459,7 +467,7 @@
 				</div>
 
 				<!-- Right column: knowledge panel -->
-				{#if data.infobox && data.tab === 'web' && !loading}
+				{#if showInfoboxPanel && !loading}
 					<div class="hidden w-[380px] shrink-0 lg:block">
 						<Infobox infobox={data.infobox} />
 						<div class="mt-2 flex justify-end">
@@ -504,10 +512,10 @@
 
 		<!-- Center: nav links -->
 		<nav class="text-md flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-white/90">
-			<a href="/privacy" class="transition hover:text-(--app-text)">Privacy Policy</a>
-			<a href="/about" class="transition hover:text-(--app-text)">About Us</a>
-			<a href="/press" class="transition hover:text-(--app-text)">Press</a>
-			<a href="/blog" class="transition hover:text-(--app-text)">Blog</a>
+			<a href="/privacy" class="transition hover:text-(--app-button-hover)">Privacy Policy</a>
+			<a href="/about" class="transition hover:text-(--app-button-hover)">About Us</a>
+			<a href="/press" class="transition hover:text-(--app-button-hover)">Press</a>
+			<a href="/blog" class="transition hover:text-(--app-button-hover)">Blog</a>
 		</nav>
 
 		<!-- Right: social icons -->

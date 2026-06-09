@@ -52,7 +52,7 @@
 			{#each terms as term (term)}
 				<a
 					href={href(term)}
-					class="shrink-0 rounded-full border border-(--app-border) bg-(--app-surface) px-4 py-2 text-sm font-medium whitespace-nowrap text-(--app-text) capitalize transition hover:bg-(--app-hover)"
+					class="shrink-0 rounded-full border border-(--app-border) bg-(--app-surface) px-4 py-2 text-sm font-medium whitespace-nowrap text-(--app-button) capitalize transition hover:bg-(--app-hover)"
 				>
 					{term}
 				</a>
@@ -64,7 +64,7 @@
 			type="button"
 			aria-label="Scroll related searches"
 			onclick={scrollRight}
-			class="absolute top-0 right-0 flex h-full w-10 items-center justify-end bg-gradient-to-l from-(--app-background) via-(--app-background) to-transparent text-(--app-muted) transition hover:text-(--app-text)"
+			class="absolute top-0 right-0 flex h-full w-10 items-center justify-end bg-gradient-to-l from-(--app-background) via-(--app-background) to-transparent text-(--app-muted) transition hover:text-(--app-button-hover)"
 		>
 			<i class="fa-solid fa-chevron-right"></i>
 		</button>

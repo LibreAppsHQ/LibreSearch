@@ -130,7 +130,7 @@
 						>
 					{/if}
 					<span
-						class="shrink-0 rounded-lg border border-(--app-border) px-2.5 py-1 font-mono text-sm text-(--app-text)"
+						class="shrink-0 rounded-lg border border-(--app-border) px-2.5 py-1 font-mono text-sm text-(--app-button)"
 						>{quote.symbol}</span
 					>
 				</div>
@@ -160,7 +160,7 @@
 							onclick={() => (range = r.key)}
 							class={range === r.key
 								? 'rounded-lg bg-(--app-accent) px-3 py-1.5 text-sm font-semibold text-[#111]'
-								: 'rounded-lg bg-(--app-hover) px-3 py-1.5 text-sm font-medium text-(--app-text) transition hover:opacity-90'}
+								: 'rounded-lg bg-(--app-hover) px-3 py-1.5 text-sm font-medium text-(--app-button) transition hover:opacity-90'}
 						>
 							{r.label}
 						</button>

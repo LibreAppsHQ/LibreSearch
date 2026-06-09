@@ -28,13 +28,22 @@
 			{ ids: ['request-method'] },
 			{ ids: ['save-history', 'history-retention'] },
 			{ ids: ['search-region'] }
+		],
+		eco: [
+			{ ids: ['eco-mode'] },
+			{ ids: ['eco-hide-backgrounds', 'eco-skip-suggestions'] },
+			{ ids: ['eco-skip-rich-answers', 'eco-skip-favicons'] },
+			{ ids: ['eco-prefer-dark', 'eco-cap-results'] },
+			{ ids: ['eco-impact-tips', 'eco-green-shortcuts'] },
+			{ ids: ['eco-support-charities', 'eco-local-results'] }
 		]
 	};
 
 	const sections: Array<{ id: SettingCategory; label: string }> = [
 		{ id: 'general', label: 'General' },
 		{ id: 'appearance', label: 'Appearance' },
-		{ id: 'privacy', label: 'Privacy and Safety' }
+		{ id: 'privacy', label: 'Privacy and Safety' },
+		{ id: 'eco', label: 'Eco' }
 	];
 
 	let activeSection = $state<SettingCategory>('general');
@@ -161,7 +170,7 @@
 	>
 		<span
 			class={checked
-				? 'absolute top-0.5 left-0.5 h-5 w-5 translate-x-5 rounded-full bg-white shadow transition-transform'
+				? 'absolute top-0.5 left-0.5 h-5 w-5 translate-x-5 rounded-full bg-(--app-toggle-knob) shadow transition-transform'
 				: 'absolute top-0.5 left-0.5 h-5 w-5 translate-x-0 rounded-full bg-(--app-muted) transition-transform'}
 		></span>
 	</button>
@@ -193,8 +202,8 @@
 						type="button"
 						onclick={() => scrollToSection(section.id)}
 						class={activeSection === section.id
-							? 'shrink-0 border-b-2 border-(--app-accent) py-3 text-sm font-semibold text-(--app-text)'
-							: 'shrink-0 border-b-2 border-transparent py-3 text-sm font-medium text-(--app-muted) transition hover:text-(--app-text)'}
+							? 'shrink-0 border-b-2 border-(--app-accent) py-3 text-sm font-semibold text-(--app-button-hover)'
+							: 'shrink-0 border-b-2 border-transparent py-3 text-sm font-medium text-(--app-muted) transition hover:text-(--app-button-hover)'}
 					>
 						{section.label}
 					</button>
@@ -212,6 +221,13 @@
 				{#each sections as section (section.id)}
 					<section id={`sec-${section.id}`} data-section={section.id} class="scroll-mt-32">
 						<h2 class="mb-5 text-3xl font-bold tracking-tight">{section.label}</h2>
+
+						{#if section.id === 'eco'}
+							<p class="mb-5 max-w-2xl text-sm leading-6 text-(--app-muted)">
+								Lower your own footprint and pitch in on global impact — fewer requests, local
+								results, and links to causes that protect forests, oceans, and climate.
+							</p>
+						{/if}
 
 						<!-- Theme picker lives at the top of Appearance -->
 						{#if section.id === 'appearance'}
@@ -326,7 +342,7 @@
 					<button
 						type="button"
 						onclick={discard}
-						class="mt-3 text-sm text-(--app-muted) underline-offset-2 transition hover:text-(--app-text) hover:underline"
+						class="mt-3 text-sm text-(--app-muted) underline-offset-2 transition hover:text-(--app-button-hover) hover:underline"
 					>
 						Discard changes
 					</button>
@@ -341,7 +357,7 @@
 					<button
 						type="button"
 						onclick={exportSettings}
-						class="flex w-full items-center gap-2 rounded-lg border border-(--app-border) px-4 py-2 text-sm text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
+						class="flex w-full items-center gap-2 rounded-lg border border-(--app-border) px-4 py-2 text-sm text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 					>
 						<i class="fa-solid fa-download text-xs"></i>
 						Export settings
@@ -349,7 +365,7 @@
 					<button
 						type="button"
 						onclick={triggerImport}
-						class="flex w-full items-center gap-2 rounded-lg border border-(--app-border) px-4 py-2 text-sm text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
+						class="flex w-full items-center gap-2 rounded-lg border border-(--app-border) px-4 py-2 text-sm text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 					>
 						<i class="fa-solid fa-upload text-xs"></i>
 						Import settings

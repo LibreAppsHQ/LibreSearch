@@ -184,21 +184,21 @@
 		<div class="mt-14 flex flex-wrap gap-3">
 			<a
 				href="/privacy"
-				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-2 text-sm text-(--app-text) transition hover:bg-(--app-hover)"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-2 text-sm text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 			>
 				<i class="fa-solid fa-shield-halved"></i>
 				Privacy policy
 			</a>
 			<a
 				href="/transparency"
-				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-2 text-sm text-(--app-text) transition hover:bg-(--app-hover)"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-2 text-sm text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 			>
 				<i class="fa-solid fa-file-contract"></i>
 				Transparency report
 			</a>
 			<a
 				href="/contact"
-				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-2 text-sm text-(--app-text) transition hover:bg-(--app-hover)"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-2 text-sm text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 			>
 				<i class="fa-solid fa-envelope"></i>
 				Contact us
