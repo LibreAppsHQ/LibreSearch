@@ -15,6 +15,7 @@ Thumbs.db
 # Secrets & signing keys — never commit these
 *.pem
 *.key
+libresearch-extension-key.pem
 
 # Env
 .env

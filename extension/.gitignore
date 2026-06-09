@@ -1,4 +1,7 @@
 *.zip
+*.pem
+*.key
+libresearch-extension-key.pem
 web-ext-artifacts/
 node_modules/
 .DS_Store
