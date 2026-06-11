@@ -40,3 +40,6 @@ src/routes/account
 src/routes/auth
 
 CLAUDE.md
+.claude
+.codegraph
+.claude-flow
