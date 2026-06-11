@@ -17,6 +17,29 @@
 
 	const releases: Release[] = [
 		{
+			version: '0.9.2',
+			date: '2026-06-10',
+			title: 'Mobile performance and faster first paint',
+			entries: [
+				{
+					tag: 'perf',
+					text: 'Lazy-load heavy search components (AI answers, infobox, maps, images, videos) to shrink the initial /search bundle'
+				},
+				{
+					tag: 'perf',
+					text: 'Defer homepage wave background, clock, eco panel, and quick settings until after the first paint'
+				},
+				{
+					tag: 'perf',
+					text: 'Defer Umami, Speed Insights, and FontAwesome until the browser is idle so they do not compete with LCP'
+				},
+				{
+					tag: 'perf',
+					text: 'Homepage logo uses fetchpriority=high; link preloading switches from hover to tap on mobile'
+				}
+			]
+		},
+		{
 			version: '0.9.1',
 			date: '2026-06-10',
 			title: 'Umami analytics and privacy docs',

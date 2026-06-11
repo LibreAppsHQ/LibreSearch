@@ -7,24 +7,12 @@
 	import NoResults from '$lib/components/NoResults.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import ResultsList from '$lib/components/ResultsList.svelte';
-	import InstantAnswer from '$lib/components/InstantAnswer.svelte';
-	import StockAnswer from '$lib/components/StockAnswer.svelte';
-	import AiAnswer from '$lib/components/AiAnswer.svelte';
 	import SearchTabs from '$lib/components/SearchTabs.svelte';
-	import Infobox from '$lib/components/Infobox.svelte';
-	import FeedbackModal from '$lib/components/FeedbackModal.svelte';
-	import NewsResultItem from '$lib/components/NewsResultItem.svelte';
-	import VideoResultItem from '$lib/components/VideoResultItem.svelte';
-	import VideoViewer from '$lib/components/VideoViewer.svelte';
-	import ImageGrid from '$lib/components/ImageGrid.svelte';
-	import ImageRelated from '$lib/components/ImageRelated.svelte';
-	import MapView from '$lib/components/MapView.svelte';
 	import CustomSelect from '$lib/components/CustomSelect.svelte';
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import BurnButton from '$lib/components/BurnButton.svelte';
-	import SiteFooter from '$lib/components/SiteFooter.svelte';
 	import AltchaChallenge from '$lib/components/AltchaChallenge.svelte';
-	import EcoWorldPanel from '$lib/components/EcoWorldPanel.svelte';
+	import Lazy from '$lib/components/Lazy.svelte';
 	import { settingsStore, getToggle, getSelect, ecoActive } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
 	import type { VideoResult } from '$lib/search';
@@ -398,14 +386,27 @@
 						<SearchSkeleton tab={loadingTab} />
 					{:else if data.tab === 'web'}
 						{#if currentPage === 1}
-							<EcoWorldPanel variant="search" />
+							<Lazy
+								load={() => import('$lib/components/EcoWorldPanel.svelte')}
+								variant="search"
+							/>
 						{/if}
 						{#if instantAnswers && currentPage === 1}
-							<StockAnswer query={data.query} />
-							<InstantAnswer query={data.query} />
+							<Lazy
+								load={() => import('$lib/components/StockAnswer.svelte')}
+								query={data.query}
+							/>
+							<Lazy
+								load={() => import('$lib/components/InstantAnswer.svelte')}
+								query={data.query}
+							/>
 						{/if}
 						{#if aiAnswers && data.query && currentPage === 1}
-							<AiAnswer query={data.query} tab={data.tab} />
+							<Lazy
+								load={() => import('$lib/components/AiAnswer.svelte')}
+								query={data.query}
+								tab={data.tab}
+							/>
 						{/if}
 						{#if allResults.length > 0}
 							<p class="mb-3 text-xs font-medium text-(--app-muted)">
@@ -422,7 +423,12 @@
 						{#if data.newsResults && data.newsResults.length > 0}
 							<ol class="space-y-2">
 								{#each data.newsResults as result (result.url)}
-									<li><NewsResultItem {result} /></li>
+									<li>
+										<Lazy
+											load={() => import('$lib/components/NewsResultItem.svelte')}
+											{result}
+										/>
+									</li>
 								{/each}
 							</ol>
 							{@render pagination()}
@@ -433,7 +439,11 @@
 						{#if data.videoResults && data.videoResults.length > 0}
 							<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 								{#each data.videoResults as result (result.url)}
-									<VideoResultItem {result} onselect={(v) => (activeVideo = v)} />
+									<Lazy
+										load={() => import('$lib/components/VideoResultItem.svelte')}
+										{result}
+										onselect={(v: VideoResult) => (activeVideo = v)}
+									/>
 								{/each}
 							</div>
 							{@render pagination()}
@@ -442,8 +452,14 @@
 						{/if}
 					{:else if data.tab === 'images'}
 						{#if data.imageResults && data.imageResults.length > 0}
-							<ImageRelated query={data.query} />
-							<ImageGrid images={data.imageResults} />
+							<Lazy
+								load={() => import('$lib/components/ImageRelated.svelte')}
+								query={data.query}
+							/>
+							<Lazy
+								load={() => import('$lib/components/ImageGrid.svelte')}
+								images={data.imageResults}
+							/>
 							{@render pagination()}
 						{:else if data.query && !data.error}
 							<NoResults query={data.query} tab="images" />
@@ -458,7 +474,10 @@
 						{/if}
 					{:else if data.tab === 'maps'}
 						{#if data.placeResults && data.placeResults.length > 0}
-							<MapView places={data.placeResults} />
+							<Lazy
+								load={() => import('$lib/components/MapView.svelte')}
+								places={data.placeResults}
+							/>
 							{@render pagination()}
 						{:else if data.query && !data.error}
 							<NoResults query={data.query} tab="maps" />
@@ -469,7 +488,10 @@
 				<!-- Right column: knowledge panel -->
 				{#if showInfoboxPanel && !loading}
 					<div class="hidden w-[380px] shrink-0 lg:block">
-						<Infobox infobox={data.infobox} />
+						<Lazy
+							load={() => import('$lib/components/Infobox.svelte')}
+							infobox={data.infobox}
+						/>
 						<div class="mt-2 flex justify-end">
 							<button
 								type="button"
@@ -495,7 +517,10 @@
 </button>
 
 {#if feedbackOpen}
-	<FeedbackModal onclose={() => (feedbackOpen = false)} />
+	<Lazy
+		load={() => import('$lib/components/FeedbackModal.svelte')}
+		onclose={() => (feedbackOpen = false)}
+	/>
 {/if}
 
 <footer class="bg-[#1b1e21] px-6 py-9">
@@ -552,5 +577,9 @@
 </footer>
 
 {#if activeVideo}
-	<VideoViewer video={activeVideo} onclose={() => (activeVideo = null)} />
+	<Lazy
+		load={() => import('$lib/components/VideoViewer.svelte')}
+		video={activeVideo}
+		onclose={() => (activeVideo = null)}
+	/>
 {/if}

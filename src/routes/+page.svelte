@@ -1,12 +1,10 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import BurnButton from '$lib/components/BurnButton.svelte';
 	import Logo from '$lib/components/Logo.svelte';
-	import Clock from '$lib/components/Clock.svelte';
-	import Background from '$lib/components/WaveBackground.svelte';
-	import QuickSettings from '$lib/components/QuickSettings.svelte';
-	import EcoWorldPanel from '$lib/components/EcoWorldPanel.svelte';
+	import Lazy from '$lib/components/Lazy.svelte';
 	import { settingsStore, getSelect, ecoActive } from '$lib/stores/settings';
 
 	let query = $state('');
@@ -14,6 +12,14 @@
 		getSelect($settingsStore, 'safe-search', 'moderate') as 'strict' | 'moderate' | 'low'
 	);
 	let hideBackgrounds = $derived(ecoActive($settingsStore, 'eco-hide-backgrounds'));
+	let showDeferred = $state(false);
+
+	onMount(() => {
+		// Paint logo + search bar first; load decorative UI after first frame.
+		requestAnimationFrame(() => {
+			showDeferred = true;
+		});
+	});
 
 	let showDefaultModal = $state(false);
 
@@ -152,14 +158,16 @@
 </svelte:head>
 
 <main class="relative flex min-h-dvh flex-col bg-(--app-background) text-(--app-text)">
-	{#if !hideBackgrounds}
-		<Background />
+	{#if !hideBackgrounds && showDeferred}
+		<Lazy load={() => import('$lib/components/WaveBackground.svelte')} />
 	{/if}
 
 	<div class="relative z-10 flex flex-1 flex-col">
-		<div class="absolute top-6 left-6 z-30">
-			<Clock />
-		</div>
+		{#if showDeferred}
+			<div class="absolute top-6 left-6 z-30">
+				<Lazy load={() => import('$lib/components/Clock.svelte')} />
+			</div>
+		{/if}
 		<div class="absolute top-6 right-6 z-30 flex items-center gap-1">
 			<BurnButton />
 			<SiteMenu />
@@ -169,7 +177,7 @@
 		<div class="relative flex flex-1 flex-col items-center px-6 pt-[21vh]">
 			<div class="w-full max-w-xl text-center">
 				<a href="/" class="inline-flex items-center gap-2.5" aria-label="LibreSearch home">
-					<Logo class="h-24 w-auto max-w-full sm:h-28" />
+					<Logo class="h-24 w-auto max-w-full sm:h-28" fetchpriority="high" />
 				</a>
 				<h1 class="mt-3 text-base text-(--app-text) sm:text-lg">Privacy for everyone.</h1>
 
@@ -185,11 +193,18 @@
 					/>
 				</div>
 
-				<EcoWorldPanel variant="home" />
+				{#if showDeferred}
+					<Lazy
+						load={() => import('$lib/components/EcoWorldPanel.svelte')}
+						variant="home"
+					/>
+				{/if}
 			</div>
 		</div>
 
-		<QuickSettings />
+		{#if showDeferred}
+			<Lazy load={() => import('$lib/components/QuickSettings.svelte')} />
+		{/if}
 
 		<!-- Footer -->
 		<footer

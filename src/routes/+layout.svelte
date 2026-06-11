@@ -66,20 +66,30 @@
 		settingsStore.load();
 		historyStore.load();
 
-		injectSpeedInsights();
+		const deferNonCritical = (fn: () => void) => {
+			if ('requestIdleCallback' in window) {
+				requestIdleCallback(fn, { timeout: 4000 });
+			} else {
+				setTimeout(fn, 200);
+			}
+		};
 
-		// Umami: privacy-friendly pageview counts (skipped in dev and eco mode).
-		if (!dev && !ecoActive(get(settingsStore), 'eco-mode')) {
-			const script = document.createElement('script');
-			script.defer = true;
-			script.src = 'https://cloud.umami.is/script.js';
-			script.dataset.websiteId = UMAMI_WEBSITE_ID;
-			script.dataset.domains = 'libresearch.ca';
-			document.head.appendChild(script);
-		}
+		deferNonCritical(() => {
+			injectSpeedInsights();
 
-		// Load FontAwesome after first paint so it doesn't block FCP/LCP.
-		import('@fortawesome/fontawesome-free/css/all.css');
+			// Umami: privacy-friendly pageview counts (skipped in dev and eco mode).
+			if (!dev && !ecoActive(get(settingsStore), 'eco-mode')) {
+				const script = document.createElement('script');
+				script.defer = true;
+				script.src = 'https://cloud.umami.is/script.js';
+				script.dataset.websiteId = UMAMI_WEBSITE_ID;
+				script.dataset.domains = 'libresearch.ca';
+				document.head.appendChild(script);
+			}
+
+			// Load FontAwesome after LCP-critical content.
+			import('@fortawesome/fontawesome-free/css/all.css');
+		});
 	});
 </script>
 
