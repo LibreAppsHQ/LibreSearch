@@ -5,6 +5,7 @@
 	import BurnButton from '$lib/components/BurnButton.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import Lazy from '$lib/components/Lazy.svelte';
+	import DefaultSearchPrompt from '$lib/components/DefaultSearchPrompt.svelte';
 	import { settingsStore, getSelect, ecoActive } from '$lib/stores/settings';
 
 	let query = $state('');
@@ -19,88 +20,6 @@
 		requestAnimationFrame(() => {
 			showDeferred = true;
 		});
-	});
-
-	let showDefaultModal = $state(false);
-
-	type BrowserKey = 'chrome' | 'edge' | 'firefox' | 'safari' | 'other';
-
-	function detectBrowser(): BrowserKey {
-		if (typeof navigator === 'undefined') return 'other';
-		const ua = navigator.userAgent;
-		if (/Edg\//.test(ua)) return 'edge';
-		if (/Firefox\//.test(ua)) return 'firefox';
-		if (/Chrome\//.test(ua) || /Chromium\//.test(ua)) return 'chrome';
-		if (/Safari\//.test(ua) && /Apple/.test(navigator.vendor)) return 'safari';
-		return 'other';
-	}
-
-	let origin = $state('https://libresearch.ca');
-	let searchUrlTemplate = $derived(`${origin}/search?q=%s`);
-
-	let defaultSteps = $derived<Record<BrowserKey, { name: string; steps: string[] }>>({
-		chrome: {
-			name: 'Chrome',
-			steps: [
-				'Go to chrome://settings/searchEngines.',
-				'Next to “Site search”, click Add.',
-				`Name it “LibreSearch”, set a shortcut (e.g. libre), and set the URL to ${searchUrlTemplate}.`,
-				'Click the ⋮ next to the new entry and choose “Make default”.'
-			]
-		},
-		edge: {
-			name: 'Edge',
-			steps: [
-				'Go to edge://settings/searchEngines.',
-				'Next to “Manage search engines”, click Add.',
-				`Name it “LibreSearch”, set a shortcut (e.g. libre), and set the URL to ${searchUrlTemplate}.`,
-				'Click the ⋯ next to the new entry and choose “Make default”.'
-			]
-		},
-		firefox: {
-			name: 'Firefox',
-			steps: [
-				'Click the search bar, then the magnifying-glass/options icon.',
-				'Choose “Add LibreSearch” to install it as a search engine.',
-				'Open Settings → Search and pick LibreSearch as your Default Search Engine.'
-			]
-		},
-		safari: {
-			name: 'Safari',
-			steps: [
-				'Safari only allows a fixed list of default search engines, so it can’t be set as the system default.',
-				'Bookmark LibreSearch instead, or add it to your Favorites for one-tap access.'
-			]
-		},
-		other: {
-			name: 'your browser',
-			steps: [
-				'Open your browser’s search engine settings.',
-				'Look for “LibreSearch” among the discovered engines (most browsers add it after your first visit).',
-				`If it isn’t there, click Add and set the URL to ${searchUrlTemplate}, then select it.`
-			]
-		}
-	});
-
-	let browser = $state<BrowserKey>('other');
-	let dialogEl = $state<HTMLDivElement | null>(null);
-
-	function openDefaultModal() {
-		browser = detectBrowser();
-		if (typeof window !== 'undefined') origin = window.location.origin;
-		showDefaultModal = true;
-	}
-
-	// Close on Escape and pull focus into the dialog when it opens, so keyboard
-	// users aren't left tabbing through the page behind the modal.
-	$effect(() => {
-		if (!showDefaultModal) return;
-		function onKey(event: KeyboardEvent) {
-			if (event.key === 'Escape') showDefaultModal = false;
-		}
-		window.addEventListener('keydown', onKey);
-		dialogEl?.focus();
-		return () => window.removeEventListener('keydown', onKey);
 	});
 
 	// Built in the script block so the inline <script> tag doesn't trip the
@@ -191,6 +110,7 @@
 						autoFocus={true}
 						{safesearch}
 					/>
+					<DefaultSearchPrompt showLink={true} />
 				</div>
 
 				{#if showDeferred}

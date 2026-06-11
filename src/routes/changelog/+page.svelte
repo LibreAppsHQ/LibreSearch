@@ -17,6 +17,29 @@
 
 	const releases: Release[] = [
 		{
+			version: '0.9.3',
+			date: '2026-06-10',
+			title: 'Discovery pages and default-search prompts',
+			entries: [
+				{
+					tag: 'feature',
+					text: '“Make default” prompt on the homepage and after search results — browser-specific steps in a dismissible dialog'
+				},
+				{
+					tag: 'feature',
+					text: 'Alternative landing pages at /alternatives/google, /alternatives/duckduckgo, and /alternatives/startpage with side-by-side comparisons'
+				},
+				{
+					tag: 'docs',
+					text: 'Sitemap now includes blog posts, syntax guide, and alternative pages; footer and compare page link to them'
+				},
+				{
+					tag: 'perf',
+					text: 'Compare table data moved to a shared module so /compare and alternative pages stay in sync'
+				}
+			]
+		},
+		{
 			version: '0.9.2',
 			date: '2026-06-10',
 			title: 'Mobile performance and faster first paint',

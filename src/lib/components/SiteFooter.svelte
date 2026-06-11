@@ -46,6 +46,18 @@
 								>Syntax</a
 							>
 						</li>
+						<li>
+							<a href="/compare" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
+								>Compare</a
+							>
+						</li>
+						<li>
+							<a
+								href="/alternatives/google"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)"
+								>Google alternative</a
+							>
+						</li>
 					</ul>
 				</div>
 				<div class="space-y-3">
