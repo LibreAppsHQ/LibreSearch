@@ -13,7 +13,6 @@
 	import BurnButton from '$lib/components/BurnButton.svelte';
 	import AltchaChallenge from '$lib/components/AltchaChallenge.svelte';
 	import Lazy from '$lib/components/Lazy.svelte';
-	import DefaultSearchPrompt from '$lib/components/DefaultSearchPrompt.svelte';
 	import { settingsStore, getToggle, getSelect, ecoActive } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
 	import type { VideoResult } from '$lib/search';
@@ -74,7 +73,6 @@
 	});
 
 	const MAX_PAGE = 10; // Brave caps offset at 9 → page 10 is the last reachable page
-	let showDefaultPrompt = $derived(Boolean(data.query) && !data.challengeRequired && !data.error);
 	let currentPage = $derived(data.page ?? 1);
 	let showInfoboxPanel = $derived(Boolean(data.infobox) && data.tab === 'web' && currentPage === 1);
 	let canGoNext = $derived(hasMore && currentPage < MAX_PAGE);
@@ -315,8 +313,6 @@
 			{#if data.error}
 				<p class="mb-6 max-w-2xl text-sm text-red-400">{data.error}</p>
 			{/if}
-
-			<DefaultSearchPrompt showWhen={showDefaultPrompt} />
 
 			{#if data.freshness && data.query}
 				<p class="mb-4 max-w-2xl text-xs text-(--app-muted)">

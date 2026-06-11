@@ -5,7 +5,6 @@
 	import BurnButton from '$lib/components/BurnButton.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import Lazy from '$lib/components/Lazy.svelte';
-	import DefaultSearchPrompt from '$lib/components/DefaultSearchPrompt.svelte';
 	import { settingsStore, getSelect, ecoActive } from '$lib/stores/settings';
 
 	let query = $state('');
@@ -110,7 +109,6 @@
 						autoFocus={true}
 						{safesearch}
 					/>
-					<DefaultSearchPrompt showLink={true} />
 				</div>
 
 				{#if showDeferred}
