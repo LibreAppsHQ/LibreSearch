@@ -77,13 +77,13 @@
 		deferNonCritical(() => {
 			injectSpeedInsights();
 
-			// Umami: privacy-friendly pageview counts (skipped in dev and eco mode).
+			// Umami: cookie-free pageview counts (skipped in dev and eco mode).
 			if (!dev && !ecoActive(get(settingsStore), 'eco-mode')) {
 				const script = document.createElement('script');
 				script.defer = true;
 				script.src = 'https://cloud.umami.is/script.js';
 				script.dataset.websiteId = UMAMI_WEBSITE_ID;
-				script.dataset.domains = 'libresearch.ca';
+				script.dataset.domains = 'libresearch.ca,www.libresearch.ca';
 				document.head.appendChild(script);
 			}
 
