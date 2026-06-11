@@ -17,6 +17,29 @@
 
 	const releases: Release[] = [
 		{
+			version: '0.9.1',
+			date: '2026-06-10',
+			title: 'Umami analytics and privacy docs',
+			entries: [
+				{
+					tag: 'feature',
+					text: 'Umami analytics for cookie-free, aggregate pageview counts — not loaded in dev or when eco mode is on'
+				},
+				{
+					tag: 'fix',
+					text: 'Replaced Vercel Analytics with Umami; kept Vercel Speed Insights for Core Web Vitals'
+				},
+				{
+					tag: 'docs',
+					text: 'Privacy policy and Trust Center updated to document Umami and Speed Insights'
+				},
+				{
+					tag: 'security',
+					text: 'Content-Security-Policy updated to allow Umami script and beacon endpoints'
+				}
+			]
+		},
+		{
 			version: '0.9.0',
 			date: '2026-06-08',
 			title: 'Eco tools, About refresh, and search polish',

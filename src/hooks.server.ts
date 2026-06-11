@@ -37,8 +37,8 @@ const SECURITY_HEADERS: Record<string, string> = {
 	'X-DNS-Prefetch-Control': 'off',
 	'Content-Security-Policy': [
 		"default-src 'self'",
-		// va.vercel-scripts.com hosts the Speed Insights + Analytics scripts.
-		"script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+		// va.vercel-scripts.com hosts Speed Insights; cloud.umami.is hosts Umami analytics.
+		"script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://cloud.umami.is",
 		"style-src 'self' 'unsafe-inline'",
 		"img-src 'self' https: data:",
 		"font-src 'self' data:",
@@ -46,7 +46,7 @@ const SECURITY_HEADERS: Record<string, string> = {
 		// the Speed Insights beacon endpoint.
 		// *.ingest.us.sentry.io is the Sentry error/trace ingest endpoint.
 		// *.cloud.appwrite.io is the Appwrite Cloud API (auth + databases).
-		"connect-src 'self' https://api.web3forms.com https://vitals.vercel-insights.com https://*.ingest.us.sentry.io https://*.cloud.appwrite.io",
+		"connect-src 'self' https://api.web3forms.com https://vitals.vercel-insights.com https://cloud.umami.is https://*.ingest.us.sentry.io https://*.cloud.appwrite.io",
 		'frame-src https:',
 		"worker-src 'self' blob:",
 		"object-src 'none'",

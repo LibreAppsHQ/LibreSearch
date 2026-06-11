@@ -42,11 +42,18 @@
 			url: 'https://web3forms.com/privacy'
 		},
 		{
-			name: 'Vercel Analytics + Speed Insights',
-			role: 'Aggregate, privacy-respecting performance signals',
-			data: 'Anonymous, aggregated page-view counts and Core Web Vitals. No cookies, no cross-site tracking, no personal data.',
+			name: 'Umami',
+			role: 'Aggregate, privacy-friendly pageview analytics',
+			data: 'Cookie-free pageview counts and referrers. No cross-site tracking, no personal profiles. Not loaded when eco mode is on.',
+			region: 'United States (Umami Cloud).',
+			url: 'https://umami.is/privacy'
+		},
+		{
+			name: 'Vercel Speed Insights',
+			role: 'Aggregate performance signals',
+			data: 'Anonymous Core Web Vitals beacons. No cookies, no cross-site tracking, no personal data.',
 			region: 'United States.',
-			url: 'https://vercel.com/docs/analytics/privacy-policy'
+			url: 'https://vercel.com/docs/speed-insights/privacy-policy'
 		},
 		{
 			name: 'Sentry',

@@ -9,7 +9,9 @@
 	import { updated } from '$app/state';
 	import InstallPrompt from '$lib/components/InstallPrompt.svelte';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
-	import { injectAnalytics } from '@vercel/analytics/sveltekit';
+	import { get } from 'svelte/store';
+
+	const UMAMI_WEBSITE_ID = 'c0c01c57-f1bc-4bb0-b998-e522cf3ddad6';
 
 	let { children } = $props();
 
@@ -29,16 +31,6 @@
 		}
 	});
 
-	// Vercel SDKs must run client-side inside lifecycle
-	onMount(() => {
-		if (!browser) return;
-
-		injectSpeedInsights();
-
-		if (!dev) {
-			injectAnalytics();
-		}
-	});
 
 	$effect(() => {
 		if (!browser) return;
@@ -68,9 +60,23 @@
 	}
 
 	onMount(() => {
+		if (!browser) return;
+
 		themeStore.load();
 		settingsStore.load();
 		historyStore.load();
+
+		injectSpeedInsights();
+
+		// Umami: privacy-friendly pageview counts (skipped in dev and eco mode).
+		if (!dev && !ecoActive(get(settingsStore), 'eco-mode')) {
+			const script = document.createElement('script');
+			script.defer = true;
+			script.src = 'https://cloud.umami.is/script.js';
+			script.dataset.websiteId = UMAMI_WEBSITE_ID;
+			script.dataset.domains = 'libresearch.ca';
+			document.head.appendChild(script);
+		}
 
 		// Load FontAwesome after first paint so it doesn't block FCP/LCP.
 		import('@fortawesome/fontawesome-free/css/all.css');

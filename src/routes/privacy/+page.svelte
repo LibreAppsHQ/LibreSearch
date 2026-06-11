@@ -4,7 +4,7 @@
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 	import AltchaBadge from '$lib/components/AltchaBadge.svelte';
 
-	const lastUpdated = 'May 2026';
+	const lastUpdated = 'June 2026';
 
 	const sections = [
 		{ id: 'overview', label: 'Overview' },
@@ -166,19 +166,28 @@
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Third parties</h2>
 				<p class="text-sm leading-7 text-(--app-muted)">
 					To return results we rely on an upstream search index, which receives your query through
-					our anonymizing proxy but not your identity. We do not embed third-party advertising,
-					analytics, or social tracking scripts on LibreSearch. We have no business model that
-					depends on sharing your data, so we don't.
+					our anonymizing proxy but not your identity. We do not embed third-party advertising or
+					social tracking scripts, and we have no business model that depends on sharing your data.
 				</p>
 				<p class="mt-3 text-sm leading-7 text-(--app-muted)">
-					The one diagnostic service we use is <a
+					For aggregate traffic we use <a
+						href="https://umami.is"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-(--app-accent) hover:underline">Umami</a
+					>
+					— cookie-free pageview counts with no cross-site tracking or personal profiles. Umami is not
+					loaded when eco mode is enabled. For performance we use Vercel Speed Insights (Core Web
+					Vitals only).
+				</p>
+				<p class="mt-3 text-sm leading-7 text-(--app-muted)">
+					For crash diagnostics we use <a
 						href="https://sentry.io"
 						target="_blank"
 						rel="noopener noreferrer"
 						class="text-(--app-accent) hover:underline">Sentry</a
-					> for error monitoring, so we can find and fix crashes. It only receives technical error reports
-					— configured with personal-data collection off and IP addresses removed — never your searches
-					or a profile of you.
+					>. It only receives technical error reports — configured with personal-data collection off
+					and IP addresses removed — never your searches or a profile of you.
 				</p>
 			</section>
 
