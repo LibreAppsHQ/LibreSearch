@@ -1,13 +1,15 @@
 export const DEFAULT_LOGO_SIZE = 'h-16 w-16';
 
-export const engines = [
+export type Engine = { name: string; logo: string; accent?: boolean; size?: string };
+
+export const engines: readonly Engine[] = [
 	{ name: 'LibreSearch', logo: '/2.svg', accent: true },
 	{ name: 'Google', logo: '/google.png' },
 	{ name: 'Bing', logo: '/bing.png', size: 'h-14 w-28' },
 	{ name: 'DuckDuckGo', logo: '/ddg.svg' },
 	{ name: 'Brave Search', logo: '/brave.png', size: 'h-20 w-20' },
 	{ name: 'Startpage', logo: '/startpage.svg' }
-] as const;
+];
 
 export type Mark = 'yes' | 'no' | 'partial' | 'na';
 

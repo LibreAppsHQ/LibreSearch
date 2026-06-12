@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import * as Sentry from '@sentry/sveltekit';
@@ -5,8 +6,13 @@ import { sentryHandle, handleErrorWithSentry } from '@sentry/sveltekit';
 import { getUser } from '$lib/server/appwrite';
 import { getPlan } from '$lib/server/plan';
 
+// Sentry only runs when a DSN is configured (the hosted libresearch.ca deploy).
+// Self-hosted instances leave PUBLIC_SENTRY_DSN unset → no telemetry at all.
+const SENTRY_DSN = process.env.PUBLIC_SENTRY_DSN?.trim() || '';
+
 Sentry.init({
-	dsn: 'https://c6f76c27eb2b5e689b2b18fe208334b3@o4511459621011456.ingest.us.sentry.io/4511459622125568',
+	dsn: SENTRY_DSN,
+	enabled: Boolean(SENTRY_DSN),
 	// Privacy: never send default PII (e.g. IP addresses) to Sentry.
 	sendDefaultPii: false,
 	tracesSampleRate: 0.1,
@@ -34,11 +40,31 @@ const SECURITY_HEADERS: Record<string, string> = {
 		'geolocation=(), microphone=(), camera=(), payment=(), usb=(), browsing-topics=(), interest-cohort=()',
 	'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
 	'Cross-Origin-Opener-Policy': 'same-origin',
-	'X-DNS-Prefetch-Control': 'off',
-	'Content-Security-Policy': [
+	'X-DNS-Prefetch-Control': 'off'
+};
+
+// Per-request CSP. Inline scripts (theme bootstrap, SvelteKit init, JSON-LD)
+// are authorized via a nonce injected into every nonce-less inline <script>
+// by transformPageChunk below. 'unsafe-inline' remains only as a fallback for
+// legacy browsers — any nonce-aware browser ignores it, so injected inline
+// scripts are blocked where it matters.
+// Third-party CSP hosts are only allowed on the hosted deploy (Vercel) or when
+// the corresponding service is configured — a self-hosted instance with no
+// analytics/Sentry/Appwrite gets a strictly first-party policy.
+const onVercel = Boolean(process.env.VERCEL);
+const SCRIPT_HOSTS = onVercel ? ' https://va.vercel-scripts.com https://cloud.umami.is' : '';
+const CONNECT_HOSTS = [
+	'https://api.web3forms.com',
+	...(onVercel ? ['https://vitals.vercel-insights.com', 'https://cloud.umami.is'] : []),
+	...(SENTRY_DSN ? ['https://*.ingest.us.sentry.io'] : []),
+	...(process.env.PUBLIC_APPWRITE_ENDPOINT || onVercel ? ['https://*.cloud.appwrite.io'] : [])
+].join(' ');
+
+function buildCsp(nonce: string, secure: boolean): string {
+	return [
 		"default-src 'self'",
 		// va.vercel-scripts.com hosts Speed Insights; cloud.umami.is hosts Umami analytics.
-		"script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://cloud.umami.is",
+		`script-src 'self' 'nonce-${nonce}' 'unsafe-inline'${SCRIPT_HOSTS}`,
 		"style-src 'self' 'unsafe-inline'",
 		"img-src 'self' https: data:",
 		"font-src 'self' data:",
@@ -46,15 +72,22 @@ const SECURITY_HEADERS: Record<string, string> = {
 		// the Speed Insights beacon endpoint.
 		// *.ingest.us.sentry.io is the Sentry error/trace ingest endpoint.
 		// *.cloud.appwrite.io is the Appwrite Cloud API (auth + databases).
-		"connect-src 'self' https://api.web3forms.com https://vitals.vercel-insights.com https://cloud.umami.is https://*.ingest.us.sentry.io https://*.cloud.appwrite.io",
-		'frame-src https:',
+		`connect-src 'self' ${CONNECT_HOSTS}`,
+		// Only the embeds we actually render: privacy YouTube, Vimeo player, OSM maps.
+		'frame-src https://www.youtube-nocookie.com https://player.vimeo.com https://www.openstreetmap.org',
 		"worker-src 'self' blob:",
 		"object-src 'none'",
 		"base-uri 'self'",
 		"form-action 'self'",
-		'upgrade-insecure-requests'
-	].join('; ')
-};
+		// Only meaningful on https. On a plain-http self-hosted/LAN instance it
+		// makes the browser rewrite same-origin asset URLs to https://, which
+		// fails and renders the page unstyled.
+		...(secure ? ['upgrade-insecure-requests'] : [])
+	].join('; ');
+}
+
+// Matches inline <script> openers (no src=) that don't already carry a nonce.
+const INLINE_SCRIPT_RE = /<script(?![^>]*\bsrc=)(?![^>]*\bnonce=)([^>]*)>/g;
 
 // Resolve the logged-in user (if any) from the session cookie and attach it,
 // plus their plan, to event.locals for downstream loaders and endpoints.
@@ -76,11 +109,24 @@ const securityHandle: Handle = async ({ event, resolve }) => {
 		});
 	}
 
-	const response = await resolve(event);
+	const nonce = crypto.randomBytes(16).toString('base64');
+
+	const response = await resolve(event, {
+		transformPageChunk: ({ html }) =>
+			html.replace(INLINE_SCRIPT_RE, `<script nonce="${nonce}"$1>`)
+	});
+
+	// Trust the proxy's protocol header if present (TLS usually terminates there).
+	const proto = event.request.headers.get('x-forwarded-proto');
+	const secure = proto ? proto === 'https' : event.url.protocol === 'https:';
 
 	for (const [header, value] of Object.entries(SECURITY_HEADERS)) {
+		// HSTS over plain http is ignored by browsers and can poison LAN hosts
+		// that are later served over https by something else — skip it.
+		if (header === 'Strict-Transport-Security' && !secure) continue;
 		response.headers.set(header, value);
 	}
+	response.headers.set('Content-Security-Policy', buildCsp(nonce, secure));
 
 	// Some SEO crawlers flag HTML responses whose `Content-Type` lacks an
 	// explicit charset, even when a `<meta charset>` is present. Make sure

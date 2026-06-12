@@ -74,11 +74,15 @@
 			}
 		};
 
+		// Analytics only run on the hosted libresearch.ca deploy — self-hosted
+		// instances never load Speed Insights or Umami.
+		const hostedDeploy = /(^|\.)libresearch\.ca$/.test(window.location.hostname);
+
 		deferNonCritical(() => {
-			injectSpeedInsights();
+			if (hostedDeploy) injectSpeedInsights();
 
 			// Umami: cookie-free pageview counts (skipped in dev and eco mode).
-			if (!dev && !ecoActive(get(settingsStore), 'eco-mode')) {
+			if (hostedDeploy && !dev && !ecoActive(get(settingsStore), 'eco-mode')) {
 				const script = document.createElement('script');
 				script.defer = true;
 				script.src = 'https://cloud.umami.is/script.js';

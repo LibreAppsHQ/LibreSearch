@@ -1,8 +1,14 @@
 import * as Sentry from '@sentry/sveltekit';
 import { handleErrorWithSentry } from '@sentry/sveltekit';
+import { env } from '$env/dynamic/public';
+
+// Sentry only runs when a DSN is configured (the hosted libresearch.ca deploy).
+// Self-hosted instances leave PUBLIC_SENTRY_DSN unset → no telemetry at all.
+const SENTRY_DSN = env.PUBLIC_SENTRY_DSN?.trim() || '';
 
 Sentry.init({
-	dsn: 'https://c6f76c27eb2b5e689b2b18fe208334b3@o4511459621011456.ingest.us.sentry.io/4511459622125568',
+	dsn: SENTRY_DSN,
+	enabled: Boolean(SENTRY_DSN),
 	// Privacy: never send default PII (e.g. IP addresses) to Sentry.
 	sendDefaultPii: false,
 	tracesSampleRate: 0.1,

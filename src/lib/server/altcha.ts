@@ -1,6 +1,7 @@
 import crypto from 'node:crypto';
 import { env } from '$env/dynamic/private';
 import { dev } from '$app/environment';
+import { getRedis } from './kv';
 
 // Self-hosted, privacy-friendly proof-of-work challenge (ALTCHA-compatible scheme).
 // No third-party service is contacted — challenges are signed with a server secret.
@@ -54,7 +55,10 @@ export function createChallenge(maxnumber = DEFAULT_MAX_NUMBER): Challenge {
 	return { algorithm: ALGORITHM, challenge, salt, signature, maxnumber };
 }
 
-// Prevent a solved challenge from being replayed.
+// Prevent a solved challenge from being replayed. Redis-backed when configured
+// (required on serverless, where each instance has its own memory); in-memory
+// Map otherwise for local dev.
+const REDIS_USED_PREFIX = 'altcha-used:';
 const usedSignatures = new Map<string, number>();
 function pruneUsed(now: number): void {
 	for (const [sig, expiresAt] of usedSignatures) {
@@ -62,8 +66,29 @@ function pruneUsed(now: number): void {
 	}
 }
 
+/**
+ * Atomically mark a signature as used. Returns false if it was already used
+ * (i.e. this is a replay).
+ */
+async function claimSignature(signature: string, expiresAt: number): Promise<boolean> {
+	const now = Date.now();
+	const redis = getRedis();
+	if (redis) {
+		// NX = only set if absent → atomic first-use claim across instances.
+		const result = await redis.set(`${REDIS_USED_PREFIX}${signature}`, 1, {
+			nx: true,
+			px: Math.max(expiresAt - now, 1000)
+		});
+		return result === 'OK';
+	}
+	pruneUsed(now);
+	if (usedSignatures.has(signature)) return false;
+	usedSignatures.set(signature, expiresAt);
+	return true;
+}
+
 /** Verify a base64-encoded ALTCHA solution payload. */
-export function verifySolution(payloadB64: string): boolean {
+export async function verifySolution(payloadB64: string): Promise<boolean> {
 	try {
 		const decoded = JSON.parse(Buffer.from(payloadB64, 'base64').toString('utf-8')) as {
 			algorithm?: string;
@@ -87,11 +112,7 @@ export function verifySolution(payloadB64: string): boolean {
 		const signature = hmacHex(challenge);
 		if (!safeEqualHex(signature, decoded.signature)) return false;
 
-		pruneUsed(now);
-		if (usedSignatures.has(decoded.signature)) return false;
-		usedSignatures.set(decoded.signature, expires);
-
-		return true;
+		return await claimSignature(decoded.signature, expires);
 	} catch {
 		return false;
 	}

@@ -1,11 +1,10 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { consumeRateLimit } from '$lib/server/search';
+import { getClientKey } from '$lib/server/security';
 
-export const GET: RequestHandler = async ({ url, fetch, request, getClientAddress }) => {
-	const clientKey =
-		request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-		getClientAddress() ||
-		'unknown';
+export const GET: RequestHandler = async (event) => {
+	const { url, fetch } = event;
+	const clientKey = getClientKey(event);
 
 	const rateLimit = await consumeRateLimit(clientKey);
 	if (!rateLimit.allowed) {

@@ -651,6 +651,54 @@ function getBraveApiKey(): string {
 	return apiKey;
 }
 
+// Self-hosted instances without their own Brave key can search through another
+// LibreSearch instance's /api/upstream/search proxy (e.g. the hosted
+// libresearch.ca deploy) using an operator-issued bearer token.
+function getUpstreamConfig(): { url: string; token: string } | null {
+	const url = env.UPSTREAM_SEARCH_URL?.trim();
+	const token = env.UPSTREAM_SEARCH_TOKEN?.trim();
+	return url && token ? { url, token } : null;
+}
+
+async function fetchUpstreamSearch(
+	query: string,
+	tab: SearchTab,
+	safesearch: 'strict' | 'moderate' | 'off',
+	offset: number,
+	freshness: string | undefined,
+	fetchImpl: typeof fetch,
+	country?: string,
+	count?: number
+): Promise<SearchResponse> {
+	const upstream = getUpstreamConfig();
+	if (!upstream) throw new Error('Upstream search is not configured');
+
+	const url = new URL('/api/upstream/search', upstream.url);
+	url.searchParams.set('q', query);
+	url.searchParams.set('t', tab);
+	url.searchParams.set('safe', safesearch);
+	if (offset > 0) url.searchParams.set('offset', String(offset));
+	if (freshness) url.searchParams.set('f', freshness);
+	if (country) url.searchParams.set('region', country);
+	if (count) url.searchParams.set('count', String(count));
+
+	const controller = new AbortController();
+	const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+	try {
+		const response = await fetchImpl(url, {
+			cache: 'no-store',
+			credentials: 'omit',
+			headers: { accept: 'application/json', authorization: `Bearer ${upstream.token}` },
+			signal: controller.signal
+		});
+		if (!response.ok) throw new Error(`Upstream search responded with ${response.status}`);
+		// The upstream endpoint returns an already-normalized SearchResponse.
+		return (await response.json()) as SearchResponse;
+	} finally {
+		clearTimeout(timeout);
+	}
+}
+
 async function fetchBraveSearch(
 	query: string,
 	tab: SearchTab,
@@ -666,6 +714,14 @@ async function fetchBraveSearch(
 ): Promise<SearchResponse> {
 	// Maps is served by Nominatim, not Brave.
 	if (tab === 'maps') return geocodePlaces(query, fetchImpl);
+
+	// No local Brave key but an upstream LibreSearch proxy configured → use it.
+	// Ad/tracker filters are applied upstream-agnostically by the caller's
+	// settings only when we query Brave directly; the upstream response is
+	// already normalized, so it's returned as-is.
+	if (!env.BRAVE_SEARCH_API_KEY?.trim() && getUpstreamConfig()) {
+		return fetchUpstreamSearch(query, tab, safesearch, offset, freshness, fetchImpl, country, count);
+	}
 
 	const searchUrl = getBraveSearchUrl(query, tab, safesearch, offset, freshness, country, count);
 	const apiKey = getBraveApiKey();

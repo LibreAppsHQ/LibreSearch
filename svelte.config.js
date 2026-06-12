@@ -1,4 +1,9 @@
-import adapter from '@sveltejs/adapter-vercel';
+import vercelAdapter from '@sveltejs/adapter-vercel';
+import nodeAdapter from '@sveltejs/adapter-node';
+
+// Self-hosted builds (Docker, bare Node) use adapter-node; Vercel stays the
+// default. Select with `ADAPTER=node pnpm build` — the Dockerfile sets this.
+const adapter = process.env.ADAPTER === 'node' ? nodeAdapter : vercelAdapter;
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {

@@ -1,0 +1,53 @@
+services:
+  libresearch:
+    # Prebuilt image, updated on every release. To build from source instead,
+    # comment `image:` out and uncomment `build: .`
+    image: ghcr.io/arcbasehq/libresearch:latest
+    # build: .
+    restart: unless-stopped
+    labels:
+      # Opt this container into Watchtower auto-updates (see watchtower below).
+      - com.centurylinklabs.watchtower.enable=true
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    environment:
+      # Cross-instance rate limiting / caching via the bundled Redis.
+      # Comment these two out to run fully in-memory (single instance is fine).
+      UPSTASH_REDIS_REST_URL: http://serverless-redis:80
+      UPSTASH_REDIS_REST_TOKEN: ${REDIS_HTTP_TOKEN:-libresearch-local-token}
+    depends_on:
+      - serverless-redis
+
+  # @upstash/redis speaks REST, not the Redis wire protocol, so we front a
+  # vanilla Redis with the upstash-compatible HTTP proxy.
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis-data:/data
+
+  serverless-redis:
+    image: hiett/serverless-redis-http:latest
+    restart: unless-stopped
+    environment:
+      SRH_MODE: env
+      SRH_TOKEN: ${REDIS_HTTP_TOKEN:-libresearch-local-token}
+      SRH_CONNECTION_STRING: redis://redis:6379
+    depends_on:
+      - redis
+
+  # Automatic updates: checks for a new libresearch image daily and restarts
+  # the container with the same config. Remove this service to update manually
+  # (docker compose pull && docker compose up -d).
+  watchtower:
+    image: containrrr/watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --label-enable --cleanup --interval 86400
+
+volumes:
+  redis-data:

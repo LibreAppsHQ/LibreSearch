@@ -32,7 +32,7 @@ export const GET: RequestHandler = async (event) => {
 	const ip = getClientKey(event);
 
 	// Verified humans bypass the limit; everyone else shares the search budget.
-	if (!isVerified(ip)) {
+	if (!(await isVerified(ip))) {
 		const rateLimit = await consumeRateLimit(ip);
 		if (!rateLimit.allowed) {
 			return json(EMPTY, {

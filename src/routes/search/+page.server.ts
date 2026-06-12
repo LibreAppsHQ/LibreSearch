@@ -39,7 +39,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 
 	// Honeypot — bots fill this field, humans don't
 	if (get('website')) {
-		flagSuspicious(ip);
+		await flagSuspicious(ip);
 		return blocked(false);
 	}
 
@@ -108,7 +108,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 	}
 
 	// Adaptive ALTCHA gate: a flagged client must solve a challenge before searching.
-	if (challengeRequired(ip)) {
+	if (await challengeRequired(ip)) {
 		return { ...blocked(true), query };
 	}
 
@@ -133,7 +133,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 
 		// Rate-limited → the client has been flagged; show a challenge instead of an error.
 		if (response.status === 429) {
-			flagSuspicious(ip);
+			await flagSuspicious(ip);
 			return { ...blocked(true), query };
 		}
 

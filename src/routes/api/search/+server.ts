@@ -17,7 +17,7 @@ export const GET: RequestHandler = async (event) => {
 	// Honeypot — silently drop requests where the bot-trap field is filled,
 	// and flag the client so it must solve a challenge to continue.
 	if (event.url.searchParams.get('website')) {
-		flagSuspicious(ip);
+		await flagSuspicious(ip);
 		return json(
 			{ query: '', tab: 'web', results: [] },
 			{ headers: { 'Cache-Control': 'no-store' }, status: 200 }
@@ -35,10 +35,10 @@ export const GET: RequestHandler = async (event) => {
 
 	// Verified humans bypass the rate limit; everyone else is throttled, and
 	// tripping the limit flags them for a challenge.
-	if (!isVerified(ip)) {
+	if (!(await isVerified(ip))) {
 		const rateLimit = await consumeRateLimit(ip);
 		if (!rateLimit.allowed) {
-			flagSuspicious(ip);
+			await flagSuspicious(ip);
 			return json(
 				{ error: 'Too many searches. Please wait a moment.' },
 				{
@@ -94,7 +94,7 @@ export const GET: RequestHandler = async (event) => {
 			headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex, nofollow' }
 		});
 	} catch (error) {
-		if (!env.BRAVE_SEARCH_API_KEY) {
+		if (!env.BRAVE_SEARCH_API_KEY && !env.UPSTREAM_SEARCH_URL) {
 			return json(
 				{ query, tab, results: [], error: 'Search backend not configured yet.' },
 				{
