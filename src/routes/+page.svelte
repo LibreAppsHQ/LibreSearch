@@ -4,7 +4,10 @@
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import BurnButton from '$lib/components/BurnButton.svelte';
 	import Logo from '$lib/components/Logo.svelte';
-	import Lazy from '$lib/components/Lazy.svelte';
+	import WaveBackground from '$lib/components/WaveBackground.svelte';
+	import Clock from '$lib/components/Clock.svelte';
+	import EcoWorldPanel from '$lib/components/EcoWorldPanel.svelte';
+	import QuickSettings from '$lib/components/QuickSettings.svelte';
 	import { settingsStore, getSelect, ecoActive } from '$lib/stores/settings';
 	import { getWallpaper } from '$lib/wallpaper';
 
@@ -13,14 +16,10 @@
 		getSelect($settingsStore, 'safe-search', 'moderate') as 'strict' | 'moderate' | 'low'
 	);
 	let hideBackgrounds = $derived(ecoActive($settingsStore, 'eco-hide-backgrounds'));
-	let showDeferred = $state(false);
 	let wallpaper = $state<string | null>(null);
 
 	onMount(() => {
 		wallpaper = getWallpaper();
-		requestAnimationFrame(() => {
-			showDeferred = true;
-		});
 	});
 
 	// Built in the script block so the inline <script> tag doesn't trip the
@@ -81,16 +80,14 @@
 	class="relative flex min-h-dvh flex-col bg-(--app-background) text-(--app-text)"
 	style={wallpaper ? `background-image: url('${wallpaper}'); background-size: cover; background-position: center;` : ''}
 >
-	{#if !hideBackgrounds && !wallpaper && showDeferred}
-		<Lazy load={() => import('$lib/components/WaveBackground.svelte')} />
+	{#if !hideBackgrounds && !wallpaper}
+		<WaveBackground />
 	{/if}
 
 	<div class="relative z-10 flex flex-1 flex-col">
-		{#if showDeferred}
-			<div class="absolute top-6 left-6 z-30">
-				<Lazy load={() => import('$lib/components/Clock.svelte')} />
-			</div>
-		{/if}
+		<div class="absolute top-6 left-6 z-30">
+			<Clock />
+		</div>
 		<div class="absolute top-6 right-6 z-30 flex items-center gap-1">
 			<BurnButton />
 			<SiteMenu />
@@ -116,15 +113,11 @@
 					/>
 				</div>
 
-				{#if showDeferred}
-					<Lazy load={() => import('$lib/components/EcoWorldPanel.svelte')} variant="home" />
-				{/if}
+				<EcoWorldPanel variant="home" />
 			</div>
 		</div>
 
-		{#if showDeferred}
-			<Lazy load={() => import('$lib/components/QuickSettings.svelte')} />
-		{/if}
+		<QuickSettings />
 
 		<!-- Footer -->
 		<footer
