@@ -4,7 +4,6 @@
 	let terms = $state<string[]>([]);
 	let strip = $state<HTMLDivElement>();
 
-	// Pull related terms from the suggest endpoint (Brave images has no related data).
 	$effect(() => {
 		const q = query.trim();
 		terms = [];
@@ -27,7 +26,7 @@
 					.filter((t) => t && t.toLowerCase() !== lower)
 					.slice(0, 14);
 			} catch {
-				/* ignore — strip just stays empty */
+				/* ignore */
 			}
 		})();
 
@@ -44,22 +43,24 @@
 </script>
 
 {#if terms.length > 0}
-	<div class="relative mb-5">
+	<div class="relative mb-4">
 		<div
 			bind:this={strip}
-			class="flex [scrollbar-width:none] gap-2.5 overflow-x-auto pr-10 [&::-webkit-scrollbar]:hidden"
+			class="flex [scrollbar-width:none] gap-2 overflow-x-auto pr-10 [&::-webkit-scrollbar]:hidden"
 		>
 			{#each terms as term (term)}
 				<a
 					href={href(term)}
-					class="shrink-0 rounded-full border border-(--app-border) bg-(--app-surface) px-4 py-2 text-sm font-medium whitespace-nowrap text-(--app-button) capitalize transition hover:bg-(--app-hover)"
+					class="group flex shrink-0 items-center gap-2 overflow-hidden rounded-lg border border-(--app-border) bg-(--app-surface) text-sm font-medium whitespace-nowrap text-(--app-button) transition hover:bg-(--app-hover)"
 				>
-					{term}
+					<div class="flex h-10 w-10 items-center justify-center bg-(--app-hover)">
+						<i class="fa-solid fa-image text-xs text-(--app-muted)"></i>
+					</div>
+					<span class="px-3 capitalize">{term}</span>
 				</a>
 			{/each}
 		</div>
 
-		<!-- Right scroll affordance -->
 		<button
 			type="button"
 			aria-label="Scroll related searches"

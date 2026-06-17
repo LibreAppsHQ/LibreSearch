@@ -12,6 +12,9 @@ const gitignorePath = path.resolve(import.meta.dirname, '.gitignore');
 
 export default defineConfig(
 	includeIgnoreFile(gitignorePath),
+	// Paraglide generates these files at build time; they use `/* eslint-disable */`
+	// which triggers unused-directive warnings. Suppress them globally.
+	{ ignores: ['src/lib/paraglide/**'] },
 	js.configs.recommended,
 	ts.configs.recommended,
 	svelte.configs.recommended,

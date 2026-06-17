@@ -6,6 +6,7 @@
 	import Logo from '$lib/components/Logo.svelte';
 	import Lazy from '$lib/components/Lazy.svelte';
 	import { settingsStore, getSelect, ecoActive } from '$lib/stores/settings';
+	import { getWallpaper } from '$lib/wallpaper';
 
 	let query = $state('');
 	let safesearch = $derived(
@@ -13,9 +14,10 @@
 	);
 	let hideBackgrounds = $derived(ecoActive($settingsStore, 'eco-hide-backgrounds'));
 	let showDeferred = $state(false);
+	let wallpaper = $state<string | null>(null);
 
 	onMount(() => {
-		// Paint logo + search bar first; load decorative UI after first frame.
+		wallpaper = getWallpaper();
 		requestAnimationFrame(() => {
 			showDeferred = true;
 		});
@@ -75,8 +77,11 @@
 	{@html jsonLd}
 </svelte:head>
 
-<main class="relative flex min-h-dvh flex-col bg-(--app-background) text-(--app-text)">
-	{#if !hideBackgrounds && showDeferred}
+<main
+	class="relative flex min-h-dvh flex-col bg-(--app-background) text-(--app-text)"
+	style={wallpaper ? `background-image: url('${wallpaper}'); background-size: cover; background-position: center;` : ''}
+>
+	{#if !hideBackgrounds && !wallpaper && showDeferred}
 		<Lazy load={() => import('$lib/components/WaveBackground.svelte')} />
 	{/if}
 
@@ -112,10 +117,7 @@
 				</div>
 
 				{#if showDeferred}
-					<Lazy
-						load={() => import('$lib/components/EcoWorldPanel.svelte')}
-						variant="home"
-					/>
+					<Lazy load={() => import('$lib/components/EcoWorldPanel.svelte')} variant="home" />
 				{/if}
 			</div>
 		</div>

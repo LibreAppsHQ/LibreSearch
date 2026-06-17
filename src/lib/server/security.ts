@@ -2,7 +2,7 @@ import type { RequestEvent } from '@sveltejs/kit';
 import { getRedis } from './kv';
 
 // Tracks which clients have tripped abuse signals (rate limit / honeypot) and
-// must solve an ALTCHA challenge before searching again — and who has recently
+// must solve a Cloudflare Turnstile challenge before searching again — and who has recently
 // passed one. Keyed by client IP, mirroring the rate limiter. Backed by Redis
 // when configured (required for correctness on serverless, where each request
 // can land on a fresh instance); otherwise an in-memory Map for local dev.

@@ -285,7 +285,7 @@
 			entries: [
 				{
 					tag: 'security',
-					text: 'Altcha proof-of-work bot protection — no CAPTCHAs, no behavioral tracking'
+					text: 'Cloudflare Turnstile bot protection — privacy-friendly, no CAPTCHA puzzles'
 				},
 				{ tag: 'security', text: 'Rate limiting per IP for the search API' },
 				{ tag: 'feature', text: 'Built-in video viewer for video search results' }

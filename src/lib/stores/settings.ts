@@ -227,10 +227,10 @@ const defaultSettings: Setting[] = [
 		id: 'ai-answers',
 		name: 'AI answers',
 		description:
-			'Show a short AI-written summary above web results. When on, your query and the top result snippets are sent to our AI provider to generate the answer. Off by default.',
+			'Show a short AI-written summary above web results. When on, your query and the top result snippets are sent to our AI provider to generate the answer.',
 		category: 'privacy',
 		type: 'toggle',
-		checked: false
+		checked: true
 	},
 	{
 		id: 'filter-ads',

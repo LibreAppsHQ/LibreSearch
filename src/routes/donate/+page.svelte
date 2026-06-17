@@ -2,7 +2,7 @@
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
-	import AltchaBadge from '$lib/components/AltchaBadge.svelte';
+	import TurnstileBadge from '$lib/components/TurnstileBadge.svelte';
 
 	const tiers = [
 		{
@@ -278,4 +278,4 @@
 </main>
 
 <SiteFooter />
-<AltchaBadge />
+<TurnstileBadge />

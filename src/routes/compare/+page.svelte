@@ -2,12 +2,7 @@
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
-	import {
-		DEFAULT_LOGO_SIZE,
-		compareSections,
-		engines,
-		markStyles
-	} from '$lib/compareData';
+	import { DEFAULT_LOGO_SIZE, compareSections, engines, markStyles } from '$lib/compareData';
 
 	const jsonLd =
 		`<script type="application/ld+json">` +

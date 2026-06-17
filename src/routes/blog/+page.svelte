@@ -23,12 +23,7 @@
 		content="Writing on privacy, security, and how LibreSearch is built — from what search engines know about you to why we use proof-of-work instead of CAPTCHAs."
 	/>
 	<link rel="canonical" href="https://libresearch.ca/blog" />
-	<link
-		rel="alternate"
-		type="application/rss+xml"
-		title="LibreSearch Blog"
-		href="/feed.xml"
-	/>
+	<link rel="alternate" type="application/rss+xml" title="LibreSearch Blog" href="/feed.xml" />
 	<meta property="og:title" content="Blog - LibreSearch" />
 	<meta
 		property="og:description"

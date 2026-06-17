@@ -5,6 +5,15 @@ import * as Sentry from '@sentry/sveltekit';
 import { sentryHandle, handleErrorWithSentry } from '@sentry/sveltekit';
 import { getUser } from '$lib/server/appwrite';
 import { getPlan } from '$lib/server/plan';
+import { logger, createLogger } from '$lib/server/logger';
+import {
+	overwriteGetLocale,
+	overwriteSetLocale,
+	extractLocaleFromRequest,
+	locales,
+	baseLocale,
+	cookieName as localeCookieName
+} from '$lib/paraglide/runtime.js';
 
 // Sentry only runs when a DSN is configured (the hosted libresearch.ca deploy).
 // Self-hosted instances leave PUBLIC_SENTRY_DSN unset → no telemetry at all.
@@ -52,7 +61,9 @@ const SECURITY_HEADERS: Record<string, string> = {
 // the corresponding service is configured — a self-hosted instance with no
 // analytics/Sentry/Appwrite gets a strictly first-party policy.
 const onVercel = Boolean(process.env.VERCEL);
-const SCRIPT_HOSTS = onVercel ? ' https://va.vercel-scripts.com https://cloud.umami.is' : '';
+const SCRIPT_HOSTS = onVercel
+	? ' https://va.vercel-scripts.com https://cloud.umami.is https://challenges.cloudflare.com'
+	: ' https://challenges.cloudflare.com';
 const CONNECT_HOSTS = [
 	'https://api.web3forms.com',
 	...(onVercel ? ['https://vitals.vercel-insights.com', 'https://cloud.umami.is'] : []),
@@ -74,7 +85,7 @@ function buildCsp(nonce: string, secure: boolean): string {
 		// *.cloud.appwrite.io is the Appwrite Cloud API (auth + databases).
 		`connect-src 'self' ${CONNECT_HOSTS}`,
 		// Only the embeds we actually render: privacy YouTube, Vimeo player, OSM maps.
-		'frame-src https://www.youtube-nocookie.com https://player.vimeo.com https://www.openstreetmap.org',
+		'frame-src https://www.youtube-nocookie.com https://player.vimeo.com https://www.openstreetmap.org https://challenges.cloudflare.com',
 		"worker-src 'self' blob:",
 		"object-src 'none'",
 		"base-uri 'self'",
@@ -98,6 +109,35 @@ const authHandle: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
+// Detect the user's locale from cookie or Accept-Language header using
+// paraglide-js strategies, then set it for the request duration on the
+// server and attach the resolved locale to event.locals.
+const i18nHandle: Handle = async ({ event, resolve }) => {
+	const locale = extractLocaleFromRequest(event.request);
+	const validLocale: string = (locales as readonly string[]).includes(locale) ? locale : baseLocale;
+	event.locals.locale = validLocale;
+
+	let currentLocale = validLocale;
+	overwriteGetLocale(() => currentLocale as typeof baseLocale);
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	(overwriteSetLocale as any)((newLocale: string) => {
+		currentLocale = (locales as readonly string[]).includes(newLocale) ? newLocale : currentLocale;
+	});
+
+	const response = await resolve(event);
+
+	const proto = event.request.headers.get('x-forwarded-proto');
+	const secureCookie = proto ? proto === 'https' : event.url.protocol === 'https:';
+	const cookieValue = `${localeCookieName}=${currentLocale}; Path=/; Max-Age=${60 * 60 * 24 * 400}; SameSite=Lax${secureCookie ? '; Secure' : ''}`;
+	if (response.headers.has('set-cookie')) {
+		response.headers.append('set-cookie', cookieValue);
+	} else {
+		response.headers.set('set-cookie', cookieValue);
+	}
+
+	return response;
+};
+
 const securityHandle: Handle = async ({ event, resolve }) => {
 	// Browsers and crawlers still probe /favicon.ico even when the page declares
 	// an SVG icon. We don't ship a .ico, so without this we'd 500/404 on every
@@ -112,8 +152,7 @@ const securityHandle: Handle = async ({ event, resolve }) => {
 	const nonce = crypto.randomBytes(16).toString('base64');
 
 	const response = await resolve(event, {
-		transformPageChunk: ({ html }) =>
-			html.replace(INLINE_SCRIPT_RE, `<script nonce="${nonce}"$1>`)
+		transformPageChunk: ({ html }) => html.replace(INLINE_SCRIPT_RE, `<script nonce="${nonce}"$1>`)
 	});
 
 	// Trust the proxy's protocol header if present (TLS usually terminates there).
@@ -139,8 +178,53 @@ const securityHandle: Handle = async ({ event, resolve }) => {
 	return response;
 };
 
-// Sentry's request handler runs first, then our security/header handler.
-export const handle: Handle = sequence(sentryHandle(), authHandle, securityHandle);
+const requestLogger = createLogger('http');
 
-// Reports unhandled server-side errors to Sentry.
-export const handleError = handleErrorWithSentry();
+const logHandle: Handle = async ({ event, resolve }) => {
+	const start = Date.now();
+	const response = await resolve(event);
+	const duration = Date.now() - start;
+	const url = event.url.pathname + event.url.search;
+
+	if (response.status >= 500) {
+		requestLogger.error(
+			{ method: event.request.method, url, status: response.status, duration },
+			'request error'
+		);
+	} else if (response.status >= 400 && response.status < 500) {
+		requestLogger.warn(
+			{ method: event.request.method, url, status: response.status, duration },
+			'request warn'
+		);
+	} else {
+		requestLogger.info(
+			{ method: event.request.method, url, status: response.status, duration },
+			'request'
+		);
+	}
+
+	return response;
+};
+
+// Sentry's request handler runs first, then auth, locale detection, logging, and security headers.
+export const handle: Handle = sequence(
+	sentryHandle(),
+	authHandle,
+	i18nHandle,
+	logHandle,
+	securityHandle
+);
+
+// Reports unhandled server-side errors to Sentry and structured logs.
+const sentryErrorHandler = handleErrorWithSentry();
+
+export const handleError = (async (input: {
+	error: unknown;
+	event: import('@sveltejs/kit').RequestEvent;
+	status: number;
+	message: string;
+}) => {
+	const err = input.error instanceof Error ? input.error : new Error(String(input.error));
+	logger.error({ err, url: input.event.url.pathname }, 'unhandled server error');
+	return sentryErrorHandler(input);
+}) satisfies import('@sveltejs/kit').HandleServerError;

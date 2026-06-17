@@ -1,9 +1,5 @@
 import { redirect, type RequestHandler } from '@sveltejs/kit';
-import {
-	SESSION_COOKIE,
-	clearSessionCookie,
-	createSessionClient
-} from '$lib/server/appwrite';
+import { SESSION_COOKIE, clearSessionCookie, createSessionClient } from '$lib/server/appwrite';
 
 // POST /logout — delete the Appwrite session and clear the cookie.
 export const POST: RequestHandler = async ({ cookies }) => {

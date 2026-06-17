@@ -91,22 +91,22 @@ export const posts: Post[] = [
 <p>In other words, the "are you human" check is itself a tracking system. It works precisely because it has watched you on thousands of other sites. For a product whose entire premise is <em>not</em> tracking you, embedding one would be a contradiction.</p>
 
 <h2>Proof-of-work, briefly</h2>
-<p>Instead we use <strong>Altcha</strong>, a proof-of-work challenge. The idea is simple:</p>
+<p>Instead we use <strong>Cloudflare Turnstile</strong>, a privacy-respecting challenge. The idea is simple:</p>
 <ol>
-<li>Our server hands your browser a small math puzzle.</li>
-<li>Your browser spends a tiny amount of CPU time solving it — typically imperceptible to you.</li>
-<li>It returns the answer, which our server can verify instantly.</li>
+<li>Your browser loads a lightweight challenge from Cloudflare.</li>
+<li>It runs automatically — no clicks, no puzzles, no input required.</li>
+<li>If the challenge passes, you continue to your search.</li>
 </ol>
-<p>For one human doing one search, the cost is a few milliseconds you will never notice. For a bot trying to do this millions of times per hour, that cost stacks up into a real, economic wall. The asymmetry does the defending.</p>
+<p>For a human, this takes a fraction of a second. For bots, Turnstile's machine learning models block automated traffic before it reaches our servers.</p>
 
 <h2>What it does <em>not</em> do</h2>
 <p>This is the part that matters for privacy:</p>
 <ul>
-<li><strong>No third-party cookies.</strong> The challenge is between your browser and us.</li>
-<li><strong>No behavioral tracking.</strong> We do not score your mouse, your typing, or your reputation.</li>
-<li><strong>No cross-site identity.</strong> Solving the puzzle tells us nothing about who you are.</li>
+<li><strong>No tracking across sites.</strong> Turnstile does not use browsing history, cookies, or cross-site identity.</li>
+<li><strong>No behavioral profiling.</strong> We do not score your mouse, your typing, or your reputation.</li>
+<li><strong>No personal data collection.</strong> The challenge only confirms you're human, nothing more.</li>
 </ul>
-<p>You prove you spent a little work, not that you are a particular person. Bots get priced out; humans get left alone. That trade is the whole point.</p>
+<p>You pass a quick check, not a background investigation. Bots get blocked; humans get through. That trade is the whole point.</p>
 `
 	},
 	{

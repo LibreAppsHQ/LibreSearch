@@ -2,8 +2,10 @@
 	import type { Component } from 'svelte';
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	let { load, ...rest }: { load: () => Promise<{ default: Component<any> }> } & Record<string, unknown> =
-		$props();
+	let {
+		load,
+		...rest
+	}: { load: () => Promise<{ default: Component<any> }> } & Record<string, unknown> = $props();
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	let Comp = $state<Component<any> | null>(null);
@@ -12,6 +14,8 @@
 		let cancelled = false;
 		load().then((mod) => {
 			if (!cancelled) Comp = mod.default;
+		}).catch((err) => {
+			console.error('Lazy component load failed:', err);
 		});
 		return () => {
 			cancelled = true;

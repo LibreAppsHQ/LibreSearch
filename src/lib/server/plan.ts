@@ -30,13 +30,10 @@ export async function getPlan(userId: string): Promise<Plan> {
 export async function ensureProfile(userId: string): Promise<void> {
 	try {
 		const { databases } = createAdminClient();
-		await databases.createDocument(
-			DB_ID,
-			PROFILES,
-			userId,
-			{ userId, plan: 'free' },
-			[Permission.read(Role.user(userId)), Permission.update(Role.user(userId))]
-		);
+		await databases.createDocument(DB_ID, PROFILES, userId, { userId, plan: 'free' }, [
+			Permission.read(Role.user(userId)),
+			Permission.update(Role.user(userId))
+		]);
 	} catch {
 		// Already exists (409) or collection unreachable — non-fatal.
 	}

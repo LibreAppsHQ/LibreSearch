@@ -16,6 +16,11 @@ const config = {
 		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
 		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
 		adapter: adapter(),
+		csrf: {
+			// Production behind reverse proxy (nginx, Cloudflare) causes origin
+			// mismatch. POST search form has no sensitive mutation, so disable.
+			checkOrigin: false
+		},
 		version: {
 			// Poll for new deploys every 5 min. When a new version is detected the
 			// `updated` store flips, letting us force a full page reload on the next

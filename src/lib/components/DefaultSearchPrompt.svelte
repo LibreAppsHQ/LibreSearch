@@ -1,11 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
-	import {
-		detectBrowser,
-		getDefaultSearchSteps,
-		type BrowserKey
-	} from '$lib/defaultSearch';
+	import { detectBrowser, getDefaultSearchSteps, type BrowserKey } from '$lib/defaultSearch';
 
 	let {
 		showWhen = false,
@@ -129,9 +125,7 @@
 		onclose={() => (showModal = false)}
 	>
 		<div class="border-b border-(--app-border) px-5 py-4">
-			<h2 id="default-search-title" class="text-lg font-semibold">
-				Make LibreSearch your default
-			</h2>
+			<h2 id="default-search-title" class="text-lg font-semibold">Make LibreSearch your default</h2>
 			<p class="mt-1 text-sm text-(--app-muted)">
 				Steps for {steps.name}
 			</p>

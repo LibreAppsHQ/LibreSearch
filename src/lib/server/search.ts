@@ -1,5 +1,7 @@
 import { env } from '$env/dynamic/private';
 
+import { createLogger } from './logger';
+
 import {
 	SEARCH_QUERY_ERROR,
 	normalizeSearchQuery,
@@ -422,12 +424,27 @@ function normalizePlaceResult(raw: unknown): PlaceResult | null {
  * Geocode a free-text query into places via OpenStreetMap's Nominatim service.
  * Brave has no maps endpoint, so the Maps tab is served from here instead.
  */
-async function geocodePlaces(query: string, fetchImpl: typeof fetch): Promise<SearchResponse> {
+async function geocodePlaces(
+	query: string,
+	fetchImpl: typeof fetch,
+	country?: string
+): Promise<SearchResponse> {
 	const url = new URL(NOMINATIM_ENDPOINT);
 	url.searchParams.set('q', query);
 	url.searchParams.set('format', 'jsonv2');
 	url.searchParams.set('limit', '10');
 	url.searchParams.set('addressdetails', '0');
+	// Bias results toward the user's country when available. The country code
+	// is derived from proxy headers (e.g. x-vercel-ip-country) — the user's IP
+	// is never sent to Nominatim. A broad country bias still lets cross-border
+	// queries work while preventing "restaurants" from showing results on a
+	// different continent.
+	if (country) {
+		url.searchParams.set('countrycodes', country.toLowerCase());
+		createLogger('maps').info({ query, country }, 'geocoding with country bias');
+	} else {
+		createLogger('maps').info({ query }, 'geocoding without country bias');
+	}
 
 	const controller = new AbortController();
 	const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
@@ -712,15 +729,24 @@ async function fetchBraveSearch(
 	blockTrackers?: boolean,
 	count?: number
 ): Promise<SearchResponse> {
-	// Maps is served by Nominatim, not Brave.
-	if (tab === 'maps') return geocodePlaces(query, fetchImpl);
+	// Maps is served by Nominatim, not Brave. Bias by country when known.
+	if (tab === 'maps') return geocodePlaces(query, fetchImpl, country);
 
 	// No local Brave key but an upstream LibreSearch proxy configured → use it.
 	// Ad/tracker filters are applied upstream-agnostically by the caller's
 	// settings only when we query Brave directly; the upstream response is
 	// already normalized, so it's returned as-is.
 	if (!env.BRAVE_SEARCH_API_KEY?.trim() && getUpstreamConfig()) {
-		return fetchUpstreamSearch(query, tab, safesearch, offset, freshness, fetchImpl, country, count);
+		return fetchUpstreamSearch(
+			query,
+			tab,
+			safesearch,
+			offset,
+			freshness,
+			fetchImpl,
+			country,
+			count
+		);
 	}
 
 	const searchUrl = getBraveSearchUrl(query, tab, safesearch, offset, freshness, country, count);
@@ -876,6 +902,10 @@ export async function searchBrave(
 		useCache?: boolean;
 		count?: number;
 		waitUntil?: (promise: Promise<unknown>) => void;
+		/** Country derived from the client IP via proxy headers (e.g. "US", "DE").
+		 *  Only used for the Maps tab to bias Nominatim results geographically.
+		 *  The user's IP is never forwarded — only the ISO country code is used. */
+		ipCountry?: string;
 	} = {},
 	fetchImpl: typeof fetch = fetch
 ): Promise<SearchResponse> {
@@ -902,7 +932,9 @@ export async function searchBrave(
 			offset,
 			freshness,
 			fetchImpl,
-			country,
+			// For maps: prefer IP-derived country so Nominatim returns local results.
+			// For other tabs: use the user's chosen region setting.
+			tab === 'maps' ? options.ipCountry || country : country,
 			filterAds,
 			blockAds,
 			blockTrackers,

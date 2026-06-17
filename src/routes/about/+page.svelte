@@ -2,7 +2,7 @@
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
-	import AltchaBadge from '$lib/components/AltchaBadge.svelte';
+	import TurnstileBadge from '$lib/components/TurnstileBadge.svelte';
 	import cloudsBg from '$lib/assets/clouds.jpg';
 
 	const jsonLd =
@@ -59,9 +59,7 @@
 					<a href="/" class="justify-self-start">
 						<Logo class="h-10 w-25" />
 					</a>
-					<p class="justify-self-center text-2xl font-bold tracking-tight text-white">
-						About Us
-					</p>
+					<p class="justify-self-center text-2xl font-bold tracking-tight text-white">About Us</p>
 					<SiteMenu class="justify-self-end text-(--app-muted) hover:text-(--app-secondary)" />
 				</div>
 			</div>
@@ -84,8 +82,8 @@
 			</h1>
 
 			<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-white/90">
-				LibreSearch returns results without logging queries, building profiles, or serving ads — with
-				optional eco tools to lighten your digital footprint and support the planet.
+				LibreSearch returns results without logging queries, building profiles, or serving ads —
+				with optional eco tools to lighten your digital footprint and support the planet.
 			</p>
 
 			<div class="mt-10 flex flex-wrap items-center justify-center gap-3">
@@ -178,17 +176,20 @@
 		<div class="mx-auto flex max-w-6xl flex-col items-center gap-12 md:flex-row md:justify-between">
 			<div class="max-w-xl text-center md:text-left">
 				<p class="text-xs font-semibold tracking-widest text-emerald-200/80 uppercase">Eco</p>
-				<h2 class="mt-3 text-5xl leading-tight font-bold sm:text-6xl">Lighter searches, bigger impact</h2>
+				<h2 class="mt-3 text-5xl leading-tight font-bold sm:text-6xl">
+					Lighter searches, bigger impact
+				</h2>
 
 				<p class="mt-6 text-lg text-white/85">
 					Every query uses energy somewhere on the internet. LibreSearch lets you cut the weight of
-					each search — fewer requests, leaner results, and tools that nudge the web toward something
-					greener.
+					each search — fewer requests, leaner results, and tools that nudge the web toward
+					something greener.
 				</p>
 
 				<p class="mt-4 text-lg text-white/85">
 					Turn on Eco mode in settings to hide decorative backgrounds, skip extra network calls, cap
-					results, and surface links to conservation nonprofits — all stored locally in your browser.
+					results, and surface links to conservation nonprofits — all stored locally in your
+					browser.
 				</p>
 
 				<a
@@ -314,4 +315,4 @@
 </main>
 
 <SiteFooter />
-<AltchaBadge />
+<TurnstileBadge />

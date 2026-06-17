@@ -44,3 +44,19 @@ if (typeof window !== 'undefined') {
 
 // Reports unhandled client-side errors to Sentry.
 export const handleError = handleErrorWithSentry();
+
+// Register the service worker for offline caching and PWA installability.
+// Skipped during dev (HMR + SW don't mix well) and on self-hosted instances
+// where `PUBLIC_SENTRY_DSN` is absent (we use that as a hosted-deploy signal).
+if (typeof window !== 'undefined' && !import.meta.env.DEV) {
+	const hostedDeploy = /(^|\.)libresearch\.ca$/.test(window.location.hostname);
+	const shouldRegister = hostedDeploy || Boolean(import.meta.env.PUBLIC_SENTRY_DSN);
+
+	if (shouldRegister && 'serviceWorker' in navigator) {
+		window.addEventListener('load', () => {
+			navigator.serviceWorker.register('/service-worker.js', { scope: '/' }).catch(() => {
+				// Fail silently — offline support is a progressive enhancement.
+			});
+		});
+	}
+}

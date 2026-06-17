@@ -25,6 +25,11 @@ export default defineConfig(({ mode }) => {
 		],
 		// Pre-bundle Sentry so it isn't discovered late (avoids a dev re-optimize
 		// + full reload, which surfaces as 504 "Outdated Optimize Dep").
-		optimizeDeps: { include: ['@sentry/sveltekit'] }
+		optimizeDeps: { include: ['@sentry/sveltekit'] },
+		server: {
+			fs: {
+				allow: ['.']
+			}
+		}
 	};
 });

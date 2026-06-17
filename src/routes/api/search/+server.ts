@@ -72,6 +72,22 @@ export const GET: RequestHandler = async (event) => {
 	const maxCount = tab === 'images' ? 100 : 20;
 	const count = isNaN(rawCount) ? 10 : Math.min(Math.max(rawCount, 1), maxCount);
 
+	// Country code from the edge proxy, if available. Used only for the Maps
+	// tab to bias Nominatim results toward the user's location. The IP itself
+	// is never forwarded — only the ISO-3166-1 alpha-2 country code.
+	const ipCountry = (event.request.headers.get('x-vercel-ip-country')
+		|| event.request.headers.get('cf-ipcountry')
+		|| event.request.headers.get('x-geo-country')
+		|| event.url.searchParams.get('ipcountry')
+		|| '')?.trim() || undefined;
+
+	// NOT using Accept-Language for country detection — locale ≠ location.
+	// A Canadian user with browser set to en-GB would get UK results.
+	// Falls back to the user's region setting (country param) in searchBrave.
+
+	// Validate: must look like an ISO country code (2-3 uppercase letters).
+	const validIpCountry = ipCountry && /^[A-Z]{2,3}$/.test(ipCountry) ? ipCountry : undefined;
+
 	try {
 		const payload = await searchBrave(
 			query,
@@ -86,7 +102,8 @@ export const GET: RequestHandler = async (event) => {
 				blockTrackers,
 				useCache,
 				count,
-				waitUntil: event.platform?.context?.waitUntil
+				waitUntil: event.platform?.context?.waitUntil,
+				ipCountry: validIpCountry
 			},
 			event.fetch
 		);

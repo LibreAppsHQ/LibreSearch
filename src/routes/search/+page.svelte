@@ -11,7 +11,7 @@
 	import CustomSelect from '$lib/components/CustomSelect.svelte';
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import BurnButton from '$lib/components/BurnButton.svelte';
-	import AltchaChallenge from '$lib/components/AltchaChallenge.svelte';
+	import TurnstileChallenge from '$lib/components/TurnstileChallenge.svelte';
 	import Lazy from '$lib/components/Lazy.svelte';
 	import { settingsStore, getToggle, getSelect, ecoActive } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
@@ -75,10 +75,10 @@
 	const MAX_PAGE = 10; // Brave caps offset at 9 → page 10 is the last reachable page
 	let currentPage = $derived(data.page ?? 1);
 	let showInfoboxPanel = $derived(Boolean(data.infobox) && data.tab === 'web' && currentPage === 1);
-	let canGoNext = $derived(hasMore && currentPage < MAX_PAGE);
+	let canGoNext = $derived(currentPage < MAX_PAGE);
 	let pageNumbers = $derived.by(() => {
 		const start = Math.max(1, currentPage - 2);
-		const end = Math.min(MAX_PAGE, hasMore ? start + 4 : currentPage);
+		const end = Math.min(MAX_PAGE, start + 4);
 		const pages: number[] = [];
 		for (let i = start; i <= end; i++) pages.push(i);
 		return pages;
@@ -93,6 +93,11 @@
 	);
 	// Opt-in: AI answers are off unless the user enables them in settings.
 	let aiAnswers = $derived(getToggle($settingsStore, 'ai-answers', false) && !skipRichAnswers);
+	let resultsContainerClass = $derived(
+		data.tab === 'images'
+			? 'mx-auto w-full px-2 pt-5 pb-16'
+			: 'mx-auto w-full max-w-[1200px] px-4 pt-5 pb-16 sm:px-6 sm:pr-6'
+	);
 
 	// Show skeletons while a search navigation is in flight so stale results
 	// aren't left frozen on screen during the server round-trip.
@@ -283,10 +288,10 @@
 	<!-- Body -->
 	{#if data.challengeRequired}
 		<div class="mx-auto w-full max-w-[1200px] px-4 pt-5 pb-16 sm:px-6">
-			<AltchaChallenge />
+			<TurnstileChallenge />
 		</div>
 	{:else}
-		<div class="mx-auto w-full max-w-[1200px] px-4 pt-5 pb-16 sm:px-6 sm:pr-6">
+		<div class={resultsContainerClass}>
 			<!-- Filters row -->
 			{#if data.query && showFilters}
 				<div class="mb-5 flex flex-wrap items-center gap-3">
@@ -385,27 +390,21 @@
 					{#if loading}
 						<SearchSkeleton tab={loadingTab} />
 					{:else if data.tab === 'web'}
-						{#if currentPage === 1}
-							<Lazy
-								load={() => import('$lib/components/EcoWorldPanel.svelte')}
-								variant="search"
-							/>
-						{/if}
-						{#if instantAnswers && currentPage === 1}
-							<Lazy
-								load={() => import('$lib/components/StockAnswer.svelte')}
-								query={data.query}
-							/>
-							<Lazy
-								load={() => import('$lib/components/InstantAnswer.svelte')}
-								query={data.query}
-							/>
-						{/if}
 						{#if aiAnswers && data.query && currentPage === 1}
 							<Lazy
 								load={() => import('$lib/components/AiAnswer.svelte')}
 								query={data.query}
 								tab={data.tab}
+							/>
+						{/if}
+						{#if currentPage === 1}
+							<Lazy load={() => import('$lib/components/EcoWorldPanel.svelte')} variant="search" />
+						{/if}
+						{#if instantAnswers && currentPage === 1}
+							<Lazy load={() => import('$lib/components/StockAnswer.svelte')} query={data.query} />
+							<Lazy
+								load={() => import('$lib/components/InstantAnswer.svelte')}
+								query={data.query}
 							/>
 						{/if}
 						{#if allResults.length > 0}
@@ -424,10 +423,7 @@
 							<ol class="space-y-2">
 								{#each data.newsResults as result (result.url)}
 									<li>
-										<Lazy
-											load={() => import('$lib/components/NewsResultItem.svelte')}
-											{result}
-										/>
+										<Lazy load={() => import('$lib/components/NewsResultItem.svelte')} {result} />
 									</li>
 								{/each}
 							</ol>
@@ -452,10 +448,7 @@
 						{/if}
 					{:else if data.tab === 'images'}
 						{#if data.imageResults && data.imageResults.length > 0}
-							<Lazy
-								load={() => import('$lib/components/ImageRelated.svelte')}
-								query={data.query}
-							/>
+							<Lazy load={() => import('$lib/components/ImageRelated.svelte')} query={data.query} />
 							<Lazy
 								load={() => import('$lib/components/ImageGrid.svelte')}
 								images={data.imageResults}
@@ -488,10 +481,7 @@
 				<!-- Right column: knowledge panel -->
 				{#if showInfoboxPanel && !loading}
 					<div class="hidden w-[380px] shrink-0 lg:block">
-						<Lazy
-							load={() => import('$lib/components/Infobox.svelte')}
-							infobox={data.infobox}
-						/>
+						<Lazy load={() => import('$lib/components/Infobox.svelte')} infobox={data.infobox} />
 						<div class="mt-2 flex justify-end">
 							<button
 								type="button"
@@ -523,24 +513,24 @@
 	/>
 {/if}
 
-<footer class="bg-[#1b1e21] px-6 py-9">
+<footer class="border-t border-(--app-border) bg-(--app-background) px-6 py-9">
 	<div class="mx-auto grid w-full max-w-7xl grid-cols-3 items-center gap-6">
 		<!-- Left: logo + copyright -->
 		<div class="flex shrink-0 flex-col gap-1">
 			<a href="/" aria-label="LibreSearch home">
 				<Logo class="h-14 w-auto" />
 			</a>
-			<p class="text-xs text-white/90">
+			<p class="text-xs text-(--app-muted)">
 				&copy; {new Date().getFullYear()} LibreSearch. All rights reserved.
 			</p>
 		</div>
 
 		<!-- Center: nav links -->
-		<nav class="text-md flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-white/90">
-			<a href="/privacy" class="transition hover:text-(--app-button-hover)">Privacy Policy</a>
-			<a href="/about" class="transition hover:text-(--app-button-hover)">About Us</a>
-			<a href="/press" class="transition hover:text-(--app-button-hover)">Press</a>
-			<a href="/blog" class="transition hover:text-(--app-button-hover)">Blog</a>
+		<nav class="text-md flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-(--app-text)">
+			<a href="/privacy" class="transition hover:text-(--app-accent)">Privacy Policy</a>
+			<a href="/about" class="transition hover:text-(--app-accent)">About Us</a>
+			<a href="/press" class="transition hover:text-(--app-accent)">Press</a>
+			<a href="/blog" class="transition hover:text-(--app-accent)">Blog</a>
 		</nav>
 
 		<!-- Right: social icons -->
@@ -550,7 +540,7 @@
 				target="_blank"
 				rel="noopener noreferrer"
 				aria-label="GitHub"
-				class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-white transition hover:bg-indigo-500"
+				class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-(--app-accent) text-[#111] transition hover:opacity-80"
 			>
 				<i class="fa-brands fa-github text-sm"></i>
 			</a>
@@ -559,7 +549,7 @@
 				target="_blank"
 				rel="me noopener noreferrer"
 				aria-label="Mastodon"
-				class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-white transition hover:bg-indigo-500"
+				class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-(--app-accent) text-[#111] transition hover:opacity-80"
 			>
 				<i class="fa-brands fa-mastodon text-sm"></i>
 			</a>
@@ -568,7 +558,7 @@
 				target="_blank"
 				rel="me noopener noreferrer"
 				aria-label="X"
-				class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-white transition hover:bg-indigo-500"
+				class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-(--app-accent) text-[#111] transition hover:opacity-80"
 			>
 				<i class="fa-brands fa-x-twitter text-sm"></i>
 			</a>

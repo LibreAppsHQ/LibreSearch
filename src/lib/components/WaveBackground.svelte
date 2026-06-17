@@ -42,12 +42,14 @@
 	}
 
 	:global([data-theme='light']) .waves-top,
-	:global([data-theme='sand']) .waves-top {
+	:global([data-theme='sand']) .waves-top,
+	:global([data-theme='sakura']) .waves-top {
 		background-image: url('/waves-bg-top-light.svg');
 	}
 
 	:global([data-theme='light']) .waves-bottom,
-	:global([data-theme='sand']) .waves-bottom {
+	:global([data-theme='sand']) .waves-bottom,
+	:global([data-theme='sakura']) .waves-bottom {
 		background-image: url('/waves-bg-bottom-light.svg');
 	}
 </style>

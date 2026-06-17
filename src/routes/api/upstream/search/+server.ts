@@ -71,7 +71,10 @@ export const GET: RequestHandler = async (event) => {
 
 	const query = normalizeSearchQuery(event.url.searchParams.get('q') ?? '');
 	if (!query) {
-		return json({ error: SEARCH_QUERY_ERROR }, { headers: { 'Cache-Control': 'no-store' }, status: 400 });
+		return json(
+			{ error: SEARCH_QUERY_ERROR },
+			{ headers: { 'Cache-Control': 'no-store' }, status: 400 }
+		);
 	}
 
 	const rawSafe = event.url.searchParams.get('safe');

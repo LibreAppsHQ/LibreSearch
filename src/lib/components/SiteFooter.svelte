@@ -22,11 +22,14 @@
 					<p class="text-xs font-semibold tracking-widest text-(--app-muted) uppercase">Search</p>
 					<ul class="space-y-2 text-sm">
 						<li>
-							<a href="/" class="text-(--app-muted) transition hover:text-(--app-button-hover)">Home</a>
+							<a href="/" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
+								>Home</a
+							>
 						</li>
 						<li>
-							<a href="/search?q=news" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>News</a
+							<a
+								href="/search?q=news"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">News</a
 							>
 						</li>
 						<li>
@@ -42,13 +45,15 @@
 							>
 						</li>
 						<li>
-							<a href="/syntax" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>Syntax</a
+							<a
+								href="/syntax"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Syntax</a
 							>
 						</li>
 						<li>
-							<a href="/compare" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>Compare</a
+							<a
+								href="/compare"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Compare</a
 							>
 						</li>
 						<li>
@@ -69,13 +74,15 @@
 							>
 						</li>
 						<li>
-							<a href="/donate" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>Donate</a
+							<a
+								href="/donate"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Donate</a
 							>
 						</li>
 						<li>
-							<a href="/settings" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>Settings</a
+							<a
+								href="/settings"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Settings</a
 							>
 						</li>
 						<li>
@@ -85,16 +92,20 @@
 							>
 						</li>
 						<li>
-							<a href="/extension" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>Extension</a
+							<a
+								href="/extension"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Extension</a
 							>
 						</li>
 						<li>
-							<a href="/blog" class="text-(--app-muted) transition hover:text-(--app-button-hover)">Blog</a>
+							<a href="/blog" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
+								>Blog</a
+							>
 						</li>
 						<li>
-							<a href="/changelog" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>Changelog</a
+							<a
+								href="/changelog"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Changelog</a
 							>
 						</li>
 					</ul>
@@ -108,13 +119,15 @@
 							>
 						</li>
 						<li>
-							<a href="/enterprise" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>Enterprise</a
+							<a
+								href="/enterprise"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Enterprise</a
 							>
 						</li>
 						<li>
-							<a href="/contact" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>Contact</a
+							<a
+								href="/contact"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Contact</a
 							>
 						</li>
 						<li>
@@ -129,8 +142,9 @@
 							>
 						</li>
 						<li>
-							<a href="/design" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>Design</a
+							<a
+								href="/design"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Design</a
 							>
 						</li>
 					</ul>
@@ -139,8 +153,9 @@
 					<p class="text-xs font-semibold tracking-widest text-(--app-muted) uppercase">Trust</p>
 					<ul class="space-y-2 text-sm">
 						<li>
-							<a href="/privacy" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>Privacy</a
+							<a
+								href="/privacy"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Privacy</a
 							>
 						</li>
 						<li>
@@ -149,18 +164,22 @@
 							>
 						</li>
 						<li>
-							<a href="/transparency" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
+							<a
+								href="/transparency"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)"
 								>Transparency</a
 							>
 						</li>
 						<li>
-							<a href="/security" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>Security</a
+							<a
+								href="/security"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Security</a
 							>
 						</li>
 						<li>
-							<a href="/status" class="text-(--app-muted) transition hover:text-(--app-button-hover)"
-								>Status</a
+							<a
+								href="/status"
+								class="text-(--app-muted) transition hover:text-(--app-button-hover)">Status</a
 							>
 						</li>
 					</ul>

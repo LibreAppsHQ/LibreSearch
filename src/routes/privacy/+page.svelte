@@ -2,7 +2,7 @@
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
-	import AltchaBadge from '$lib/components/AltchaBadge.svelte';
+	import TurnstileBadge from '$lib/components/TurnstileBadge.svelte';
 
 	const lastUpdated = 'June 2026';
 
@@ -177,8 +177,8 @@
 						class="text-(--app-accent) hover:underline">Umami</a
 					>
 					— cookie-free pageview counts with no cross-site tracking or personal profiles. Umami is not
-					loaded when eco mode is enabled. For performance we use Vercel Speed Insights (Core Web
-					Vitals only).
+					loaded when eco mode is enabled. For performance we use Vercel Speed Insights (Core Web Vitals
+					only).
 				</p>
 				<p class="mt-3 text-sm leading-7 text-(--app-muted)">
 					For crash diagnostics we use <a
@@ -224,4 +224,4 @@
 </main>
 
 <SiteFooter />
-<AltchaBadge />
+<TurnstileBadge />

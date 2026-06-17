@@ -3,7 +3,7 @@
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
-	import AltchaWidget from '$lib/components/AltchaWidget.svelte';
+	import TurnstileWidget from '$lib/components/TurnstileWidget.svelte';
 
 	// Where to reach us directly when the form isn't an option.
 	const contactEmail = 'info@libresearch.ca';
@@ -32,7 +32,7 @@
 	let botcheck = $state('');
 	// ALTCHA proof-of-work captcha must be solved before the form will send.
 	let captchaVerified = $state(false);
-	let altcha = $state<{ reset: () => void } | null>(null);
+	let turnstile = $state<{ reset: () => void } | null>(null);
 	let submitting = $state(false);
 	let result = $state<{ type: 'success' | 'error'; msg: string } | null>(null);
 
@@ -85,7 +85,7 @@
 				subject = 'General';
 				message = '';
 				captchaVerified = false;
-				altcha?.reset();
+				turnstile?.reset();
 			} else {
 				result = {
 					type: 'error',
@@ -231,7 +231,7 @@
 
 					<!-- Spam protection: self-hosted proof-of-work captcha (no third party). -->
 					<div class="mt-5">
-						<AltchaWidget bind:this={altcha} bind:verified={captchaVerified} />
+						<TurnstileWidget bind:this={turnstile} bind:verified={captchaVerified} />
 					</div>
 
 					{#if result}

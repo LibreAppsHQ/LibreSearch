@@ -1,0 +1,23 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"search_placeholder": "Search the web...",
+	"search_button": "Search",
+	"nav_home": "Home",
+	"nav_about": "About",
+	"nav_settings": "Settings",
+	"nav_privacy": "Privacy",
+	"nav_donate": "Donate",
+	"nav_blog": "Blog",
+	"nav_contact": "Contact",
+	"search_tab_web": "Web",
+	"search_tab_images": "Images",
+	"search_tab_videos": "Videos",
+	"search_tab_news": "News",
+	"search_tab_maps": "Maps",
+	"search_tab_shopping": "Shopping",
+	"settings_title": "Settings",
+	"settings_theme": "Theme",
+	"settings_safesearch": "SafeSearch",
+	"settings_region": "Region",
+	"footer_tagline": "Private search. No tracking. No profiles."
+}

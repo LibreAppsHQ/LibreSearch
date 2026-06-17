@@ -11,7 +11,7 @@ import { getRedis } from './kv';
  * no answer when this returns null.
  */
 const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
-const GROQ_MODEL = env.GROQ_MODEL?.trim() || 'llama-3.3-70b-versatile';
+const GROQ_MODEL = env.GROQ_MODEL?.trim() || 'meta-llama/llama-4-scout-17b-16e-instruct';
 const REQUEST_TIMEOUT_MS = 10_000;
 const MAX_SOURCES = 5;
 

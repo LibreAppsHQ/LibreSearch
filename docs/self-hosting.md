@@ -90,7 +90,7 @@ When `BRAVE_SEARCH_API_KEY` is unset and these are present, all search tabs
 (web/news/videos/images) route through the upstream; maps still go directly to
 Nominatim. The upstream operator's key is never exposed to you or your users.
 
-To *offer* upstream access from your own instance, set
+To _offer_ upstream access from your own instance, set
 `UPSTREAM_SEARCH_TOKENS` to a comma-separated list of tokens
 (`openssl rand -hex 24` each) and hand them out. Each token is rate limited
 independently, and queries are cached server-side to conserve your Brave
@@ -98,11 +98,11 @@ quota. Leave it blank to keep `/api/upstream/search` disabled (404).
 
 ## Optional features
 
-| Feature        | Env vars                                              |
-| -------------- | ----------------------------------------------------- |
-| AI answers     | `GROQ_API_KEY` (+ `GROQ_MODEL`)                       |
-| Stock widgets  | `FINNHUB_API_KEY`                                     |
-| Contact forms  | `PUBLIC_WEB3FORMS_KEY`                                |
+| Feature        | Env vars                                                                                                  |
+| -------------- | --------------------------------------------------------------------------------------------------------- |
+| AI answers     | `GROQ_API_KEY` (+ `GROQ_MODEL`)                                                                           |
+| Stock widgets  | `FINNHUB_API_KEY`                                                                                         |
+| Contact forms  | `PUBLIC_WEB3FORMS_KEY`                                                                                    |
 | Accounts       | `PUBLIC_APPWRITE_ENDPOINT`, `PUBLIC_APPWRITE_PROJECT_ID`, `APPWRITE_API_KEY` (self-hosted Appwrite works) |
-| Error tracking | `PUBLIC_SENTRY_DSN` (unset = zero telemetry)          |
-| Redis          | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`  |
+| Error tracking | `PUBLIC_SENTRY_DSN` (unset = zero telemetry)                                                              |
+| Redis          | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`                                                      |

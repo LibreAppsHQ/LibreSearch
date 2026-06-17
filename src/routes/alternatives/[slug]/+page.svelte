@@ -61,7 +61,9 @@
 			<a href="/" class="justify-self-start">
 				<Logo class="h-10 w-25 rounded-full" />
 			</a>
-			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">Alternatives</p>
+			<p class="justify-self-center text-2xl font-bold tracking-tight text-(--app-text)">
+				Alternatives
+			</p>
 			<SiteMenu class="justify-self-end" />
 		</div>
 	</div>
@@ -77,7 +79,12 @@
 				loading="lazy"
 			/>
 			<i class="fa-solid fa-arrow-right text-(--app-muted)"></i>
-			<img src="/2.svg" alt="LibreSearch" class="h-12 w-12 rounded-xl object-contain" loading="lazy" />
+			<img
+				src="/2.svg"
+				alt="LibreSearch"
+				class="h-12 w-12 rounded-xl object-contain"
+				loading="lazy"
+			/>
 		</div>
 		<h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">{page.headline}</h1>
 		<p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-(--app-muted) sm:text-lg">
@@ -164,7 +171,11 @@
 						href="/alternatives/{slug}"
 						class="rounded-full border border-(--app-border) bg-(--app-card) px-4 py-2 text-(--app-muted) transition hover:border-(--app-accent) hover:text-(--app-accent)"
 					>
-						vs {slug === 'duckduckgo' ? 'DuckDuckGo' : slug === 'startpage' ? 'Startpage' : 'Google'}
+						vs {slug === 'duckduckgo'
+							? 'DuckDuckGo'
+							: slug === 'startpage'
+								? 'Startpage'
+								: 'Google'}
 					</a>
 				</li>
 			{/each}

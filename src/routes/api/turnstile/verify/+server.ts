@@ -1,13 +1,13 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
-import { verifySolution } from '$lib/server/altcha';
+import { verifyTurnstile } from '$lib/server/turnstile';
 import { markVerified, getClientKey } from '$lib/server/security';
 import { clearRateLimit } from '$lib/server/search';
 
 export const POST: RequestHandler = async (event) => {
-	const body = (await event.request.json().catch(() => null)) as { payload?: string } | null;
-	const payload = body?.payload;
+	const body = (await event.request.json().catch(() => null)) as { token?: string } | null;
+	const token = body?.token;
 
-	if (!payload || typeof payload !== 'string' || !(await verifySolution(payload))) {
+	if (!token || typeof token !== 'string' || !(await verifyTurnstile(token))) {
 		return json({ ok: false }, { headers: { 'Cache-Control': 'no-store' }, status: 400 });
 	}
 

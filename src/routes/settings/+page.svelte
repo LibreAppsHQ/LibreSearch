@@ -2,9 +2,11 @@
 	import { onMount } from 'svelte';
 	import { settingsStore, type Setting, type SettingCategory } from '$lib/stores/settings';
 	import { themeStore, themes, themeKeys } from '$lib/stores/theme';
+	import { getWallpaper, setWallpaper, clearWallpaper } from '$lib/wallpaper';
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import CustomSelect from '$lib/components/CustomSelect.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
+	import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 
 	type SettingGroup = { ids: string[] };
 
@@ -22,6 +24,7 @@
 			{ ids: ['show-clock', 'datetime-format', 'clock-show-date', 'clock-show-seconds'] }
 		],
 		privacy: [
+			{ ids: ['ai-answers'] },
 			{ ids: ['block-ads', 'block-trackers'] },
 			{ ids: ['safe-search', 'filter-ads'] },
 			{ ids: ['strip-tracking', 'no-referrer'] },
@@ -50,8 +53,12 @@
 	let draft = $state<Setting[]>([]);
 	let isDirty = $state(false);
 	let savedFeedback = $state(false);
+	let wallpaper = $state<string | null>(null);
+	let fileInput = $state<HTMLInputElement | null>(null);
+	let showResetModal = $state(false);
 
 	onMount(() => {
+		wallpaper = getWallpaper();
 		settingsStore.load();
 		draft = structuredClone($settingsStore);
 
@@ -107,11 +114,33 @@
 	}
 
 	function resetAll() {
-		if (confirm('Reset all settings to their defaults?')) {
-			settingsStore.reset();
-			draft = structuredClone($settingsStore);
-			isDirty = false;
-		}
+		showResetModal = true;
+	}
+
+	function doReset() {
+		settingsStore.reset();
+		draft = structuredClone($settingsStore);
+		isDirty = false;
+	}
+
+	function handleWallpaper(event: Event) {
+		const file = (event.target as HTMLInputElement).files?.[0];
+		if (!file) return;
+		const reader = new FileReader();
+		reader.onload = (e) => {
+			const data = e.target?.result as string;
+			if (data) {
+				setWallpaper(data);
+				wallpaper = data;
+			}
+		};
+		reader.readAsDataURL(file);
+		(event.target as HTMLInputElement).value = '';
+	}
+
+	function removeWallpaper() {
+		clearWallpaper();
+		wallpaper = null;
 	}
 
 	function exportSettings() {
@@ -280,6 +309,56 @@
 							</div>
 						{/if}
 
+						<!-- Wallpaper upload -->
+						{#if section.id === 'appearance'}
+							<div
+								class="mb-5 overflow-hidden rounded-sm border border-(--app-border) bg-(--app-surface)"
+							>
+								<div class="px-5 py-4">
+									<p class="text-[15px] font-semibold text-(--app-text)">Homepage wallpaper</p>
+									<p class="text-sm leading-5 text-(--app-muted)">
+										Upload a custom image as the homepage background.
+									</p>
+									<input
+										bind:this={fileInput}
+										type="file"
+										accept="image/*"
+										class="sr-only"
+										onchange={handleWallpaper}
+									/>
+									<div class="mt-3 flex items-center gap-3">
+										{#if wallpaper}
+											<div class="relative h-16 w-28 overflow-hidden rounded-md">
+												<img
+													src={wallpaper}
+													alt="Wallpaper preview"
+													class="h-full w-full object-cover"
+												/>
+											</div>
+										{/if}
+										<button
+											type="button"
+											onclick={() => fileInput?.click()}
+											class="inline-flex items-center gap-2 rounded-full border border-(--app-border) px-4 py-2 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
+										>
+											<i class="fa-solid fa-image text-xs"></i>
+											{wallpaper ? 'Change' : 'Upload'}
+										</button>
+										{#if wallpaper}
+											<button
+												type="button"
+												onclick={removeWallpaper}
+												class="inline-flex items-center gap-2 rounded-full border border-red-500/20 px-4 py-2 text-sm font-medium text-red-400 transition hover:bg-red-500/10"
+											>
+												<i class="fa-solid fa-trash text-xs"></i>
+												Remove
+											</button>
+										{/if}
+									</div>
+								</div>
+							</div>
+						{/if}
+
 						<div
 							class="divide-y divide-(--app-border) overflow-hidden rounded-sm border border-(--app-border) bg-(--app-surface)"
 						>
@@ -391,5 +470,14 @@
 		</div>
 	</div>
 </main>
+
+<ConfirmModal
+	open={showResetModal}
+	title="Reset all settings?"
+	message="This will restore every setting to its default value. Your search history and wallpaper will not be affected."
+	confirmLabel="Reset"
+	onconfirm={doReset}
+	oncancel={() => (showResetModal = false)}
+/>
 
 <SiteFooter />

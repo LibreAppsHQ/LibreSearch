@@ -27,6 +27,15 @@ libresearch-extension-key.pem
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+# Playwright
+/playwright-report/
+/test-results/
+
+# Paraglide lockfile (auto-generated, keep compiled output committed)
+# The compiled messages in src/lib/paraglide/ are committed so type-check
+# and CI work without a separate compile step. The lockfile is machine-specific.
+project.inlang/cache
+
 .env.local
 .claude
 .agents

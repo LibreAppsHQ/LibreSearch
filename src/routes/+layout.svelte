@@ -31,7 +31,6 @@
 		}
 	});
 
-
 	$effect(() => {
 		if (!browser) return;
 		if (reduceMotion) {

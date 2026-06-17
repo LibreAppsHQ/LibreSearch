@@ -78,22 +78,18 @@
 			<!-- Site breadcrumb row -->
 			<div class="flex items-center gap-2.5">
 				{#if showFavicons && domain}
-					<span
-						class="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full border border-(--app-border) bg-(--app-surface)"
-					>
-						<img
-							src={`https://icons.duckduckgo.com/ip3/${domain}.ico`}
-							alt=""
-							width="18"
-							height="18"
-							loading="lazy"
-							decoding="async"
-							class="h-[18px] w-[18px]"
-							onerror={(e) => {
-								(e.currentTarget as HTMLImageElement).style.display = 'none';
-							}}
+					<img
+						src={`https://icons.duckduckgo.com/ip3/${domain}.ico`}
+						alt=""
+						width="24"
+						height="24"
+						loading="lazy"
+						decoding="async"
+						class="h-6 w-6 shrink-0 rounded-full"
+						onerror={(e) => {
+							(e.currentTarget as HTMLImageElement).style.display = 'none';
+						}}
 						/>
-					</span>
 				{/if}
 				<div class="min-w-0 flex-1 leading-tight">
 					<div class="truncate text-sm font-medium text-(--app-text)">{siteLabel}</div>

@@ -107,7 +107,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 		};
 	}
 
-	// Adaptive ALTCHA gate: a flagged client must solve a challenge before searching.
+	// Adaptive Turnstile gate: a flagged client must solve a challenge before searching.
 	if (await challengeRequired(ip)) {
 		return { ...blocked(true), query };
 	}
@@ -127,6 +127,17 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 	if (blockTrackers) apiParams.set('blocktrackers', '1');
 	if (enableCache) apiParams.set('enablecache', '1');
 	if (count !== 10) apiParams.set('count', String(count));
+
+	// Pass the client's country from edge proxy headers to the internal API
+	// so the Maps tab can bias Nominatim results geographically.
+	// NOT using Accept-Language — locale ≠ location.
+	const headerCountry = (event.request.headers.get('x-vercel-ip-country')
+		|| event.request.headers.get('cf-ipcountry')
+		|| event.request.headers.get('x-geo-country')
+		|| '')?.trim() || undefined;
+	if (headerCountry && /^[A-Z]{2,3}$/.test(headerCountry)) {
+		apiParams.set('ipcountry', headerCountry);
+	}
 
 	try {
 		const response = await event.fetch(`/api/search?${apiParams}`);

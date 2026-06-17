@@ -2,7 +2,7 @@
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
-	import AltchaBadge from '$lib/components/AltchaBadge.svelte';
+	import TurnstileBadge from '$lib/components/TurnstileBadge.svelte';
 
 	// Help categories shown as cards under the hero. Each links to the most
 	// relevant existing page on the site so support stays a thin index over
@@ -366,4 +366,4 @@
 </main>
 
 <SiteFooter />
-<AltchaBadge />
+<TurnstileBadge />

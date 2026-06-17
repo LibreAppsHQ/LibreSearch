@@ -235,7 +235,7 @@
 			</a>
 			<a
 				href="/privacy"
-				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-button) transition hover:text-(--app-button-hover) hover:bg-(--app-hover)"
+				class="inline-flex items-center gap-2 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-3 text-sm font-semibold text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 			>
 				<i class="fa-solid fa-shield-halved"></i>
 				Read the privacy policy

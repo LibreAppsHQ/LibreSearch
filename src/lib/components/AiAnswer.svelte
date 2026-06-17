@@ -1,9 +1,12 @@
 <script lang="ts">
 	import type { SearchTab } from '$lib/search';
+	import { settingsStore, getToggle } from '$lib/stores/settings';
 
 	type Citation = { title: string; url: string };
 
 	let { query, tab }: { query: string; tab: SearchTab } = $props();
+
+	let openInNewTab = $derived(getToggle($settingsStore, 'open-new-tab'));
 
 	let answer = $state<string | null>(null);
 	let sources = $state<Citation[]>([]);
@@ -71,7 +74,7 @@
 					{#each sources as source, i (i)}
 						<a
 							href={source.url}
-							target="_blank"
+							target={openInNewTab ? '_blank' : '_self'}
 							rel="noopener noreferrer"
 							title={source.title}
 							class="inline-flex max-w-[220px] items-center gap-1.5 rounded bg-(--app-hover) px-2.5 py-1 text-[11px] text-(--app-secondary) transition hover:opacity-80"

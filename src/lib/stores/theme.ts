@@ -41,6 +41,14 @@ export const themes = {
 		panel: '#fffaf1',
 		accent: '#c38b4d',
 		text: '#201a15'
+	},
+	sakura: {
+		name: 'Sakura',
+		description: 'Soft pink tones with a gentle, calming palette.',
+		background: '#fce4ec',
+		panel: '#ffffff',
+		accent: '#ec407a',
+		text: '#2d1f24'
 	}
 } as const;
 
@@ -64,7 +72,7 @@ function createThemeStore() {
 			'--app-muted',
 			themeKey === 'light' || themeKey === 'sand' ? '#5f5b55' : '#9ca3af'
 		);
-		const isLight = themeKey === 'light' || themeKey === 'sand';
+		const isLight = themeKey === 'light' || themeKey === 'sand' || themeKey === 'sakura';
 		// Elevated surfaces (inputs, dropdowns, pills). Must track the theme so
 		// near-black text stays readable on light themes instead of dark-on-dark.
 		root.style.setProperty(

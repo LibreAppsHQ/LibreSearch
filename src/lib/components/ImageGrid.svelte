@@ -6,12 +6,11 @@
 
 	let openInNewTab = $derived(getToggle($settingsStore, 'open-new-tab'));
 
-	const ROW_HEIGHT = 230;
+	const ROW_HEIGHT = 200;
 
-	// Inline preview state (Startpage-style expanding panel).
 	let selected = $state<number | null>(null);
-	let rowEnd = $state(0); // index of the last image in the selected image's row
-	let caretLeft = $state(0); // px offset of the caret, pointing at the selected thumbnail
+	let rowEnd = $state(0);
+	let caretLeft = $state(0);
 	let copied = $state(false);
 
 	let gridEl = $state<HTMLDivElement>();
@@ -34,8 +33,11 @@
 		}
 	}
 
-	// Find the last image sharing a row with `index`, using horizontal position so
-	// it stays correct regardless of the panel inserted between rows.
+	function favicon(image: ImageResult): string {
+		const d = domain(image);
+		return d ? `https://icons.duckduckgo.com/ip3/${d}.ico` : '';
+	}
+
 	function computeLayout(index: number) {
 		let end = index;
 		for (let i = index; i + 1 < images.length; i++) {
@@ -46,13 +48,11 @@
 			else break;
 		}
 		rowEnd = end;
-
 		const el = els[index];
 		if (el) caretLeft = el.offsetLeft + el.offsetWidth / 2;
 	}
 
 	function open(index: number) {
-		// Toggle off when re-clicking the open image.
 		if (selected === index) {
 			selected = null;
 			return;
@@ -92,7 +92,6 @@
 		else if (event.key === 'ArrowRight') step(1);
 	}
 
-	// Keep the panel anchored to the right row when the viewport reflows.
 	$effect(() => {
 		if (selected === null) return;
 		const onResize = () => selected !== null && computeLayout(selected);
@@ -100,8 +99,6 @@
 		return () => window.removeEventListener('resize', onResize);
 	});
 
-	// Close the preview and drop stale element refs whenever the result set
-	// changes — otherwise `selected` would silently point at a different image.
 	$effect(() => {
 		void images;
 		selected = null;
@@ -112,9 +109,11 @@
 
 <svelte:window onkeydown={onKeydown} />
 
-<div bind:this={gridEl} class="relative flex flex-wrap gap-x-3 gap-y-6">
+<div bind:this={gridEl} class="relative flex flex-wrap gap-1.5">
 	{#each images as image, i (image.imageUrl)}
 		{@const r = ratio(image)}
+		{@const d = domain(image)}
+		{@const f = favicon(image)}
 		<button
 			type="button"
 			bind:this={els[i]}
@@ -125,9 +124,7 @@
 			title={image.title}
 		>
 			<div
-				class={selected === i
-					? 'overflow-hidden rounded-lg bg-(--app-surface) ring-2 ring-(--app-accent)'
-					: 'overflow-hidden rounded-lg bg-(--app-surface)'}
+				class="overflow-hidden rounded-lg"
 				style={`height:${ROW_HEIGHT}px;`}
 			>
 				<img
@@ -135,20 +132,33 @@
 					alt={image.title}
 					loading="lazy"
 					decoding="async"
-					class="h-full w-full object-cover transition duration-300 group-hover:opacity-90"
+					class="h-full w-full object-cover transition duration-200 group-hover:brightness-110"
+					class:ring-2={selected === i}
+					class:ring-(--app-accent)={selected === i}
 					onerror={(e) => {
 						(e.currentTarget as HTMLImageElement).style.display = 'none';
 					}}
 				/>
 			</div>
-			<p class="mt-2 truncate text-sm text-(--app-text)">{image.title}</p>
-			<p class="truncate text-xs text-(--app-muted)">{domain(image)}</p>
+			<div class="mt-1.5 flex items-center gap-1.5 px-0.5">
+				{#if f}
+					<img
+						src={f}
+						alt=""
+						class="h-3.5 w-3.5 rounded-sm"
+						loading="lazy"
+						onerror={(e) => {
+							(e.currentTarget as HTMLImageElement).style.display = 'none';
+						}}
+					/>
+				{/if}
+				<span class="truncate text-xs text-(--app-muted)">{d || image.source}</span>
+			</div>
+			<p class="mt-0.5 truncate px-0.5 text-[13px] leading-tight text-(--app-text)">{image.title}</p>
 		</button>
 
 		{#if active && selected !== null && i === rowEnd}
-			<!-- Full-width inline preview, inserted right after the selected image's row -->
 			<div class="relative w-full basis-full">
-				<!-- Caret pointing up to the selected thumbnail -->
 				<i
 					class="fa-solid fa-chevron-up absolute -top-6 text-2xl text-(--app-accent)"
 					style={`left:${caretLeft}px;transform:translateX(-50%);`}
@@ -165,7 +175,6 @@
 					</button>
 
 					<div class="flex flex-col gap-6 md:flex-row">
-						<!-- Large image -->
 						<a
 							href={active.url}
 							target={openInNewTab ? '_blank' : '_self'}
@@ -183,7 +192,6 @@
 							/>
 						</a>
 
-						<!-- Details -->
 						<div class="min-w-0 flex-1 pr-10">
 							<a
 								href={active.url}
@@ -233,7 +241,6 @@
 						</div>
 					</div>
 
-					<!-- Prev / next -->
 					<div class="absolute right-5 bottom-5 flex gap-2">
 						<button
 							type="button"

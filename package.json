@@ -11,18 +11,24 @@
 		"preview": "vite preview",
 		"test": "vitest run",
 		"test:watch": "vitest",
-		"prepare": "svelte-kit sync || echo ''",
+		"prepare": "(paraglide-js compile --outdir ./src/lib/paraglide --strategy cookie preferredLanguage baseLocale --is-server 'import.meta.env.SSR' || echo '') && (svelte-kit sync || echo '')",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
+		"paraglide:compile": "paraglide-js compile --outdir ./src/lib/paraglide --strategy cookie preferredLanguage baseLocale --is-server 'import.meta.env.SSR'",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui",
 		"build:extension": "tailwindcss -i extension/popup/popup.src.css -o extension/popup/popup.css --minify && tailwindcss -i extension/options/options.src.css -o extension/options/options.css --minify",
 		"watch:extension:popup": "tailwindcss -i extension/popup/popup.src.css -o extension/popup/popup.css --watch",
 		"watch:extension:options": "tailwindcss -i extension/options/options.src.css -o extension/options/options.css --watch"
 	},
 	"devDependencies": {
+		"@axe-core/playwright": "^4.11.3",
 		"@eslint/compat": "^2.0.4",
 		"@eslint/js": "^10.0.1",
+		"@inlang/paraglide-js": "^2.20.0",
+		"@playwright/test": "^1.61.0",
 		"@sveltejs/adapter-auto": "^7.0.1",
 		"@sveltejs/adapter-node": "^5.5.4",
 		"@sveltejs/adapter-vercel": "^6.3.3",
@@ -52,7 +58,8 @@
 		"@sentry/sveltekit": "^10.55.0",
 		"@upstash/redis": "^1.35.0",
 		"@vercel/speed-insights": "^2.0.0",
-		"node-appwrite": "^26.0.0"
+		"node-appwrite": "^26.0.0",
+		"pino": "^10.3.1"
 	},
 	"packageManager": "pnpm@10.33.0",
 	"pnpm": {

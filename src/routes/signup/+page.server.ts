@@ -1,10 +1,6 @@
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { ID } from 'node-appwrite';
-import {
-	appwriteConfigured,
-	createAdminClient,
-	setSessionCookie
-} from '$lib/server/appwrite';
+import { appwriteConfigured, createAdminClient, setSessionCookie } from '$lib/server/appwrite';
 import { ensureProfile } from '$lib/server/plan';
 import type { PageServerLoad } from './$types';
 
