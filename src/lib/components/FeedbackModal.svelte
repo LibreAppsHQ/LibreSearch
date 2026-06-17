@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { env } from '$env/dynamic/public';
+	import { PUBLIC_WEB3FORMS_KEY } from '$env/static/public';
 
 	let { onclose }: { onclose: () => void } = $props();
 
-	const accessKey = env.PUBLIC_WEB3FORMS_KEY ?? '';
+	const accessKey = PUBLIC_WEB3FORMS_KEY ?? '';
 
 	type Rating = 'dislike' | 'neutral' | 'like';
 

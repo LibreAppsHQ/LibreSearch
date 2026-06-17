@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { invalidateAll } from '$app/navigation';
-	import { env } from '$env/dynamic/public';
+	import { PUBLIC_TURNSTILE_SITE_KEY } from '$env/static/public';
 
-	const SITE_KEY = env.PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';
+	const SITE_KEY = PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';
 
 	type State = 'loading' | 'verifying' | 'done' | 'error';
 	let state = $state<State>('loading');

@@ -43,10 +43,9 @@ const SECURITY_HEADERS: Record<string, string> = {
 	'X-Content-Type-Options': 'nosniff',
 	'X-Frame-Options': 'DENY',
 	'Referrer-Policy': 'no-referrer',
-	// Disable powerful features, and opt out of ad-targeting APIs (Topics / legacy
-	// FLoC) — important for a privacy-first search engine.
-	'Permissions-Policy':
-		'geolocation=(), microphone=(), camera=(), payment=(), usb=(), browsing-topics=(), interest-cohort=()',
+	// Disable powerful features. Stick to widely-supported directives — Chrome
+	// logs console errors for deprecated sandbox names like browsing-topics.
+	'Permissions-Policy': 'geolocation=(), microphone=(), camera=(), payment=(), usb=()',
 	'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
 	'Cross-Origin-Opener-Policy': 'same-origin',
 	'X-DNS-Prefetch-Control': 'off'

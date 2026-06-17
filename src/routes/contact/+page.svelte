@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { env } from '$env/dynamic/public';
+	import { PUBLIC_WEB3FORMS_KEY } from '$env/static/public';
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
@@ -12,7 +12,7 @@
 	// to whatever inbox is tied to the access key. The key is intentionally
 	// browser-visible — Web3Forms expects this. When unset, the form is hidden
 	// and users are pointed at the direct email address instead.
-	const accessKey = env.PUBLIC_WEB3FORMS_KEY ?? '';
+	const accessKey = PUBLIC_WEB3FORMS_KEY ?? '';
 	const formEnabled = accessKey.length > 0;
 
 	const subjectOptions = [

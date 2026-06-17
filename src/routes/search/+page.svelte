@@ -11,7 +11,7 @@
 	import CustomSelect from '$lib/components/CustomSelect.svelte';
 	import SiteMenu from '$lib/components/SiteMenu.svelte';
 	import BurnButton from '$lib/components/BurnButton.svelte';
-	import TurnstileChallenge from '$lib/components/TurnstileChallenge.svelte';
+	import VerifyChallenge from '$lib/components/VerifyChallenge.svelte';
 	import Lazy from '$lib/components/Lazy.svelte';
 	import { settingsStore, getToggle, getSelect, ecoActive } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
@@ -288,7 +288,7 @@
 	<!-- Body -->
 	{#if data.challengeRequired}
 		<div class="mx-auto w-full max-w-[1200px] px-4 pt-5 pb-16 sm:px-6">
-			<TurnstileChallenge />
+			<VerifyChallenge />
 		</div>
 	{:else}
 		<div class={resultsContainerClass}>

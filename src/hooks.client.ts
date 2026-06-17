@@ -33,12 +33,28 @@ Sentry.init({
 // genuinely missing (e.g. CDN outage) instead of just stale, while still
 // allowing a fresh reload for a later deploy in the same tab session.
 if (typeof window !== 'undefined') {
-	window.addEventListener('vite:preloadError', () => {
+	const reloadOnceForStaleAssets = () => {
 		const RELOAD_KEY = 'preload-error-reloaded-at';
 		const last = Number(sessionStorage.getItem(RELOAD_KEY) ?? 0);
 		if (Date.now() - last < 10_000) return;
 		sessionStorage.setItem(RELOAD_KEY, String(Date.now()));
 		window.location.reload();
+	};
+
+	window.addEventListener('vite:preloadError', reloadOnceForStaleAssets);
+
+	// Dynamic import() failures after a deploy don't always fire vite:preloadError.
+	window.addEventListener('unhandledrejection', (event) => {
+		const message =
+			typeof event.reason === 'object' &&
+			event.reason !== null &&
+			'message' in event.reason &&
+			typeof event.reason.message === 'string'
+				? event.reason.message
+				: String(event.reason ?? '');
+		if (message.includes('Failed to fetch dynamically imported module')) {
+			reloadOnceForStaleAssets();
+		}
 	});
 }
 
