@@ -17,16 +17,25 @@ self.addEventListener('activate', (event) => {
 	);
 });
 
+function cachePut(request: Request, response: Response): void {
+	const clone = response.clone();
+	void caches
+		.open(CACHE)
+		.then((cache) => cache.put(request, clone))
+		.catch(() => {});
+}
+
 function networkFirst(request: Request): Promise<Response> {
 	return fetch(request)
 		.then((response) => {
-			if (response.ok) {
-				const clone = response.clone();
-				caches.open(CACHE).then((cache) => cache.put(request, clone));
-			}
+			if (response.ok) cachePut(request, response);
 			return response;
 		})
-		.catch(() => caches.match(request).then((cached) => cached ?? Response.error()));
+		.catch(() =>
+			caches
+				.match(request)
+				.then((cached) => cached ?? new Response('', { status: 504, statusText: 'Offline' }))
+		);
 }
 
 self.addEventListener('fetch', (event) => {
@@ -36,21 +45,20 @@ self.addEventListener('fetch', (event) => {
 	if (url.origin !== self.location.origin) return;
 	if (url.pathname.startsWith('/api/')) return;
 
-	// HTML + client navigations must be network-first. Cache-first HTML keeps
-	// old asset hashes after a deploy → 404 on /_app/immutable/* chunks.
-	const acceptsHtml = event.request.headers.get('accept')?.includes('text/html');
-	if (
-		event.request.mode === 'navigate' ||
-		acceptsHtml ||
+	// SSR routes (/search, etc.) must bypass the SW. Intercepting navigations
+	// turns transient network errors into page-breaking "Failed to fetch".
+	if (event.request.mode === 'navigate') return;
+	if (event.request.headers.get('accept')?.includes('text/html')) return;
+
+	const isAppAsset =
 		url.pathname.startsWith('/_app/') ||
-		ASSETS.some((a) => url.pathname.endsWith(a.replace(/^\//, '')))
-	) {
+		ASSETS.some((a) => url.pathname.endsWith(a.replace(/^\//, '')));
+
+	if (isAppAsset) {
 		event.respondWith(networkFirst(event.request));
 		return;
 	}
 
 	// Static files (images, fonts, favicon): cache-first.
-	event.respondWith(
-		caches.match(event.request).then((cached) => cached || fetch(event.request))
-	);
+	event.respondWith(caches.match(event.request).then((cached) => cached ?? fetch(event.request)));
 });

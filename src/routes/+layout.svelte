@@ -87,6 +87,8 @@
 				script.src = 'https://cloud.umami.is/script.js';
 				script.dataset.websiteId = UMAMI_WEBSITE_ID;
 				script.dataset.domains = 'libresearch.ca,www.libresearch.ca';
+				// Ad blockers block this — fail silently, no console error cascade.
+				script.onerror = () => {};
 				document.head.appendChild(script);
 			}
 
