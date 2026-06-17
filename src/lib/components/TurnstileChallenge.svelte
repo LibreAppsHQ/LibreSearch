@@ -7,6 +7,7 @@
 
 	type State = 'loading' | 'verifying' | 'done' | 'error';
 	let state = $state<State>('loading');
+	let widgetId: string | undefined;
 
 	async function run() {
 		state = 'loading';
@@ -24,8 +25,10 @@
 			const turnstileDiv = document.getElementById('turnstile-widget');
 			if (!turnstileDiv || !window.turnstile) throw new Error('Turnstile widget not found');
 
+			if (widgetId) window.turnstile.remove(widgetId);
+
 			const token = await new Promise<string>((resolve) => {
-				window.turnstile!.render(turnstileDiv, {
+				widgetId = window.turnstile!.render(turnstileDiv, {
 					sitekey: SITE_KEY,
 					theme: 'auto',
 					callback: resolve,
@@ -71,15 +74,15 @@
 	<div
 		class="mt-6 flex w-full items-center justify-center gap-3 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-4"
 	>
-		{#if state === 'loading'}
-			<div id="turnstile-widget"></div>
-		{:else if state === 'verifying'}
+		<div id="turnstile-widget" class:hidden={state !== 'loading'}></div>
+
+		{#if state === 'verifying'}
 			<i class="fa-solid fa-spinner fa-spin text-(--app-accent)"></i>
 			<span class="text-sm text-(--app-text)">Confirming\u2026</span>
 		{:else if state === 'done'}
 			<i class="fa-solid fa-circle-check text-emerald-400"></i>
 			<span class="text-sm text-(--app-text)">Verified \u2014 loading your results\u2026</span>
-		{:else}
+		{:else if state === 'error'}
 			<i class="fa-solid fa-triangle-exclamation text-rose-400"></i>
 			<span class="text-sm text-(--app-text)">Verification failed.</span>
 			<button

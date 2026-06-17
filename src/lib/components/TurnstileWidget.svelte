@@ -2,22 +2,17 @@
 	import { env } from '$env/dynamic/public';
 
 	const SITE_KEY = env.PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';
-	// Inline Turnstile widget for forms.
-	// Loads Cloudflare Turnstile challenge, verifies with our server,
-	// and flips `verified` to true.
 
 	type State = 'idle' | 'loading' | 'verifying' | 'done' | 'error';
 
-	// eslint-disable-next-line no-useless-assignment -- write-only bindable prop default
 	let { verified = $bindable(false) }: { verified?: boolean } = $props();
 	let state = $state<State>('idle');
 	let widgetId: string | undefined;
 
-	// Reset so a spent solution can be re-solved, e.g. after a failed send.
 	export function reset() {
 		state = 'idle';
 		verified = false;
-		if (widgetId) window.turnstile?.reset(widgetId);
+		if (widgetId) window.turnstile?.remove(widgetId);
 		widgetId = undefined;
 	}
 
@@ -36,10 +31,14 @@
 				});
 			}
 
+			const turnstileDiv = document.getElementById('turnstile-widget-form');
+			if (!turnstileDiv || !window.turnstile) throw new Error('Turnstile widget not found');
+
+			// Remove any stale widget from a previous attempt before rendering a new one.
+			if (widgetId) window.turnstile.remove(widgetId);
+
 			const token = await new Promise<string>((resolve) => {
-				const turnstileDiv = document.getElementById('turnstile-widget-form');
-				if (!turnstileDiv || !window.turnstile) throw new Error('Turnstile widget not found');
-				widgetId = window.turnstile.render(turnstileDiv, {
+				widgetId = window.turnstile!.render(turnstileDiv, {
 					sitekey: SITE_KEY,
 					theme: 'auto',
 					size: 'compact',
@@ -57,6 +56,8 @@
 				body: JSON.stringify({ token })
 			});
 			if (!res.ok) throw new Error('Verification failed');
+			const data = (await res.json()) as { ok?: boolean };
+			if (!data.ok) throw new Error('Verification rejected');
 
 			state = 'done';
 			verified = true;
@@ -70,11 +71,16 @@
 <div
 	class="flex items-center gap-3 rounded-xl border border-(--app-border) bg-(--app-surface) px-4 py-3"
 >
+	<div
+		id="turnstile-widget-form"
+		class="h-[65px] w-[130px]"
+		class:hidden={state !== 'loading' && state !== 'verifying'}
+	></div>
+
 	{#if state === 'done'}
 		<i class="fa-solid fa-circle-check text-lg text-emerald-400"></i>
 		<span class="text-sm text-(--app-text)">Verified — you're human</span>
 	{:else if state === 'loading' || state === 'verifying'}
-		<div id="turnstile-widget-form" class="h-[65px] w-[130px]"></div>
 		<i class="fa-solid fa-spinner fa-spin text-lg text-(--app-accent)"></i>
 		<span class="text-sm text-(--app-text)">
 			{state === 'loading' ? 'Verifying you\u2019re human\u2026' : 'Confirming\u2026'}
@@ -109,4 +115,3 @@
 		>
 	</span>
 </div>
-
