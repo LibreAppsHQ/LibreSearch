@@ -89,7 +89,7 @@
 						onerror={(e) => {
 							(e.currentTarget as HTMLImageElement).style.display = 'none';
 						}}
-						/>
+					/>
 				{/if}
 				<div class="min-w-0 flex-1 leading-tight">
 					<div class="truncate text-sm font-medium text-(--app-text)">{siteLabel}</div>

@@ -141,7 +141,7 @@
 		<div class="mt-10 flex flex-wrap items-center justify-center gap-4">
 			<a
 				href="#tiers"
-				class="inline-flex items-center gap-2 rounded-xl bg-(--app-accent) px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+				class="inline-flex items-center gap-2 rounded-xl bg-(--app-accent)/90 px-6 py-3 text-sm font-semibold text-white transition hover:bg-(--app-accent)/80"
 			>
 				<i class="fa-solid fa-heart"></i>
 				Become a supporter

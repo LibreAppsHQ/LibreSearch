@@ -25,7 +25,7 @@
 		)
 	);
 
-	const jsonLd =
+	const jsonLd = $derived(
 		`<script type="application/ld+json">` +
 		JSON.stringify({
 			'@context': 'https://schema.org',
@@ -36,7 +36,8 @@
 			isPartOf: { '@type': 'WebSite', name: 'LibreSearch', url: 'https://libresearch.ca' }
 		}) +
 		'</' +
-		'script>';
+		'script>'
+	);
 
 	let query = $state('');
 </script>

@@ -43,11 +43,7 @@
 		class="mt-6 flex w-full flex-col items-center gap-3 rounded-xl border border-(--app-border) bg-(--app-surface) px-5 py-4"
 	>
 		<label class="flex cursor-pointer items-center gap-3">
-			<input
-				type="checkbox"
-				bind:checked={verified}
-				class="h-5 w-5 accent-(--app-accent)"
-			/>
+			<input type="checkbox" bind:checked={verified} class="h-5 w-5 accent-(--app-accent)" />
 			<span class="text-sm text-(--app-text)">I am human</span>
 		</label>
 

@@ -526,7 +526,9 @@
 		</div>
 
 		<!-- Center: nav links -->
-		<nav class="text-md flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-(--app-text)">
+		<nav
+			class="text-md flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-(--app-text)"
+		>
 			<a href="/privacy" class="transition hover:text-(--app-accent)">Privacy Policy</a>
 			<a href="/about" class="transition hover:text-(--app-accent)">About Us</a>
 			<a href="/press" class="transition hover:text-(--app-accent)">Press</a>

@@ -95,7 +95,5 @@
 		{/if}
 	</div>
 
-	<p class="mt-4 text-xs text-(--app-muted)">
-		Protected by Cloudflare Turnstile
-	</p>
+	<p class="mt-4 text-xs text-(--app-muted)">Protected by Cloudflare Turnstile</p>
 </div>

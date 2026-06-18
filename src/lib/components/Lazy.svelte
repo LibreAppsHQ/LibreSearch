@@ -12,11 +12,13 @@
 
 	$effect(() => {
 		let cancelled = false;
-		load().then((mod) => {
-			if (!cancelled) Comp = mod.default;
-		}).catch((err) => {
-			console.error('Lazy component load failed:', err);
-		});
+		load()
+			.then((mod) => {
+				if (!cancelled) Comp = mod.default;
+			})
+			.catch((err) => {
+				console.error('Lazy component load failed:', err);
+			});
 		return () => {
 			cancelled = true;
 		};

@@ -32,14 +32,15 @@
 {#if open}
 	<div
 		class="fixed inset-0 z-50 flex items-center justify-center bg-(--app-background)/95"
-		onclick={oncancelling}
+		onclick={(e) => { if (e.target === e.currentTarget) oncancelling(); }}
+		onkeydown={(e) => { if (e.key === 'Escape') oncancelling(); }}
 		role="dialog"
 		aria-modal="true"
 		aria-labelledby="confirm-title"
+		tabindex="-1"
 	>
 		<div
 			class="mx-4 w-full max-w-sm rounded-2xl border border-(--app-border) bg-(--app-card) p-6 shadow-xl"
-			onclick={(e) => e.stopPropagation()}
 		>
 			<h3 id="confirm-title" class="text-lg font-semibold text-(--app-text)">{title}</h3>
 			{#if message}

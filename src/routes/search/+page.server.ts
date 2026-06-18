@@ -131,10 +131,13 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 	// Pass the client's country from edge proxy headers to the internal API
 	// so the Maps tab can bias Nominatim results geographically.
 	// NOT using Accept-Language — locale ≠ location.
-	const headerCountry = (event.request.headers.get('x-vercel-ip-country')
-		|| event.request.headers.get('cf-ipcountry')
-		|| event.request.headers.get('x-geo-country')
-		|| '')?.trim() || undefined;
+	const headerCountry =
+		(
+			event.request.headers.get('x-vercel-ip-country') ||
+			event.request.headers.get('cf-ipcountry') ||
+			event.request.headers.get('x-geo-country') ||
+			''
+		)?.trim() || undefined;
 	if (headerCountry && /^[A-Z]{2,3}$/.test(headerCountry)) {
 		apiParams.set('ipcountry', headerCountry);
 	}

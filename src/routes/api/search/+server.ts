@@ -75,11 +75,14 @@ export const GET: RequestHandler = async (event) => {
 	// Country code from the edge proxy, if available. Used only for the Maps
 	// tab to bias Nominatim results toward the user's location. The IP itself
 	// is never forwarded — only the ISO-3166-1 alpha-2 country code.
-	const ipCountry = (event.request.headers.get('x-vercel-ip-country')
-		|| event.request.headers.get('cf-ipcountry')
-		|| event.request.headers.get('x-geo-country')
-		|| event.url.searchParams.get('ipcountry')
-		|| '')?.trim() || undefined;
+	const ipCountry =
+		(
+			event.request.headers.get('x-vercel-ip-country') ||
+			event.request.headers.get('cf-ipcountry') ||
+			event.request.headers.get('x-geo-country') ||
+			event.url.searchParams.get('ipcountry') ||
+			''
+		)?.trim() || undefined;
 
 	// NOT using Accept-Language for country detection — locale ≠ location.
 	// A Canadian user with browser set to en-GB would get UK results.

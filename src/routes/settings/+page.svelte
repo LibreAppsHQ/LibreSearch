@@ -319,13 +319,14 @@
 									<p class="text-sm leading-5 text-(--app-muted)">
 										Upload a custom image as the homepage background.
 									</p>
-									<input
-										bind:this={fileInput}
-										type="file"
-										accept="image/*"
-										class="sr-only"
-										onchange={handleWallpaper}
-									/>
+								<input
+									bind:this={fileInput}
+									type="file"
+									accept="image/*"
+									class="sr-only"
+									aria-label="Upload wallpaper image"
+									onchange={handleWallpaper}
+								/>
 									<div class="mt-3 flex items-center gap-3">
 										{#if wallpaper}
 											<div class="relative h-16 w-28 overflow-hidden rounded-md">
@@ -383,6 +384,7 @@
 													value={setting.value}
 													options={setting.options}
 													onchange={(val) => handleSelect(setting.id, val)}
+													aria-label={setting.name}
 												/>
 											{/if}
 										</div>
@@ -464,6 +466,7 @@
 					type="file"
 					accept="application/json,.json"
 					class="sr-only"
+					aria-label="Import settings JSON file"
 					onchange={handleImport}
 				/>
 			</aside>

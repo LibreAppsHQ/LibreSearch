@@ -123,10 +123,7 @@
 			style={`flex-grow:${r};flex-basis:${Math.round(r * ROW_HEIGHT)}px;`}
 			title={image.title}
 		>
-			<div
-				class="overflow-hidden rounded-lg"
-				style={`height:${ROW_HEIGHT}px;`}
-			>
+			<div class="overflow-hidden rounded-lg" style={`height:${ROW_HEIGHT}px;`}>
 				<img
 					src={image.thumbnail}
 					alt={image.title}
@@ -154,7 +151,9 @@
 				{/if}
 				<span class="truncate text-xs text-(--app-muted)">{d || image.source}</span>
 			</div>
-			<p class="mt-0.5 truncate px-0.5 text-[13px] leading-tight text-(--app-text)">{image.title}</p>
+			<p class="mt-0.5 truncate px-0.5 text-[13px] leading-tight text-(--app-text)">
+				{image.title}
+			</p>
 		</button>
 
 		{#if active && selected !== null && i === rowEnd}

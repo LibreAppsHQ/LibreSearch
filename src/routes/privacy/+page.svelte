@@ -158,7 +158,7 @@
 					stored entirely in your own browser using local storage. They never leave your device and
 					are never synced to our servers. You can wipe all of it at any time by clearing your
 					browser data or using the controls in
-					<a href="/settings" class="text-(--app-accent) hover:underline">Settings</a>.
+					<a href="/settings" class="text-blue-400 underline">Settings</a>.
 				</p>
 			</section>
 
@@ -174,7 +174,7 @@
 						href="https://umami.is"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="text-(--app-accent) hover:underline">Umami</a
+						class="text-blue-400 underline">Umami</a
 					>
 					— cookie-free pageview counts with no cross-site tracking or personal profiles. Umami is not
 					loaded when eco mode is enabled. For performance we use Vercel Speed Insights (Core Web Vitals
@@ -185,7 +185,7 @@
 						href="https://sentry.io"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="text-(--app-accent) hover:underline">Sentry</a
+						class="text-blue-400 underline">Sentry</a
 					>. It only receives technical error reports — configured with personal-data collection off
 					and IP addresses removed — never your searches or a profile of you.
 				</p>
@@ -214,9 +214,9 @@
 				<h2 class="mb-3 text-xl font-bold tracking-tight">Contact</h2>
 				<p class="text-sm leading-7 text-(--app-muted)">
 					Questions about privacy at LibreSearch? Reach us via
-					<a href="/contact" class="text-(--app-accent) hover:underline">/contact</a>
+					<a href="/contact" class="text-blue-400 underline">/contact</a>
 					or learn more on the
-					<a href="/about" class="text-(--app-accent) hover:underline">About</a> page.
+					<a href="/about" class="text-blue-400 underline">About</a> page.
 				</p>
 			</section>
 		</div>

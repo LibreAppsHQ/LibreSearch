@@ -1,12 +1,14 @@
 <script lang="ts">
-	let {
+ 	let {
 		value = $bindable(''),
 		options = [],
-		onchange
+		onchange,
+		'aria-label': ariaLabel = ''
 	} = $props<{
 		value?: string;
 		options: Array<{ label: string; value: string }>;
 		onchange?: (value: string) => void;
+		'aria-label'?: string;
 	}>();
 
 	import { fly } from 'svelte/transition';
@@ -183,6 +185,7 @@
 		aria-expanded={open}
 		aria-controls={menuId}
 		aria-activedescendant={open && activeIndex >= 0 ? optId(activeIndex) : undefined}
+		aria-label={ariaLabel || undefined}
 		onclick={toggle}
 		onkeydown={handleKeydown}
 		class={open

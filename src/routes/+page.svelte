@@ -78,7 +78,9 @@
 
 <main
 	class="relative flex min-h-dvh flex-col bg-(--app-background) text-(--app-text)"
-	style={wallpaper ? `background-image: url('${wallpaper}'); background-size: cover; background-position: center;` : ''}
+	style={wallpaper
+		? `background-image: url('${wallpaper}'); background-size: cover; background-position: center;`
+		: ''}
 >
 	{#if !hideBackgrounds && !wallpaper}
 		<WaveBackground />

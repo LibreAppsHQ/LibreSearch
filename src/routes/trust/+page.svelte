@@ -22,7 +22,7 @@
 		{
 			icon: 'fa-shield-halved',
 			title: 'Bot protection without surveillance',
-			desc: 'We use Cloudflare Turnstile — a private challenge that confirms you\'re human without tracking you across sites or collecting personal data.'
+			desc: "We use Cloudflare Turnstile — a private challenge that confirms you're human without tracking you across sites or collecting personal data."
 		}
 	];
 
