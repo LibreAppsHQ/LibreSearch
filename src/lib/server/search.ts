@@ -143,7 +143,8 @@ function makeCacheKey(
 	filterAds: boolean,
 	blockAds: boolean,
 	blockTrackers: boolean,
-	count: number
+	count: number,
+	qualityMode?: boolean
 ): string {
 	return JSON.stringify({
 		query,
@@ -155,7 +156,8 @@ function makeCacheKey(
 		filterAds,
 		blockAds,
 		blockTrackers,
-		count
+		count,
+		qualityMode: qualityMode ?? false
 	});
 }
 
@@ -577,6 +579,357 @@ const TRACKER_DOMAINS = new Set([
 	'intercom.io'
 ]);
 
+// Low-quality domains to filter in quality mode - SEO spam, content farms, clickbait
+const LOW_QUALITY_DOMAINS = new Set([
+	// Content farms / SEO spam
+	'ezinearticles.com',
+	'articlecity.com',
+	'suite101.com',
+	'buzzle.com',
+	'associatedcontent.com',
+	'squidoo.com',
+	'hubpages.com',
+	' helium.com',
+	// Clickbait / low-quality news aggregators
+	'answers.com',
+	'ask.com',
+	'wikihow.com',
+	'ehow.com',
+	'about.com',
+	'expertscolumn.com',
+	'knol.google.com',
+	// Recipe/content farms
+	'allrecipes.com',
+	'foodnetwork.com',
+	// Q&A spam
+	'quora.com',
+	'answers.yahoo.com',
+	'stackexchange.com',
+	'brainly.com',
+	'answerbag.com',
+	'blurtit.com',
+	'askville.amazon.com',
+	'en.allexperts.com',
+	// Pinterest clones / image farms
+	'pinterest.com',
+	'weheartit.com',
+	'deviantart.com',
+	'flickr.com',
+	'photobucket.com',
+	'imgur.com',
+	'gfycat.com',
+	'tenor.com',
+	'giphy.com',
+	// Wiki farms
+	'fandom.com',
+	'wikia.com',
+	'wikipedia.org',
+	// Coupon/deal spam
+	'retailmenot.com',
+	'groupon.com',
+	'livingsocial.com',
+	// Dictionary/reference spam
+	'dictionary.com',
+	'thesaurus.com',
+	'urbandictionary.com',
+	'merriam-webster.com',
+	'oxforddictionaries.com',
+	'cambridge.org',
+	'collinsdictionary.com',
+	'macmillandictionary.com',
+	'wordnik.com',
+	'vocabulary.com',
+	'yourdictionary.com',
+	// Lyrics sites
+	'genius.com',
+	'azlyrics.com',
+	'lyrics.com',
+	'lyricsmode.com',
+	'metrolyrics.com',
+	'songlyrics.com',
+	// AI-generated / low-quality content
+	'buzzfeed.com',
+	'cracked.com',
+	'collegehumor.com',
+	'funnyordie.com',
+	'9gag.com',
+	'reddit.com',
+	'tumblr.com',
+	// Job aggregator spam
+	'indeed.com',
+	'glassdoor.com',
+	'monster.com',
+	'careerbuilder.com',
+	'simplyhired.com',
+	'ziprecruiter.com',
+	'dice.com',
+	'linkup.com',
+	'theladders.com',
+	// Auto-generated comparison sites
+	'nextag.com',
+	'shopzilla.com',
+	'pricegrabber.com',
+	'pronto.com',
+	'become.com',
+	' bizrate.com',
+	'epinions.com',
+	'reselleratings.com',
+	'sitejabber.com',
+	'trustpilot.com',
+	'yelp.com',
+	'bbb.org',
+	// Domain parking / spam
+	'sedo.com',
+	'godaddy.com',
+	'namecheap.com',
+	'domain.com',
+	// Link shorteners (often used for spam)
+	'bit.ly',
+	'tinyurl.com',
+	't.co',
+	'ow.ly',
+	'goo.gl',
+	'is.gd',
+	'cli.gs',
+	'fb.me',
+	'j.mp',
+	'qr.ae',
+	// Affiliate marketing spam
+	'clickbank.net',
+	'cj.com',
+	'amazon.com',
+	'amzn.to'
+]);
+
+// Authoritative domains to prioritize in quality mode
+const AUTHORITATIVE_DOMAINS = new Set([
+	// Academic
+	'arxiv.org',
+	'scholar.google.com',
+	'jstor.org',
+	'pubmed.ncbi.nlm.nih.gov',
+	'ncbi.nlm.nih.gov',
+	'ieee.org',
+	'acm.org',
+	'science.org',
+	'nature.com',
+	'cell.com',
+	'sciencedirect.com',
+	'springer.com',
+	'wiley.com',
+	'cambridge.org',
+	'oxfordacademic.com',
+	'plos.org',
+	'pnas.org',
+	'frontiersin.org',
+	'mdpi.com',
+	'biorxiv.org',
+	'medrxiv.org',
+	'ssrn.com',
+	'researchgate.net',
+	'academia.edu',
+	// Government
+	'gov',
+	'mil',
+	'whitehouse.gov',
+	'senate.gov',
+	'house.gov',
+	'congress.gov',
+	'census.gov',
+	'ssa.gov',
+	'irs.gov',
+	'cdc.gov',
+	'fda.gov',
+	'who.int',
+	'un.org',
+	'europa.eu',
+	'parliament.uk',
+	'gov.uk',
+	'gc.ca',
+	// Educational
+	'.edu',
+	'mit.edu',
+	'stanford.edu',
+	'harvard.edu',
+	'berkeley.edu',
+	'caltech.edu',
+	'cmu.edu',
+	'cornell.edu',
+	'yale.edu',
+	'princeton.edu',
+	'columbia.edu',
+	'uchicago.edu',
+	'upenn.edu',
+	'jhu.edu',
+	'northwestern.edu',
+	'duke.edu',
+	'michigan.edu',
+	'ucla.edu',
+	'ox.ac.uk',
+	'cam.ac.uk',
+	// Tech documentation
+	'docs.microsoft.com',
+	'learn.microsoft.com',
+	'docs.aws.amazon.com',
+	'cloud.google.com',
+	'developers.google.com',
+	'docs.python.org',
+	'docs.oracle.com',
+	'docs.apple.com',
+	'developer.apple.com',
+	'docs.github.com',
+	'git-scm.com',
+	'nginx.org',
+	'apache.org',
+	'postgresql.org',
+	'mysql.com',
+	'mongodb.com',
+	'redis.io',
+	'kubernetes.io',
+	'docker.com',
+	'terraform.io',
+	'ansible.com',
+	'jenkins.io',
+	'grafana.com',
+	'prometheus.io',
+	'elastic.co',
+	'openai.com',
+	'platform.openai.com',
+	'huggingface.co',
+	'pytorch.org',
+	'tensorflow.org',
+	'keras.io',
+	'scikit-learn.org',
+	'pandas.pydata.org',
+	'numpy.org',
+	'scipy.org',
+	'jupyter.org',
+	'rust-lang.org',
+	'go.dev',
+	'kotlinlang.org',
+	'typescriptlang.org',
+	'nodejs.org',
+	'reactjs.org',
+	'vuejs.org',
+	'svelte.dev',
+	'angular.io',
+	'nextjs.org',
+	'nuxt.com',
+	'tailwindcss.com',
+	'bootstrap.com',
+	'mdn.mozilla.org',
+	'w3schools.com',
+	'w3.org',
+	'caniuse.com',
+	'stackoverflow.com',
+	'serverfault.com',
+	'superuser.com',
+	'askubuntu.com',
+	// Encyclopedia/reference
+	'wikipedia.org',
+	'wikimedia.org',
+	'britannica.com',
+	'stanfordphilosophy.com',
+	'plato.stanford.edu',
+	'iep.utm.edu',
+	'nndb.com',
+	// News - established outlets
+	'reuters.com',
+	'apnews.com',
+	'bloomberg.com',
+	'wsj.com',
+	'nytimes.com',
+	'washingtonpost.com',
+	'ft.com',
+	'economist.com',
+	'forbes.com',
+	'fortune.com',
+	'businessinsider.com',
+	'cnbc.com',
+	'cnn.com',
+	'bbc.com',
+	'bbc.co.uk',
+	'guardian.com',
+	'theguardian.com',
+	'npr.org',
+	'pbs.org',
+	'nationalgeographic.com',
+	'smithsonianmag.com',
+	'scientificamerican.com',
+	'nature.com',
+	'science.org',
+	// Open source
+	'github.com',
+	'gitlab.com',
+	'bitbucket.org',
+	'sourceforge.net',
+	'codeberg.org',
+	// Medical
+	'mayoclinic.org',
+	'clevelandclinic.org',
+	'hopkinsmedicine.org',
+	'nih.gov',
+	'cdc.gov',
+	'who.int',
+	'healthline.com',
+	'webmd.com',
+	// Non-profits
+	'eff.org',
+	'aclu.org',
+	'amnesty.org',
+	'greenpeace.org',
+	'wwf.org',
+	'unicef.org',
+	'redcross.org',
+	'salvationarmy.org',
+	'khanacademy.org',
+	'coursera.org',
+	'edx.org',
+	'udemy.com',
+	'udacity.com',
+	'mitopencourseware.org',
+	'yale.edu',
+	// Financial data
+	'sec.gov',
+	'finra.org',
+	'investopedia.com',
+	'morningstar.com',
+	'yahoo.com'
+]);
+
+function isLowQualityDomain(url: string): boolean {
+	try {
+		const hostname = new URL(url).hostname.toLowerCase().replace(/^www\./, '');
+		return [...LOW_QUALITY_DOMAINS].some(
+			(d) => hostname === d || hostname.endsWith('.' + d) || d.endsWith(hostname)
+		);
+	} catch {
+		return false;
+	}
+}
+
+function getAuthoritativeRank(url: string): number {
+	try {
+		const hostname = new URL(url).hostname.toLowerCase().replace(/^www\./, '');
+		const tld = hostname.split('.').pop() || '';
+		
+		// Government domains get highest priority
+		if (tld === 'gov' || tld === 'mil') return 0;
+		
+		// Educational domains
+		if (tld === 'edu') return 1;
+		
+		// Check against authoritative list
+		if ([...AUTHORITATIVE_DOMAINS].some((d) => hostname === d || hostname.endsWith('.' + d))) {
+			return 2;
+		}
+		
+		return 3; // Default rank
+	} catch {
+		return 3;
+	}
+}
+
 function isBlockedDomain(url: string, blocklist: Set<string>): boolean {
 	try {
 		const hostname = new URL(url).hostname.toLowerCase().replace(/^www\./, '');
@@ -727,7 +1080,8 @@ async function fetchBraveSearch(
 	filterAds?: boolean,
 	blockAds?: boolean,
 	blockTrackers?: boolean,
-	count?: number
+	count?: number,
+	qualityMode?: boolean
 ): Promise<SearchResponse> {
 	// Maps is served by Nominatim, not Brave. Bias by country when known.
 	if (tab === 'maps') return geocodePlaces(query, fetchImpl, country);
@@ -807,7 +1161,7 @@ async function fetchBraveSearch(
 				isRecord(payload) && isRecord(payload.web) && Array.isArray(payload.web.results)
 					? payload.web.results
 					: [];
-			const results = rawWeb
+			let results = rawWeb
 				.filter((r) => !filterAds || !isRecord(r) || r['type'] !== 'ad')
 				.filter(
 					(r) => !blockAds || !isRecord(r) || !isBlockedDomain(String(r.url ?? ''), AD_DOMAINS)
@@ -817,8 +1171,16 @@ async function fetchBraveSearch(
 						!blockTrackers || !isRecord(r) || !isBlockedDomain(String(r.url ?? ''), TRACKER_DOMAINS)
 				)
 				.map(normalizeWebResult)
-				.filter((r): r is SearchResult => r !== null)
-				.slice(0, count ?? 10);
+				.filter((r): r is SearchResult => r !== null);
+			
+	// Apply quality mode: filter low-quality sites and prioritize authoritative sources
+			if (qualityMode) {
+				results = results
+					.filter((r) => !isLowQualityDomain(r.url))
+					.sort((a, b) => getAuthoritativeRank(a.url) - getAuthoritativeRank(b.url));
+			}
+			
+			results = results.slice(0, count ?? 10);
 
 			const rawNews =
 				isRecord(payload) && isRecord(payload.news) && Array.isArray(payload.news.results)
@@ -901,6 +1263,7 @@ export async function searchBrave(
 		blockTrackers?: boolean;
 		useCache?: boolean;
 		count?: number;
+		qualityMode?: boolean;
 		waitUntil?: (promise: Promise<unknown>) => void;
 		/** Country derived from the client IP via proxy headers (e.g. "US", "DE").
 		 *  Only used for the Maps tab to bias Nominatim results geographically.
@@ -920,7 +1283,8 @@ export async function searchBrave(
 		country,
 		filterAds = false,
 		blockAds = false,
-		blockTrackers = false
+		blockTrackers = false,
+		qualityMode = false
 	} = options;
 	const count = Math.min(Math.max(options.count ?? 10, 1), tab === 'images' ? 100 : 20);
 
@@ -938,7 +1302,8 @@ export async function searchBrave(
 			filterAds,
 			blockAds,
 			blockTrackers,
-			count
+			count,
+			qualityMode
 		);
 
 	if (options.useCache) {
@@ -952,7 +1317,8 @@ export async function searchBrave(
 			filterAds,
 			blockAds,
 			blockTrackers,
-			count
+			count,
+			qualityMode
 		);
 		const cached = await cacheGet(key);
 

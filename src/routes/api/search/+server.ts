@@ -67,6 +67,7 @@ export const GET: RequestHandler = async (event) => {
 	const blockAds = event.url.searchParams.get('blockads') === '1';
 	const blockTrackers = event.url.searchParams.get('blocktrackers') === '1';
 	const useCache = event.url.searchParams.get('enablecache') === '1';
+	const qualityMode = event.url.searchParams.get('qualitymode') === '1';
 	const rawCount = parseInt(event.url.searchParams.get('count') ?? '', 10);
 	// Images can return up to 100; other tabs are capped at 20 by Brave.
 	const maxCount = tab === 'images' ? 100 : 20;
@@ -105,6 +106,7 @@ export const GET: RequestHandler = async (event) => {
 				blockTrackers,
 				useCache,
 				count,
+				qualityMode,
 				waitUntil: event.platform?.context?.waitUntil,
 				ipCountry: validIpCountry
 			},

@@ -301,6 +301,14 @@ const defaultSettings: Setting[] = [
 		]
 	},
 	{
+		id: 'quality-mode',
+		name: 'High-quality results mode',
+		description: 'Filter out low-quality sites and prioritize authoritative sources. Removes SEO spam, content farms, and clickbait.',
+		category: 'privacy',
+		type: 'toggle',
+		checked: false
+	},
+	{
 		id: 'search-region',
 		name: 'Search region',
 		description: 'Localise results to a specific country.',
@@ -448,7 +456,7 @@ const defaultSettings: Setting[] = [
 		category: 'appearance',
 		type: 'textarea',
 		value: '',
-		placeholder: '/* Example: Change the accent color */\n:root { --app-accent: #ff6b6b; }'
+		placeholder: '/* Test: Make search button bright red */\nbutton[type="submit"] {\n  color: #ff0000 !important;\n  transform: scale(1.2);\n}'
 	}
 ];
 

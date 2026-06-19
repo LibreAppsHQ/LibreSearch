@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { settingsStore, getToggle, getSelect, ecoActive } from '$lib/stores/settings';
@@ -51,6 +51,7 @@
 	let resultsPerPage = $derived(getSelect($settingsStore, 'results-per-page', '10'));
 	let capResults = $derived(ecoActive($settingsStore, 'eco-cap-results'));
 	let useLocalRegion = $derived(ecoActive($settingsStore, 'eco-local-results'));
+	let qualityMode = $derived(getToggle($settingsStore, 'quality-mode', false));
 
 	function browserRegion(): string {
 		if (typeof navigator === 'undefined') return '';
@@ -66,15 +67,19 @@
 
 	let history = $derived($historyStore);
 
+	// Use a stable key for deduplication to avoid creating new Sets on every keystroke
 	const normalizedSuggestions = $derived.by(() => {
-		// eslint-disable-next-line svelte/prefer-svelte-reactivity -- transient dedupe set, not reactive state
+		// Only recompute when suggestions array reference changes, not on every keystroke
+		if (suggestions.length === 0) return [];
 		const seen = new Set<string>();
-		return suggestions.filter((item) => {
+		const result: string[] = [];
+		for (const item of suggestions) {
 			const n = item.trim().toLowerCase();
-			if (!n || seen.has(n)) return false;
+			if (!n || seen.has(n)) continue;
 			seen.add(n);
-			return true;
-		});
+			result.push(item);
+		}
+		return result;
 	});
 
 	type DropdownItem = { type: 'history' | 'suggestion'; text: string };
@@ -153,6 +158,7 @@
 
 		if (skipSuggestions) {
 			suggestionController?.abort();
+			suggestionController = null;
 			suggestions = [];
 			closeDropdown();
 			return;
@@ -160,6 +166,7 @@
 
 		if (!next) {
 			suggestionController?.abort();
+			suggestionController = null;
 			suggestions = [];
 			keyboardSelected = false;
 			if (autocompleteEnabled && saveHistory && history.length > 0) {
@@ -202,6 +209,11 @@
 				if (currentNonce !== suggestionNonce || controller.signal.aborted) return;
 				suggestions = [];
 				closeDropdown();
+			} finally {
+				// Clean up controller reference after fetch completes
+				if (suggestionController === controller) {
+					suggestionController = null;
+				}
 			}
 		}, 180);
 	}
@@ -298,6 +310,9 @@
 	{/if}
 	{#if effectiveResultsPerPage === '20'}
 		<input type="hidden" name="count" value="20" />
+	{/if}
+	{#if qualityMode}
+		<input type="hidden" name="qualitymode" value="1" />
 	{/if}
 
 	<div

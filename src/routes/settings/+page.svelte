@@ -27,6 +27,7 @@
 		privacy: [
 			{ ids: ['ai-answers'] },
 			{ ids: ['block-ads', 'block-trackers'] },
+			{ ids: ['quality-mode'] },
 			{ ids: ['safe-search', 'filter-ads'] },
 			{ ids: ['strip-tracking', 'no-referrer'] },
 			{ ids: ['request-method'] },
@@ -184,41 +185,51 @@
 			}
 		};
 		reader.readAsText(file);
-	// Reset so the same file can be re-imported if needed
-	(event.currentTarget as HTMLInputElement).value = '';
-}
+		// Reset so the same file can be re-imported if needed
+		(event.currentTarget as HTMLInputElement).value = '';
+	}
 
-function openCssModal() {
-	const setting = draft.find((s) => s.id === 'custom-css');
-	cssDraft = setting && setting.type === 'textarea' ? setting.value : '';
-	showCssModal = true;
-}
+	function openCssModal() {
+		const setting = draft.find((s) => s.id === 'custom-css');
+		cssDraft = setting && setting.type === 'textarea' ? setting.value : '';
+		showCssModal = true;
+	}
 
-function closeCssModal() {
-	showCssModal = false;
-	cssDraft = '';
-}
+	function closeCssModal() {
+		showCssModal = false;
+		cssDraft = '';
+	}
 
-function saveCssModal() {
-	draft = draft.map((s) =>
-		s.id === 'custom-css' && s.type === 'textarea' ? { ...s, value: cssDraft } : s
-	);
-	isDirty = true;
-	showCssModal = false;
-}
+	function saveCssModal() {
+		draft = draft.map((s) =>
+			s.id === 'custom-css' && s.type === 'textarea' ? { ...s, value: cssDraft } : s
+		);
+		isDirty = true;
+		showCssModal = false;
+		// Apply CSS immediately so user can see the effect before saving settings
+		if (typeof document !== 'undefined') {
+			let styleEl = document.getElementById('libresearch-custom-css') as HTMLStyleElement | null;
+			if (!styleEl) {
+				styleEl = document.createElement('style');
+				styleEl.id = 'libresearch-custom-css';
+				document.head.appendChild(styleEl);
+			}
+			styleEl.textContent = cssDraft;
+		}
+	}
 
-function handleCssKeydown(event: KeyboardEvent) {
-	if (!showCssModal) return;
-	if (event.key === 'Escape') closeCssModal();
-}
+	function handleCssKeydown(event: KeyboardEvent) {
+		if (!showCssModal) return;
+		if (event.key === 'Escape') closeCssModal();
+	}
 
-function handleCssInput(event: Event) {
-	cssDraft = (event.currentTarget as HTMLTextAreaElement).value;
-}
+	function handleCssInput(event: Event) {
+		cssDraft = (event.currentTarget as HTMLTextAreaElement).value;
+	}
 </script>
 
 <svelte:head>
-  <title>Settings - LibreSearch</title>
+	<title>Settings - LibreSearch</title>
 </svelte:head>
 
 {#snippet toggleSwitch(id: string, checked: boolean, label: string)}
@@ -354,14 +365,14 @@ function handleCssInput(event: Event) {
 									<p class="text-sm leading-5 text-(--app-muted)">
 										Upload a custom image as the homepage background.
 									</p>
-								<input
-									bind:this={fileInput}
-									type="file"
-									accept="image/*"
-									class="sr-only"
-									aria-label="Upload wallpaper image"
-									onchange={handleWallpaper}
-								/>
+									<input
+										bind:this={fileInput}
+										type="file"
+										accept="image/*"
+										class="sr-only"
+										aria-label="Upload wallpaper image"
+										onchange={handleWallpaper}
+									/>
 									<div class="mt-3 flex items-center gap-3">
 										{#if wallpaper}
 											<div class="relative h-16 w-28 overflow-hidden rounded-md">
@@ -415,7 +426,7 @@ function handleCssInput(event: Event) {
 												<button
 													type="button"
 													onclick={openCssModal}
-													class="shrink-0 rounded-full border border-(--app-border) px-4 py-2 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
+													class="shrink-0 rounded-sm border border-(--app-border) px-4 py-2 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
 												>
 													<i class="fa-solid fa-pen-to-square mr-2 text-xs"></i>
 													{setting.value ? 'Edit CSS' : 'Add CSS'}
@@ -542,8 +553,12 @@ function handleCssInput(event: Event) {
 {#if showCssModal}
 	<div
 		class="fixed inset-0 z-50 flex items-center justify-center bg-(--app-background)/95 backdrop-blur-sm"
-		onclick={(e) => { if (e.target === e.currentTarget) closeCssModal(); }}
-		onkeydown={(e) => { if (e.key === 'Escape') closeCssModal(); }}
+		onclick={(e) => {
+			if (e.target === e.currentTarget) closeCssModal();
+		}}
+		onkeydown={(e) => {
+			if (e.key === 'Escape') closeCssModal();
+		}}
 		role="dialog"
 		aria-modal="true"
 		aria-labelledby="css-modal-title"
@@ -553,7 +568,12 @@ function handleCssInput(event: Event) {
 			class="mx-4 flex h-[80vh] w-full max-w-2xl flex-col rounded-2xl border border-(--app-border) bg-(--app-card) shadow-xl"
 		>
 			<div class="flex items-center justify-between border-b border-(--app-border) px-6 py-4">
-				<h3 id="css-modal-title" class="text-lg font-semibold text-(--app-text)">Custom CSS</h3>
+				<div>
+					<h3 id="css-modal-title" class="text-lg font-semibold text-(--app-text)">Custom CSS</h3>
+					<p class="mt-1 text-xs text-(--app-muted)">
+						Changes apply immediately but click "Save your settings" to persist.
+					</p>
+				</div>
 				<button
 					type="button"
 					onclick={closeCssModal}
@@ -567,7 +587,7 @@ function handleCssInput(event: Event) {
 				<textarea
 					value={cssDraft}
 					oninput={handleCssInput}
-					placeholder="/* Enter your custom CSS here */"
+					placeholder="/* Test CSS - makes search button red and bigger */"
 					class="h-full w-full resize-none rounded-xl border border-(--app-border) bg-(--app-background) p-4 font-mono text-sm text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:outline-none"
 					aria-label="Custom CSS"
 				></textarea>

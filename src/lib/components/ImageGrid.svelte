@@ -92,11 +92,22 @@
 		else if (event.key === 'ArrowRight') step(1);
 	}
 
+	// Track previous selected value to only add/remove listener when crossing null boundary
+	let prevSelected: number | null = $state(null);
+	
 	$effect(() => {
-		if (selected === null) return;
-		const onResize = () => selected !== null && computeLayout(selected);
-		window.addEventListener('resize', onResize);
-		return () => window.removeEventListener('resize', onResize);
+		// Only act when transitioning between null and non-null
+		if (selected !== null && prevSelected === null) {
+			const onResize = () => selected !== null && computeLayout(selected);
+			window.addEventListener('resize', onResize);
+			prevSelected = selected;
+			return () => {
+				window.removeEventListener('resize', onResize);
+				prevSelected = null;
+			};
+		} else if (selected === null) {
+			prevSelected = null;
+		}
 	});
 
 	$effect(() => {

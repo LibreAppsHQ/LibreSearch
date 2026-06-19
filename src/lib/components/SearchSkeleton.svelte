@@ -11,7 +11,11 @@
 </script>
 
 <div class="animate-fade-in" aria-busy="true" aria-live="polite">
-	<span class="sr-only">Loading results…</span>
+	<div class="mb-4 flex items-center gap-2 text-sm text-(--app-muted)">
+		<i class="fa-solid fa-circle-notch fa-spin"></i>
+		<span class="sr-only">Loading</span>
+		<span>Loading results…</span>
+	</div>
 
 	{#if tab === 'images'}
 		<div class="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">

@@ -87,6 +87,7 @@
 	let safesearch = $derived(
 		getSelect($settingsStore, 'safe-search', 'moderate') as 'strict' | 'moderate' | 'low'
 	);
+	let qualityMode = $derived(getToggle($settingsStore, 'quality-mode', false));
 	let skipRichAnswers = $derived(ecoActive($settingsStore, 'eco-skip-rich-answers'));
 	let instantAnswers = $derived(
 		getToggle($settingsStore, 'instant-answers', true) && !skipRichAnswers
@@ -96,7 +97,9 @@
 	let resultsContainerClass = $derived(
 		data.tab === 'images'
 			? 'mx-auto w-full px-2 pt-5 pb-16'
-			: 'mx-auto w-full max-w-[1200px] px-4 pt-5 pb-16 sm:px-6 sm:pr-6'
+			: data.tab === 'ai'
+				? 'w-full fixed bottom-0 left-0 right-0 top-[120px]'
+				: 'mx-auto w-full max-w-[1200px] px-4 pt-5 pb-16 sm:px-6 sm:pr-6'
 	);
 
 	// Show skeletons while a search navigation is in flight so stale results
@@ -177,6 +180,7 @@
 		if (data.freshness) params.set('f', data.freshness);
 		if (data.safe !== 'moderate') params.set('safe', data.safe);
 		if (data.region) params.set('region', data.region);
+		if (qualityMode) params.set('qualitymode', '1');
 		for (const [k, v] of Object.entries(overrides)) {
 			if (v === undefined || v === '') params.delete(k);
 			else params.set(k, v);
@@ -340,7 +344,7 @@
 							: 'max-w-2xl'
 						: showInfoboxPanel
 							? 'max-w-2xl min-w-0 flex-1'
-							: data.tab === 'images' || data.tab === 'videos' || data.tab === 'maps'
+							: data.tab === 'images' || data.tab === 'videos' || data.tab === 'maps' || data.tab === 'ai'
 								? 'w-full'
 								: 'max-w-2xl'}
 				>
@@ -473,6 +477,15 @@
 							{@render pagination()}
 						{:else if data.query && !data.error}
 							<NoResults query={data.query} tab="maps" />
+						{/if}
+					{:else if data.tab === 'ai'}
+						{#if data.query}
+							<Lazy
+								load={() => import('$lib/components/AiChat.svelte')}
+								query={data.query}
+							/>
+						{:else}
+							<p class="text-sm text-(--app-muted)">Enter a search query to start AI chat.</p>
 						{/if}
 					{/if}
 				</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SearchTab } from '$lib/search';
-	import { settingsStore, getSelect } from '$lib/stores/settings';
+	import { settingsStore, getSelect, getToggle } from '$lib/stores/settings';
 
 	let { current, query, freshness, filtersOpen, ontogglefilters } = $props<{
 		current: SearchTab;
@@ -9,6 +9,8 @@
 		filtersOpen?: boolean;
 		ontogglefilters?: () => void;
 	}>();
+
+	let aiAnswersEnabled = $derived(getToggle($settingsStore, 'ai-answers', false));
 
 	const tabs: Array<{ id: SearchTab; label: string }> = [
 		{ id: 'web', label: 'All' },
@@ -38,6 +40,21 @@
 </script>
 
 <nav class="flex w-full max-w-3xl items-center gap-0.5" aria-label="Search type">
+	<!-- AI Mode tab - commented out for now
+	{#if aiAnswersEnabled}
+		{#if isPost}
+			<form method="POST" action="/search">
+				<input type="hidden" name="q" value={query} />
+				<input type="hidden" name="t" value="ai" />
+				{#if freshness}<input type="hidden" name="f" value={freshness} />{/if}
+				<button type="submit" class={tabClass('ai')}>AI Mode</button>
+			</form>
+		{:else}
+			<a href={tabHref('ai')} class={tabClass('ai')}>AI Mode</a>
+		{/if}
+	{/if}
+	-->
+
 	{#each tabs as tab (tab.id)}
 		{#if isPost}
 			<form method="POST" action="/search">

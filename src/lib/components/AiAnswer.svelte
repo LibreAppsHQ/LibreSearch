@@ -55,7 +55,7 @@
 
 {#if loading || answer}
 	<section
-		class="mb-5 rounded-lg border border-(--app-border) bg-(--app-surface) p-4"
+		class="mb-5 rounded-sm border border-(--app-border) bg-(--app-surface) p-4"
 		aria-label="AI answer"
 	>
 		<div class="mb-2 flex items-center gap-2 text-xs font-semibold text-(--app-accent)">
@@ -65,7 +65,10 @@
 		</div>
 
 		{#if loading}
-			<p class="text-sm text-(--app-muted)">Generating an answer…</p>
+			<div class="flex items-center gap-2 text-sm text-(--app-muted)">
+				<i class="fa-solid fa-circle-notch fa-spin"></i>
+				<span>Generating an answer…</span>
+			</div>
 		{:else if answer}
 			<p class="text-sm leading-6 whitespace-pre-line text-(--app-text)">{answer}</p>
 

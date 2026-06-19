@@ -13,7 +13,8 @@
 		videos: { label: 'Videos', icon: 'fa-play' },
 		images: { label: 'Images', icon: 'fa-image' },
 		shopping: { label: 'Shopping', icon: 'fa-bag-shopping' },
-		maps: { label: 'Maps', icon: 'fa-location-dot' }
+		maps: { label: 'Maps', icon: 'fa-location-dot' },
+		ai: { label: 'AI Mode', icon: 'fa-robot' }
 	};
 
 	let others = $derived((Object.keys(tabMeta) as SearchTab[]).filter((t) => t !== tab));

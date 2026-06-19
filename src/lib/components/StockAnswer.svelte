@@ -115,7 +115,10 @@
 	>
 		{#if loading && !quote}
 			<div class="p-5">
-				<div class="h-4 w-32 animate-pulse rounded bg-(--app-hover)"></div>
+				<div class="flex items-center gap-2 text-sm text-(--app-muted)">
+					<i class="fa-solid fa-circle-notch fa-spin"></i>
+					<span>Loading stock data…</span>
+				</div>
 				<div class="mt-3 h-9 w-40 animate-pulse rounded bg-(--app-hover)"></div>
 				<div class="mt-4 h-40 w-full animate-pulse rounded bg-(--app-hover)"></div>
 			</div>

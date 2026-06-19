@@ -3,6 +3,14 @@
 
 	let terms = $state<string[]>([]);
 	let strip = $state<HTMLDivElement>();
+	let canScrollLeft = $state(false);
+	let canScrollRight = $state(false);
+
+	function updateScrollState() {
+		if (!strip) return;
+		canScrollLeft = strip.scrollLeft > 0;
+		canScrollRight = strip.scrollLeft < strip.scrollWidth - strip.clientWidth - 1;
+	}
 
 	$effect(() => {
 		const q = query.trim();
@@ -25,6 +33,8 @@
 					.map((t) => t.trim())
 					.filter((t) => t && t.toLowerCase() !== lower)
 					.slice(0, 14);
+				// Wait for DOM update then check scroll state
+				setTimeout(updateScrollState, 0);
 			} catch {
 				/* ignore */
 			}
@@ -37,6 +47,10 @@
 		return `/search?q=${encodeURIComponent(term)}&t=images`;
 	}
 
+	function scrollLeft() {
+		strip?.scrollBy({ left: -320, behavior: 'smooth' });
+	}
+
 	function scrollRight() {
 		strip?.scrollBy({ left: 320, behavior: 'smooth' });
 	}
@@ -44,9 +58,22 @@
 
 {#if terms.length > 0}
 	<div class="relative mb-4">
+		<!-- Scroll left button -->
+		{#if canScrollLeft}
+			<button
+				type="button"
+				aria-label="Scroll left"
+				onclick={scrollLeft}
+				class="absolute top-0 left-0 z-10 flex h-full w-10 items-center justify-start bg-gradient-to-r from-(--app-background) via-(--app-background) to-transparent text-(--app-muted) transition hover:text-(--app-button-hover)"
+			>
+				<i class="fa-solid fa-chevron-left"></i>
+			</button>
+		{/if}
+
 		<div
 			bind:this={strip}
-			class="flex [scrollbar-width:none] gap-2 overflow-x-auto pr-10 [&::-webkit-scrollbar]:hidden"
+			onscroll={updateScrollState}
+			class="flex [scrollbar-width:none] gap-2 overflow-x-auto px-10 [&::-webkit-scrollbar]:hidden"
 		>
 			{#each terms as term (term)}
 				<a
@@ -61,13 +88,16 @@
 			{/each}
 		</div>
 
-		<button
-			type="button"
-			aria-label="Scroll related searches"
-			onclick={scrollRight}
-			class="absolute top-0 right-0 flex h-full w-10 items-center justify-end bg-gradient-to-l from-(--app-background) via-(--app-background) to-transparent text-(--app-muted) transition hover:text-(--app-button-hover)"
-		>
-			<i class="fa-solid fa-chevron-right"></i>
-		</button>
+		<!-- Scroll right button -->
+		{#if canScrollRight}
+			<button
+				type="button"
+				aria-label="Scroll right"
+				onclick={scrollRight}
+				class="absolute top-0 right-0 flex h-full w-10 items-center justify-end bg-gradient-to-l from-(--app-background) via-(--app-background) to-transparent text-(--app-muted) transition hover:text-(--app-button-hover)"
+			>
+				<i class="fa-solid fa-chevron-right"></i>
+			</button>
+		{/if}
 	</div>
 {/if}

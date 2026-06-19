@@ -115,6 +115,28 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 	const filterAds = get('filterads') === '1';
 	const blockAds = get('blockads') === '1';
 	const blockTrackers = get('blocktrackers') === '1';
+	const qualityMode = get('qualitymode') === '1';
+
+	// AI mode doesn't need search results - just return the query
+	if (tab === 'ai') {
+		return {
+			query,
+			tab,
+			freshness,
+			region,
+			safe,
+			page,
+			count,
+			challengeRequired: false,
+			error: '',
+			results: [],
+			newsResults: undefined,
+			videoResults: undefined,
+			imageResults: undefined,
+			placeResults: undefined,
+			infobox: undefined
+		};
+	}
 
 	const apiParams = new URLSearchParams({ q: query, t: tab });
 	// Brave's `offset` is a page index (skips offset × count results), max 9.
@@ -126,6 +148,7 @@ async function runSearch(event: RequestEvent, get: ParamGetter) {
 	if (blockAds) apiParams.set('blockads', '1');
 	if (blockTrackers) apiParams.set('blocktrackers', '1');
 	if (enableCache) apiParams.set('enablecache', '1');
+	if (qualityMode) apiParams.set('qualitymode', '1');
 	if (count !== 10) apiParams.set('count', String(count));
 
 	// Pass the client's country from edge proxy headers to the internal API

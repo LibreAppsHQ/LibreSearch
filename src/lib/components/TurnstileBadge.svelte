@@ -1,5 +1,5 @@
 <script lang="ts">
-	const Logo = '/favicon.svg';
+	const Logo = '$lib/assets/turnstile.png';
 </script>
 
 <div class="group fixed top-1/2 right-0 z-40 -translate-y-1/2">
