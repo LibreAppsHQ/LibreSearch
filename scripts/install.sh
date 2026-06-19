@@ -1,14 +1,14 @@
 #!/usr/bin/env sh
 # LibreSearch self-host installer.
 #
-#   curl -fsSL https://raw.githubusercontent.com/LibreAppsHQ/LibreSearch/main/scripts/install.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/Arcbasehq/LibreSearch/main/scripts/install.sh | sh
 #
 # Creates ./libresearch with docker-compose.yml + .env, generates secrets,
 # asks for a search backend, and starts the stack.
 
 set -eu
 
-REPO_RAW="https://raw.githubusercontent.com/LibreAppsHQ/LibreSearch/main"
+REPO_RAW="https://raw.githubusercontent.com/Arcbasehq/LibreSearch/main"
 DIR="${LIBRESEARCH_DIR:-libresearch}"
 
 say()  { printf '\033[1;36m[libresearch]\033[0m %s\n' "$*"; }

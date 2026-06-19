@@ -353,14 +353,14 @@
 		<p class="text-sm text-(--app-muted)">
 			Every release, dated and tagged. Subscribe via
 			<a
-				href="https://github.com/LibreAppsHQ/LibreSearch/releases.atom"
+				href="https://github.com/Arcbasehq/LibreSearch/releases.atom"
 				class="text-(--app-accent) hover:underline"
 				target="_blank"
 				rel="noopener noreferrer">RSS</a
 			>
 			or
 			<a
-				href="https://github.com/LibreAppsHQ/LibreSearch/releases"
+				href="https://github.com/Arcbasehq/LibreSearch/releases"
 				class="text-(--app-accent) hover:underline"
 				target="_blank"
 				rel="noopener noreferrer">GitHub releases</a

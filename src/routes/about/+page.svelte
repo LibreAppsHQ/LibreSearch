@@ -16,7 +16,7 @@
 			description:
 				'A private, eco-conscious search engine with no tracking, no profiles, and no ads.',
 			sameAs: [
-				'https://github.com/LibreAppsHQ/LibreSearch',
+				'https://github.com/Arcbasehq/LibreSearch',
 				'https://mastodon.social/@libresearch',
 				'https://x.com/libresearchca'
 			]

@@ -57,6 +57,8 @@
 	let wallpaper = $state<string | null>(null);
 	let fileInput = $state<HTMLInputElement | null>(null);
 	let showResetModal = $state(false);
+	let showCssModal = $state(false);
+	let cssDraft = $state('');
 
 	onMount(() => {
 		wallpaper = getWallpaper();
@@ -182,9 +184,37 @@
 			}
 		};
 		reader.readAsText(file);
-		// Reset so the same file can be re-imported if needed
-		(event.currentTarget as HTMLInputElement).value = '';
-	}
+	// Reset so the same file can be re-imported if needed
+	(event.currentTarget as HTMLInputElement).value = '';
+}
+
+function openCssModal() {
+	const setting = draft.find((s) => s.id === 'custom-css');
+	cssDraft = setting && setting.type === 'textarea' ? setting.value : '';
+	showCssModal = true;
+}
+
+function closeCssModal() {
+	showCssModal = false;
+	cssDraft = '';
+}
+
+function saveCssModal() {
+	draft = draft.map((s) =>
+		s.id === 'custom-css' && s.type === 'textarea' ? { ...s, value: cssDraft } : s
+	);
+	isDirty = true;
+	showCssModal = false;
+}
+
+function handleCssKeydown(event: KeyboardEvent) {
+	if (!showCssModal) return;
+	if (event.key === 'Escape') closeCssModal();
+}
+
+function handleCssInput(event: Event) {
+	cssDraft = (event.currentTarget as HTMLTextAreaElement).value;
+}
 </script>
 
 <svelte:head>
@@ -373,8 +403,8 @@
 									{@const setting = getSetting(id)}
 									{#if setting}
 										{#if setting.type === 'textarea'}
-											<div class="px-5 py-4">
-												<div class="mb-2 space-y-0.5">
+											<div class="flex items-center justify-between gap-8 px-5 py-4">
+												<div class="min-w-0 space-y-0.5">
 													<p class="text-[15px] font-semibold text-(--app-text)">
 														{setting.name}
 													</p>
@@ -382,13 +412,14 @@
 														{setting.description}
 													</p>
 												</div>
-												<textarea
-													value={setting.value}
-													placeholder={setting.placeholder}
-													oninput={(e) => handleTextarea(setting.id, e.currentTarget.value)}
-													class="mt-2 h-48 w-full resize-y rounded-md border border-(--app-border) bg-(--app-background) p-3 font-mono text-sm text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:outline-none"
-													aria-label={setting.name}
-												></textarea>
+												<button
+													type="button"
+													onclick={openCssModal}
+													class="shrink-0 rounded-full border border-(--app-border) px-4 py-2 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover) hover:text-(--app-button-hover)"
+												>
+													<i class="fa-solid fa-pen-to-square mr-2 text-xs"></i>
+													{setting.value ? 'Edit CSS' : 'Add CSS'}
+												</button>
 											</div>
 										{:else}
 											<div class="flex items-center justify-between gap-8 px-5 py-4">
@@ -507,5 +538,60 @@
 	onconfirm={doReset}
 	oncancel={() => (showResetModal = false)}
 />
+
+{#if showCssModal}
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-(--app-background)/95 backdrop-blur-sm"
+		onclick={(e) => { if (e.target === e.currentTarget) closeCssModal(); }}
+		onkeydown={(e) => { if (e.key === 'Escape') closeCssModal(); }}
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="css-modal-title"
+		tabindex="-1"
+	>
+		<div
+			class="mx-4 flex h-[80vh] w-full max-w-2xl flex-col rounded-2xl border border-(--app-border) bg-(--app-card) shadow-xl"
+		>
+			<div class="flex items-center justify-between border-b border-(--app-border) px-6 py-4">
+				<h3 id="css-modal-title" class="text-lg font-semibold text-(--app-text)">Custom CSS</h3>
+				<button
+					type="button"
+					onclick={closeCssModal}
+					class="inline-flex h-8 w-8 items-center justify-center rounded-lg text-(--app-muted) transition hover:bg-(--app-hover) hover:text-(--app-text)"
+					aria-label="Close"
+				>
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+			</div>
+			<div class="flex-1 p-4">
+				<textarea
+					value={cssDraft}
+					oninput={handleCssInput}
+					placeholder="/* Enter your custom CSS here */"
+					class="h-full w-full resize-none rounded-xl border border-(--app-border) bg-(--app-background) p-4 font-mono text-sm text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:outline-none"
+					aria-label="Custom CSS"
+				></textarea>
+			</div>
+			<div class="flex items-center justify-end gap-3 border-t border-(--app-border) px-6 py-4">
+				<button
+					type="button"
+					onclick={closeCssModal}
+					class="rounded-full border border-(--app-border) px-5 py-2 text-sm font-medium text-(--app-button) transition hover:bg-(--app-hover)"
+				>
+					Cancel
+				</button>
+				<button
+					type="button"
+					onclick={saveCssModal}
+					class="rounded-full bg-(--app-accent) px-5 py-2 text-sm font-semibold text-[#111111] transition hover:opacity-90"
+				>
+					Save CSS
+				</button>
+			</div>
+		</div>
+	</div>
+{/if}
+
+<svelte:window onkeydown={handleCssKeydown} />
 
 <SiteFooter />

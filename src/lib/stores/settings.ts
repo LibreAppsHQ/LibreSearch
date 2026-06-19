@@ -446,8 +446,9 @@ const defaultSettings: Setting[] = [
 		name: 'Custom CSS',
 		description: 'Add your own CSS to customize the look of LibreSearch.',
 		category: 'appearance',
-		type: 'toggle',
-		checked: false
+		type: 'textarea',
+		value: '',
+		placeholder: '/* Example: Change the accent color */\n:root { --app-accent: #ff6b6b; }'
 	}
 ];
 

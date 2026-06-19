@@ -42,7 +42,7 @@
 			heroIcon: '/ex-icon.png',
 			heroIconType: 'img',
 			accent: 'text-(--app-accent)',
-			githubPath: 'LibreAppsHQ/LibreSearch/tree/main/extension',
+			githubPath: 'Arcbasehq/LibreSearch/tree/main/extension',
 			browsers: [
 				{
 					name: 'Microsoft Edge',
@@ -108,7 +108,7 @@
 			heroIcon: '/guard.png',
 			heroIconType: 'img',
 			accent: 'text-emerald-400',
-			githubPath: 'LibreAppsHQ/LibreGuard',
+			githubPath: 'Arcbasehq/LibreGuard',
 			browsers: [
 				{
 					name: 'Microsoft Edge',

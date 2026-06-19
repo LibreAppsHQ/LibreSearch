@@ -537,7 +537,7 @@
 		<!-- Right: social icons -->
 		<div class="flex items-center justify-end gap-2">
 			<a
-				href="https://github.com/LibreAppsHQ/LibreSearch"
+				href="https://github.com/Arcbasehq/LibreSearch"
 				target="_blank"
 				rel="noopener noreferrer"
 				aria-label="GitHub"

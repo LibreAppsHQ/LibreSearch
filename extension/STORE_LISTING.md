@@ -41,7 +41,7 @@ Permissions explained:
 • "contextMenus" - adds the right-click "Search LibreSearch for X" entry. Only sees text you explicitly highlight and choose to send.
 • "storage" - stores your preferences across devices.
 
-Open source under AGPL-3.0. Source: https://github.com/LibreAppsHQ/LibreSearch
+Open source under AGPL-3.0. Source: https://github.com/Arcbasehq/LibreSearch
 Learn more: https://libresearch.ca
 Privacy policy: https://libresearch.ca/privacy
 ```
@@ -106,7 +106,7 @@ Skip these for v0.1.0; add for v0.2 once you've gathered feedback.
 
 - **Notes for certification**: paste this into the "Notes for certification" box so the reviewer doesn't get tripped up:
 
-  > This extension adds LibreSearch (https://libresearch.ca) as a selectable search engine via `chrome_settings_overrides.search_provider` with `is_default: false`. It does NOT silently change the user's default - the user must promote it via Edge's search engine settings. The popup, omnibox keyword `libre`, and right-click context menu all open searches on libresearch.ca only. No host_permissions are requested. Source: https://github.com/LibreAppsHQ/LibreSearch
+  > This extension adds LibreSearch (https://libresearch.ca) as a selectable search engine via `chrome_settings_overrides.search_provider` with `is_default: false`. It does NOT silently change the user's default - the user must promote it via Edge's search engine settings. The popup, omnibox keyword `libre`, and right-click context menu all open searches on libresearch.ca only. No host_permissions are requested. Source: https://github.com/Arcbasehq/LibreSearch
 
 - **Country availability**: Worldwide is fine.
 - **Age rating**: 3+ (no objectionable content).

@@ -276,7 +276,7 @@
 							>{contactEmail}</a
 						>, or file non-sensitive issues and feature requests on our
 						<a
-							href="https://github.com/LibreAppsHQ/LibreSearch/issues"
+							href="https://github.com/Arcbasehq/LibreSearch/issues"
 							target="_blank"
 							rel="noopener noreferrer"
 							class="text-(--app-accent) hover:underline">GitHub repo</a
