@@ -182,8 +182,7 @@
 </script>
 
 <svelte:head>
-	<title>Settings - LibreSearch</title>
-	<meta name="robots" content="noindex, nofollow" />
+  <title>Settings - LibreSearch</title>
 </svelte:head>
 
 {#snippet toggleSwitch(id: string, checked: boolean, label: string)}

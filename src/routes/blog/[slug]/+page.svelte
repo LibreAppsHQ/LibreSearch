@@ -17,6 +17,40 @@
 			day: 'numeric'
 		});
 	}
+
+	const jsonLd = $derived(
+		`<script type="application/ld+json">` +
+			JSON.stringify({
+				'@context': 'https://schema.org',
+				'@type': 'BlogPosting',
+				headline: post.title,
+				description: post.description,
+				datePublished: post.date,
+				dateModified: post.date,
+				author: {
+					'@type': 'Organization',
+					name: post.author,
+					url: 'https://libresearch.ca/about'
+				},
+				publisher: {
+					'@type': 'Organization',
+					name: 'LibreSearch',
+					url: 'https://libresearch.ca',
+					logo: {
+						'@type': 'ImageObject',
+						url: 'https://libresearch.ca/2.svg'
+					}
+				},
+				mainEntityOfPage: {
+					'@type': 'WebPage',
+					'@id': 'https://libresearch.ca/blog/' + post.slug
+				},
+				keywords: post.category,
+				inLanguage: 'en'
+			}) +
+			'</' +
+			'script>'
+	);
 </script>
 
 <svelte:head>
@@ -29,6 +63,9 @@
 	<meta property="og:url" content="https://libresearch.ca/blog/{post.slug}" />
 	<meta property="og:image" content="https://libresearch.ca/og-image.png" />
 	<meta property="article:published_time" content={post.date} />
+	<!-- JSON-LD: BlogPosting structured data -->
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -- trusted, static structured data -->
+	{@html jsonLd}
 </svelte:head>
 
 <header class="sticky top-0 z-20 bg-(--app-background)">

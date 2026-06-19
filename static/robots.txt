@@ -1,8 +1,4 @@
 User-agent: *
-Disallow: /search
 Disallow: /api
-Disallow: /settings
-Disallow: /themes
-Disallow: /design
 
 Sitemap: https://libresearch.ca/sitemap.xml

@@ -5,12 +5,11 @@
 </script>
 
 <svelte:head>
-	<title>About the design - LibreSearch</title>
-	<meta name="robots" content="noindex, nofollow" />
-	<meta
-		name="description"
-		content="Why LibreSearch's interface looks a lot like Startpage's — an honest note on design inspiration."
-	/>
+  <title>About the design - LibreSearch</title>
+  <meta
+    name="description"
+    content="Why LibreSearch's interface looks a lot like Startpage's — an honest note on design inspiration."
+  />
 </svelte:head>
 
 <!-- Sticky header -->

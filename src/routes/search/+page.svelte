@@ -237,8 +237,7 @@
 </script>
 
 <svelte:head>
-	<title>{data.query ? `${data.query} - LibreSearch` : 'LibreSearch'}</title>
-	<meta name="robots" content="noindex, noarchive, nofollow" />
+<title>{data.query ? `${data.query} - LibreSearch` : 'LibreSearch'}</title>
 </svelte:head>
 
 <main class="min-h-screen bg-(--app-background) text-(--app-text)">
