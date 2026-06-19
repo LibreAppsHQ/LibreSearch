@@ -67,7 +67,7 @@
 	const facts = [
 		{ label: 'Operating entity', value: 'LibreSearch HQ' },
 		{ label: 'Primary jurisdiction', value: 'Canada' },
-		{ label: 'License', value: 'AGPL-3.0 (source: github.com/Arcbasehq/LibreSearch)' },
+		{ label: 'License', value: 'AGPL-3.0 (source: github.com/LibreAppsHQ/LibreSearch)' },
 		{ label: 'Funding model', value: 'Donations — no ads, no data sales' },
 		{ label: 'Security contact', value: '/contact (subject: Security disclosure)' },
 		{ label: 'Security disclosure', value: '/.well-known/security.txt (RFC 9116)' }

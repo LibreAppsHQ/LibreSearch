@@ -11,7 +11,7 @@ disabled when unconfigured. A self-hosted instance sends no telemetry.
 ## One-line install (recommended)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Arcbasehq/LibreSearch/main/scripts/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/LibreAppsHQ/LibreSearch/main/scripts/install.sh | sh
 ```
 
 Checks for Docker, downloads the compose file, generates secrets, asks which

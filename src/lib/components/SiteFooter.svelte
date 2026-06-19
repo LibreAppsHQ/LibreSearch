@@ -202,7 +202,7 @@
 			</div>
 			<div class="flex items-center gap-4">
 				<a
-					href="https://github.com/Arcbasehq/LibreSearch"
+					href="https://github.com/LibreAppsHQ/LibreSearch"
 					target="_blank"
 					rel="noopener noreferrer"
 					aria-label="GitHub"

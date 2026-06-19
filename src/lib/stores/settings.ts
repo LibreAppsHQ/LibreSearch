@@ -21,7 +21,17 @@ export interface SelectSetting {
 	options: Array<{ label: string; value: string }>;
 }
 
-export type Setting = ToggleSetting | SelectSetting;
+export interface TextareaSetting {
+	id: string;
+	name: string;
+	description: string;
+	category: SettingCategory;
+	type: 'textarea';
+	value: string;
+	placeholder?: string;
+}
+
+export type Setting = ToggleSetting | SelectSetting | TextareaSetting;
 
 const defaultSettings: Setting[] = [
 	// ── General ──────────────────────────────────────────────────
@@ -428,6 +438,16 @@ const defaultSettings: Setting[] = [
 		category: 'eco',
 		type: 'toggle',
 		checked: false
+	},
+
+	// ── Advanced ─────────────────────────────────────────────────
+	{
+		id: 'custom-css',
+		name: 'Custom CSS',
+		description: 'Add your own CSS to customize the look of LibreSearch.',
+		category: 'appearance',
+		type: 'toggle',
+		checked: false
 	}
 ];
 
@@ -440,6 +460,12 @@ export function getToggle(settings: Setting[], id: string, defaultValue = true):
 export function getSelect(settings: Setting[], id: string, defaultValue = ''): string {
 	const s = settings.find((s) => s.id === id);
 	if (!s || s.type !== 'select') return defaultValue;
+	return s.value;
+}
+
+export function getTextarea(settings: Setting[], id: string, defaultValue = ''): string {
+	const s = settings.find((s) => s.id === id);
+	if (!s || s.type !== 'textarea') return defaultValue;
 	return s.value;
 }
 
@@ -457,6 +483,9 @@ function mergeWithDefaults(stored: unknown[]): Setting[] {
 			return { ...def, checked: found.checked };
 		}
 		if (def.type === 'select' && found.type === 'select') {
+			return { ...def, value: found.value };
+		}
+		if (def.type === 'textarea' && found.type === 'textarea') {
 			return { ...def, value: found.value };
 		}
 		return def;
@@ -495,6 +524,17 @@ function createSettingsStore() {
 			update((settings) => {
 				const updated = settings.map((s) =>
 					s.id === id && s.type === 'select' ? { ...s, value } : s
+				);
+				if (typeof window !== 'undefined') {
+					window.localStorage.setItem('LibreSearch:settings', JSON.stringify(updated));
+				}
+				return updated;
+			});
+		},
+		textarea: (id: string, value: string) => {
+			update((settings) => {
+				const updated = settings.map((s) =>
+					s.id === id && s.type === 'textarea' ? { ...s, value } : s
 				);
 				if (typeof window !== 'undefined') {
 					window.localStorage.setItem('LibreSearch:settings', JSON.stringify(updated));

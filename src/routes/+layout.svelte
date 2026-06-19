@@ -2,7 +2,7 @@
 	import './layout.css';
 	import { browser, dev } from '$app/environment';
 	import { themeStore } from '$lib/stores/theme';
-	import { settingsStore, getToggle, ecoActive } from '$lib/stores/settings';
+	import { settingsStore, getToggle, getTextarea, ecoActive } from '$lib/stores/settings';
 	import { historyStore } from '$lib/stores/history';
 	import { onMount } from 'svelte';
 	import { beforeNavigate } from '$app/navigation';
@@ -43,6 +43,20 @@
 	$effect(() => {
 		if (!browser) return;
 		if (ecoPreferDark) themeStore.setTheme('dark');
+	});
+
+	// Apply custom CSS from settings
+	let customCss = $derived(getTextarea($settingsStore, 'custom-css', ''));
+
+	$effect(() => {
+		if (!browser) return;
+		let styleEl = document.getElementById('libresearch-custom-css') as HTMLStyleElement | null;
+		if (!styleEl) {
+			styleEl = document.createElement('style');
+			styleEl.id = 'libresearch-custom-css';
+			document.head.appendChild(styleEl);
+		}
+		styleEl.textContent = customCss;
 	});
 
 	function handleKeydown(event: KeyboardEvent) {

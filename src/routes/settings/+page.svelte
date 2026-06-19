@@ -21,7 +21,8 @@
 			{ ids: ['show-favicons', 'show-sitelinks', 'show-age'] },
 			{ ids: ['compact-results', 'reduce-motion'] },
 			{ ids: ['results-per-page', 'temperature-unit'] },
-			{ ids: ['show-clock', 'datetime-format', 'clock-show-date', 'clock-show-seconds'] }
+			{ ids: ['show-clock', 'datetime-format', 'clock-show-date', 'clock-show-seconds'] },
+			{ ids: ['custom-css'] }
 		],
 		privacy: [
 			{ ids: ['ai-answers'] },
@@ -98,6 +99,11 @@
 
 	function handleSelect(id: string, value: string) {
 		draft = draft.map((s) => (s.id === id && s.type === 'select' ? { ...s, value } : s));
+		isDirty = true;
+	}
+
+	function handleTextarea(id: string, value: string) {
+		draft = draft.map((s) => (s.id === id && s.type === 'textarea' ? { ...s, value } : s));
 		isDirty = true;
 	}
 
@@ -366,27 +372,47 @@
 								{#each group.ids as id (id)}
 									{@const setting = getSetting(id)}
 									{#if setting}
-										<div class="flex items-center justify-between gap-8 px-5 py-4">
-											<div class="min-w-0 space-y-0.5">
-												<p class="text-[15px] font-semibold text-(--app-text)">
-													{setting.name}
-												</p>
-												<p class="text-sm leading-5 text-(--app-muted)">
-													{setting.description}
-												</p>
-											</div>
-
-											{#if setting.type === 'toggle'}
-												{@render toggleSwitch(setting.id, setting.checked, setting.name)}
-											{:else if setting.type === 'select'}
-												<CustomSelect
+										{#if setting.type === 'textarea'}
+											<div class="px-5 py-4">
+												<div class="mb-2 space-y-0.5">
+													<p class="text-[15px] font-semibold text-(--app-text)">
+														{setting.name}
+													</p>
+													<p class="text-sm leading-5 text-(--app-muted)">
+														{setting.description}
+													</p>
+												</div>
+												<textarea
 													value={setting.value}
-													options={setting.options}
-													onchange={(val) => handleSelect(setting.id, val)}
+													placeholder={setting.placeholder}
+													oninput={(e) => handleTextarea(setting.id, e.currentTarget.value)}
+													class="mt-2 h-48 w-full resize-y rounded-md border border-(--app-border) bg-(--app-background) p-3 font-mono text-sm text-(--app-text) placeholder:text-(--app-muted) focus:border-(--app-accent) focus:outline-none"
 													aria-label={setting.name}
-												/>
-											{/if}
-										</div>
+												></textarea>
+											</div>
+										{:else}
+											<div class="flex items-center justify-between gap-8 px-5 py-4">
+												<div class="min-w-0 space-y-0.5">
+													<p class="text-[15px] font-semibold text-(--app-text)">
+														{setting.name}
+													</p>
+													<p class="text-sm leading-5 text-(--app-muted)">
+														{setting.description}
+													</p>
+												</div>
+
+												{#if setting.type === 'toggle'}
+													{@render toggleSwitch(setting.id, setting.checked, setting.name)}
+												{:else if setting.type === 'select'}
+													<CustomSelect
+														value={setting.value}
+														options={setting.options}
+														onchange={(val) => handleSelect(setting.id, val)}
+														aria-label={setting.name}
+													/>
+												{/if}
+											</div>
+										{/if}
 									{/if}
 								{/each}
 

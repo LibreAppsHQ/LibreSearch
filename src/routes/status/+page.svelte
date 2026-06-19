@@ -292,7 +292,7 @@
 				<p>
 					Seeing red and we haven't said anything? File a quick note on the
 					<a
-						href="https://github.com/Arcbasehq/LibreSearch/issues"
+						href="https://github.com/LibreAppsHQ/LibreSearch/issues"
 						target="_blank"
 						rel="noopener noreferrer"
 						class="text-(--app-accent) hover:underline">GitHub issues</a
