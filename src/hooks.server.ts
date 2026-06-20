@@ -61,13 +61,14 @@ const SECURITY_HEADERS: Record<string, string> = {
 // analytics/Sentry/Appwrite gets a strictly first-party policy.
 const onVercel = Boolean(process.env.VERCEL);
 const SCRIPT_HOSTS = onVercel
-	? ' https://va.vercel-scripts.com https://cloud.umami.is https://challenges.cloudflare.com'
-	: ' https://challenges.cloudflare.com';
+	? ' https://va.vercel-scripts.com https://cloud.umami.is https://challenges.cloudflare.com https://track.libreapps.xyz'
+	: ' https://challenges.cloudflare.com https://track.libreapps.xyz';
 const CONNECT_HOSTS = [
 	'https://api.web3forms.com',
 	...(onVercel ? ['https://vitals.vercel-insights.com', 'https://cloud.umami.is'] : []),
 	...(SENTRY_DSN ? ['https://*.ingest.us.sentry.io'] : []),
-	...(process.env.PUBLIC_APPWRITE_ENDPOINT || onVercel ? ['https://*.cloud.appwrite.io'] : [])
+	...(process.env.PUBLIC_APPWRITE_ENDPOINT || onVercel ? ['https://*.cloud.appwrite.io'] : []),
+	'https://track.libreapps.xyz'
 ].join(' ');
 
 function buildCsp(nonce: string, secure: boolean): string {
